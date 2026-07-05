@@ -191,14 +191,14 @@ Contributions are welcome — documentation, labs, tests, and packaging improvem
 
 ## Project roadmap
 
-| Milestone  | Focus                                       |
-| ---------- | ------------------------------------------- |
-| **v1.0.x** | npm reliability, CI, core documentation     |
-| **v1.1**   | Four labs, instructor guides, sample traces |
-| **v1.2**   | Documentation site and browser playground   |
-| **v1.3**   | Community onboarding and classroom pilots   |
+| Milestone  | Focus                                       | Status on upgrade branch |
+| ---------- | ------------------------------------------- | ------------------------ |
+| **v1.0.x** | npm reliability, CI, docs, release, citation | Phases 1–13 complete; owner actions for npm/Pages/DOI |
+| **v1.1**   | Labs, instructor guides, traces              | Core materials shipped   |
+| **v1.2**   | Documentation site and browser demo         | Built; Pages deploy pending owner |
+| **v1.3**   | Community pilots and expanded labs          | Planned                  |
 
-Detailed planning will be published in `ROADMAP.md` (Phase 14).
+Full milestone detail, phase matrix, and owner checklist: [ROADMAP.md](ROADMAP.md) and [docs/maintainers/open-source-upgrade-summary.md](docs/maintainers/open-source-upgrade-summary.md).
 
 ## Citation
 
