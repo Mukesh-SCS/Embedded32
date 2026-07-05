@@ -9,7 +9,7 @@
 | **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                 |
 | **Maturity**      | Active development — suitable for learning, labs, and prototyping                     |
 | **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage |
-| **Documentation** | In progress — education site and browser demo planned                                 |
+| **Documentation** | `apps/site/` Next.js site — run locally; public deploy pending maintainer approval |
 | **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant              |
 
 Embedded32 is a teaching and experimentation platform. It is not positioned as a production-grade replacement for professional CAN tools or a complete J1939 implementation.
@@ -43,10 +43,20 @@ Embedded32 is a teaching and experimentation platform. It is not positioned as a
 | JavaScript client SDK                      | `@embedded32/sdk-js`                         |
 | Web dashboard (private, dev-only)          | `@embedded32/dashboard`                      |
 
+## Documentation site
+
+Run the Next.js docs site locally after `npm ci` and `npm run docs:api`:
+
+```bash
+cd apps/site
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) for guides, labs, packages, and API reference. Production URL (`embedded32.dev`) is **not deployed yet** — see Phase 11.
+
 ## Browser demo
 
-> **Coming soon** — interactive CAN/J1939 viewer and ECU network visualization at the documentation site.  
-> Placeholder: `https://embedded32.dev/demo` (not deployed yet)
+> **Coming soon (Phase 10)** — interactive CAN/J1939 viewer at `/demo` on the documentation site.
 
 ## Fifteen-minute quickstart
 

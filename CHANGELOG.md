@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Open-source education platform: labs, course docs, community files, CI workflows, and maintainer runbooks
 - `npm run release:dry-run` — verification + tarball preview without publishing
 - `.github/workflows/release.yml` — approval-gated release workflow (dry-run by default)
+- `apps/site/` — Next.js documentation website (labs, docs, packages, API reference)
 - Maintainer docs: `release-process.md`, `manual-npm-settings.md`
 
 ### Changed

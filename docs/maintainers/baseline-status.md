@@ -145,6 +145,7 @@ Updated in Phase 3 — all root workflow commands now exist:
 | Dependabot           | **Present** — `.github/dependabot.yml`                               |
 | CodeQL               | **Present** — weekly + PR                                              |
 | Release dry-run      | **Present** — `npm run release:dry-run` (Phase 8)                      |
+| Documentation site   | **Present** — `apps/site` Next.js (Phase 9); deploy in Phase 11        |
 
 ---
 

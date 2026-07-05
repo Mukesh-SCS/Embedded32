@@ -6,3 +6,5 @@ package-lock.json
 **/LICENSE
 docs/api/**
 !docs/api/README.md
+apps/site/.next/**
+apps/site/public/api-ref/**

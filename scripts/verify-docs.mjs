@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * Verify documentation artifacts that exist today (API docs).
- * Site build (apps/site) is added when Phase 9 lands.
+ * Verify documentation artifacts: TypeDoc API output and docs site build.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -12,12 +11,16 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-function run(command, args) {
+function run(command, args, cwd = ROOT) {
   const result = spawnSync(command, args, {
-    cwd: ROOT,
+    cwd,
     encoding: 'utf8',
     shell: process.platform === 'win32',
   });
+  if (!result.ok && result.status !== 0) {
+    if (result.stdout) process.stdout.write(result.stdout);
+    if (result.stderr) process.stderr.write(result.stderr);
+  }
   return result.status === 0;
 }
 
@@ -34,13 +37,27 @@ function main() {
     console.error('FAIL: docs/api/index.html not generated');
     process.exit(1);
   }
+  console.log('  ✓ API documentation generated');
 
   const siteDir = path.join(ROOT, 'apps', 'site');
-  if (!fs.existsSync(path.join(siteDir, 'package.json'))) {
-    console.log('  ⏭ apps/site not implemented yet (Phase 9) — skipped');
+  const sitePkg = path.join(siteDir, 'package.json');
+  if (!fs.existsSync(sitePkg)) {
+    console.error('FAIL: apps/site/package.json missing');
+    process.exit(1);
   }
 
-  console.log('  ✓ API documentation generated');
+  if (!run('npm', ['run', 'build'], siteDir)) {
+    console.error('FAIL: apps/site build');
+    process.exit(1);
+  }
+
+  const siteApiRef = path.join(siteDir, 'public', 'api-ref', 'index.html');
+  if (!fs.existsSync(siteApiRef)) {
+    console.error('FAIL: apps/site/public/api-ref/index.html not synced');
+    process.exit(1);
+  }
+
+  console.log('  ✓ Documentation site build');
 }
 
 main();

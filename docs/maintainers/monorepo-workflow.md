@@ -25,7 +25,7 @@ npm ci
 | `npm run test:package-install` | Smoke-test tarball installs                          |
 | `npm run test:labs`            | Verify classroom lab solutions and hygiene           |
 | `npm run test:examples`        | Run key examples after build                         |
-| `npm run test:docs`            | Generate and verify API documentation                |
+| `npm run test:docs`            | Generate API docs and build `apps/site`                               |
 | `npm run test:coverage`        | Coverage report for j1939, core, can                 |
 | `npm run verify`               | Full pre-merge check (includes labs, examples, docs) |
 
@@ -53,7 +53,7 @@ Package paths are unchanged from the original repository layout. Published impor
 
 | Path                 | Phase | Purpose                             |
 | -------------------- | ----- | ----------------------------------- |
-| `apps/site/`         | 9     | Documentation website               |
+| `apps/site/`         | 9     | Documentation website (Next.js)     |
 | `apps/demo/`         | 10    | Browser demo                        |
 | `labs/`              | 5     | Classroom labs (four complete labs) |
 | `docs/education/`    | 5     | Instructor and student guides       |

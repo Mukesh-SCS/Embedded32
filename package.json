@@ -17,7 +17,8 @@
     "embedded32-dashboard",
     "embedded32-sdk-js",
     "embedded32-sdk-c",
-    "embedded32-sdk-python"
+    "embedded32-sdk-python",
+    "apps/site"
   ],
   "scripts": {
     "build": "lerna run build",

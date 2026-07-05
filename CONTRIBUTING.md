@@ -50,7 +50,7 @@ npm run verify
 ```
 Embedded32/
 ├── embedded32-*/          # @embedded32/* npm packages
-├── apps/site/             # Documentation site (planned)
+├── apps/site/             # Documentation site (Next.js)
 ├── apps/demo/             # Browser demo (planned)
 ├── labs/                  # Classroom labs
 ├── docs/                    # Human documentation + generated API
