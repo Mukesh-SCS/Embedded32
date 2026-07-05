@@ -10,6 +10,17 @@
 
 Dependabot: [../dependabot.yml](../dependabot.yml)
 
+## Supported Node.js versions
+
+The full monorepo (including the Next.js 16 documentation site in `apps/site`, which
+requires Node `>=20.9.0`) is verified on **Node 20 and Node 22**. The root `engines`
+field declares `node >=20.9.0`.
+
+Individual published libraries may still declare `node >=18` in their own
+`package.json`; that library-only compatibility is not exercised by this
+full-workspace CI and would need a separate package-only workflow (excluding
+`apps/site`) to be validated.
+
 ## Local equivalent
 
 ```bash
@@ -22,8 +33,8 @@ npm run test:coverage
 
 Enable in GitHub → Settings → Branches:
 
-- `Verify (Node 18)`
 - `Verify (Node 20)`
+- `Verify (Node 22)`
 - `Verify (Windows, Node 20)`
 - `Analyze JavaScript/TypeScript` (CodeQL)
 - `Review dependencies` (on PRs)

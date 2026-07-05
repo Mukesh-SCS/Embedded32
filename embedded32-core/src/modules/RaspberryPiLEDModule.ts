@@ -1,8 +1,16 @@
 import { BaseModule } from './Module.js';
-import { Gpio } from 'onoff';
+
+// `onoff` is a Raspberry Pi-only native GPIO binding declared as an optional
+// dependency. It is loaded lazily so that importing @embedded32/core (and any
+// package that depends on it, such as the CLI, tools, and browser demo) does
+// not require the native binding to be present outside a Raspberry Pi.
+type GpioLike = {
+  writeSync(value: number): void;
+  unexport(): void;
+};
 
 export class RaspberryPiLEDModule extends BaseModule {
-  private gpio: Gpio | null = null;
+  private gpio: GpioLike | null = null;
   private blinkInterval: any = null;
   private state: 'on' | 'off' = 'off';
 
@@ -14,8 +22,19 @@ export class RaspberryPiLEDModule extends BaseModule {
     super(name, '1.0.0');
   }
 
-  onInit() {
+  async onInit() {
     this.log(`Initializing Raspberry Pi LED on GPIO ${this.pin}`);
+    let Gpio: new (pin: number, direction: string) => GpioLike;
+    try {
+      ({ Gpio } = (await import('onoff')) as unknown as {
+        Gpio: new (pin: number, direction: string) => GpioLike;
+      });
+    } catch {
+      throw new Error(
+        "RaspberryPiLEDModule requires the optional 'onoff' package, which is only " +
+          'available on Raspberry Pi hardware. Install it with `npm install onoff` on a Pi.'
+      );
+    }
     this.gpio = new Gpio(this.pin, 'out');
     if (this.activeLow) {
       // For active-low configuration, we'd need additional setup

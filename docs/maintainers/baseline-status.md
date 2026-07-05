@@ -8,7 +8,7 @@ Environment:
 | ------------------- | ---------------------------------------------------------- |
 | OS                  | Windows 10 (10.0.26200)                                    |
 | Shell               | PowerShell                                                 |
-| Node.js             | (system default; root `engines` requires `>=18.0.0`)       |
+| Node.js             | (system default; root `engines` requires `>=20.9.0`)       |
 | npm                 | 11.6.2 (warns about unknown `devdir` env config)           |
 | Branch              | `feat/open-source-education-platform`                      |
 | Pre-change baseline | Yes — no structural refactoring performed before recording |
