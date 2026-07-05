@@ -64,9 +64,14 @@ ethernet:
       },
     } as never);
 
-    const payload = String(spy.mock.calls[0]?.[1] ?? '');
-    expect(payload).toContain('[REDACTED]');
-    expect(payload).not.toContain('secret');
+    const joined = spy.mock.calls
+      .flat()
+      .map((v) => (typeof v === 'string' ? v : JSON.stringify(v)))
+      .join(' ');
+
+    expect(joined).toContain('[REDACTED]');
+    expect(joined).not.toContain('secret');
+
     spy.mockRestore();
   });
 });
