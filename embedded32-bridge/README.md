@@ -1,128 +1,76 @@
-# embedded32-bridge
+# @embedded32/bridge
 
-Intelligent routing and bridging of J1939 CAN messages to Ethernet and MQTT.
-
-## Overview
-
-Embedded32 Bridge connects the CAN bus to cloud and IoT infrastructure:
-
-- **CAN ↔ Ethernet** - Bidirectional routing with filtering and rate limiting
-- **CAN ↔ MQTT** - Topic-based message distribution with device discovery
-- **Rule Engine** - Priority-based filtering, transformations, and selective routing
-- **J1939 Aware** - Native PGN/SPN parsing and selective message propagation
+Route selected CAN/J1939 traffic to UDP, TCP, or MQTT using `@embedded32/ethernet` transports — gateway pattern for connected-vehicle labs.
 
 ## Installation
 
 ```bash
-npm install embedded32-bridge embedded32-ethernet embedded32-can embedded32-j1939
+npm install @embedded32/bridge @embedded32/ethernet @embedded32/can @embedded32/j1939 @embedded32/core
 ```
 
-## Usage
+## Minimum runnable example
 
-### CAN-Ethernet Bridge
-
-```typescript
-import { CanEthernetBridge } from 'embedded32-bridge';
-import { CANBus } from 'embedded32-can';
-import { UDPServer } from 'embedded32-ethernet';
-
-const canBus = new CANBus({ interface: 'vcan0' });
-const ethServer = new UDPServer(5000);
-
-const bridge = new CanEthernetBridge({
-  canBus,
-  ethServer,
-  pgnFilters: {
-    whitelist: [0xF004, 0xFECA],
-    blacklist: []
-  },
-  rateLimits: {
-    0xF004: 10,  // 10 Hz for Engine Speed
-    default: 5   // 5 Hz for others
-  }
-});
-
-await bridge.start();
-```
-
-### CAN-MQTT Bridge
+Conceptual wiring (see package `examples/` and supervisor config for full setup):
 
 ```typescript
-import { CanMqttBridge } from 'embedded32-bridge';
-import { CANBus } from 'embedded32-can';
-import { MQTTClient } from 'embedded32-ethernet';
+import { CanMqttBridge } from '@embedded32/bridge';
+import { MQTTClient } from '@embedded32/ethernet';
+import { CANInterface, MockCANDriver } from '@embedded32/can';
 
-const canBus = new CANBus();
+const can = new CANInterface(new MockCANDriver());
 const mqtt = new MQTTClient({ broker: 'mqtt://localhost:1883' });
 
 const bridge = new CanMqttBridge({
-  canBus,
+  canBus: can,
   mqtt,
-  topicPrefix: 'fleet/truck1',
-  pgnTopics: {
-    0xF004: 'engine/speed',
-    0xFECA: 'engine/controller'
-  },
-  deviceName: 'Truck ECU 1',
-  payloadFormat: 'nanoproto'
+  topicPrefix: 'classroom/bus1',
 });
 
 await bridge.start();
 ```
 
-### Rule Engine
+Requires a local MQTT broker for live forwarding.
 
-```typescript
-import { RuleEngine } from 'embedded32-bridge';
+## Public API overview
 
-const engine = new RuleEngine({
-  defaultAction: 'drop',
-  rules: [
-    {
-      id: 1,
-      priority: 100,
-      pgn: 0xF004,
-      action: 'forward',
-      destinations: ['ethernet', 'mqtt'],
-      rateLimit: 10
-    },
-    {
-      id: 2,
-      priority: 80,
-      pgn: 0xFECA,
-      spnFilter: [190, 191],
-      action: 'forward',
-      destinations: ['mqtt'],
-      rateLimit: 1
-    }
-  ]
-});
+| Export                      | Role                                                 |
+| --------------------------- | ---------------------------------------------------- |
+| `CanEthernetBridge`         | CAN ↔ UDP/TCP forwarding with filters                |
+| `CanMqttBridge`             | CAN ↔ MQTT topic mapping                             |
+| `RuleEngine`                | Priority rules, PGN whitelist/blacklist, rate limits |
+| `BridgeRule`, `RoutingRule` | Configuration types                                  |
 
-const decision = engine.route(canMessage);
-```
+## Runtime requirements
 
-## Configuration Options
+- Node.js **18+**
+- ESM package
+- `@embedded32/ethernet` for transports
 
-### CanEthernetConfig
+## Hardware requirements
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `canBus` | CANBus | CAN interface instance |
-| `ethServer` | UDPServer | UDP server instance |
-| `pgnFilters` | object | Whitelist/blacklist PGNs |
-| `rateLimits` | object | Rate limit per PGN (Hz) |
-| `statsInterval` | number | Statistics reporting interval (ms) |
+None when using `MockCANDriver`. Production gateways typically use Linux SocketCAN plus network access to MQTT/UDP peers.
 
-### CanMqttConfig
+## Browser compatibility
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `canBus` | CANBus | CAN interface instance |
-| `mqtt` | MQTTClient | MQTT client instance |
-| `topicPrefix` | string | Base topic path |
-| `pgnTopics` | object | PGN to topic mapping |
-| `deviceName` | string | Device identifier |
-| `payloadFormat` | string | 'nanoproto' or 'json' |
+**Node.js only.** MQTT consumers may be browser apps, but this package runs on the gateway host.
+
+## Common errors
+
+| Error                   | Fix                                                 |
+| ----------------------- | --------------------------------------------------- |
+| MQTT connection refused | Start broker (`mosquitto`) or fix broker URL        |
+| No forwarded messages   | Check PGN whitelist and `RuleEngine` default action |
+| Wrong import path       | Use `@embedded32/bridge`, not legacy unscoped name  |
+
+## Related packages
+
+- `@embedded32/ethernet` — UDP, TCP, MQTT clients
+- `@embedded32/j1939` — PGN-aware filtering
+- `@embedded32/cli` — load bridge via supervisor config
+
+## Version compatibility
+
+`@embedded32/bridge@1.0.0` (ESM) must pair with `@embedded32/j1939@1.0.0` and `@embedded32/ethernet@1.0.0`.
 
 ## License
 

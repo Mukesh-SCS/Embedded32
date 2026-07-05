@@ -1,0 +1,22 @@
+{
+  "name": "@embedded32/demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Client-side CAN/J1939 educational demo modules for the Embedded32 documentation site",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate:traces": "node scripts/generate-traces.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "keywords": ["can", "j1939", "browser", "simulation", "education", "embedded32"],
+  "author": "Mukesh Mani Tripathi",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

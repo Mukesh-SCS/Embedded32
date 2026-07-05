@@ -1,129 +1,76 @@
-# Embedded32 SDK for JavaScript/TypeScript
+# @embedded32/sdk-js
 
-J1939 client library for interacting with the Embedded32 platform.
+Stable JavaScript/TypeScript J1939 client SDK for applications that subscribe to PGNs, request data, and send commands over configurable transports.
 
 ## Installation
 
 ```bash
-npm install @embedded32/sdk-js
+npm install @embedded32/sdk-js @embedded32/j1939
 ```
 
-## Usage
+## Minimum runnable example
 
 ```typescript
 import { J1939Client, PGN, SA } from '@embedded32/sdk-js';
 
-// Create client
 const client = new J1939Client({
-  interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_2
+  interface: 'virtual',
+  sourceAddress: SA.DIAG_TOOL_2,
+  transport: 'virtual',
 });
 
-// Connect to the J1939 network
 await client.connect();
 
-// Subscribe to Engine Controller messages
 client.onPGN(PGN.EEC1, (msg) => {
-  console.log(`Engine Speed: ${msg.spns.engineSpeed} RPM`);
-  console.log(`Engine Torque: ${msg.spns.torque}%`);
+  console.log('EEC1', msg.pgnName, msg.spns);
 });
 
-// Subscribe to Engine Temperature
-client.onPGN(PGN.ET1, (msg) => {
-  console.log(`Coolant Temp: ${msg.spns.coolantTemp}°C`);
-});
-
-// Request specific data
-await client.requestPGN(PGN.ET1);
-
-// Send a command
-await client.sendPGN(PGN.ENGINE_CONTROL_CMD, {
-  targetRpm: 1200,
-  enable: 1
-});
-
-// Disconnect
 await client.disconnect();
 ```
 
-## API Reference
+See `embedded32-sdk-js/examples/basic-j1939.ts` in the monorepo.
 
-### Constructor
+## Public API overview
 
-```typescript
-const client = new J1939Client(config: J1939ClientConfig);
-```
+| Export                              | Role                                                      |
+| ----------------------------------- | --------------------------------------------------------- |
+| `J1939Client`                       | `connect`, `disconnect`, `onPGN`, `requestPGN`, `sendPGN` |
+| `PGN`, `SA`                         | Common parameter group and source-address constants       |
+| `J1939ClientConfig`, `J1939Message` | Public types                                              |
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `interface` | string | ✅ | CAN interface (e.g., "vcan0") |
-| `sourceAddress` | number | ✅ | Your ECU's address (0x00-0xFD) |
-| `transport` | string | ❌ | 'socketcan', 'pcan', 'virtual' |
-| `debug` | boolean | ❌ | Enable verbose logging |
+**Not public:** `@embedded32/sdk-js/internal` — may change without notice.
 
-### Methods
+## Runtime requirements
 
-| Method | Description |
-|--------|-------------|
-| `connect()` | Connect to J1939 network |
-| `disconnect()` | Disconnect and cleanup |
-| `onPGN(pgn, handler)` | Subscribe to PGN, returns unsubscribe function |
-| `requestPGN(pgn, dest?)` | Request data from network |
-| `sendPGN(pgn, data, dest?)` | Send PGN with data |
+- Node.js **18+**
+- ESM
+- Transport backend (`virtual`, `socketcan`, etc.) per config
 
-### Message Structure
+## Hardware requirements
 
-```typescript
-interface J1939Message {
-  pgn: number;              // 0xF004
-  pgnName: string;          // "Electronic Engine Controller 1"
-  sourceAddress: number;    // 0x00
-  destinationAddress: number; // 0xFF
-  priority: number;         // 3
-  spns: Record<string, any>; // { engineSpeed: 1500, torque: 45 }
-  raw: Uint8Array;          // Raw bytes
-  timestamp: number;        // Unix timestamp
-}
-```
+`virtual` transport needs no hardware. `socketcan` requires Linux CAN interface.
 
-## Constants
+## Browser compatibility
 
-```typescript
-import { PGN, SA } from '@embedded32/sdk-js';
+Virtual transport and decode-only paths may be bundled for future browser demo (Phase 10). SocketCAN is not browser-available.
 
-// PGNs
-PGN.REQUEST            // 0xEA00
-PGN.EEC1               // 0xF004
-PGN.ETC1               // 0xF003
-PGN.ET1                // 0xFEEE
-PGN.DM1                // 0xFECA
-PGN.ENGINE_CONTROL_CMD // 0xEF00
+## Common errors
 
-// Source Addresses
-SA.ENGINE_1            // 0x00
-SA.TRANSMISSION_1      // 0x03
-SA.DIAG_TOOL_1         // 0xF9
-SA.DIAG_TOOL_2         // 0xFA
-SA.GLOBAL              // 0xFF
-```
+| Error                          | Fix                                  |
+| ------------------------------ | ------------------------------------ |
+| `connect()` fails on socketcan | Check interface name and permissions |
+| Empty `spns` object            | PGN decoder may not cover all fields |
+| Deep import from `/internal`   | Use documented public exports only   |
 
-## API Stability
+## Related packages
 
-The public SDK API is considered **stable as of v1.0.0**:
+- `@embedded32/j1939` — protocol decoding layer
+- `@embedded32/can` — CAN drivers for socketcan transport
+- `@embedded32/bridge` — network-fed virtual transports (advanced)
 
-| API | Status |
-|-----|--------|
-| `J1939Client` | ✅ Stable |
-| `connect()` / `disconnect()` | ✅ Stable |
-| `onPGN(pgn, handler)` | ✅ Stable |
-| `requestPGN(pgn)` | ✅ Stable |
-| `sendPGN(pgn, data)` | ✅ Stable |
-| `PGN` / `SA` constants | ✅ Stable |
+## Version compatibility
 
-**Internal modules** (available via `@embedded32/sdk-js/internal`) are **not part of the public API** and may change without notice:
-- Transport implementations
-- Codec functions
-- Legacy CAN APIs
+Public SDK API marked stable at **v1.0.0**. Pin `@embedded32/sdk-js@1.0.0` with `@embedded32/j1939@1.0.0`.
 
 ## License
 

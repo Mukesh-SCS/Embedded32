@@ -15,8 +15,8 @@
  * Run: npx ts-node examples/monitor-j1939.ts
  */
 
-import { decodeJ1939, formatJ1939Message } from "../src/index.js";
-import type { CANFrame } from "@embedded32/can";
+import { decodeJ1939, formatJ1939Message } from '../src/index.js';
+import type { CANFrame } from '@embedded32/can';
 
 /**
  * J1939 Message Monitor
@@ -90,7 +90,10 @@ class J1939Monitor {
       // Notify listeners
       this.listeners.forEach((listener) => listener(decodedMsg));
     } catch (error) {
-      console.error(`Error processing frame 0x${frame.id.toString(16).padStart(8, "0").toUpperCase()}:`, error);
+      console.error(
+        `Error processing frame 0x${frame.id.toString(16).padStart(8, '0').toUpperCase()}:`,
+        error
+      );
     }
   }
 
@@ -114,13 +117,15 @@ class J1939Monitor {
 }
 
 // Demo: Create monitor and simulate messages
-console.log("=== J1939 Monitor Example ===\n");
+console.log('=== J1939 Monitor Example ===\n');
 
 const monitor = new J1939Monitor();
 
 // Listen to all J1939 messages
 monitor.onMessage((msg) => {
-  console.log(`[RECEIVED] ${msg.name} from SA=0x${msg.sa.toString(16).padStart(2, "0").toUpperCase()}`);
+  console.log(
+    `[RECEIVED] ${msg.name} from SA=0x${msg.sa.toString(16).padStart(2, '0').toUpperCase()}`
+  );
 });
 
 // Simulate some J1939 traffic
@@ -147,13 +152,13 @@ const simulatedFrames = [
   },
 ];
 
-console.log("Processing simulated J1939 frames...");
+console.log('Processing simulated J1939 frames...');
 simulatedFrames.forEach((frame) => {
   monitor.processFrame(frame);
 });
 
 // Example: Filter by PGN
-console.log("\n=== Filter Example: Monitor only EEC1 (0xF004) ===");
+console.log('\n=== Filter Example: Monitor only EEC1 (0xF004) ===');
 monitor.clearFilters();
 monitor.filterByPGN(0xf004);
 
@@ -162,7 +167,7 @@ simulatedFrames.forEach((frame) => {
 });
 
 // Example: Filter by Source Address
-console.log("\n=== Filter Example: Monitor only SA=0x01 ===");
+console.log('\n=== Filter Example: Monitor only SA=0x01 ===');
 monitor.clearFilters();
 monitor.filterBySA(0x01);
 
@@ -171,10 +176,10 @@ simulatedFrames.forEach((frame) => {
 });
 
 // Print history
-console.log("\n=== Message History ===");
+console.log('\n=== Message History ===');
 monitor.printLastMessages(5);
 
-console.log("\n=== Integration with embedded32-can ===");
+console.log('\n=== Integration with embedded32-can ===');
 console.log(`
 To use with a real CAN interface:
 

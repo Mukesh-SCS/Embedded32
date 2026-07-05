@@ -1,16 +1,16 @@
 /**
  * Deterministic Simulation Scheduler
- * 
+ *
  * Provides time-synchronized execution of simulation components.
  * Ensures reproducible simulation runs.
  */
 
-import { ISimScheduler, ISimPort, SimState } from "../interfaces/SimPort.js";
-import { EventEmitter } from "events";
+import { ISimScheduler, ISimPort, SimState } from '../interfaces/SimPort.js';
+import { EventEmitter } from 'events';
 
 /**
  * Deterministic Scheduler
- * 
+ *
  * Features:
  * - Fixed timestep execution
  * - Deterministic time progression
@@ -35,7 +35,7 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
   register(component: ISimPort): void {
     if (!this.components.includes(component)) {
       this.components.push(component);
-      this.emit("componentRegistered", component.getName());
+      this.emit('componentRegistered', component.getName());
     }
   }
 
@@ -46,7 +46,7 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
     const idx = this.components.indexOf(component);
     if (idx >= 0) {
       this.components.splice(idx, 1);
-      this.emit("componentUnregistered", component.getName());
+      this.emit('componentUnregistered', component.getName());
     }
   }
 
@@ -60,12 +60,12 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
     this.nowMs = 0;
     this.startRealTime = Date.now();
 
-    this.emit("started");
+    this.emit('started');
 
     // Start all components
     for (const component of this.components) {
-      component.start().catch(err => {
-        this.emit("error", err);
+      component.start().catch((err) => {
+        this.emit('error', err);
       });
     }
 
@@ -90,14 +90,14 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
 
     // Stop all components
     for (const component of this.components) {
-      component.stop().catch(err => {
-        this.emit("error", err);
+      component.stop().catch((err) => {
+        this.emit('error', err);
       });
     }
 
-    this.emit("stopped", { 
+    this.emit('stopped', {
       simulationTimeMs: this.nowMs,
-      realTimeMs: Date.now() - this.startRealTime 
+      realTimeMs: Date.now() - this.startRealTime,
     });
   }
 
@@ -115,12 +115,12 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
         try {
           component.tick(this.nowMs, deltaMs);
         } catch (err) {
-          this.emit("error", err);
+          this.emit('error', err);
         }
       }
     }
 
-    this.emit("tick", { nowMs: this.nowMs, deltaMs });
+    this.emit('tick', { nowMs: this.nowMs, deltaMs });
   }
 
   /**
@@ -155,6 +155,6 @@ export class DeterministicScheduler extends EventEmitter implements ISimSchedule
    * Get all component names
    */
   getComponentNames(): string[] {
-    return this.components.map(c => c.getName());
+    return this.components.map((c) => c.getName());
   }
 }

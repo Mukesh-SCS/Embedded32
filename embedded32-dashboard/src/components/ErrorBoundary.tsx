@@ -27,19 +27,21 @@ export class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          padding: 20,
-          background: '#ffebee',
-          border: '1px solid #f44336',
-          borderRadius: 4,
-          margin: 16,
-          color: '#c62828'
-        }}>
+        <div
+          style={{
+            padding: 20,
+            background: '#ffebee',
+            border: '1px solid #f44336',
+            borderRadius: 4,
+            margin: 16,
+            color: '#c62828',
+          }}
+        >
           <h2>⚠️ Error in Dashboard</h2>
           <pre style={{ background: '#fff', padding: 12, borderRadius: 4, overflow: 'auto' }}>
             {this.state.error?.toString()}
           </pre>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             style={{
               padding: '8px 16px',
@@ -48,7 +50,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
               border: 'none',
               borderRadius: 4,
               cursor: 'pointer',
-              marginTop: 12
+              marginTop: 12,
             }}
           >
             Reload Dashboard

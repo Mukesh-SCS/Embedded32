@@ -1,20 +1,20 @@
 /**
  * Vehicle Simulation Runner - Phase 2
- * 
+ *
  * Main entry point for running vehicle simulations from profiles.
  */
 
-import * as fs from "fs";
-import * as path from "path";
-import { VehicleProfile, IECUSimulator, SimState } from "./interfaces/SimPort.js";
-import { DeterministicScheduler } from "./scheduler/DeterministicScheduler.js";
-import { EngineECU } from "./ecus/EngineECU.js";
-import { TransmissionECU } from "./ecus/TransmissionECU.js";
-import { DiagnosticToolECU } from "./ecus/DiagnosticToolECU.js";
-import { VirtualCANPort, ICANPort } from "@embedded32/can";
-import { J1939PortImpl, parseJ1939Id, getPGNInfo, IJ1939Port } from "@embedded32/j1939";
-import { PGN } from "@embedded32/j1939";
-import { EventEmitter } from "events";
+import * as fs from 'fs';
+import * as path from 'path';
+import { VehicleProfile, IECUSimulator, SimState } from './interfaces/SimPort.js';
+import { DeterministicScheduler } from './scheduler/DeterministicScheduler.js';
+import { EngineECU } from './ecus/EngineECU.js';
+import { TransmissionECU } from './ecus/TransmissionECU.js';
+import { DiagnosticToolECU } from './ecus/DiagnosticToolECU.js';
+import { VirtualCANPort, ICANPort } from '@embedded32/can';
+import { J1939PortImpl, parseJ1939Id, getPGNInfo, IJ1939Port } from '@embedded32/j1939';
+import { PGN } from '@embedded32/j1939';
+import { EventEmitter } from 'events';
 
 /**
  * Simulation runner events
@@ -60,7 +60,7 @@ export class SimulationRunner extends EventEmitter {
    * Load profile from file
    */
   loadProfile(profilePath: string): VehicleProfile {
-    const content = fs.readFileSync(profilePath, "utf-8");
+    const content = fs.readFileSync(profilePath, 'utf-8');
     this.profile = JSON.parse(content) as VehicleProfile;
     return this.profile;
   }
@@ -70,18 +70,18 @@ export class SimulationRunner extends EventEmitter {
    */
   loadBuiltinProfile(name: string): VehicleProfile {
     // Use process.cwd() as base, vehicle-profiles should be relative to package
-    const profilesDir = path.resolve(process.cwd(), "vehicle-profiles");
+    const profilesDir = path.resolve(process.cwd(), 'vehicle-profiles');
     let profilePath = path.join(profilesDir, `${name}.json`);
-    
+
     // Fallback: try relative to this file's compiled location
     if (!fs.existsSync(profilePath)) {
-      profilePath = path.resolve(__dirname, "../vehicle-profiles", `${name}.json`);
+      profilePath = path.resolve(__dirname, '../vehicle-profiles', `${name}.json`);
     }
-    
+
     if (!fs.existsSync(profilePath)) {
       throw new Error(`Profile not found: ${name}`);
     }
-    
+
     return this.loadProfile(profilePath);
   }
 
@@ -90,11 +90,11 @@ export class SimulationRunner extends EventEmitter {
    */
   async start(): Promise<void> {
     if (!this.profile) {
-      throw new Error("No profile loaded");
+      throw new Error('No profile loaded');
     }
 
     if (this.running) {
-      throw new Error("Simulation already running");
+      throw new Error('Simulation already running');
     }
 
     this.running = true;
@@ -124,13 +124,13 @@ export class SimulationRunner extends EventEmitter {
       let ecu: IECUSimulator | null = null;
 
       switch (ecuConfig.name) {
-        case "engine":
+        case 'engine':
           ecu = new EngineECU(ecuConfig);
           break;
-        case "transmission":
+        case 'transmission':
           ecu = new TransmissionECU(ecuConfig);
           break;
-        case "diag_tool":
+        case 'diag_tool':
           ecu = new DiagnosticToolECU(ecuConfig);
           break;
         default:
@@ -144,14 +144,14 @@ export class SimulationRunner extends EventEmitter {
         this.scheduler.register(ecu);
 
         // Forward ECU events
-        ecu.on("broadcast", (data) => {
-          this.emit("ecuBroadcast", { ecu: ecuConfig.name, ...data });
+        ecu.on('broadcast', (data) => {
+          this.emit('ecuBroadcast', { ecu: ecuConfig.name, ...data });
         });
-        ecu.on("request", (data) => {
-          this.emit("ecuRequest", { ecu: ecuConfig.name, ...data });
+        ecu.on('request', (data) => {
+          this.emit('ecuRequest', { ecu: ecuConfig.name, ...data });
         });
-        ecu.on("response", (data) => {
-          this.emit("ecuResponse", { ecu: ecuConfig.name, ...data });
+        ecu.on('response', (data) => {
+          this.emit('ecuResponse', { ecu: ecuConfig.name, ...data });
         });
       }
     }
@@ -160,29 +160,29 @@ export class SimulationRunner extends EventEmitter {
     this.scheduler.start();
 
     // Log startup
-    console.log("");
-    console.log("╔════════════════════════════════════════════════════════════╗");
-    console.log("║           EMBEDDED32 VEHICLE SIMULATION                    ║");
-    console.log("╚════════════════════════════════════════════════════════════╝");
-    console.log("");
+    console.log('');
+    console.log('╔════════════════════════════════════════════════════════════╗');
+    console.log('║           EMBEDDED32 VEHICLE SIMULATION                    ║');
+    console.log('╚════════════════════════════════════════════════════════════╝');
+    console.log('');
     console.log(`  Profile: ${this.profile.name}`);
     console.log(`  CAN Interface: ${this.profile.bus.interface}`);
     console.log(`  Bitrate: ${this.profile.bus.bitrate} bps`);
-    console.log("");
-    console.log("  ECUs Started:");
+    console.log('');
+    console.log('  ECUs Started:');
 
     for (const [name, ecu] of this.ecus) {
       const config = ecu.getConfig();
-      const saHex = `0x${config.address.toString(16).toUpperCase().padStart(2, "0")}`;
+      const saHex = `0x${config.address.toString(16).toUpperCase().padStart(2, '0')}`;
       console.log(`    ✓ ${name}: claimed SA=${saHex}`);
-      this.emit("ecuStarted", name, config.address);
+      this.emit('ecuStarted', name, config.address);
     }
 
-    console.log("");
-    console.log("  J1939 Traffic:");
-    console.log("  ─────────────────────────────────────────────────────────");
+    console.log('');
+    console.log('  J1939 Traffic:');
+    console.log('  ─────────────────────────────────────────────────────────');
 
-    this.emit("started", this.profile);
+    this.emit('started', this.profile);
 
     // Handle duration
     if (this.profile.simulation?.durationMs && this.profile.simulation.durationMs > 0) {
@@ -200,7 +200,7 @@ export class SimulationRunner extends EventEmitter {
 
     const parsed = parseJ1939Id(frame.id);
     const pgnInfo = getPGNInfo(parsed.pgn);
-    const pgnName = pgnInfo?.name || "Unknown";
+    const pgnName = pgnInfo?.name || 'Unknown';
 
     // Decode specific PGNs
     let decoded: Record<string, any> = {};
@@ -209,63 +209,65 @@ export class SimulationRunner extends EventEmitter {
       const rpmRaw = frame.data[4] | (frame.data[5] << 8);
       const torque = frame.data[3] - 125;
       decoded = {
-        engineSpeed: (rpmRaw * 0.125).toFixed(1) + " rpm",
-        torque: torque + "%"
+        engineSpeed: (rpmRaw * 0.125).toFixed(1) + ' rpm',
+        torque: torque + '%',
       };
     } else if (parsed.pgn === PGN.ET1) {
       const coolant = frame.data[0] - 40;
       decoded = {
-        coolantTemp: coolant + "°C"
+        coolantTemp: coolant + '°C',
       };
     } else if (parsed.pgn === PGN.ETC1) {
       const gear = frame.data[7] - 125;
       decoded = {
-        gear: gear
+        gear: gear,
       };
     } else if (parsed.pgn === PGN.REQUEST) {
       const requestedPGN = frame.data[0] | (frame.data[1] << 8) | (frame.data[2] << 16);
       decoded = {
-        requestedPGN: `0x${requestedPGN.toString(16).toUpperCase()}`
+        requestedPGN: `0x${requestedPGN.toString(16).toUpperCase()}`,
       };
     }
 
     const frameInfo: FrameInfo = {
       id: frame.id,
-      idHex: frame.id.toString(16).toUpperCase().padStart(8, "0"),
+      idHex: frame.id.toString(16).toUpperCase().padStart(8, '0'),
       pgn: parsed.pgn,
-      pgnHex: parsed.pgn.toString(16).toUpperCase().padStart(5, "0"),
+      pgnHex: parsed.pgn.toString(16).toUpperCase().padStart(5, '0'),
       pgnName: pgnName,
       sa: parsed.sa,
       data: frame.data,
-      dataHex: frame.data.map((b: number) => b.toString(16).toUpperCase().padStart(2, "0")).join(" "),
+      dataHex: frame.data
+        .map((b: number) => b.toString(16).toUpperCase().padStart(2, '0'))
+        .join(' '),
       decoded,
-      timestamp: frame.timestamp || Date.now()
+      timestamp: frame.timestamp || Date.now(),
     };
 
     // Print to console
     this.printFrame(frameInfo);
 
-    this.emit("frame", frameInfo);
+    this.emit('frame', frameInfo);
   }
 
   /**
    * Print frame to console
    */
   private printFrame(info: FrameInfo): void {
-    const saHex = info.sa.toString(16).toUpperCase().padStart(2, "0");
-    
+    const saHex = info.sa.toString(16).toUpperCase().padStart(2, '0');
+
     // Build decoded string
-    let decodedStr = "";
+    let decodedStr = '';
     if (Object.keys(info.decoded || {}).length > 0) {
       decodedStr = Object.entries(info.decoded!)
         .map(([k, v]) => `${k}=${v}`)
-        .join(" ");
+        .join(' ');
     }
 
     console.log(
       `  ${info.idHex}  ${info.data.length}  ${info.dataHex.padEnd(26)}` +
-      `PGN=${info.pgnHex} ${info.pgnName.padEnd(35)} SA=${saHex}` +
-      (decodedStr ? `  ${decodedStr}` : "")
+        `PGN=${info.pgnHex} ${info.pgnName.padEnd(35)} SA=${saHex}` +
+        (decodedStr ? `  ${decodedStr}` : '')
     );
   }
 
@@ -291,12 +293,12 @@ export class SimulationRunner extends EventEmitter {
     this.ecus.clear();
     this.j1939Ports.clear();
 
-    console.log("");
-    console.log("  ─────────────────────────────────────────────────────────");
+    console.log('');
+    console.log('  ─────────────────────────────────────────────────────────');
     console.log(`  Simulation stopped. Total frames: ${this.frameCount}`);
-    console.log("");
+    console.log('');
 
-    this.emit("stopped");
+    this.emit('stopped');
   }
 
   /**
@@ -322,8 +324,8 @@ export class SimulationRunner extends EventEmitter {
 }
 
 // Re-export types
-export { VehicleProfile, ECUConfig, SimState } from "./interfaces/SimPort.js";
-export { EngineECU } from "./ecus/EngineECU.js";
-export { TransmissionECU } from "./ecus/TransmissionECU.js";
-export { DiagnosticToolECU } from "./ecus/DiagnosticToolECU.js";
-export { DeterministicScheduler } from "./scheduler/DeterministicScheduler.js";
+export type { VehicleProfile, ECUConfig, SimState } from './interfaces/SimPort.js';
+export { EngineECU } from './ecus/EngineECU.js';
+export { TransmissionECU } from './ecus/TransmissionECU.js';
+export { DiagnosticToolECU } from './ecus/DiagnosticToolECU.js';
+export { DeterministicScheduler } from './scheduler/DeterministicScheduler.js';

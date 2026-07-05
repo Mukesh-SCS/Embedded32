@@ -1,16 +1,16 @@
 /**
  * Diagnostic Tool ECU Simulator - Phase 2
- * 
+ *
  * Sends:
  * - PGN Request (59904) to request engine data
- * 
+ *
  * Receives:
  * - Responses from other ECUs
  */
 
-import { IECUSimulator, ECUConfig, SimState } from "../interfaces/SimPort.js";
-import { IJ1939Port, PGN, J1939Message } from "@embedded32/j1939";
-import { EventEmitter } from "events";
+import { IECUSimulator, ECUConfig, SimState } from '../interfaces/SimPort.js';
+import { IJ1939Port, PGN, J1939Message } from '@embedded32/j1939';
+import { EventEmitter } from 'events';
 
 /**
  * Diagnostic Tool state
@@ -31,13 +31,13 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
   private state: SimState = SimState.STOPPED;
   private j1939Port: IJ1939Port | null = null;
   private lastRequestMs: number = 0;
-  
+
   private ecuState: DiagToolECUState = {
     requestsSent: 0,
     responsesReceived: 0,
     lastRequestPGN: 0,
     lastResponsePGN: 0,
-    lastEngineSpeed: null
+    lastEngineSpeed: null,
   };
 
   // PGNs to request in rotation
@@ -48,7 +48,7 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
     super();
     this.config = {
       ...config,
-      rateMs: config.rateMs || 500
+      rateMs: config.rateMs || 500,
     };
   }
 
@@ -73,11 +73,11 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
     const rpmRaw = msg.data[4] | (msg.data[5] << 8);
     this.ecuState.lastEngineSpeed = rpmRaw * 0.125;
 
-    this.emit("response", {
+    this.emit('response', {
       pgn: PGN.EEC1,
-      pgnName: "EEC1",
+      pgnName: 'EEC1',
       sa: msg.sa,
-      engineSpeed: this.ecuState.lastEngineSpeed
+      engineSpeed: this.ecuState.lastEngineSpeed,
     });
   }
 
@@ -88,11 +88,11 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
     // Decode coolant temp from byte 0
     const coolantTemp = msg.data[0] - 40;
 
-    this.emit("response", {
+    this.emit('response', {
       pgn: PGN.ET1,
-      pgnName: "ET1",
+      pgnName: 'ET1',
       sa: msg.sa,
-      coolantTemp
+      coolantTemp,
     });
   }
 
@@ -103,22 +103,22 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
     // Decode gear from byte 7
     const gear = msg.data[7] - 125;
 
-    this.emit("response", {
+    this.emit('response', {
       pgn: PGN.ETC1,
-      pgnName: "ETC1",
+      pgnName: 'ETC1',
       sa: msg.sa,
-      gear
+      gear,
     });
   }
 
   async start(): Promise<void> {
     this.state = SimState.RUNNING;
-    this.emit("started");
+    this.emit('started');
   }
 
   async stop(): Promise<void> {
     this.state = SimState.STOPPED;
-    this.emit("stopped");
+    this.emit('stopped');
   }
 
   tick(nowMs: number, deltaMs: number): void {
@@ -141,13 +141,13 @@ export class DiagnosticToolECU extends EventEmitter implements IECUSimulator {
 
       // Send global request
       await this.j1939Port.requestPGN(pgn);
-      
+
       this.ecuState.requestsSent++;
       this.ecuState.lastRequestPGN = pgn;
 
-      this.emit("request", { pgn, pgnHex: `0x${pgn.toString(16).toUpperCase()}` });
+      this.emit('request', { pgn, pgnHex: `0x${pgn.toString(16).toUpperCase()}` });
     } catch (err) {
-      this.emit("error", err);
+      this.emit('error', err);
     }
   }
 

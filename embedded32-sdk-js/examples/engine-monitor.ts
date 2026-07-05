@@ -1,12 +1,12 @@
 /**
  * Embedded32 SDK Example - Engine Monitor
- * 
+ *
  * Demonstrates how to use the SDK to:
  * 1. Connect to a J1939 network
  * 2. Subscribe to engine data
  * 3. Request specific PGNs
  * 4. Send control commands
- * 
+ *
  * Run with: npx ts-node examples/engine-monitor.ts
  */
 
@@ -21,8 +21,8 @@ async function main() {
   // Create client as a diagnostic tool
   const client = new J1939Client({
     interface: 'vcan0',
-    sourceAddress: SA.DIAG_TOOL_2,  // 0xFA
-    debug: true
+    sourceAddress: SA.DIAG_TOOL_2, // 0xFA
+    debug: true,
   });
 
   // Track engine state
@@ -30,7 +30,7 @@ async function main() {
     rpm: 0,
     torque: 0,
     coolantTemp: 0,
-    messageCount: 0
+    messageCount: 0,
   };
 
   try {
@@ -67,7 +67,7 @@ async function main() {
       console.log('\n🎮 Sending engine control command: Target 1200 RPM\n');
       await client.sendPGN(PGN.ENGINE_CONTROL_CMD, {
         targetRpm: 1200,
-        enable: true
+        enable: true,
       });
     }, 5000);
 
@@ -81,7 +81,6 @@ async function main() {
     console.log(`  Final RPM: ${engineState.rpm.toFixed(1)}`);
     console.log(`  Final Coolant Temp: ${engineState.coolantTemp}°C`);
     console.log('═══════════════════════════════════════════════\n');
-
   } finally {
     await client.disconnect();
     console.log('Disconnected\n');

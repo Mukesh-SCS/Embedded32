@@ -1,9 +1,9 @@
 /**
  * Embedded32 SDK - Type Definitions
- * 
+ *
  * This file defines the unified SDK API contract.
  * Both JS and Python SDKs must implement this same conceptual API.
- * 
+ *
  * @module @embedded32/sdk-js
  * @version 1.0.0
  */
@@ -18,10 +18,10 @@
 export interface TransportConfig {
   /** CAN interface name (e.g., "vcan0", "can0", "PCAN_USBBUS1") */
   interface: string;
-  
+
   /** Transport type - auto-detected if not specified */
   type?: 'socketcan' | 'pcan' | 'virtual';
-  
+
   /** Bitrate for physical interfaces (default: 250000) */
   bitrate?: number;
 }
@@ -32,16 +32,16 @@ export interface TransportConfig {
 export interface ITransport {
   /** Connect to the CAN bus */
   connect(): Promise<void>;
-  
+
   /** Disconnect from the CAN bus */
   disconnect(): Promise<void>;
-  
+
   /** Send a raw CAN frame */
   send(frame: CANFrame): Promise<void>;
-  
+
   /** Register frame receive handler */
   onFrame(handler: (frame: CANFrame) => void): void;
-  
+
   /** Check if connected */
   isConnected(): boolean;
 }
@@ -66,25 +66,25 @@ export interface CANFrame {
 export interface J1939Message {
   /** Parameter Group Number */
   pgn: number;
-  
+
   /** PGN name from database */
   pgnName: string;
-  
+
   /** Source Address of sender */
   sourceAddress: number;
-  
+
   /** Destination Address (255 for broadcast) */
   destinationAddress: number;
-  
+
   /** Priority (0-7, lower is higher priority) */
   priority: number;
-  
+
   /** Decoded Signal/Parameter Numbers */
   spns: Record<string, number | string | boolean>;
-  
+
   /** Raw data bytes (for debugging only) */
   raw: Uint8Array;
-  
+
   /** Timestamp when received */
   timestamp: number;
 }
@@ -95,19 +95,19 @@ export interface J1939Message {
 export interface PGNData {
   /** Target RPM for engine control */
   targetRpm?: number;
-  
+
   /** Enable flag for commands */
   enable?: boolean | number;
-  
+
   /** Engine speed in RPM */
   engineSpeed?: number;
-  
+
   /** Coolant temperature in Celsius */
   coolantTemp?: number;
-  
+
   /** Current gear */
   gear?: number;
-  
+
   /** Generic SPN values */
   [spn: string]: number | string | boolean | undefined;
 }
@@ -127,13 +127,13 @@ export type PGNHandler = (message: J1939Message) => void;
 export interface J1939ClientConfig {
   /** CAN interface name */
   interface: string;
-  
+
   /** This client's source address (0x00-0xFD) */
   sourceAddress: number;
-  
+
   /** Transport type (auto-detected if not specified) */
   transport?: 'socketcan' | 'pcan' | 'virtual';
-  
+
   /** Enable verbose logging */
   debug?: boolean;
 }
@@ -144,7 +144,7 @@ export interface J1939ClientConfig {
 
 /**
  * J1939 Client Interface
- * 
+ *
  * This is the primary SDK interface. All methods must be implemented
  * by both JS and Python SDKs with identical semantics.
  */
@@ -154,47 +154,47 @@ export interface IJ1939Client {
    * Must be called before any other operations
    */
   connect(): Promise<void>;
-  
+
   /**
    * Disconnect from the J1939 network
    * Cleans up resources and stops all listeners
    */
   disconnect(): Promise<void>;
-  
+
   /**
    * Subscribe to a specific PGN
    * Handler is called whenever a message with this PGN is received
-   * 
+   *
    * @param pgn - Parameter Group Number to subscribe to
    * @param handler - Callback invoked with decoded message
    * @returns Unsubscribe function
    */
   onPGN(pgn: number, handler: PGNHandler): () => void;
-  
+
   /**
    * Request a PGN from the network
    * Sends Request PGN (59904/0xEA00) asking for data
-   * 
+   *
    * @param pgn - Parameter Group Number to request
    * @param destination - Target address (default: 255 for broadcast)
    */
   requestPGN(pgn: number, destination?: number): Promise<void>;
-  
+
   /**
    * Send a PGN with data
    * Encodes the data according to J1939 and transmits
-   * 
+   *
    * @param pgn - Parameter Group Number to send
    * @param data - Decoded data to encode and send
    * @param destination - Target address (default: 255 for broadcast)
    */
   sendPGN(pgn: number, data: PGNData, destination?: number): Promise<void>;
-  
+
   /**
    * Check if client is connected
    */
   isConnected(): boolean;
-  
+
   /**
    * Get client's source address
    */
@@ -210,34 +210,34 @@ export interface IJ1939Client {
  */
 export const PGN = {
   /** Request PGN (59904) - used to request data from other ECUs */
-  REQUEST: 0xEA00,
-  
+  REQUEST: 0xea00,
+
   /** Address Claimed (60928) */
-  ADDRESS_CLAIMED: 0xEE00,
-  
+  ADDRESS_CLAIMED: 0xee00,
+
   /** Electronic Engine Controller 1 (61444) */
-  EEC1: 0xF004,
-  
+  EEC1: 0xf004,
+
   /** Electronic Transmission Controller 1 (61443) */
-  ETC1: 0xF003,
-  
+  ETC1: 0xf003,
+
   /** Engine Temperature 1 (65262) */
-  ET1: 0xFEEE,
-  
+  ET1: 0xfeee,
+
   /** Fuel Economy (65266) */
-  FE: 0xFEF2,
-  
+  FE: 0xfef2,
+
   /** DM1 Active Diagnostic Trouble Codes (65226) */
-  DM1: 0xFECA,
-  
+  DM1: 0xfeca,
+
   /** DM2 Previously Active DTCs (65227) */
-  DM2: 0xFECB,
-  
+  DM2: 0xfecb,
+
   /** Engine Control Command - Proprietary B (61184) */
-  ENGINE_CONTROL_CMD: 0xEF00,
-  
+  ENGINE_CONTROL_CMD: 0xef00,
+
   /** Proprietary Transmission Status (61440) */
-  PROP_TRANS_STATUS: 0xF000,
+  PROP_TRANS_STATUS: 0xf000,
 } as const;
 
 /**
@@ -246,28 +246,28 @@ export const PGN = {
 export const SA = {
   /** Engine ECU #1 */
   ENGINE_1: 0x00,
-  
+
   /** Engine ECU #2 */
   ENGINE_2: 0x01,
-  
+
   /** Transmission ECU #1 */
   TRANSMISSION_1: 0x03,
-  
+
   /** Brakes - System Controller */
-  BRAKES: 0x0B,
-  
+  BRAKES: 0x0b,
+
   /** Body Controller */
   BODY: 0x21,
-  
+
   /** Instrument Cluster */
   INSTRUMENT_CLUSTER: 0x17,
-  
+
   /** Off-board Diagnostic Tool #1 */
-  DIAG_TOOL_1: 0xF9,
-  
+  DIAG_TOOL_1: 0xf9,
+
   /** Off-board Diagnostic Tool #2 */
-  DIAG_TOOL_2: 0xFA,
-  
+  DIAG_TOOL_2: 0xfa,
+
   /** Global (broadcast) */
-  GLOBAL: 0xFF,
+  GLOBAL: 0xff,
 } as const;

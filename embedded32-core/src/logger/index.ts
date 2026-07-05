@@ -1,6 +1,6 @@
 /**
  * Logger
- * 
+ *
  * Centralized logging system for Embedded32.
  */
 

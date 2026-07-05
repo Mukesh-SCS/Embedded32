@@ -1,11 +1,11 @@
-import { BaseCommand } from "./BaseCommand.js";
-import type { CANFrame } from "@embedded32/can";
+import { BaseCommand } from './BaseCommand.js';
+import type { CANFrame } from '@embedded32/can';
 
 /**
  * CAN Monitor Command
- * 
+ *
  * Real-time CAN frame dump (like candump utility)
- * 
+ *
  * Usage:
  *   embedded32 can monitor --iface can0
  */
@@ -14,7 +14,7 @@ export class CANMonitorCommand extends BaseCommand {
   private startTime = Date.now();
 
   constructor() {
-    super("can-monitor");
+    super('can-monitor');
   }
 
   getHelp(): string {
@@ -41,16 +41,16 @@ Examples:
     try {
       const parsed = this.parseArgs(this.args);
 
-      const iface = parsed.iface ? (parsed.iface as string) : "can0";
+      const iface = parsed.iface ? (parsed.iface as string) : 'can0';
       const idFilter = parsed.id ? (parsed.id as string) : null;
-      const onlyStandard = !!parsed["no-extended"];
-      const format = (parsed.format as string) || "candump";
+      const onlyStandard = !!parsed['no-extended'];
+      const format = (parsed.format as string) || 'candump';
 
       this.log(`Starting CAN monitor on interface: ${iface}`);
       if (idFilter) this.log(`Filtering by CAN ID: 0x${idFilter.toUpperCase()}`);
 
-      this.log("═".repeat(80));
-      this.log("Monitoring active. Press Ctrl+C to exit.");
+      this.log('═'.repeat(80));
+      this.log('Monitoring active. Press Ctrl+C to exit.');
       console.log(`
 Real-time CAN dump - format like candump:
 
@@ -69,8 +69,8 @@ To stop monitoring, press Ctrl+C
       `);
 
       // Handle graceful shutdown
-      process.on("SIGINT", async () => {
-        console.log("\n" + "═".repeat(80));
+      process.on('SIGINT', async () => {
+        console.log('\n' + '═'.repeat(80));
         this.log(`Received ${this.msgCount} frames`);
         const elapsed = (Date.now() - this.startTime) / 1000;
         if (elapsed > 0) {
@@ -82,7 +82,7 @@ To stop monitoring, press Ctrl+C
         process.exit(0);
       });
     } catch (err) {
-      this.log(`Error: ${err}`, "error");
+      this.log(`Error: ${err}`, 'error');
       await this.cleanup();
       throw err;
     }

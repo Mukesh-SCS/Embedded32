@@ -1,4 +1,4 @@
-import { CANFrame } from "./CANTypes.js";
+import { CANFrame } from './CANTypes.js';
 
 export interface ICANDriver {
   send(frame: CANFrame): Promise<void> | void;

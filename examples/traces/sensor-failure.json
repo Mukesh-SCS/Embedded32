@@ -1,0 +1,20 @@
+{
+  "format": "embedded32-trace-v1",
+  "source": "synthetic",
+  "scenario": "sensor-failure",
+  "description": "Barometric pressure SPN reports erratic above-normal reading",
+  "frames": [
+    {
+      "timestampMs": 0,
+      "id": "0x18FEF500",
+      "extended": true,
+      "data": [255, 255, 255, 255, 255, 255, 255, 255]
+    },
+    {
+      "timestampMs": 100,
+      "id": "0x18FECA00",
+      "extended": true,
+      "data": [4, 110, 0, 0, 0, 0, 0, 0]
+    }
+  ]
+}

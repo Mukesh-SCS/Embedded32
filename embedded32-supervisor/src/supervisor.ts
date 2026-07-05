@@ -5,7 +5,7 @@ import { Logger } from './logger';
 
 /**
  * Central supervisor managing the entire Embedded32 runtime
- * 
+ *
  * Responsibilities:
  * - Load and manage modules
  * - Handle module lifecycle (start, stop, restart)
@@ -101,7 +101,7 @@ export class Supervisor {
       enabled: true,
       priority: 50,
       restartPolicy: 'on-failure',
-      maxRestarts: 5
+      maxRestarts: 5,
     });
   }
 
@@ -137,15 +137,15 @@ export class Supervisor {
       moduleStatuses[moduleInfo.id] = {
         state: moduleInfo.state,
         uptime: moduleInfo.uptime,
-        restarts: moduleInfo.restartCount
+        restarts: moduleInfo.restartCount,
       };
     }
 
     return {
-      healthy: this.isRunning && modules.every(m => m.state === ModuleState.RUNNING),
+      healthy: this.isRunning && modules.every((m) => m.state === ModuleState.RUNNING),
       modules: moduleStatuses,
       timestamp: Date.now(),
-      systemUptime: this.startTime ? Date.now() - this.startTime : 0
+      systemUptime: this.startTime ? Date.now() - this.startTime : 0,
     };
   }
 
@@ -244,7 +244,7 @@ export class Supervisor {
       for (const [moduleId, status] of Object.entries(health.modules)) {
         if (status.state === ModuleState.ERROR) {
           this.logger.warn(`Module in ERROR state, attempting restart: ${moduleId}`);
-          this.restartModule(moduleId).catch(err =>
+          this.restartModule(moduleId).catch((err) =>
             this.logger.error(`Failed to restart module: ${moduleId}`, err)
           );
         }

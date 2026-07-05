@@ -28,6 +28,7 @@ A modern, real-time web dashboard for monitoring CAN and J1939 traffic, inspired
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 - A CAN interface (can0, vcan0, or PCAN)
 
@@ -54,10 +55,12 @@ node embedded32-tools/dist/cli.js dashboard bridge --port 9000 --iface vcan0
 ```
 
 Options:
+
 - `--port <port>` - WebSocket port (default: 9000)
 - `--iface <iface>` - CAN interface name (default: vcan0)
 
 You should see:
+
 ```
 Starting Embedded32 Dashboard Bridge...
 Interface: vcan0
@@ -77,6 +80,7 @@ npm run dev
 ```
 
 The Vite dev server will start:
+
 ```
 VITE ready in 233 ms
 ➜  Local:   http://localhost:5173/
@@ -106,6 +110,7 @@ To see the dashboard in action, you can:
 ## Features
 
 ### Live PGN Table
+
 - Displays all incoming J1939 messages
 - Color-coded by message type:
   - 🔵 Blue: Engine (EEC1)
@@ -115,16 +120,19 @@ To see the dashboard in action, you can:
 - Shows: Priority, PGN, Name, SA, Timestamp, Raw bytes, SPN values
 
 ### Engine Charts
+
 - Real-time line charts using Recharts
 - Tracks engine speed (RPM) and coolant temperature (°C)
 - Auto-updating as new data arrives
 
 ### DM1 Fault Viewer
+
 - Displays active diagnostic trouble codes
 - Shows: SPN, FMI, Description, Occurrence count
 - Highlighted in red for visibility
 
 ### Filter Panel
+
 - Filter messages by:
   - PGN (Parameter Group Number)
   - SA (Source Address)
@@ -132,12 +140,14 @@ To see the dashboard in action, you can:
 - Filters persist in localStorage
 
 ### Connection Manager
+
 - Connect/disconnect from WebSocket bridge
 - Configure WebSocket URL
 - Shows connection status
 - URL persists in localStorage
 
 ### Raw CAN Frame Viewer
+
 - Low-level CAN frame display
 - Useful for debugging
 - Shows CAN ID, data bytes, timestamp
@@ -210,6 +220,7 @@ The bridge sends messages in this format:
 ```
 
 Message types:
+
 - `j1939` - Decoded J1939 messages
 - `can` - Raw CAN frames
 - `dm1` - Diagnostic trouble codes
@@ -231,16 +242,19 @@ npm run preview
 ## Troubleshooting
 
 ### Dashboard won't connect
+
 - Ensure the bridge is running: `node embedded32-tools/dist/cli.js dashboard bridge`
 - Check the WebSocket URL is correct: `ws://localhost:9000`
 - Check browser console for errors
 
 ### No data showing
+
 - Verify CAN interface is active: `ip link show vcan0`
 - Check if simulators are running
 - Look at bridge terminal output for errors
 
 ### Build errors
+
 - Clear node_modules: `rm -rf node_modules && npm install`
 - Ensure TypeScript dependencies are installed
 - Check Node.js version (18+ required)

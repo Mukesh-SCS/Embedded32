@@ -76,7 +76,7 @@ export enum ModuleState {
   STOPPING = 'stopping',
   STOPPED = 'stopped',
   ERROR = 'error',
-  RESTARTING = 'restarting'
+  RESTARTING = 'restarting',
 }
 
 export interface ModuleInfo {
@@ -92,7 +92,14 @@ export interface ModuleInfo {
 }
 
 export interface RuntimeEvent {
-  type: 'module-started' | 'module-stopped' | 'module-failed' | 'config-loaded' | 'supervisor-started' | 'supervisor-stopped' | 'health-check';
+  type:
+    | 'module-started'
+    | 'module-stopped'
+    | 'module-failed'
+    | 'config-loaded'
+    | 'supervisor-started'
+    | 'supervisor-stopped'
+    | 'health-check';
   timestamp: number;
   moduleId?: string;
   data?: Record<string, unknown>;

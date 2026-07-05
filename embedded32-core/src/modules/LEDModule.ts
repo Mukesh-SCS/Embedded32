@@ -1,35 +1,35 @@
-import { BaseModule } from "./Module.js";
+import { BaseModule } from './Module.js';
 
 export class LEDModule extends BaseModule {
   private blinkInterval: any = null;
-  private state: "on" | "off" = "off";
+  private state: 'on' | 'off' = 'off';
 
-  constructor(name = "led") {
-    super(name, "1.0.0");
+  constructor(name = 'led') {
+    super(name, '1.0.0');
   }
 
   onInit() {
-    this.log("LED module initialized");
+    this.log('LED module initialized');
   }
 
   onStart() {
-    this.log("LED module started");
+    this.log('LED module started');
 
-    this.bus.subscribe("led.on", () => this.turnOn());
-    this.bus.subscribe("led.off", () => this.turnOff());
-    this.bus.subscribe("led.blink", (msg: any) => this.blink(msg.payload?.interval || 500));
+    this.bus.subscribe('led.on', () => this.turnOn());
+    this.bus.subscribe('led.off', () => this.turnOff());
+    this.bus.subscribe('led.blink', (msg: any) => this.blink(msg.payload?.interval || 500));
   }
 
   private turnOn() {
     this.clearBlink();
-    this.state = "on";
-    this.log("LED turned ON");
+    this.state = 'on';
+    this.log('LED turned ON');
   }
 
   private turnOff() {
     this.clearBlink();
-    this.state = "off";
-    this.log("LED turned OFF");
+    this.state = 'off';
+    this.log('LED turned OFF');
   }
 
   private blink(interval: number) {
@@ -37,7 +37,7 @@ export class LEDModule extends BaseModule {
     this.log(`LED blinking every ${interval}ms`);
 
     this.blinkInterval = this.scheduler.every(interval, () => {
-      this.state = this.state === "on" ? "off" : "on";
+      this.state = this.state === 'on' ? 'off' : 'on';
       this.log(`LED ${this.state}`);
     });
   }
@@ -51,6 +51,6 @@ export class LEDModule extends BaseModule {
 
   onStop() {
     this.clearBlink();
-    this.log("LED module stopped");
+    this.log('LED module stopped');
   }
 }

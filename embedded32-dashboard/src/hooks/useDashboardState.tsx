@@ -59,7 +59,7 @@ const initialState: DashboardState = {
 
 function dashboardReducer(state: DashboardState, action: any): DashboardState {
   console.log('[Reducer] Action:', action.type, action);
-  
+
   switch (action.type) {
     case 'SET_CONNECTED':
       return { ...state, connected: action.value };
@@ -89,17 +89,18 @@ function dashboardReducer(state: DashboardState, action: any): DashboardState {
   }
 }
 
-const DashboardContext = createContext<{
-  state: DashboardState;
-  dispatch: React.Dispatch<any>;
-} | undefined>(undefined);
+const DashboardContext = createContext<
+  | {
+      state: DashboardState;
+      dispatch: React.Dispatch<any>;
+    }
+  | undefined
+>(undefined);
 
 export const DashboardProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(dashboardReducer, initialState);
   return (
-    <DashboardContext.Provider value={{ state, dispatch }}>
-      {children}
-    </DashboardContext.Provider>
+    <DashboardContext.Provider value={{ state, dispatch }}>{children}</DashboardContext.Provider>
   );
 };
 

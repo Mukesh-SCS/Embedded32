@@ -1,5 +1,5 @@
-import { CANFrame } from "./CANTypes.js";
-import { ICANDriver } from "./CANDriver.js";
+import { CANFrame } from './CANTypes.js';
+import { ICANDriver } from './CANDriver.js';
 
 export class MockCANDriver implements ICANDriver {
   private handlers: ((frame: CANFrame) => void)[] = [];
@@ -7,7 +7,7 @@ export class MockCANDriver implements ICANDriver {
   send(frame: CANFrame) {
     // Echo back as if received from the bus
     setTimeout(() => {
-      this.handlers.forEach(h => h({ ...frame, timestamp: Date.now() }));
+      this.handlers.forEach((h) => h({ ...frame, timestamp: Date.now() }));
     }, 10);
   }
 

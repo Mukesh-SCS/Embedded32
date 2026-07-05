@@ -63,7 +63,7 @@ export class PluginManager {
       start: async () => {
         this.logger.info('CAN Bus module starting...');
         // Initialize CAN interface
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise((r) => setTimeout(r, 100));
       },
       stop: async () => {
         this.logger.info('CAN Bus module stopping...');
@@ -75,8 +75,14 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'can', enabled: true, priority: 100, restartPolicy: 'always', maxRestarts: 5 }
-      })
+        config: {
+          name: 'can',
+          enabled: true,
+          priority: 100,
+          restartPolicy: 'always',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // J1939 module
@@ -86,7 +92,7 @@ export class PluginManager {
       version: '0.1.0',
       start: async () => {
         this.logger.info('J1939 module starting...');
-        await new Promise(r => setTimeout(r, 50));
+        await new Promise((r) => setTimeout(r, 50));
       },
       stop: async () => {
         this.logger.info('J1939 module stopping...');
@@ -98,8 +104,14 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'j1939', enabled: true, priority: 90, restartPolicy: 'on-failure', maxRestarts: 5 }
-      })
+        config: {
+          name: 'j1939',
+          enabled: true,
+          priority: 90,
+          restartPolicy: 'on-failure',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // Ethernet module
@@ -115,7 +127,7 @@ export class PluginManager {
         if (config.ethernet?.tcp?.enabled) {
           this.logger.info(`  → TCP server on port ${config.ethernet.tcp.port}`);
         }
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise((r) => setTimeout(r, 100));
       },
       stop: async () => {
         this.logger.info('Ethernet module stopping...');
@@ -127,8 +139,14 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'ethernet', enabled: true, priority: 80, restartPolicy: 'on-failure', maxRestarts: 5 }
-      })
+        config: {
+          name: 'ethernet',
+          enabled: true,
+          priority: 80,
+          restartPolicy: 'on-failure',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // Bridge module
@@ -144,7 +162,7 @@ export class PluginManager {
         if (config.bridge?.canMqtt?.enabled) {
           this.logger.info('  → CAN ↔ MQTT bridge active');
         }
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise((r) => setTimeout(r, 100));
       },
       stop: async () => {
         this.logger.info('Bridge module stopping...');
@@ -156,13 +174,19 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'bridge', enabled: true, priority: 70, restartPolicy: 'on-failure', maxRestarts: 5 }
-      })
+        config: {
+          name: 'bridge',
+          enabled: true,
+          priority: 70,
+          restartPolicy: 'on-failure',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // Dashboard module
     let dashboardProcess: ChildProcess | null = null;
-    
+
     this.registerPlugin('dashboard', (config: RuntimeConfig) => ({
       id: 'dashboard',
       name: 'Web Dashboard',
@@ -170,12 +194,12 @@ export class PluginManager {
       start: async () => {
         this.logger.info('Dashboard module starting...');
         const dashboardPath = path.resolve(process.cwd(), 'embedded32-dashboard');
-        
+
         try {
           // Serve pre-built dashboard or start dev server
           const isWindows = process.platform === 'win32';
           const command = 'npm run dev';
-          
+
           try {
             // Try to use pre-built dist folder with a simple HTTP server
             const distPath = path.join(dashboardPath, 'dist');
@@ -188,7 +212,7 @@ export class PluginManager {
                 {
                   cwd: dashboardPath,
                   stdio: 'pipe',
-                  env: { ...process.env, NODE_NO_WARNINGS: '1' }
+                  env: { ...process.env, NODE_NO_WARNINGS: '1' },
                 }
               );
             } else {
@@ -197,13 +221,13 @@ export class PluginManager {
                 dashboardProcess = spawn('cmd.exe', ['/c', command], {
                   cwd: dashboardPath,
                   stdio: 'pipe',
-                  env: { ...process.env, NODE_NO_WARNINGS: '1' }
+                  env: { ...process.env, NODE_NO_WARNINGS: '1' },
                 });
               } else {
                 dashboardProcess = spawn('npm', ['run', 'dev'], {
                   cwd: dashboardPath,
                   stdio: 'pipe',
-                  env: { ...process.env, NODE_NO_WARNINGS: '1' }
+                  env: { ...process.env, NODE_NO_WARNINGS: '1' },
                 });
               }
             }
@@ -213,48 +237,52 @@ export class PluginManager {
               dashboardProcess = spawn('cmd.exe', ['/c', command], {
                 cwd: dashboardPath,
                 stdio: 'pipe',
-                env: { ...process.env, NODE_NO_WARNINGS: '1' }
+                env: { ...process.env, NODE_NO_WARNINGS: '1' },
               });
             } else {
               dashboardProcess = spawn('npm', ['run', 'dev'], {
                 cwd: dashboardPath,
                 stdio: 'pipe',
-                env: { ...process.env, NODE_NO_WARNINGS: '1' }
+                env: { ...process.env, NODE_NO_WARNINGS: '1' },
               });
             }
           }
-          
+
           // Capture output for logging
           dashboardProcess.stdout?.on('data', (data) => {
             const output = data.toString().trim();
             if (output) this.logger.info(`[Dashboard] ${output}`);
           });
-          
+
           dashboardProcess.stderr?.on('data', (data) => {
             const output = data.toString().trim();
             if (output) this.logger.warn(`[Dashboard] ${output}`);
           });
-          
+
           dashboardProcess.on('error', (err) => {
             this.logger.error(`Dashboard process error: ${err.message}`);
             dashboardProcess = null;
           });
-          
+
           dashboardProcess.on('exit', (code) => {
             if (code !== 0) {
               this.logger.warn(`Dashboard process exited with code ${code}`);
             }
             dashboardProcess = null;
           });
-          
+
           // Give the server time to start
-          await new Promise(r => setTimeout(r, 3000));
-          
+          await new Promise((r) => setTimeout(r, 3000));
+
           if (config.dashboard?.enabled) {
-            this.logger.info(`  → Server on http://${config.dashboard.host || 'localhost'}:${config.dashboard.port || 5173}`);
+            this.logger.info(
+              `  → Server on http://${config.dashboard.host || 'localhost'}:${config.dashboard.port || 5173}`
+            );
           }
         } catch (err) {
-          this.logger.error(`Failed to start dashboard: ${err instanceof Error ? err.message : String(err)}`);
+          this.logger.error(
+            `Failed to start dashboard: ${err instanceof Error ? err.message : String(err)}`
+          );
           throw err;
         }
       },
@@ -272,8 +300,14 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'dashboard', enabled: true, priority: 60, restartPolicy: 'on-failure', maxRestarts: 5 }
-      })
+        config: {
+          name: 'dashboard',
+          enabled: true,
+          priority: 60,
+          restartPolicy: 'on-failure',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // Simulator module
@@ -290,7 +324,7 @@ export class PluginManager {
         if (enabled.length > 0) {
           this.logger.info(`  → Simulating: ${enabled.join(', ')}`);
         }
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise((r) => setTimeout(r, 100));
       },
       stop: async () => {
         this.logger.info('Simulator module stopping...');
@@ -302,15 +336,21 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'simulator', enabled: true, priority: 50, restartPolicy: 'always', maxRestarts: 5 }
-      })
+        config: {
+          name: 'simulator',
+          enabled: true,
+          priority: 50,
+          restartPolicy: 'always',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     // WebSocket Bridge module for dashboard
     let wsServer: WebSocket.Server | null = null;
     let wsCleanup: (() => void) | null = null;
     let activeDM1Faults: Map<number, any> = new Map(); // Track active faults by SPN
-    
+
     this.registerPlugin('ws-bridge', (config: RuntimeConfig) => ({
       id: 'ws-bridge',
       name: 'WebSocket Bridge',
@@ -324,13 +364,15 @@ export class PluginManager {
 
           wsServer.on('connection', (ws) => {
             this.logger.info('Dashboard connected via WebSocket');
-            ws.send(JSON.stringify({ type: 'connected', message: 'Connected to Embedded32 Backend' }));
+            ws.send(
+              JSON.stringify({ type: 'connected', message: 'Connected to Embedded32 Backend' })
+            );
 
             ws.on('message', (data) => {
               try {
                 const msg = JSON.parse(data.toString());
                 this.logger.debug(`Received from dashboard: ${msg.type}`);
-                
+
                 // Handle DM1 fault injection commands
                 if (msg.type === 'j1939.dm1.inject') {
                   const fault = {
@@ -338,32 +380,36 @@ export class PluginManager {
                     fmi: msg.fmi,
                     description: msg.description,
                     count: 1,
-                    occurrence: 1
+                    occurrence: 1,
                   };
                   activeDM1Faults.set(msg.spn, fault);
                   this.logger.info(`DM1 Fault injected: SPN ${msg.spn}, FMI ${msg.fmi}`);
-                  
+
                   // Send updated DM1 fault list to all clients
                   const faults = Array.from(activeDM1Faults.values());
-                  wsServer?.clients.forEach(client => {
+                  wsServer?.clients.forEach((client) => {
                     if (client.readyState === WebSocket.OPEN) {
-                      client.send(JSON.stringify({
-                        type: 'dm1',
-                        faults: faults
-                      }));
+                      client.send(
+                        JSON.stringify({
+                          type: 'dm1',
+                          faults: faults,
+                        })
+                      );
                     }
                   });
                 } else if (msg.type === 'j1939.dm1.clear') {
                   activeDM1Faults.clear();
                   this.logger.info('All DM1 faults cleared');
-                  
+
                   // Send updated (empty) DM1 fault list to all clients
-                  wsServer?.clients.forEach(client => {
+                  wsServer?.clients.forEach((client) => {
                     if (client.readyState === WebSocket.OPEN) {
-                      client.send(JSON.stringify({
-                        type: 'dm1',
-                        faults: []
-                      }));
+                      client.send(
+                        JSON.stringify({
+                          type: 'dm1',
+                          faults: [],
+                        })
+                      );
                     }
                   });
                 }
@@ -401,9 +447,9 @@ export class PluginManager {
                     spnValues: {
                       engineSpeed: Math.floor(800 + Math.random() * 3000),
                       coolantTemp: Math.floor(80 + Math.random() * 20),
-                      acceleratorPedal: Math.floor(Math.random() * 100)
-                    }
-                  }
+                      acceleratorPedal: Math.floor(Math.random() * 100),
+                    },
+                  },
                 },
                 {
                   type: 'j1939',
@@ -415,15 +461,15 @@ export class PluginManager {
                     priority: 6,
                     spnValues: {
                       transmissionGear: Math.floor(Math.random() * 6),
-                      torquePercent: Math.floor(Math.random() * 100)
-                    }
-                  }
-                }
+                      torquePercent: Math.floor(Math.random() * 100),
+                    },
+                  },
+                },
               ];
 
               wsServer.clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
-                  mockMessages.forEach(msg => {
+                  mockMessages.forEach((msg) => {
                     client.send(JSON.stringify(msg));
                     messageCount++;
                     messagesInWindow++;
@@ -435,16 +481,18 @@ export class PluginManager {
                     const framesPerSec = messagesInWindow;
                     // Estimate bus load as percentage of max capacity (assuming 2500 frames/sec max)
                     const busLoad = (framesPerSec / 2500) * 100;
-                    
+
                     const statsMsg = {
                       type: 'stats',
                       fps: framesPerSec,
                       load: busLoad,
-                      timestamp: now
+                      timestamp: now,
                     };
-                    
+
                     client.send(JSON.stringify(statsMsg));
-                    this.logger.debug(`WebSocket: Stats - ${framesPerSec} fps, ${busLoad.toFixed(1)}% load`);
+                    this.logger.debug(
+                      `WebSocket: Stats - ${framesPerSec} fps, ${busLoad.toFixed(1)}% load`
+                    );
                   }
                 }
               });
@@ -455,9 +503,11 @@ export class PluginManager {
                 lastStatsTime = now;
                 messagesInWindow = 0;
               }
-              
+
               if (messageCount % 20 === 0) {
-                this.logger.debug(`WebSocket: Sent ${messageCount} messages total to ${wsServer.clients.size} client(s)`);
+                this.logger.debug(
+                  `WebSocket: Sent ${messageCount} messages total to ${wsServer.clients.size} client(s)`
+                );
               }
             }
           }, 500); // Send data every 500ms
@@ -472,9 +522,11 @@ export class PluginManager {
             httpServer.close();
           };
 
-          await new Promise(r => setTimeout(r, 100));
+          await new Promise((r) => setTimeout(r, 100));
         } catch (err) {
-          this.logger.error(`Failed to start WebSocket Bridge: ${err instanceof Error ? err.message : String(err)}`);
+          this.logger.error(
+            `Failed to start WebSocket Bridge: ${err instanceof Error ? err.message : String(err)}`
+          );
         }
       },
       stop: async () => {
@@ -494,8 +546,14 @@ export class PluginManager {
         state: ModuleState.RUNNING,
         uptime: 0,
         restartCount: 0,
-        config: { name: 'ws-bridge', enabled: true, priority: 55, restartPolicy: 'on-failure', maxRestarts: 5 }
-      })
+        config: {
+          name: 'ws-bridge',
+          enabled: true,
+          priority: 55,
+          restartPolicy: 'on-failure',
+          maxRestarts: 5,
+        },
+      }),
     }));
 
     this.logger.debug('Built-in plugins registered');

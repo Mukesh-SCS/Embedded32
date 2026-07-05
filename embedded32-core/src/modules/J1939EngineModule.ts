@@ -1,4 +1,4 @@
-import { BaseModule } from "./Module.js";
+import { BaseModule } from './Module.js';
 
 interface EngineState {
   rpm: number;
@@ -14,22 +14,22 @@ export class J1939EngineModule extends BaseModule {
     running: false,
   };
 
-  constructor(name = "j1939-engine") {
-    super(name, "1.0.0");
+  constructor(name = 'j1939-engine') {
+    super(name, '1.0.0');
   }
 
   onInit() {
-    this.log("J1939 Engine ECU module initialized");
+    this.log('J1939 Engine ECU module initialized');
   }
 
   onStart() {
-    this.log("J1939 Engine ECU module started");
+    this.log('J1939 Engine ECU module started');
 
     // Listen for simple "start/stop" commands
-    this.bus.subscribe("engine.command", (msg: any) => {
+    this.bus.subscribe('engine.command', (msg: any) => {
       const cmd = msg.payload?.cmd;
-      if (cmd === "start") this.startEngine();
-      if (cmd === "stop") this.stopEngine();
+      if (cmd === 'start') this.startEngine();
+      if (cmd === 'stop') this.stopEngine();
     });
 
     // Simulate engine behaviour at 100ms steps
@@ -37,12 +37,12 @@ export class J1939EngineModule extends BaseModule {
   }
 
   private startEngine() {
-    this.log("Engine start command received");
+    this.log('Engine start command received');
     this.state.running = true;
   }
 
   private stopEngine() {
-    this.log("Engine stop command received");
+    this.log('Engine stop command received');
     this.state.running = false;
   }
 
@@ -65,9 +65,9 @@ export class J1939EngineModule extends BaseModule {
     const high = (engineSpeedRaw >> 8) & 0xff;
     const data = [low, high]; // only 2 bytes used for this example
 
-    this.bus.publish("j1939.tx", {
+    this.bus.publish('j1939.tx', {
       pgn: pgnEngineSpeed,
-      description: "Engine Speed",
+      description: 'Engine Speed',
       rpm: this.state.rpm,
       torquePercent: this.state.torquePercent,
       data,
@@ -76,7 +76,7 @@ export class J1939EngineModule extends BaseModule {
   }
 
   onStop() {
-    this.log("J1939 Engine ECU module stopped");
+    this.log('J1939 Engine ECU module stopped');
     if (this.tickInterval) {
       this.scheduler.clear(this.tickInterval);
       this.tickInterval = null;

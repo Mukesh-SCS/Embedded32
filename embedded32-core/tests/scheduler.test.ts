@@ -87,7 +87,7 @@ describe('Scheduler', () => {
       scheduler.start();
 
       // Give scheduler time to execute
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       expect(task.execute).toHaveBeenCalled();
     });
@@ -105,7 +105,7 @@ describe('Scheduler', () => {
       scheduler.start();
       scheduler.stop();
 
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 50));
 
       // Task might be called once, but not multiple times
       const callCount = mockExecute.mock.calls.length;
@@ -121,14 +121,18 @@ describe('Scheduler', () => {
         id: 'task1',
         name: 'Low Priority',
         priority: 1,
-        execute: jest.fn(async () => { executionOrder.push('task1'); }),
+        execute: jest.fn(async () => {
+          executionOrder.push('task1');
+        }),
       };
 
       const task2: Task = {
         id: 'task2',
         name: 'High Priority',
         priority: 10,
-        execute: jest.fn(async () => { executionOrder.push('task2'); }),
+        execute: jest.fn(async () => {
+          executionOrder.push('task2');
+        }),
       };
 
       scheduler.addTask(task1);
@@ -136,7 +140,7 @@ describe('Scheduler', () => {
       scheduler.start();
 
       // Wait for at least one execution
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Higher priority task should be in the execution order
       expect(executionOrder.length).toBeGreaterThan(0);
@@ -175,7 +179,7 @@ describe('Scheduler', () => {
       scheduler.start();
 
       // Give time to execute
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Should still have both tasks
       expect(scheduler.getTaskCount()).toBe(2);

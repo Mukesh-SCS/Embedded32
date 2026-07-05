@@ -17,6 +17,7 @@ examples/
 ## Getting Started
 
 Each example includes:
+
 - README with setup instructions
 - Complete source code
 - Configuration files

@@ -30,20 +30,24 @@ const BusLoadIndicator: React.FC = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ minWidth: 70 }}>Bus Load:</span>
-          <div style={{ 
-            flex: 1,
-            height: 20, 
-            background: '#e5e7eb', 
-            borderRadius: 4,
-            overflow: 'hidden',
-            border: `1px solid ${getLoadColor()}`
-          }}>
-            <div style={{ 
-              width: `${Math.min(busLoad, 100)}%`, 
-              height: '100%', 
-              background: getLoadColor(),
-              transition: 'width 0.3s, background 0.3s'
-            }} />
+          <div
+            style={{
+              flex: 1,
+              height: 20,
+              background: '#e5e7eb',
+              borderRadius: 4,
+              overflow: 'hidden',
+              border: `1px solid ${getLoadColor()}`,
+            }}
+          >
+            <div
+              style={{
+                width: `${Math.min(busLoad, 100)}%`,
+                height: '100%',
+                background: getLoadColor(),
+                transition: 'width 0.3s, background 0.3s',
+              }}
+            />
           </div>
           <strong style={{ minWidth: 45, textAlign: 'right', color: getLoadColor() }}>
             {busLoad.toFixed(1)}%

@@ -1,0 +1,26 @@
+{
+  "format": "embedded32-trace-v1",
+  "source": "synthetic",
+  "scenario": "engine-overheat",
+  "description": "Coolant temperature elevated followed by DM1 active fault from engine ECU",
+  "frames": [
+    {
+      "timestampMs": 0,
+      "id": "0x18FEEE00",
+      "extended": true,
+      "data": [150, 255, 255, 255, 255, 255, 255, 255]
+    },
+    {
+      "timestampMs": 100,
+      "id": "0x18FECA00",
+      "extended": true,
+      "data": [4, 26, 0, 0, 32, 0, 0, 0]
+    },
+    {
+      "timestampMs": 200,
+      "id": "0x18F00400",
+      "extended": true,
+      "data": [0, 0, 0, 100, 50, 20, 0, 0]
+    }
+  ]
+}

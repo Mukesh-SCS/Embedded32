@@ -52,7 +52,9 @@ const DM1Viewer: React.FC = () => {
               <tbody>
                 {faults.map((fault, idx) => (
                   <tr key={idx}>
-                    <td><strong>{fault.spn}</strong></td>
+                    <td>
+                      <strong>{fault.spn}</strong>
+                    </td>
                     <td>{fault.fmi}</td>
                     <td>
                       <span className={getSeverityTagClass(fault.fmi)}>

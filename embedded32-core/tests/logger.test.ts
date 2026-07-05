@@ -35,14 +35,14 @@ describe('Logger', () => {
       logger.error('Test error message');
       // Error logging is tracked in history
       const history = logger.getHistory();
-      expect(history.some(entry => entry.level === 'error')).toBe(true);
+      expect(history.some((entry) => entry.level === 'error')).toBe(true);
     });
 
     it('should log debug messages when level is debug', () => {
       const debugLogger = new Logger('debug');
       debugLogger.debug('Test debug message');
       const history = debugLogger.getHistory();
-      expect(history.some(entry => entry.level === 'debug')).toBe(true);
+      expect(history.some((entry) => entry.level === 'debug')).toBe(true);
     });
 
     it('should not log debug messages when level is info', () => {
@@ -55,7 +55,7 @@ describe('Logger', () => {
     it('should store log entries in history', () => {
       logger.info('Test message 1');
       logger.warn('Test warning 2');
-      
+
       const history = logger.getHistory();
       expect(history.length).toBeGreaterThanOrEqual(2);
     });
@@ -64,7 +64,7 @@ describe('Logger', () => {
       const beforeTime = Date.now();
       logger.info('Test message');
       const afterTime = Date.now();
-      
+
       const history = logger.getHistory();
       expect(history[history.length - 1].timestamp).toBeGreaterThanOrEqual(beforeTime);
       expect(history[history.length - 1].timestamp).toBeLessThanOrEqual(afterTime);
@@ -72,14 +72,14 @@ describe('Logger', () => {
 
     it('should include log level in entries', () => {
       logger.error('Error message');
-      
+
       const history = logger.getHistory();
       expect(history[history.length - 1].level).toBe('error');
     });
 
     it('should include message content in entries', () => {
       logger.info('Important message');
-      
+
       const history = logger.getHistory();
       expect(history[history.length - 1].message).toBe('Important message');
     });
@@ -87,7 +87,7 @@ describe('Logger', () => {
     it('should clear history on clearHistory()', () => {
       logger.info('Test message');
       logger.clearHistory();
-      
+
       const history = logger.getHistory();
       expect(history.length).toBe(0);
     });
@@ -97,7 +97,7 @@ describe('Logger', () => {
     it('should change log level with setLevel()', () => {
       const debugLogger = new Logger('info');
       debugLogger.setLevel('debug');
-      
+
       debugLogger.debug('Debug message');
       expect(console.debug).toHaveBeenCalled();
     });
@@ -106,7 +106,7 @@ describe('Logger', () => {
   describe('context support', () => {
     it('should accept context data in log entries', () => {
       logger.info('Test message', { userId: 123, action: 'login' });
-      
+
       const history = logger.getHistory();
       expect(history[history.length - 1].context).toEqual({ userId: 123, action: 'login' });
     });

@@ -36,7 +36,7 @@ const DashboardBridgeCommand = new Command('dashboard bridge')
 
     wss.on('connection', (ws) => {
       console.log('Dashboard client connected');
-      
+
       // Handle incoming commands from dashboard
       ws.on('message', (data) => {
         try {
@@ -73,36 +73,40 @@ const DashboardBridgeCommand = new Command('dashboard bridge')
               fmi: command.fmi || 1,
               description: command.description || 'Injected Fault',
               count: 1,
-              occurrence: 1
+              occurrence: 1,
             };
             dm1Faults.push(fault);
             console.log('Injected DM1 fault:', fault);
-            
+
             // Send DM1 update
-            ws.send(JSON.stringify({
-              type: 'j1939.dm1',
-              faults: dm1Faults,
-              timestamp: Date.now() / 1000
-            }));
+            ws.send(
+              JSON.stringify({
+                type: 'j1939.dm1',
+                faults: dm1Faults,
+                timestamp: Date.now() / 1000,
+              })
+            );
           }
 
           // Handle DM1 clear
           if (command.type === 'j1939.dm1.clear') {
             dm1Faults = [];
             console.log('Cleared DM1 faults');
-            
+
             // Send DM1 update
-            ws.send(JSON.stringify({
-              type: 'j1939.dm1',
-              faults: [],
-              timestamp: Date.now() / 1000
-            }));
+            ws.send(
+              JSON.stringify({
+                type: 'j1939.dm1',
+                faults: [],
+                timestamp: Date.now() / 1000,
+              })
+            );
           }
         } catch (err) {
           console.error('Error processing command:', err);
         }
       });
-      
+
       // Send mock data for testing
       const interval = setInterval(() => {
         frameCount++;
@@ -120,22 +124,24 @@ const DashboardBridgeCommand = new Command('dashboard bridge')
             name: 'EEC1',
             spnValues: {
               engineSpeed: engineRunning ? currentRPM + Math.floor(Math.random() * 100) : 0,
-              coolantTemp: engineRunning ? Math.floor(Math.random() * 20) + 70 : 25
-            }
-          }
+              coolantTemp: engineRunning ? Math.floor(Math.random() * 20) + 70 : 25,
+            },
+          },
         };
         ws.send(JSON.stringify(mockMessage));
 
         // Send bus statistics every second
         if (frameCount % 10 === 0) {
           const fps = Math.floor(Math.random() * 200) + 250;
-          const busLoad = (fps * 64 / 250000) * 100;
-          
-          ws.send(JSON.stringify({
-            type: 'stats',
-            fps: fps,
-            load: busLoad
-          }));
+          const busLoad = ((fps * 64) / 250000) * 100;
+
+          ws.send(
+            JSON.stringify({
+              type: 'stats',
+              fps: fps,
+              load: busLoad,
+            })
+          );
         }
       }, 100);
 
@@ -143,7 +149,7 @@ const DashboardBridgeCommand = new Command('dashboard bridge')
         console.log('Dashboard client disconnected');
         clearInterval(interval);
       });
-      
+
       // Forward decoded messages to dashboard clients
       // Example message:
       // ws.send(JSON.stringify({

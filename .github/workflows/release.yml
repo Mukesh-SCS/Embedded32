@@ -1,0 +1,128 @@
+# Controlled release — dry-run by default; publish requires explicit approval.
+# Do not enable automatic publish on push.
+
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      dist_tag:
+        description: npm dist-tag for publish job
+        required: true
+        default: latest
+        type: choice
+        options:
+          - latest
+          - next
+      bump_preview:
+        description: Version bump preview (dry-run only, does not modify repo)
+        required: false
+        default: none
+        type: choice
+        options:
+          - none
+          - patch
+          - minor
+      confirm_publish:
+        description: Type PUBLISH to run publish job (otherwise dry-run only)
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Pre-release verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Full verify suite
+        run: npm run verify
+
+  dry-run:
+    name: Release dry-run
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Dry-run report
+        run: |
+          ARGS="--skip-verify --tag ${{ github.event.inputs.dist_tag }}"
+          if [ "${{ github.event.inputs.bump_preview }}" != "none" ]; then
+            ARGS="$ARGS --bump ${{ github.event.inputs.bump_preview }}"
+          fi
+          npm run release:dry-run -- $ARGS
+
+      - name: Dry-run summary
+        if: github.event.inputs.confirm_publish != 'PUBLISH'
+        run: |
+          echo "## Release dry-run complete" >> $GITHUB_STEP_SUMMARY
+          echo "No packages were published." >> $GITHUB_STEP_SUMMARY
+          echo "To publish, re-run workflow with confirm_publish=PUBLISH and approve the npm-publish environment." >> $GITHUB_STEP_SUMMARY
+
+  publish:
+    name: Publish to npm (approval required)
+    needs: [verify, dry-run]
+    if: github.event.inputs.confirm_publish == 'PUBLISH'
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all packages
+        run: npm run build
+
+      - name: Final package audit
+        run: npm run audit:packages
+
+      - name: Publish with Lerna
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          echo "Publishing with dist-tag ${{ github.event.inputs.dist_tag }}"
+          npx lerna publish from-package --yes --dist-tag ${{ github.event.inputs.dist_tag }}
+
+      - name: Publish summary
+        run: |
+          echo "## npm publish completed" >> $GITHUB_STEP_SUMMARY
+          echo "dist-tag: ${{ github.event.inputs.dist_tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "Verify packages on https://www.npmjs.com/search?q=%40embedded32" >> $GITHUB_STEP_SUMMARY

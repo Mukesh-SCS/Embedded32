@@ -24,7 +24,7 @@ export class Scheduler {
    */
   start(): void {
     if (this.running) return;
-    
+
     this.running = true;
     this.scheduleNext();
   }
@@ -53,8 +53,7 @@ export class Scheduler {
     if (!this.running) return;
 
     // Get tasks sorted by priority (higher priority first)
-    const sortedTasks = Array.from(this.tasks.values())
-      .sort((a, b) => b.priority - a.priority);
+    const sortedTasks = Array.from(this.tasks.values()).sort((a, b) => b.priority - a.priority);
 
     // Execute highest priority task
     if (sortedTasks.length > 0) {

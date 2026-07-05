@@ -1,16 +1,6 @@
 # @embedded32/can
 
-Lightweight, driver-agnostic CAN bus abstraction for the Embedded32 platform.
-
-## Overview
-
-This package provides a TypeScript interface for CAN communication with support for:
-
-- **SocketCAN** - Linux, Raspberry Pi, WSL
-- **MockCANDriver** - Testing, CI, simulation
-- **Custom Drivers** - Implement your own hardware layer
-
-> This module does not implement J1939 encoding/decoding. PGN/SPN logic is part of `@embedded32/j1939`.
+Driver-agnostic CAN frame I/O for Embedded32 — mock, virtual, and SocketCAN backends for labs and production prototyping on Linux.
 
 ## Installation
 
@@ -18,121 +8,70 @@ This package provides a TypeScript interface for CAN communication with support 
 npm install @embedded32/can
 ```
 
-## Platform Support
+## Minimum runnable example
 
-| Platform | Driver | Status |
-|----------|--------|--------|
-| Linux / Raspberry Pi / WSL | SocketCAN | ✅ Full support |
-| macOS / Windows | MockCANDriver | ✅ Simulation only |
-
-## Usage
-
-### SocketCAN (Linux)
+Hardware-free (works on any OS):
 
 ```typescript
-import { CANInterface, SocketCANDriver } from "@embedded32/can";
-
-const driver = new SocketCANDriver("can0");
-const can = new CANInterface(driver);
-
-// Send a CAN frame
-can.send({
-  id: 0x123,
-  data: [0x01, 0x02, 0x03],
-  extended: false
-});
-
-// Receive frames
-can.onMessage((frame) => {
-  console.log("CAN RX:", frame);
-});
-
-// Cleanup
-can.close();
-```
-
-### MockCANDriver (Cross-Platform Testing)
-
-```typescript
-import { CANInterface, MockCANDriver } from "@embedded32/can";
+import { CANInterface, MockCANDriver } from '@embedded32/can';
 
 const can = new CANInterface(new MockCANDriver());
 
-can.onMessage((f) => console.log("Mock RX:", f));
-
-can.send({
-  id: 0x456,
-  data: [0x10, 0x20, 0x30]
+can.onMessage((frame) => {
+  console.log('RX', frame.id.toString(16), frame.data);
+  can.close();
 });
+
+can.send({ id: 0x123, data: [1, 2, 3], extended: false });
 ```
 
-### Custom Driver
+From monorepo root: `npx tsx embedded32-can/examples/basic-mock.ts` (after `npm run build`).
 
-```typescript
-import { ICANDriver, CANFrame } from "@embedded32/can";
+## Public API overview
 
-export class MyDriver implements ICANDriver {
-  send(frame: CANFrame) {
-    // Write to hardware
-  }
+| Export                   | Role                                      |
+| ------------------------ | ----------------------------------------- |
+| `CANInterface`           | Send/receive wrapper around a driver      |
+| `MockCANDriver`          | In-memory driver for tests and examples   |
+| `SocketCANDriver`        | Linux SocketCAN (`vcan0`, `can0`)         |
+| `VirtualCANPort`         | Connect multiple peers on one virtual bus |
+| `ICANDriver`, `CANFrame` | Types for custom drivers                  |
 
-  onMessage(handler: (frame: CANFrame) => void) {
-    // Call handler when frame arrives
-  }
+J1939 parsing lives in `@embedded32/j1939`, not this package.
 
-  close() {
-    // Cleanup
-  }
-}
+## Runtime requirements
 
-const can = new CANInterface(new MyDriver());
-```
+- Node.js **18+**
+- ESM (`import`) or bundler that resolves package `exports`
 
-## API Reference
+## Hardware requirements
 
-### CANFrame
+| Mode           | Hardware                                                                     |
+| -------------- | ---------------------------------------------------------------------------- |
+| Mock / virtual | None                                                                         |
+| SocketCAN      | Linux or WSL with `vcan`/`can` interface and optional `socketcan` npm module |
 
-```typescript
-interface CANFrame {
-  id: number;
-  data: number[];
-  extended?: boolean;  // true = 29-bit, false = 11-bit
-  timestamp?: number;
-}
-```
+## Browser compatibility
 
-### CANInterface
+**Node.js only.** CAN hardware is not available in normal browser environments. Use simulation packages or the planned browser demo instead.
 
-| Method | Description |
-|--------|-------------|
-| `send(frame)` | Send a CAN frame |
-| `onMessage(handler)` | Register message handler |
-| `close()` | Close the interface |
+## Common errors
 
-### ICANDriver
+| Error                                  | Fix                                                          |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `Cannot find module '@embedded32/can'` | Run `npm run build` in monorepo or install published tarball |
+| SocketCAN open fails                   | Create `vcan0` (`sudo ip link add dev vcan0 type vcan`)      |
+| J1939 frames not decoded               | Use `extended: true` and decode with `@embedded32/j1939`     |
 
-```typescript
-interface ICANDriver {
-  send(frame: CANFrame): void | Promise<void>;
-  onMessage(handler: (frame: CANFrame) => void): void;
-  close(): void;
-}
-```
+## Related packages
 
-## SocketCAN Setup
+- `@embedded32/j1939` — parse and decode J1939 frames
+- `@embedded32/sim` — multi-ECU simulation on a virtual bus
+- `@embedded32/tools` — terminal monitor and simulate commands
 
-```bash
-# Install CAN utilities
-sudo apt-get install can-utils
+## Version compatibility
 
-# Create virtual CAN interface
-sudo ip link add dev vcan0 type vcan
-sudo ip link set up vcan0
-
-# Setup hardware CAN (500 kbps)
-sudo ip link set can0 type can bitrate 500000
-sudo ip link set up can0
-```
+Align all `@embedded32/*` dependencies to **1.0.0** when installing from npm. Monorepo clones use workspace linking automatically.
 
 ## License
 

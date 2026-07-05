@@ -23,7 +23,7 @@ export class ConfigLoader {
       path.join(process.cwd(), 'embedded32.yaml'),
       path.join(process.cwd(), 'config', 'embedded32.yaml'),
       path.join(__dirname, '../embedded32.yaml'),
-      path.join(__dirname, '../../embedded32.yaml')
+      path.join(__dirname, '../../embedded32.yaml'),
     ];
 
     for (const location of locations) {
@@ -84,26 +84,26 @@ export class ConfigLoader {
       can: {
         interface: 'vcan0',
         baudrate: 250000,
-        enabled: true
+        enabled: true,
       },
       j1939: {
         enabled: true,
-        databasePath: './data/j1939.db'
+        databasePath: './data/j1939.db',
       },
       ethernet: {
         udp: {
           enabled: true,
-          port: 5000
+          port: 5000,
         },
         tcp: {
           enabled: true,
-          port: 9000
+          port: 9000,
         },
         mqtt: {
           enabled: false,
           broker: 'mqtt://localhost:1883',
-          clientId: 'embedded32-default'
-        }
+          clientId: 'embedded32-default',
+        },
       },
       bridge: {
         canEthernet: {
@@ -111,29 +111,29 @@ export class ConfigLoader {
           whitelist: [0xf004, 0xfeca],
           rateLimit: {
             default: 10,
-            0xf004: 20
-          }
+            0xf004: 20,
+          },
         },
         canMqtt: {
           enabled: false,
           topicPrefix: 'vehicle',
-          payloadFormat: 'nanoproto'
-        }
+          payloadFormat: 'nanoproto',
+        },
       },
       dashboard: {
         enabled: true,
         port: 5173,
-        host: 'localhost'
+        host: 'localhost',
       },
       simulator: {
         engine: false,
         transmission: false,
-        brakes: false
+        brakes: false,
       },
       logging: {
         level: 'info',
-        console: true
-      }
+        console: true,
+      },
     };
   }
 

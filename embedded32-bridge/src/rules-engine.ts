@@ -56,7 +56,11 @@ export class RuleEngine {
   /**
    * Evaluate message against rules
    */
-  evaluate(pgn: number, data: any, spnValues?: Map<number, number>): {
+  evaluate(
+    pgn: number,
+    data: any,
+    spnValues?: Map<number, number>
+  ): {
     action: RuleAction;
     rule: RoutingRule | null;
     transformedData?: any;
@@ -74,10 +78,8 @@ export class RuleEngine {
           if (value === undefined) return false;
 
           if (spnFilter.equals !== undefined && value !== spnFilter.equals) return false;
-          if (spnFilter.minValue !== undefined && value < spnFilter.minValue)
-            return false;
-          if (spnFilter.maxValue !== undefined && value > spnFilter.maxValue)
-            return false;
+          if (spnFilter.minValue !== undefined && value < spnFilter.minValue) return false;
+          if (spnFilter.maxValue !== undefined && value > spnFilter.maxValue) return false;
 
           return true;
         });

@@ -8,18 +8,18 @@
  * - Generating diagnostic reports
  */
 
-import { DiagnosticsManager, DiagnosticTroubleCode } from "@embedded32/j1939";
+import { DiagnosticsManager, DiagnosticTroubleCode } from '@embedded32/j1939';
 
 async function diagnosticsExample(): Promise<void> {
-  console.log("╔════════════════════════════════════════╗");
-  console.log("║  J1939 Diagnostics Example             ║");
-  console.log("╚════════════════════════════════════════╝\n");
+  console.log('╔════════════════════════════════════════╗');
+  console.log('║  J1939 Diagnostics Example             ║');
+  console.log('╚════════════════════════════════════════╝\n');
 
   const dm = new DiagnosticsManager();
 
   // ========== 1. Simulate DM1 Message ==========
-  console.log("1. Processing DM1 Messages (Active DTCs)");
-  console.log("─".repeat(40));
+  console.log('1. Processing DM1 Messages (Active DTCs)');
+  console.log('─'.repeat(40));
 
   // DM1 format: Byte 0 = lamp status, Bytes 1-4 = DTC 1, Bytes 5-8 = DTC 2
   // Lamp status bits: Bit 2=MIL, Bit 3=Flash, Bit 5=Amber, Bit 6=Protect
@@ -32,11 +32,11 @@ async function diagnosticsExample(): Promise<void> {
   const msg1 = dm.processDM1(0x01, dm1Data1);
 
   if (msg1) {
-    console.log(`Device SA=0x${msg1.sourceAddress.toString(16).toUpperCase().padStart(2, "0")}`);
-    console.log(`  MIL Status: ${msg1.lamps.mil ? "ON" : "OFF"}`);
-    console.log(`  Flash: ${msg1.lamps.flash ? "ON" : "OFF"}`);
-    console.log(`  Amber: ${msg1.lamps.amber ? "ON" : "OFF"}`);
-    console.log(`  Protect: ${msg1.lamps.protect ? "ON" : "OFF"}`);
+    console.log(`Device SA=0x${msg1.sourceAddress.toString(16).toUpperCase().padStart(2, '0')}`);
+    console.log(`  MIL Status: ${msg1.lamps.mil ? 'ON' : 'OFF'}`);
+    console.log(`  Flash: ${msg1.lamps.flash ? 'ON' : 'OFF'}`);
+    console.log(`  Amber: ${msg1.lamps.amber ? 'ON' : 'OFF'}`);
+    console.log(`  Protect: ${msg1.lamps.protect ? 'ON' : 'OFF'}`);
     console.log(`  Active DTCs: ${msg1.activeDTCs.length}`);
 
     for (const dtc of msg1.activeDTCs) {
@@ -47,8 +47,8 @@ async function diagnosticsExample(): Promise<void> {
   }
 
   // ========== 2. Multiple Devices ==========
-  console.log("\n2. Processing Multiple Devices");
-  console.log("─".repeat(40));
+  console.log('\n2. Processing Multiple Devices');
+  console.log('─'.repeat(40));
 
   // Device 0x02: Different fault
   // SPN=26 (Engine Coolant Temperature), FMI=1 (Below Normal)
@@ -61,8 +61,8 @@ async function diagnosticsExample(): Promise<void> {
   dm.processDM1(0x03, dm1Data3);
 
   // ========== 3. Diagnostic Summary ==========
-  console.log("\n3. Diagnostic Summary");
-  console.log("─".repeat(40));
+  console.log('\n3. Diagnostic Summary');
+  console.log('─'.repeat(40));
 
   const summary = dm.getSummary();
   console.log(`Total Active DTCs: ${summary.totalActiveDTCs}`);
@@ -71,11 +71,11 @@ async function diagnosticsExample(): Promise<void> {
   console.log(`  MIL: ${summary.lampStatus.mil} devices`);
   console.log(`  Amber: ${summary.lampStatus.amber} devices`);
   console.log(`  Protect: ${summary.lampStatus.protect} devices`);
-  console.log(`Critical Faults: ${summary.hasCriticalFaults ? "YES" : "NO"}`);
+  console.log(`Critical Faults: ${summary.hasCriticalFaults ? 'YES' : 'NO'}`);
 
   // ========== 4. Get All Active DTCs ==========
-  console.log("\n4. All Active DTCs");
-  console.log("─".repeat(40));
+  console.log('\n4. All Active DTCs');
+  console.log('─'.repeat(40));
 
   const allDTCs = dm.getActiveDTCs();
   console.log(`Total: ${allDTCs.length} codes\n`);
@@ -85,8 +85,8 @@ async function diagnosticsExample(): Promise<void> {
   }
 
   // ========== 5. Filter by Device ==========
-  console.log("\n5. Device-Specific DTCs");
-  console.log("─".repeat(40));
+  console.log('\n5. Device-Specific DTCs');
+  console.log('─'.repeat(40));
 
   const device1DTCs = dm.getActiveDTCs(0x01);
   console.log(`Device 0x01: ${device1DTCs.length} active DTC(s)`);
@@ -95,19 +95,19 @@ async function diagnosticsExample(): Promise<void> {
   }
 
   // ========== 6. DM2 Message (Previously Active) ==========
-  console.log("\n6. Processing DM2 Messages (Previously Active DTCs)");
-  console.log("─".repeat(40));
+  console.log('\n6. Processing DM2 Messages (Previously Active DTCs)');
+  console.log('─'.repeat(40));
 
   // Simulate DM2: Historical fault that's no longer active
   const dm2Data = [0x00, 0x1a, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00];
   const dm2Msg = dm.processDM1(0x01, dm2Data); // Using processDM1 for this example
 
   if (dm2Msg) {
-    console.log(`Device SA=0x${dm2Msg.sourceAddress.toString(16).toUpperCase().padStart(2, "0")}`);
+    console.log(`Device SA=0x${dm2Msg.sourceAddress.toString(16).toUpperCase().padStart(2, '0')}`);
     console.log(`Previously Active DTCs: ${dm2Msg.activeDTCs.length}`);
   }
 
-  console.log("\n✅ Diagnostics example completed");
+  console.log('\n✅ Diagnostics example completed');
 }
 
 // Run example

@@ -67,7 +67,7 @@ export class Logger {
     // Console output - use appropriate console method by level
     const prefix = `[${new Date().toISOString()}] [${level.toUpperCase()}]`;
     const output = `${prefix} ${message}`;
-    
+
     switch (level) {
       case 'error':
         console.error(output, context || '');

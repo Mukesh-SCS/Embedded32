@@ -1,225 +1,222 @@
-# Embedded32 Platform
+# Embedded32
 
-**A unified, open-source platform for embedded communication systems**
+**An open-source TypeScript platform for learning and experimenting with embedded runtimes, CAN communication, SAE J1939, ECU simulation, diagnostics, and connected vehicle concepts.**
 
-> CAN + J1939 + Ethernet + MQTT + Developer Tools — All in one ecosystem
+## Current project status
 
-Embedded32 provides a complete runtime, protocol stacks, developer tools, and SDKs for building modern embedded and networked systems.
+| Area              | Status                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------- |
+| **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                 |
+| **Maturity**      | Active development — suitable for learning, labs, and prototyping                     |
+| **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage |
+| **Documentation** | `apps/site/` Next.js site — run locally; public deploy pending maintainer approval |
+| **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant              |
 
----
+Embedded32 is a teaching and experimentation platform. It is not positioned as a production-grade replacement for professional CAN tools or a complete J1939 implementation.
 
-## Quick Start
+## Who Embedded32 is for
+
+- **Students** learning embedded systems, CAN, and vehicle networks without buying hardware first
+- **Instructors** building hardware-free or optional-SocketCAN lab modules
+- **Developers** prototyping ECU messaging, simulation, and CAN-to-MQTT bridges in TypeScript
+- **Contributors** who want a modular npm monorepo to extend with labs, docs, and examples
+
+## What students can learn
+
+- CAN identifiers, frames, payloads, filtering, and logging
+- J1939 concepts: PGN, SPN, source address, priority, encoding and decoding (subset)
+- Multi-ECU simulation on a shared virtual bus
+- Runtime scheduling, modules, and message buses
+- Diagnostic messages (DM1/DM2 subset) and fault observation
+- Bridging CAN traffic to UDP/TCP/MQTT for connected-systems labs
+
+## Core capabilities
+
+| Capability                                 | Packages                                     |
+| ------------------------------------------ | -------------------------------------------- |
+| CAN abstraction (mock, virtual, SocketCAN) | `@embedded32/can`                            |
+| J1939 parse/decode/transport subset        | `@embedded32/j1939`                          |
+| Embedded runtime and scheduler             | `@embedded32/core`, `@embedded32/supervisor` |
+| Multi-ECU vehicle simulation               | `@embedded32/sim`                            |
+| CAN ↔ Ethernet/MQTT bridging               | `@embedded32/bridge`, `@embedded32/ethernet` |
+| CLIs for runtime and tooling               | `@embedded32/cli`, `@embedded32/tools`       |
+| JavaScript client SDK                      | `@embedded32/sdk-js`                         |
+| Web dashboard (private, dev-only)          | `@embedded32/dashboard`                      |
+
+## Documentation site
+
+Run the Next.js docs site locally after `npm ci` and `npm run docs:api`:
 
 ```bash
-# Clone and install
+cd apps/site
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) for guides, labs, packages, and API reference.
+
+The site deploys to **GitHub Pages** via `.github/workflows/deploy-pages.yml`. After the owner enables Pages, it is served at `https://mukesh-scs.github.io/Embedded32/`. See [docs/deployment/GITHUB_PAGES.md](docs/deployment/GITHUB_PAGES.md).
+
+## Browser demo
+
+An interactive, **client-side** CAN/J1939 demo lives at `/demo` on the documentation site (source in `apps/demo/`). It plays synthetic traces and decodes a teaching subset of messages entirely in the browser — no server, WebSocket, or hardware required.
+
+## Fifteen-minute quickstart
+
+No CAN hardware required. From a clean clone:
+
+```bash
 git clone https://github.com/Mukesh-SCS/Embedded32.git
 cd Embedded32
-npm install
+npm ci
 npm run build
-
-# Run demo mode
-embedded32 demo
 ```
 
-This starts:
-- Virtual CAN bus simulation
-- Engine, transmission, and brake ECUs
-- J1939 decoder with live traffic
-- Web dashboard at http://localhost:5173
-
----
-
-## Platform Architecture
-
-```
-embedded32/
-├── RUNTIME
-│   ├── embedded32-core/           → OS runtime (scheduler, messaging)
-│   ├── embedded32-supervisor/     → Module lifecycle management
-│   └── embedded32-cli/            → CLI launcher
-│
-├── PROTOCOL STACKS
-│   ├── embedded32-can/            → CAN abstraction layer
-│   ├── embedded32-j1939/          → J1939 protocol stack
-│   └── embedded32-ethernet/       → UDP, TCP, MQTT
-│
-├── TOOLS
-│   ├── embedded32-bridge/         → CAN ↔ Ethernet routing
-│   ├── embedded32-sim/            → Vehicle simulator
-│   ├── embedded32-tools/          → CLI monitoring tools
-│   └── embedded32-dashboard/      → Web dashboard
-│
-└── SDKs
-    ├── embedded32-sdk-js/         → JavaScript SDK
-    ├── embedded32-sdk-python/     → Python SDK
-    └── embedded32-sdk-c/          → C SDK for embedded
-```
-
----
-
-## CLI Commands
+**1. Decode a J1939 message**
 
 ```bash
-# Demo mode with all features
-embedded32 demo
-
-# Monitor J1939 traffic
-embedded32 j1939 monitor --iface vcan0
-
-# Filter by PGN
-embedded32 j1939 monitor --iface vcan0 --pgn 0xF004
-
-# Send J1939 message
-embedded32 j1939 send --iface vcan0 --pgn 0xF004 --data "3C 00 FF FF FF FF FF FF"
-
-# Initialize configuration
-embedded32 init
-
-# Start with configuration
-embedded32 start
+npx tsx examples/j1939-basic.ts
 ```
 
----
-
-## SDK Usage
-
-### JavaScript
+**2. Run a multi-ECU simulation**
 
 ```bash
-npm install @embedded32/sdk-js
+npx embedded32-tools simulate vehicle/basic-truck
 ```
 
-```javascript
-import { J1939Client, PGN, SA } from '@embedded32/sdk-js';
-
-const client = new J1939Client({
-  interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_2
-});
-
-await client.connect();
-
-client.onPGN(PGN.EEC1, (msg) => {
-  console.log('Engine RPM:', msg.spns.engineSpeed);
-});
-
-await client.requestPGN(PGN.EEC1);
-```
-
-### Python
+**3. Use the runtime demo (optional dashboard)**
 
 ```bash
-pip install embedded32
+npx embedded32 demo
 ```
 
-```python
-from embedded32 import J1939Client, PGN, SA
+See the full walkthrough: [docs/getting-started.md](docs/getting-started.md)
 
-client = J1939Client(interface='vcan0', source_address=SA.DIAG_TOOL_2)
-client.connect()
+## Package selection
 
-@client.on_pgn(PGN.EEC1)
-def on_engine(msg):
-    print(f"Engine RPM: {msg.spns['engineSpeed']}")
+| Goal                    | Start here                                    |
+| ----------------------- | --------------------------------------------- |
+| Learn CAN basics        | `@embedded32/can`                             |
+| Parse/decode J1939      | `@embedded32/j1939`                           |
+| Simulate multiple ECUs  | `@embedded32/sim` + `@embedded32/tools`       |
+| Build a small runtime   | `@embedded32/core` + `@embedded32/supervisor` |
+| Bridge to MQTT/Ethernet | `@embedded32/bridge` + `@embedded32/ethernet` |
+| App integration         | `@embedded32/sdk-js`                          |
 
-client.request_pgn(PGN.EEC1)
+Full guide: [docs/package-guide.md](docs/package-guide.md)
+
+## Architecture overview
+
+```mermaid
+flowchart TB
+  subgraph apps [Applications]
+    CLI["@embedded32/cli"]
+    Tools["@embedded32/tools"]
+    SDK["@embedded32/sdk-js"]
+  end
+  subgraph runtime [Runtime]
+    SUP["@embedded32/supervisor"]
+    CORE["@embedded32/core"]
+  end
+  subgraph protocol [Protocol]
+    J1939["@embedded32/j1939"]
+    CAN["@embedded32/can"]
+  end
+  subgraph connect [Connectivity]
+    BR["@embedded32/bridge"]
+    ETH["@embedded32/ethernet"]
+  end
+  SIM["@embedded32/sim"]
+  CLI --> SUP
+  Tools --> SIM
+  SDK --> J1939
+  SUP --> CORE
+  SUP --> BR
+  SIM --> J1939
+  J1939 --> CAN
+  BR --> ETH
+  BR --> J1939
+  CORE --> CAN
 ```
 
-> **API Stability:** SDK public APIs (`J1939Client`, `connect`, `on_pgn`, `request_pgn`, `send_pgn`) are frozen as of v1.0.0. Internal modules (`_codec`, `_transport`, `/internal`) are not part of the supported API.
+Details: [docs/architecture.md](docs/architecture.md)
 
----
+## Hardware-free usage
 
-## Hardware Support
+- `MockCANDriver` and `VirtualCANPort` in `@embedded32/can`
+- `SimulationRunner` and vehicle profiles in `@embedded32/sim`
+- `embedded32-tools simulate` for decoded traffic in the terminal
+- Examples under `examples/` and package `examples/` directories
+- Future browser demo with prerecorded traces
 
-| Platform | CAN Interface | Status |
-|----------|--------------|--------|
-| Linux | SocketCAN | ✅ Full support |
-| Raspberry Pi | SocketCAN, MCP2515 | ✅ Full support |
-| WSL | Virtual CAN | ✅ Full support |
-| Windows | PCAN-USB | ⚠️ Gateway mode |
-| macOS | Simulator | ✅ Testing only |
-| STM32 / ESP32 | C SDK | ✅ Platform HAL |
+## Hardware-supported usage
 
-### Virtual CAN Setup (Linux/WSL)
+| Platform     | Interface                            | Notes                                                    |
+| ------------ | ------------------------------------ | -------------------------------------------------------- |
+| Linux / WSL  | SocketCAN (`vcan0`, `can0`)          | Full driver support when `socketcan` module is installed |
+| Raspberry Pi | SocketCAN, optional GPIO via `onoff` | Documented in package READMEs                            |
+| Windows      | PCAN or gateway                      | Often via bridge/gateway rather than direct SocketCAN    |
+| macOS        | Simulation                           | Use mock/virtual paths for development                   |
 
-```bash
-sudo modprobe vcan
-sudo ip link add dev vcan0 type vcan
-sudo ip link set up vcan0
-```
+SocketCAN setup is optional for courses — see [docs/getting-started.md](docs/getting-started.md#optional-socketcan-linux--wsl).
 
-### Hardware CAN Setup
+## Educational labs
 
-```bash
-sudo ip link set can0 type can bitrate 250000
-sudo ip link set up can0
-```
+Four labs are planned under `labs/` (Phase 5):
 
----
+1. CAN communication basics
+2. J1939 messaging
+3. Multi-ECU simulation
+4. Diagnostics and fault injection
+
+Placeholder index: [labs/README.md](labs/README.md)
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [docs/getting-started.md](./docs/getting-started.md) | Installation and setup |
-| [docs/J1939_QUICKSTART.md](./docs/J1939_QUICKSTART.md) | J1939 protocol tutorial |
-| [docs/J1939_ARCHITECTURE.md](./docs/J1939_ARCHITECTURE.md) | Protocol stack reference |
-| [docs/tutorials/first-run.md](./docs/tutorials/first-run.md) | First simulation tutorial |
-
-### Package Documentation
-
-Each package has its own README with API reference:
-
-- [embedded32-core](./embedded32-core/README.md) - Runtime and modules
-- [embedded32-can](./embedded32-can/README.md) - CAN abstraction
-- [embedded32-j1939](./embedded32-j1939/README.md) - J1939 protocol
-- [embedded32-ethernet](./embedded32-ethernet/README.md) - Network transports
-- [embedded32-sim](./embedded32-sim/README.md) - Vehicle simulator
-- [embedded32-bridge](./embedded32-bridge/README.md) - Message bridging
-- [embedded32-tools](./embedded32-tools/README.md) - CLI tools
-- [embedded32-sdk-js](./embedded32-sdk-js/README.md) - JavaScript SDK
-- [embedded32-sdk-python](./embedded32-sdk-python/README.md) - Python SDK
-- [embedded32-sdk-c](./embedded32-sdk-c/README.md) - C SDK
-
----
-
-## Examples
-
-Working examples are in the [examples/](./examples/) directory:
-
-```bash
-# J1939 basic usage
-npx tsx examples/j1939-basic.ts
-
-# Multi-packet messages
-npx tsx examples/j1939-multipacket.ts
-
-# Diagnostics (DM1/DM2)
-npx tsx examples/j1939-diagnostics.ts
-```
-
----
+| Document                                                                       | Description                                      |
+| ------------------------------------------------------------------------------ | ------------------------------------------------ |
+| [docs/getting-started.md](docs/getting-started.md)                             | 15-minute hardware-free quickstart               |
+| [docs/package-guide.md](docs/package-guide.md)                                 | Which package to install                         |
+| [docs/architecture.md](docs/architecture.md)                                   | System architecture                              |
+| [docs/concepts/](docs/concepts/)                                               | CAN, J1939, simulation, diagnostics, bridge      |
+| [docs/api/](docs/api/)                                                         | Generated TypeDoc reference (`npm run docs:api`) |
+| [docs/maintainers/monorepo-workflow.md](docs/maintainers/monorepo-workflow.md) | Build, test, verify commands                     |
 
 ## Contributing
 
-We welcome contributions!
+Contributions are welcome — documentation, labs, tests, and packaging improvements are especially helpful.
 
-- 🐛 Report bugs → [Issues](https://github.com/Mukesh-SCS/Embedded32/issues)
-- 💡 Suggest features → [Discussions](https://github.com/Mukesh-SCS/Embedded32/discussions)
-- 📝 Improve documentation
-- 🔧 Submit pull requests
+- Read [CONTRIBUTING.md](CONTRIBUTING.md)
+- Run `npm run verify` before opening a pull request
+- Report bugs via [GitHub Issues](https://github.com/Mukesh-SCS/Embedded32/issues)
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+## Project roadmap
 
----
+| Milestone  | Focus                                       | Status on upgrade branch |
+| ---------- | ------------------------------------------- | ------------------------ |
+| **v1.0.x** | npm reliability, CI, docs, release, citation | Phases 1–13 complete; owner actions for npm/Pages/DOI |
+| **v1.1**   | Labs, instructor guides, traces              | Core materials shipped   |
+| **v1.2**   | Documentation site and browser demo         | Built; Pages deploy pending owner |
+| **v1.3**   | Community pilots and expanded labs          | Planned                  |
+
+Full milestone detail, phase matrix, and owner checklist: [ROADMAP.md](ROADMAP.md) and [docs/maintainers/open-source-upgrade-summary.md](docs/maintainers/open-source-upgrade-summary.md).
+
+## Citation
+
+If you use Embedded32 in academic work, see [docs/citation.md](docs/citation.md).
+
+Machine-readable metadata: [CITATION.cff](CITATION.cff). A Zenodo DOI badge will be added after the first archived release — see [docs/maintainers/zenodo-release.md](docs/maintainers/zenodo-release.md). **Do not cite a DOI until it appears in those files.**
 
 ## License
 
-**MIT License** © 2025 Mukesh Mani Tripathi
+MIT License — see [LICENSE](LICENSE).
 
----
+## Security reporting
 
-## Links
+Report vulnerabilities privately — details will be documented in `SECURITY.md` (Phase 6).  
+Do not post exploit details in public issues.
 
-- **Repository:** [github.com/Mukesh-SCS/Embedded32](https://github.com/Mukesh-SCS/Embedded32)
-- **Issues:** [GitHub Issues](https://github.com/Mukesh-SCS/Embedded32/issues)
+## Maintainer information
+
+- **Maintainer:** Mukesh Mani Tripathi
+- **Repository:** https://github.com/Mukesh-SCS/Embedded32
+- **npm scope:** `@embedded32/*` (publish controlled by maintainers)

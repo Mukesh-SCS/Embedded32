@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 5173,
     middlewareMode: false,
-    strictPort: false,  // Use next available port if 5173 is taken
+    strictPort: false, // Use next available port if 5173 is taken
   },
   build: {
     // Increase chunk size warning limit (Recharts is large)

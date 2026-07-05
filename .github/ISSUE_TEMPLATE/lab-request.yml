@@ -1,0 +1,66 @@
+name: Lab request
+description: Propose a new classroom lab or improvement to existing labs
+title: '[Lab]: '
+labels: ['education']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New labs should be **hardware-free** unless clearly marked optional. See `labs/lab-01-can-basics/` for structure.
+
+  - type: input
+    id: lab_title
+    attributes:
+      label: Lab title
+      placeholder: 'Lab 5 — CAN to MQTT bridge'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty
+      options:
+        - Introductory
+        - Intermediate
+        - Advanced
+    validations:
+      required: true
+
+  - type: textarea
+    id: objectives
+    attributes:
+      label: Learning objectives
+      description: What should students be able to do after completing the lab?
+    validations:
+      required: true
+
+  - type: textarea
+    id: outline
+    attributes:
+      label: Lab outline
+      description: Tasks, estimated time, packages used
+    validations:
+      required: true
+
+  - type: dropdown
+    id: hardware
+    attributes:
+      label: Hardware required?
+      options:
+        - 'No — simulation only'
+        - 'Optional SocketCAN'
+        - 'Required hardware'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Willing to contribute starter/solution code?
+      options:
+        - 'Yes'
+        - 'No'
+        - 'Maybe — need rubric template'
+    validations:
+      required: true

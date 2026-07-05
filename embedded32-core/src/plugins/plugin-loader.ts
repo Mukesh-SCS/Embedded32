@@ -1,6 +1,6 @@
 /**
  * Embedded32 - Plugin Loader
- * 
+ *
  * Loads and manages ECU plugins according to the v1 contract.
  * Plugins are sandboxed to only use PluginContext methods.
  */
@@ -13,7 +13,7 @@ import type {
   PluginConfig,
   PluginFactory,
   PGNData,
-  J1939Message
+  J1939Message,
 } from './plugin-interface';
 
 /**
@@ -22,7 +22,7 @@ import type {
 export class PluginLoader extends EventEmitter {
   private plugins: Map<string, LoadedPlugin> = new Map();
   private subscriptions: Map<number, Set<string>> = new Map(); // PGN -> plugin names
-  
+
   constructor(private readonly basePath: string) {
     super();
   }
@@ -36,7 +36,7 @@ export class PluginLoader extends EventEmitter {
         console.log(`[PluginLoader] Skipping disabled plugin: ${config.name}`);
         continue;
       }
-      
+
       try {
         await this.loadPlugin(config);
       } catch (error) {
@@ -50,45 +50,47 @@ export class PluginLoader extends EventEmitter {
    */
   async loadPlugin(config: PluginConfig): Promise<void> {
     console.log(`[PluginLoader] Loading plugin: ${config.name}`);
-    
+
     // Resolve plugin path
-    const pluginPath = path.isAbsolute(config.path) 
-      ? config.path 
+    const pluginPath = path.isAbsolute(config.path)
+      ? config.path
       : path.join(this.basePath, config.path);
-    
+
     // Import plugin module
     const module = await import(pluginPath);
-    
+
     // Get factory function
     const factory: PluginFactory = module.default || module.createPlugin;
     if (typeof factory !== 'function') {
       throw new Error(`Plugin ${config.name} does not export a factory function`);
     }
-    
+
     // Create plugin instance
     const plugin = factory(config.options);
-    
+
     // Validate plugin interface
     this.validatePlugin(plugin);
-    
+
     // Override source address from config
     const effectiveSA = config.sourceAddress ?? plugin.sourceAddress;
-    
+
     // Create sandboxed context
     const context = this.createContext(config.name, effectiveSA);
-    
+
     // Store loaded plugin
     this.plugins.set(config.name, {
       plugin,
       config,
       context,
-      sourceAddress: effectiveSA
+      sourceAddress: effectiveSA,
     });
-    
+
     // Initialize plugin
     plugin.init(context);
-    
-    console.log(`[PluginLoader] Loaded plugin: ${config.name} (SA=0x${effectiveSA.toString(16).toUpperCase()})`);
+
+    console.log(
+      `[PluginLoader] Loaded plugin: ${config.name} (SA=0x${effectiveSA.toString(16).toUpperCase()})`
+    );
   }
 
   /**
@@ -102,27 +104,27 @@ export class PluginLoader extends EventEmitter {
           sourceAddress,
           pgn,
           data,
-          destination: destination ?? 0xFF
+          destination: destination ?? 0xff,
         });
       },
-      
+
       requestPGN: (pgn: number, destination?: number) => {
         this.emit('requestPGN', {
           plugin: pluginName,
           sourceAddress,
           pgn,
-          destination: destination ?? 0xFF
+          destination: destination ?? 0xff,
         });
       },
-      
+
       subscribePGN: (pgn: number) => {
         if (!this.subscriptions.has(pgn)) {
           this.subscriptions.set(pgn, new Set());
         }
         this.subscriptions.get(pgn)!.add(pluginName);
       },
-      
-      getTime: () => Date.now()
+
+      getTime: () => Date.now(),
     };
   }
 
@@ -131,13 +133,13 @@ export class PluginLoader extends EventEmitter {
    */
   private validatePlugin(plugin: ECUPlugin): void {
     const required = ['name', 'version', 'sourceAddress', 'init', 'shutdown', 'onTick', 'onPGN'];
-    
+
     for (const prop of required) {
       if (!(prop in plugin)) {
         throw new Error(`Plugin missing required property: ${prop}`);
       }
     }
-    
+
     if (typeof plugin.init !== 'function') {
       throw new Error('Plugin.init must be a function');
     }
@@ -171,11 +173,11 @@ export class PluginLoader extends EventEmitter {
   dispatchMessage(message: J1939Message): void {
     const subscribers = this.subscriptions.get(message.pgn);
     if (!subscribers) return;
-    
+
     for (const pluginName of subscribers) {
       const loaded = this.plugins.get(pluginName);
       if (!loaded) continue;
-      
+
       try {
         loaded.plugin.onPGN(message);
       } catch (error) {
@@ -189,7 +191,7 @@ export class PluginLoader extends EventEmitter {
    */
   async shutdown(): Promise<void> {
     console.log('[PluginLoader] Shutting down plugins...');
-    
+
     for (const [name, loaded] of this.plugins) {
       try {
         loaded.plugin.shutdown();
@@ -198,7 +200,7 @@ export class PluginLoader extends EventEmitter {
         console.error(`[PluginLoader] Plugin ${name} shutdown error:`, error);
       }
     }
-    
+
     this.plugins.clear();
     this.subscriptions.clear();
   }

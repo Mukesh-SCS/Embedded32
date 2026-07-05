@@ -1,0 +1,70 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@embedded32/supervisor | Embedded32 API</title><meta name="description" content="Documentation for Embedded32 API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">Embedded32 API</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../index.html">Embedded32 API</a></li><li><a href="_embedded32_supervisor.html">@embedded32/supervisor</a></li></ul><h1>Module @embedded32/supervisor</h1></div><section class="tsd-panel tsd-typography"><a id="embedded32supervisor" class="tsd-anchor"></a><h1 class="tsd-anchor-link">@embedded32/supervisor<a href="#embedded32supervisor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Process-level supervisor for Embedded32 — registers modules, tracks health, coordinates startup/shutdown, and backs <code>@embedded32/cli start</code> / <code>demo</code>.</p>
+<a id="installation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@embedded32/supervisor</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="minimum-runnable-example" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Minimum runnable example<a href="#minimum-runnable-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="typescript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">Supervisor</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@embedded32/supervisor&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">supervisor</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Supervisor</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">logging:</span><span class="hl-1"> { </span><span class="hl-4">level:</span><span class="hl-1"> </span><span class="hl-2">&#39;info&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">supervisor</span><span class="hl-1">.</span><span class="hl-0">registerModule</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;hello&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">name:</span><span class="hl-1"> </span><span class="hl-2">&#39;Hello Module&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">version:</span><span class="hl-1"> </span><span class="hl-2">&#39;1.0.0&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">start</span><span class="hl-4">:</span><span class="hl-1"> </span><span class="hl-5">async</span><span class="hl-1"> () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;started&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-0">stop</span><span class="hl-4">:</span><span class="hl-1"> </span><span class="hl-5">async</span><span class="hl-1"> () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;stopped&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-0">getStatus</span><span class="hl-4">:</span><span class="hl-1"> () </span><span class="hl-5">=&gt;</span><span class="hl-1"> ({ </span><span class="hl-4">state:</span><span class="hl-1"> </span><span class="hl-2">&#39;running&#39;</span><span class="hl-1">, </span><span class="hl-4">uptime:</span><span class="hl-1"> </span><span class="hl-7">0</span><span class="hl-1">, </span><span class="hl-4">restarts:</span><span class="hl-1"> </span><span class="hl-7">0</span><span class="hl-1"> }),</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">supervisor</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span><br/><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">supervisor</span><span class="hl-1">.</span><span class="hl-0">stop</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Easiest path for learners: <code>npx embedded32 demo</code> instead of wiring supervisor manually.</p>
+<a id="public-api-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Public API overview<a href="#public-api-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Export</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Supervisor</code></td>
+<td>Start/stop runtime, module registry</td>
+</tr>
+<tr>
+<td><code>registerModule</code></td>
+<td>Add modules with <code>start</code>/<code>stop</code>/<code>getStatus</code></td>
+</tr>
+<tr>
+<td><code>getHealthStatus</code></td>
+<td>Aggregate module health</td>
+</tr>
+<tr>
+<td><code>getEventBus</code>, <code>getLogger</code></td>
+<td>Shared runtime services</td>
+</tr>
+</tbody>
+</table>
+<a id="runtime-requirements" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Runtime requirements<a href="#runtime-requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Node.js <strong>18+</strong></li>
+<li>Depends on <code>@embedded32/core</code>, <code>@embedded32/can</code>, <code>@embedded32/j1939</code>, <code>@embedded32/ethernet</code>, <code>@embedded32/bridge</code> at <strong>1.0.0</strong> for full stacks</li>
+</ul>
+<a id="hardware-requirements" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Hardware requirements<a href="#hardware-requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>None for minimal supervisor example. Full fleet configs may enable SocketCAN modules.</p>
+<a id="browser-compatibility" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Browser compatibility<a href="#browser-compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><strong>Node.js only.</strong></p>
+<a id="common-errors" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Common errors<a href="#common-errors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Module stuck in ERROR</td>
+<td>Check module <code>start()</code> throws; use <code>getHealthStatus()</code></td>
+</tr>
+<tr>
+<td>Double <code>start()</code></td>
+<td>Guard with <code>isRunningFlag()</code> or CLI status</td>
+</tr>
+<tr>
+<td>Wrong package name</td>
+<td>Use <code>@embedded32/supervisor</code> scoped install</td>
+</tr>
+</tbody>
+</table>
+<a id="related-packages" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Related packages<a href="#related-packages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><code>@embedded32/cli</code> — primary user entry</li>
+<li><code>@embedded32/core</code> — runtime primitives inside modules</li>
+<li><code>@embedded32/bridge</code> — optional bridge modules</li>
+</ul>
+<a id="version-compatibility" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Version compatibility<a href="#version-compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><code>@embedded32/supervisor@1.0.0</code> matches CLI <strong>1.0.0</strong>.</p>
+<a id="license" class="tsd-anchor"></a><h2 class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>MIT © Mukesh Mani Tripathi</p>
+</section></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#embedded32supervisor"><span>@embedded32/supervisor</span></a><ul><li><a href="#installation"><span>Installation</span></a></li><li><a href="#minimum-runnable-example"><span>Minimum runnable example</span></a></li><li><a href="#public-api-overview"><span>Public API overview</span></a></li><li><a href="#runtime-requirements"><span>Runtime requirements</span></a></li><li><a href="#hardware-requirements"><span>Hardware requirements</span></a></li><li><a href="#browser-compatibility"><span>Browser compatibility</span></a></li><li><a href="#common-errors"><span>Common errors</span></a></li><li><a href="#related-packages"><span>Related packages</span></a></li><li><a href="#version-compatibility"><span>Version compatibility</span></a></li><li><a href="#license"><span>License</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../index.html">Embedded32 API</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

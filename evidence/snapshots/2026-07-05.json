@@ -1,0 +1,121 @@
+{
+  "format": "embedded32-evidence-v1",
+  "collectedAt": "2026-07-05T04:16:34.318Z",
+  "git": {
+    "branch": "feat/open-source-education-platform",
+    "commit": "bfd5efe469d5bced6d24ebf2c57b6641b4f84922",
+    "commitShort": "bfd5efe"
+  },
+  "verification": {
+    "npmVerifyPassed": null,
+    "verifySkipped": true
+  },
+  "packages": {
+    "publicCount": 10,
+    "directories": [
+      "embedded32-can",
+      "embedded32-core",
+      "embedded32-j1939",
+      "embedded32-sim",
+      "embedded32-tools",
+      "embedded32-bridge",
+      "embedded32-ethernet",
+      "embedded32-supervisor",
+      "embedded32-cli",
+      "embedded32-sdk-js"
+    ]
+  },
+  "education": {
+    "labCount": 4,
+    "labs": [
+      "lab-01-can-basics",
+      "lab-02-j1939-messaging",
+      "lab-03-multi-ecu-simulation",
+      "lab-04-diagnostics-and-faults"
+    ],
+    "syntheticTraceCount": 6,
+    "educationDocCount": 7,
+    "browserDemoPresent": true
+  },
+  "documentation": {
+    "markdownDocCount": 34,
+    "siteStaticRouteCount": 40,
+    "apiReferenceIndexPresent": true,
+    "citationDocPresent": true
+  },
+  "quality": {
+    "coverage": {
+      "collected": true,
+      "packages": {
+        "j1939": {
+          "lines": 50.55,
+          "statements": 49.89,
+          "functions": 29.23,
+          "branches": 30.55
+        },
+        "core": {
+          "lines": 99.33,
+          "statements": 98.75,
+          "functions": 100,
+          "branches": 90.24
+        },
+        "can": {
+          "lines": 19.11,
+          "statements": 19.71,
+          "functions": 35.71,
+          "branches": 0
+        }
+      }
+    },
+    "coverageBaselineDoc": "docs/maintainers/coverage-baseline.md"
+  },
+  "automation": {
+    "workflowCount": 5,
+    "workflows": [
+      "ci.yml",
+      "codeql.yml",
+      "dependency-review.yml",
+      "deploy-pages.yml",
+      "release.yml"
+    ],
+    "rootScripts": [
+      "build",
+      "test",
+      "typecheck",
+      "lint",
+      "format",
+      "format:check",
+      "clean",
+      "bootstrap",
+      "publish-packages",
+      "release:dry-run",
+      "audit:packages",
+      "test:package-install",
+      "test:labs",
+      "test:examples",
+      "test:docs",
+      "test:citation",
+      "evidence:collect",
+      "test:evidence",
+      "validate:upgrade",
+      "test:coverage",
+      "verify:pages",
+      "seed:issues",
+      "verify",
+      "docs:api"
+    ]
+  },
+  "deployment": {
+    "githubPagesWorkflowPresent": true,
+    "publishedUrl": "https://mukesh-scs.github.io/Embedded32/",
+    "npmPublished": false
+  },
+  "citation": {
+    "cffPresent": true,
+    "zenodoDoiIssued": false
+  },
+  "notes": [
+    "Metrics are collected from the repository and local commands — not from GitHub/npm download APIs.",
+    "Outreach metrics (stars, classroom pilots) are recorded manually in evidence/outreach-log.md."
+  ]
+}

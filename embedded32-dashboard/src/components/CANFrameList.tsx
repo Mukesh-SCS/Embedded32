@@ -70,7 +70,9 @@ const CANFrameList: React.FC = () => {
                 <tbody>
                   {faults.map((fault, idx) => (
                     <tr key={idx}>
-                      <td><strong>{fault.spn}</strong></td>
+                      <td>
+                        <strong>{fault.spn}</strong>
+                      </td>
                       <td>{fault.fmi}</td>
                       <td>
                         <span className={getSeverityTagClass(fault.fmi)}>
@@ -108,7 +110,9 @@ const CANFrameList: React.FC = () => {
                         0x{frame.id.toString(16).toUpperCase().padStart(8, '0')}
                       </td>
                       <td style={{ fontFamily: 'monospace', fontSize: 10 }}>
-                        {frame.data.map(b => b.toString(16).toUpperCase().padStart(2, '0')).join(' ')}
+                        {frame.data
+                          .map((b) => b.toString(16).toUpperCase().padStart(2, '0'))
+                          .join(' ')}
                       </td>
                       <td>{frame.data.length}</td>
                       <td style={{ fontSize: 10 }}>

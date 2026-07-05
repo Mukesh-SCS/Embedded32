@@ -1,129 +1,67 @@
-# embedded32-ethernet
+# @embedded32/ethernet
 
-Lightweight multi-transport networking layer with UDP, TCP, and MQTT support.
-
-## Overview
-
-Embedded32 Ethernet provides efficient network communication for J1939 messages:
-
-- **UDP Server/Client** - Stateless datagram messaging with broadcast
-- **TCP Server/Client** - Stateful connections with multi-client support
-- **MQTT Client** - Pub/sub with auto-reconnect and device discovery
-- **NanoProto** - Compact binary encoding (~50% smaller than JSON)
+UDP, TCP, and MQTT transports plus compact NanoProto encoding for moving J1939-shaped messages over IP in Embedded32 labs.
 
 ## Installation
 
 ```bash
-npm install embedded32-ethernet
+npm install @embedded32/ethernet
 ```
 
-## Usage
-
-### UDP Transport
+## Minimum runnable example
 
 ```typescript
-import { UDPServer, UDPClient } from 'embedded32-ethernet';
+import { UDPServer, UDPClient } from '@embedded32/ethernet';
 
-// Server
 const server = new UDPServer(5000);
 await server.start();
-server.on('message', (msg) => console.log('Received:', msg));
-await server.broadcast({ pgn: 0xF004, data: [...] });
 
-// Client
+server.on('message', (msg) => console.log('UDP', msg));
+
 const client = new UDPClient();
-await client.send(msg, 'localhost', 5000);
+await client.send({ hello: 'embedded32' }, '127.0.0.1', 5000);
 ```
 
-### TCP Transport
+## Public API overview
 
-```typescript
-import { TCPServer, TCPClient } from 'embedded32-ethernet';
+| Export                               | Role                           |
+| ------------------------------------ | ------------------------------ |
+| `UDPServer`, `UDPClient`             | Datagram messaging             |
+| `TCPServer`, `TCPClient`             | Stream connections             |
+| `MQTTClient`                         | Pub/sub with reconnect helpers |
+| `J1939NanoProto`, `NanoProtoEncoder` | Compact binary J1939 payloads  |
 
-// Server
-const server = new TCPServer(9000);
-await server.start();
-server.on('connection', (id) => console.log('Client:', id));
-server.broadcast({ type: 'status', data: {...} });
+## Runtime requirements
 
-// Client
-const client = new TCPClient('localhost', 9000);
-await client.connect();
-await client.send({ command: 'start' });
-```
+- Node.js **18+**
+- ESM imports
+- Network permission for bind/connect operations
 
-### MQTT Transport
+## Hardware requirements
 
-```typescript
-import { MQTTClient } from 'embedded32-ethernet';
+None — uses host networking stack. MQTT labs need a broker (local or classroom server).
 
-const mqtt = new MQTTClient({
-  broker: 'mqtt://localhost:1883',
-  clientId: 'embedded32-vehicle'
-});
+## Browser compatibility
 
-await mqtt.connect();
+**Node.js only** in v1.0. Browser clients may consume MQTT/WebSocket via other stacks; this package targets gateway hosts.
 
-// Subscribe
-mqtt.subscribe('vehicles/truck1/engine/+', 1);
+## Common errors
 
-// Publish J1939 message
-mqtt.publishJ1939('vehicles/truck1', {
-  pgn: 0xF004,
-  sa: 0x00,
-  data: [...]
-});
+| Error               | Fix                                           |
+| ------------------- | --------------------------------------------- |
+| `EADDRINUSE`        | Pick a free port or stop prior server         |
+| MQTT never connects | Verify broker URL, firewall, credentials      |
+| Wrong package name  | Install `@embedded32/ethernet` scoped package |
 
-// Device discovery
-mqtt.announceDevice({
-  name: 'Truck ECU 1',
-  type: 'j1939-gateway',
-  version: '1.0.0'
-});
-```
+## Related packages
 
-### NanoProto Binary Encoding
+- `@embedded32/bridge` — CAN ↔ MQTT/UDP routing
+- `@embedded32/core` — runtime modules that publish telemetry
+- `@embedded32/sdk-js` — application consumers
 
-```typescript
-import { NanoProtoEncoder, J1939NanoProto } from 'embedded32-ethernet';
+## Version compatibility
 
-// Encode J1939 message
-const encoded = J1939NanoProto.encode({
-  pgn: 0xF004,
-  sa: 0x01,
-  data: [0x10, 0x20, ...]
-});
-
-// Decode
-const decoded = J1939NanoProto.decode(encoded);
-```
-
-## API Reference
-
-### UDPServer
-
-| Method | Description |
-|--------|-------------|
-| `start()` | Start listening |
-| `broadcast(msg)` | Send to all clients |
-| `on('message', handler)` | Handle incoming messages |
-
-### TCPServer
-
-| Method | Description |
-|--------|-------------|
-| `start()` | Start listening |
-| `broadcast(msg)` | Send to all connected clients |
-| `on('connection', handler)` | Handle new connections |
-
-### MQTTClient
-
-| Method | Description |
-|--------|-------------|
-| `connect()` | Connect to broker |
-| `subscribe(topic, qos)` | Subscribe to topic |
-| `publish(topic, msg)` | Publish message |
-| `announceDevice(info)` | Announce device for discovery |
+`@embedded32/ethernet@1.0.0` with `@embedded32/bridge@1.0.0`.
 
 ## License
 

@@ -108,7 +108,7 @@ describe('ModuleRegistry', () => {
     it('should handle async module initialization', async () => {
       const module = new TestModule('async-module');
       module.onInit = jest.fn(async () => {
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 10));
       });
 
       registry.register(module);
@@ -154,15 +154,13 @@ describe('ModuleRegistry', () => {
 
   describe('concurrent operations', () => {
     it('should handle concurrent module initialization', async () => {
-      const modules = Array.from({ length: 5 }, (_, i) => 
-        new TestModule(`module${i}`)
-      );
+      const modules = Array.from({ length: 5 }, (_, i) => new TestModule(`module${i}`));
 
-      modules.forEach(m => registry.register(m));
+      modules.forEach((m) => registry.register(m));
 
       await registry.initAll();
 
-      modules.forEach(m => {
+      modules.forEach((m) => {
         expect(m.onInit).toHaveBeenCalled();
       });
     });

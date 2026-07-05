@@ -13,7 +13,7 @@
  * Run: npx ts-node examples/engine-sim.ts
  */
 
-import { buildJ1939Id, parseJ1939Id, decodeJ1939 } from "../src/index.js";
+import { buildJ1939Id, parseJ1939Id, decodeJ1939 } from '../src/index.js';
 
 /**
  * Simulated Heavy-Duty Vehicle Engine
@@ -45,7 +45,7 @@ class SimulatedEngine {
     this.running = true;
     this.speed = this.idleRPM;
     this.temperature = this.operatingTemp;
-    console.log("[ENGINE] Started at idle (600 RPM)");
+    console.log('[ENGINE] Started at idle (600 RPM)');
   }
 
   /**
@@ -57,7 +57,7 @@ class SimulatedEngine {
     this.load = 0;
     this.torque = 0;
     this.temperature = 20;
-    console.log("[ENGINE] Stopped");
+    console.log('[ENGINE] Stopped');
   }
 
   /**
@@ -67,7 +67,10 @@ class SimulatedEngine {
     if (!this.running) return;
 
     this.throttlePos = Math.min(100, Math.max(0, throttlePercent));
-    this.speed = Math.min(this.maxRPM, this.idleRPM + (this.throttlePos / 100) * (this.maxRPM - this.idleRPM));
+    this.speed = Math.min(
+      this.maxRPM,
+      this.idleRPM + (this.throttlePos / 100) * (this.maxRPM - this.idleRPM)
+    );
     this.load = this.throttlePos * 0.8; // Simplified load calculation
     this.torque = (this.load / 100) * this.maxTorque;
     this.fuelRate = (this.speed / this.maxRPM) * 50; // L/h at max RPM
@@ -203,7 +206,7 @@ class SimulatedEngine {
 }
 
 // Demo
-console.log("=== Simulated Heavy-Duty Engine Demo ===\n");
+console.log('=== Simulated Heavy-Duty Engine Demo ===\n');
 
 const engine = new SimulatedEngine();
 
@@ -212,11 +215,11 @@ engine.start();
 
 // Simulate driving cycle
 const cycle = [
-  { throttle: 0, duration: 2, label: "Idle" },
-  { throttle: 30, duration: 3, label: "Light load" },
-  { throttle: 70, duration: 3, label: "Medium load" },
-  { throttle: 100, duration: 2, label: "Full load" },
-  { throttle: 30, duration: 2, label: "Decelerate" },
+  { throttle: 0, duration: 2, label: 'Idle' },
+  { throttle: 30, duration: 3, label: 'Light load' },
+  { throttle: 70, duration: 3, label: 'Medium load' },
+  { throttle: 100, duration: 2, label: 'Full load' },
+  { throttle: 30, duration: 2, label: 'Decelerate' },
 ];
 
 let step = 0;
@@ -240,11 +243,11 @@ cycle.forEach((phase) => {
 });
 
 // Stop engine
-console.log("\n--- Stopping engine ---");
+console.log('\n--- Stopping engine ---');
 engine.stop();
 console.log(`Final state: ${JSON.stringify(engine.getState())}`);
 
-console.log("\n=== Use Cases ===");
+console.log('\n=== Use Cases ===');
 console.log(`
 1. Testing J1939 decoders
    const messages = engine.generateAllMessages();

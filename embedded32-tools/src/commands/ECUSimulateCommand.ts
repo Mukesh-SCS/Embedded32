@@ -1,17 +1,17 @@
-import { BaseCommand } from "./BaseCommand.js";
+import { BaseCommand } from './BaseCommand.js';
 
 /**
  * ECU Simulator Command
- * 
+ *
  * Runs virtual ECU simulators (engine, transmission, aftertreatment)
- * 
+ *
  * Usage:
  *   embedded32 ecu simulate --engine
  *   embedded32 ecu simulate --engine --transmission --aftertreatment
  */
 export class ECUSimulateCommand extends BaseCommand {
   constructor() {
-    super("ecu-simulate");
+    super('ecu-simulate');
   }
 
   getHelp(): string {
@@ -46,13 +46,13 @@ Examples:
       const useEngine = !!parsed.engine;
       const useTransmission = !!parsed.transmission;
       const useAftertreatment = !!parsed.aftertreatment;
-      const iface = parsed.iface ? (parsed.iface as string) : "can0";
-      const scenario = parsed.scenario ? (parsed.scenario as string) : "idle";
+      const iface = parsed.iface ? (parsed.iface as string) : 'can0';
+      const scenario = parsed.scenario ? (parsed.scenario as string) : 'idle';
       const faultSpn = parsed.fault ? parseInt(parsed.fault as string) : null;
       const targetRpm = parsed.rpm ? parseInt(parsed.rpm as string) : null;
 
       if (!useEngine && !useTransmission && !useAftertreatment) {
-        this.log("No simulators selected. Use --engine, --transmission, or --aftertreatment");
+        this.log('No simulators selected. Use --engine, --transmission, or --aftertreatment');
         console.log(this.getHelp());
         return;
       }
@@ -60,11 +60,11 @@ Examples:
       this.log(`Starting ECU simulators on interface: ${iface}`);
 
       const modules: string[] = [];
-      if (useEngine) modules.push("Engine ECU");
-      if (useTransmission) modules.push("Transmission ECU");
-      if (useAftertreatment) modules.push("Aftertreatment ECU");
+      if (useEngine) modules.push('Engine ECU');
+      if (useTransmission) modules.push('Transmission ECU');
+      if (useAftertreatment) modules.push('Aftertreatment ECU');
 
-      this.log(`Enabled modules: ${modules.join(", ")}`);
+      this.log(`Enabled modules: ${modules.join(', ')}`);
       this.log(`Scenario: ${scenario}`);
 
       if (faultSpn !== null) {
@@ -75,7 +75,7 @@ Examples:
         this.log(`Target RPM: ${targetRpm}`);
       }
 
-      this.log("═".repeat(80));
+      this.log('═'.repeat(80));
 
       console.log(`
 ECU SIMULATOR
@@ -160,13 +160,13 @@ Press Ctrl+C to stop simulator and exit.
       `);
 
       // Handle graceful shutdown
-      process.on("SIGINT", async () => {
-        this.log("Stopping ECU simulators...");
+      process.on('SIGINT', async () => {
+        this.log('Stopping ECU simulators...');
         await this.cleanup();
         process.exit(0);
       });
     } catch (err) {
-      this.log(`Error: ${err}`, "error");
+      this.log(`Error: ${err}`, 'error');
       await this.cleanup();
       throw err;
     }

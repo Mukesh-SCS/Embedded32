@@ -1,13 +1,13 @@
 /**
  * Transmission ECU Simulator
- * 
+ *
  * Simulates:
  * - Transmission Gear: P/R/N/D/S
  * - Output Shaft Speed
  * - Transmission Temperature: 40-120°C
  * - Fluid Pressure: 0-500 kPa
  * - Shift Points & Timing
- * 
+ *
  * Broadcasts PGN F003 (ETC1)
  */
 
@@ -90,9 +90,9 @@ export class TransmissionSimulator {
     } else {
       this.state.outputShaftSpeed += (theoreticalOutput - this.state.outputShaftSpeed) * 0.1;
       this.state.inputShaftSpeed = engineRpm;
-      
+
       // Torque converter lockup at cruise
-      this.state.torqueConverterLockup = (engineRpm > 1500 && load > 20 && load < 70);
+      this.state.torqueConverterLockup = engineRpm > 1500 && load > 20 && load < 70;
     }
 
     // Fluid pressure increases with load
@@ -126,7 +126,7 @@ export class TransmissionSimulator {
     const data = new Array(8).fill(0);
 
     // Byte 0: Transmission Current Gear (bits 0-3)
-    data[0] = (this.state.gearPosition & 0x0f);
+    data[0] = this.state.gearPosition & 0x0f;
 
     // Byte 1-2: Output Shaft Speed (0.125 rpm/bit)
     const outputSpeed = Math.round(this.state.outputShaftSpeed / 0.125);

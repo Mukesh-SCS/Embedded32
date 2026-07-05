@@ -1,10 +1,10 @@
 {
   "name": "@embedded32/sdk-js",
   "version": "1.0.0",
-  "description": "J1939 client library for interacting with Embedded32 platform",
+  "description": "JavaScript/TypeScript client SDK for J1939 learning and virtual CAN transport",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -15,35 +15,33 @@
       "import": "./dist/internal.js"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "node ../scripts/clean-dist.mjs",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "test": "npx jest --passWithNoTests",
     "dev": "tsc --watch",
     "example": "npx ts-node examples/engine-monitor.ts"
   },
   "keywords": [
-    "sdk",
+    "sae-j1939",
     "j1939",
-    "can",
-    "automotive",
-    "embedded32",
-    "vehicle"
+    "can-bus",
+    "typescript",
+    "education",
+    "simulation",
+    "embedded32"
   ],
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Mukesh-SCS/Embedded32.git",
-    "directory": "embedded32-sdk-js"
-  },
   "dependencies": {
-    "@embedded32/j1939": "*"
+    "@embedded32/j1939": "1.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
@@ -52,5 +50,21 @@
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.0",
     "typescript": "^5.0.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mukesh-SCS/Embedded32.git",
+    "directory": "embedded32-sdk-js"
+  },
+  "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-sdk-js",
+  "bugs": {
+    "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false
 }

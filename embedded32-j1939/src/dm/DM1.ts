@@ -12,8 +12,8 @@
  * - Bytes 1-7: DTC data (SPN = bytes 1-3, FMI = byte 4)
  */
 
-export const PGN_DM1 = 0x00feca;  // Active Diagnostic Trouble Codes
-export const PGN_DM2 = 0x00fecb;  // Previously Active DTCs
+export const PGN_DM1 = 0x00feca; // Active Diagnostic Trouble Codes
+export const PGN_DM2 = 0x00fecb; // Previously Active DTCs
 
 /**
  * SPN (Suspect Parameter Number) lookup table
@@ -21,71 +21,71 @@ export const PGN_DM2 = 0x00fecb;  // Previously Active DTCs
  * This is a subset for demonstration
  */
 const SPN_LOOKUP: Record<number, string> = {
-  0: "Reserved",
-  190: "Ambient Air Temperature",
-  110: "Barometric Pressure",
-  26: "Engine Coolant Temperature",
-  84: "Engine Load at Current Speed",
-  513: "Fuel Rate (per standard)",
-  514: "Fuel Rate (per shaft output)",
-  1048: "Net Battery Voltage",
-  4765: "Diesel Particulate Filter (DPF) Active Regeneration Status",
-  4794: "DEF (Diesel Exhaust Fluid) Tank Level",
-  6393: "Engine Speed",
-  6420: "Fuel Level",
-  7331: "Turbocharger Compressor Inlet Temperature",
-  9286: "Commanded Exhaust Gas Recirculation (EGR) Valve Position",
-  9287: "Actual Exhaust Gas Recirculation (EGR) Valve Position",
+  0: 'Reserved',
+  190: 'Ambient Air Temperature',
+  110: 'Barometric Pressure',
+  26: 'Engine Coolant Temperature',
+  84: 'Engine Load at Current Speed',
+  513: 'Fuel Rate (per standard)',
+  514: 'Fuel Rate (per shaft output)',
+  1048: 'Net Battery Voltage',
+  4765: 'Diesel Particulate Filter (DPF) Active Regeneration Status',
+  4794: 'DEF (Diesel Exhaust Fluid) Tank Level',
+  6393: 'Engine Speed',
+  6420: 'Fuel Level',
+  7331: 'Turbocharger Compressor Inlet Temperature',
+  9286: 'Commanded Exhaust Gas Recirculation (EGR) Valve Position',
+  9287: 'Actual Exhaust Gas Recirculation (EGR) Valve Position',
 };
 
 /**
  * FMI (Failure Mode Indicator) meanings
  */
 const FMI_MEANINGS: Record<number, string> = {
-  0: "Data Valid But Above Normal Operating Range",
-  1: "Data Valid But Below Normal Operating Range",
-  2: "Data Spikes Above Normal",
-  3: "Data Spikes Below Normal",
-  4: "Abnormal Rate of Change",
-  5: "Abnormal Frequency",
-  6: "Abnormal Duration/Timing",
-  7: "Abnormal Update Rate",
-  8: "Abnormal Behavior",
-  9: "Condition Exists",
-  10: "Recovery Time Too Long",
-  11: "Reserved",
-  12: "Bad Intelligent Device or Processor",
-  13: "Bad Calibration",
-  14: "Reserved",
-  15: "Condition Cannot Be Determined",
-  16: "Device Not Initialized",
-  17: "System Nonfunctional",
-  18: "Solenoid A Inoperative",
-  19: "Solenoid B Inoperative",
-  20: "CAN Gateway Timeout",
-  21: "CAN Termination Resistor Failure",
+  0: 'Data Valid But Above Normal Operating Range',
+  1: 'Data Valid But Below Normal Operating Range',
+  2: 'Data Spikes Above Normal',
+  3: 'Data Spikes Below Normal',
+  4: 'Abnormal Rate of Change',
+  5: 'Abnormal Frequency',
+  6: 'Abnormal Duration/Timing',
+  7: 'Abnormal Update Rate',
+  8: 'Abnormal Behavior',
+  9: 'Condition Exists',
+  10: 'Recovery Time Too Long',
+  11: 'Reserved',
+  12: 'Bad Intelligent Device or Processor',
+  13: 'Bad Calibration',
+  14: 'Reserved',
+  15: 'Condition Cannot Be Determined',
+  16: 'Device Not Initialized',
+  17: 'System Nonfunctional',
+  18: 'Solenoid A Inoperative',
+  19: 'Solenoid B Inoperative',
+  20: 'CAN Gateway Timeout',
+  21: 'CAN Termination Resistor Failure',
 };
 
 /**
  * Diagnostic Trouble Code (DTC) representation
  */
 export interface DiagnosticTroubleCode {
-  spn: number;                    // Suspect Parameter Number (21 bits)
-  fmi: number;                    // Failure Mode Indicator (5 bits)
-  cm: number;                     // Conversion Method (1 bit, reserved)
-  oc: number;                     // Occurrence count (7 bits)
-  spnDescription?: string;        // Human-readable SPN name
-  fmiDescription?: string;        // Human-readable FMI name
+  spn: number; // Suspect Parameter Number (21 bits)
+  fmi: number; // Failure Mode Indicator (5 bits)
+  cm: number; // Conversion Method (1 bit, reserved)
+  oc: number; // Occurrence count (7 bits)
+  spnDescription?: string; // Human-readable SPN name
+  fmiDescription?: string; // Human-readable FMI name
 }
 
 /**
  * DM1 Message structure
  */
 export interface DM1Message {
-  pgn: number;                     // Should be 0xFECA
-  sourceAddress: number;           // Device that sent this
-  timestamp?: number;              // When message was received
-  lamps: LampStatus;              // Lamp status flags
+  pgn: number; // Should be 0xFECA
+  sourceAddress: number; // Device that sent this
+  timestamp?: number; // When message was received
+  lamps: LampStatus; // Lamp status flags
   activeDTCs: DiagnosticTroubleCode[]; // Active fault codes
 }
 
@@ -104,11 +104,11 @@ export interface DM2Message {
  * Lamp status flags (from byte 0 of DM message)
  */
 export interface LampStatus {
-  mil: boolean;          // Malfunction Indicator Lamp
-  flash: boolean;        // Flash lamp at specified rate
-  amber: boolean;        // Amber warning lamp
-  protect: boolean;      // Protect lamp / Red indicator
-  reserved: number;      // Reserved bits
+  mil: boolean; // Malfunction Indicator Lamp
+  flash: boolean; // Flash lamp at specified rate
+  amber: boolean; // Amber warning lamp
+  protect: boolean; // Protect lamp / Red indicator
+  reserved: number; // Reserved bits
 }
 
 /**
@@ -116,11 +116,11 @@ export interface LampStatus {
  */
 function parseLampStatus(byte0: number): LampStatus {
   return {
-    mil: (byte0 & 0x04) !== 0,       // Bit 2
-    flash: (byte0 & 0x08) !== 0,     // Bit 3
-    amber: (byte0 & 0x20) !== 0,     // Bit 5
-    protect: (byte0 & 0x40) !== 0,   // Bit 6
-    reserved: byte0 & 0x93,           // Bits 0, 1, 4, 7
+    mil: (byte0 & 0x04) !== 0, // Bit 2
+    flash: (byte0 & 0x08) !== 0, // Bit 3
+    amber: (byte0 & 0x20) !== 0, // Bit 5
+    protect: (byte0 & 0x40) !== 0, // Bit 6
+    reserved: byte0 & 0x93, // Bits 0, 1, 4, 7
   };
 }
 
@@ -131,7 +131,12 @@ function parseLampStatus(byte0: number): LampStatus {
  *   Byte 3: CM (1 bit) - Conversion Method
  *   Byte 4: FMI (5 bits) + OC (7 bits split across 4 bits of FMI + 4 bits OC)
  */
-function parseDTC(byte1: number, byte2: number, byte3: number, byte4: number): DiagnosticTroubleCode {
+function parseDTC(
+  byte1: number,
+  byte2: number,
+  byte3: number,
+  byte4: number
+): DiagnosticTroubleCode {
   // Extract SPN (21 bits from bytes 1-3)
   const spn = (byte1 & 0xff) | ((byte2 & 0xff) << 8) | ((byte3 & 0x1f) << 16);
 
@@ -167,7 +172,7 @@ export class DiagnosticsManager {
    */
   processDM1(sourceAddress: number, data: number[]): DM1Message | null {
     if (data.length < 8) {
-      console.error("[DM1] Invalid DM1 message length:", data.length);
+      console.error('[DM1] Invalid DM1 message length:', data.length);
       return null;
     }
 
@@ -209,7 +214,7 @@ export class DiagnosticsManager {
    */
   processDM2(sourceAddress: number, data: number[]): DM2Message | null {
     if (data.length < 8) {
-      console.error("[DM2] Invalid DM2 message length:", data.length);
+      console.error('[DM2] Invalid DM2 message length:', data.length);
       return null;
     }
 

@@ -1,32 +1,46 @@
 {
   "name": "@embedded32/tools",
   "version": "1.0.0",
-  "description": "Embedded32 command line tools",
-  "main": "dist/cli.js",
-  "types": "dist/cli.d.ts",
+  "description": "Command-line CAN and J1939 monitoring, logging, and simulation tools for Embedded32",
+  "main": "./dist/cli.js",
+  "types": "./dist/cli.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    }
+  },
   "bin": {
-    "embedded32": "dist/cli.js"
+    "embedded32-tools": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "node ../scripts/clean-dist.mjs",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "dev": "tsc -w -p tsconfig.json",
-    "test": "echo \"no tests yet\""
+    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js"
   },
   "dependencies": {
-    "@embedded32/can": "*",
-    "@embedded32/core": "*",
-    "@embedded32/j1939": "*",
-    "@embedded32/sim": "*",
+    "@embedded32/can": "1.0.0",
+    "@embedded32/core": "1.0.0",
+    "@embedded32/j1939": "1.0.0",
+    "@embedded32/sim": "1.0.0",
     "commander": "^14.0.2",
     "ws": "^8.18.3"
   },
   "devDependencies": {
+    "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
     "@types/ws": "^8.18.1",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.0.0"
   },
   "publishConfig": {
@@ -37,5 +51,23 @@
     "url": "https://github.com/Mukesh-SCS/Embedded32.git",
     "directory": "embedded32-tools"
   },
-  "license": "MIT"
+  "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-tools",
+  "bugs": {
+    "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
+  },
+  "keywords": [
+    "can-bus",
+    "sae-j1939",
+    "diagnostics",
+    "simulation",
+    "typescript",
+    "education",
+    "embedded32"
+  ],
+  "author": "Mukesh Mani Tripathi",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false
 }

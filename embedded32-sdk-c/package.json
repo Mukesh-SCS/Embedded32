@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "build": "echo 'Use CMake or make to build the C SDK'",
+    "typecheck": "node -e \"console.log('No TypeScript in @embedded32/sdk-c')\"",
+    "clean": "node -e \"console.log('No dist to clean in @embedded32/sdk-c')\"",
     "test": "echo 'Run tests using your C test framework'"
   },
   "keywords": [

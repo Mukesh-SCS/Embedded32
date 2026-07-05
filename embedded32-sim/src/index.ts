@@ -1,13 +1,13 @@
 /**
  * Vehicle Simulation Runtime
- * 
+ *
  * Coordinates all ECU simulators and broadcasts realistic J1939 messages
  */
 
-import { EngineSimulator, EngineScenario } from "./EngineSimulator.js";
-import { TransmissionSimulator, GearPosition } from "./TransmissionSimulator.js";
-import { AftertreatmentSimulator } from "./AftertreatmentSimulator.js";
-import { BrakeSimulator } from "./BrakeSimulator.js";
+import { EngineSimulator, EngineScenario } from './EngineSimulator.js';
+import { TransmissionSimulator, GearPosition } from './TransmissionSimulator.js';
+import { AftertreatmentSimulator } from './AftertreatmentSimulator.js';
+import { BrakeSimulator } from './BrakeSimulator.js';
 
 export interface SimulationConfig {
   enabled: {
@@ -118,7 +118,7 @@ export class VehicleSimulator {
       this.transmission.setGearPosition(GearPosition.Drive);
     }
 
-    this.emit("tick", { 
+    this.emit('tick', {
       engine: engineState,
       vehicleSpeed: this.vehicleSpeed,
     });
@@ -133,11 +133,11 @@ export class VehicleSimulator {
     // Engine ECU (Source Address 0x00)
     if (this.config.enabled.engine) {
       const engineState = this.engine.getState();
-      
+
       // PGN F004 - Electronic Engine Controller 1
       messages.push({
         pgn: 0xf004,
-        name: "Electronic Engine Controller 1 (EEC1)",
+        name: 'Electronic Engine Controller 1 (EEC1)',
         sa: 0x00,
         data: this.engine.encodeEEC1(),
       });
@@ -145,7 +145,7 @@ export class VehicleSimulator {
       // PGN FEE9 - Engine Temperature 1
       messages.push({
         pgn: 0xfee9,
-        name: "Engine Temperature 1 (ET1)",
+        name: 'Engine Temperature 1 (ET1)',
         sa: 0x00,
         data: this.engine.encodeET1(),
       });
@@ -153,7 +153,7 @@ export class VehicleSimulator {
       // PGN FEF2 - Fuel Economy
       messages.push({
         pgn: 0xfef2,
-        name: "Fuel Economy (FE)",
+        name: 'Fuel Economy (FE)',
         sa: 0x00,
         data: this.engine.encodeFE(),
       });
@@ -162,11 +162,11 @@ export class VehicleSimulator {
     // Transmission ECU (Source Address 0x03)
     if (this.config.enabled.transmission) {
       const transState = this.transmission.getState();
-      
+
       // PGN F003 - Electronic Transmission Controller 1
       messages.push({
         pgn: 0xf003,
-        name: "Electronic Transmission Controller 1 (ETC1)",
+        name: 'Electronic Transmission Controller 1 (ETC1)',
         sa: 0x03,
         data: this.transmission.encodeETC1(),
       });
@@ -174,7 +174,7 @@ export class VehicleSimulator {
       // PGN F00C - Transmission Fluids
       messages.push({
         pgn: 0xf00c,
-        name: "Transmission Fluids (TF)",
+        name: 'Transmission Fluids (TF)',
         sa: 0x03,
         data: this.transmission.encodeTF(),
       });
@@ -182,7 +182,7 @@ export class VehicleSimulator {
       // PGN FE6C - Transmission Control 1
       messages.push({
         pgn: 0xfe6c,
-        name: "Transmission Control 1 (TC1)",
+        name: 'Transmission Control 1 (TC1)',
         sa: 0x03,
         data: this.transmission.encodeTC1(),
       });
@@ -193,7 +193,7 @@ export class VehicleSimulator {
       // PGN FEEE - Anti-lock Braking System
       messages.push({
         pgn: 0xfeee,
-        name: "Anti-lock Braking System (ABS)",
+        name: 'Anti-lock Braking System (ABS)',
         sa: 0x0b,
         data: this.brakes.encodeABS(),
       });
@@ -201,7 +201,7 @@ export class VehicleSimulator {
       // PGN FEAE - Air Suspension Control 2 (includes brake pressure)
       messages.push({
         pgn: 0xfeae,
-        name: "Air Suspension Control 2 / Brake Pressure",
+        name: 'Air Suspension Control 2 / Brake Pressure',
         sa: 0x0b,
         data: this.brakes.encodeBrakePressure(),
       });
@@ -212,7 +212,7 @@ export class VehicleSimulator {
       // PGN FEDF - DEF Tank Level
       messages.push({
         pgn: 0xfedf,
-        name: "Aftertreatment 1 Diesel Exhaust Fluid Tank 1 (AT1T1)",
+        name: 'Aftertreatment 1 Diesel Exhaust Fluid Tank 1 (AT1T1)',
         sa: 0x0f,
         data: this.aftertreatment.encodeDEFLevel(),
       });
@@ -220,7 +220,7 @@ export class VehicleSimulator {
       // PGN FEEF - NOx Levels / EGR
       messages.push({
         pgn: 0xfeef,
-        name: "Engine Exhaust Gas Recirculation 1 (EGR1)",
+        name: 'Engine Exhaust Gas Recirculation 1 (EGR1)',
         sa: 0x0f,
         data: this.aftertreatment.encodeNOx(),
       });
@@ -228,13 +228,13 @@ export class VehicleSimulator {
       // PGN FEE5 - DPF Status
       messages.push({
         pgn: 0xfee5,
-        name: "Aftertreatment 1 Diesel Particulate Filter Control (A1DPFC)",
+        name: 'Aftertreatment 1 Diesel Particulate Filter Control (A1DPFC)',
         sa: 0x0f,
         data: this.aftertreatment.encodeDPFStatus(),
       });
     }
 
-    this.emit("message", messages);
+    this.emit('message', messages);
   }
 
   /**
@@ -244,9 +244,7 @@ export class VehicleSimulator {
     return {
       engine: this.config.enabled.engine ? this.engine.getState() : null,
       transmission: this.config.enabled.transmission ? this.transmission.getState() : null,
-      aftertreatment: this.config.enabled.aftertreatment
-        ? this.aftertreatment.getState()
-        : null,
+      aftertreatment: this.config.enabled.aftertreatment ? this.aftertreatment.getState() : null,
       brakes: this.config.enabled.brakes ? this.brakes.getState() : null,
       vehicleSpeed: this.vehicleSpeed,
     };
@@ -278,7 +276,7 @@ export class VehicleSimulator {
   private emit(event: string, data: any) {
     const callbacks = this.listeners.get(event);
     if (callbacks) {
-      callbacks.forEach(cb => cb(data));
+      callbacks.forEach((cb) => cb(data));
     }
   }
 
@@ -287,13 +285,13 @@ export class VehicleSimulator {
    */
   static getScenario(name: string): EngineScenario {
     switch (name) {
-      case "idle":
+      case 'idle':
         return EngineSimulator.getIdleScenario();
-      case "accel":
+      case 'accel':
         return EngineSimulator.getAccelerationScenario();
-      case "cruise":
+      case 'cruise':
         return EngineSimulator.getCruiseScenario();
-      case "decel":
+      case 'decel':
         return EngineSimulator.getDecelerationScenario();
       default:
         return EngineSimulator.getIdleScenario();
@@ -302,13 +300,13 @@ export class VehicleSimulator {
 }
 
 export { EngineSimulator, TransmissionSimulator, AftertreatmentSimulator, BrakeSimulator };
-export { GearPosition } from "./TransmissionSimulator.js";
-export { RegenerationStatus } from "./AftertreatmentSimulator.js";
+export { GearPosition } from './TransmissionSimulator.js';
+export { RegenerationStatus } from './AftertreatmentSimulator.js';
 
 // Phase 2 - Locked Interfaces and Implementations
-export * from "./interfaces/SimPort.js";
-export { DeterministicScheduler } from "./scheduler/DeterministicScheduler.js";
-export { EngineECU } from "./ecus/EngineECU.js";
-export { TransmissionECU } from "./ecus/TransmissionECU.js";
-export { DiagnosticToolECU } from "./ecus/DiagnosticToolECU.js";
-export { SimulationRunner } from "./SimulationRunner.js";
+export * from './interfaces/SimPort.js';
+export { DeterministicScheduler } from './scheduler/DeterministicScheduler.js';
+export { EngineECU } from './ecus/EngineECU.js';
+export { TransmissionECU } from './ecus/TransmissionECU.js';
+export { DiagnosticToolECU } from './ecus/DiagnosticToolECU.js';
+export { SimulationRunner } from './SimulationRunner.js';

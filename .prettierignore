@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.tgz
+package-lock.json
+**/LICENSE
+docs/api/**
+!docs/api/README.md
+apps/site/.next/**
+apps/site/out/**
+apps/site/public/api-ref/**
+apps/demo/src/traces.ts

@@ -39,7 +39,7 @@ describe('Runtime', () => {
   beforeEach(() => {
     tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-test-'));
     configPath = path.join(tempDir, 'config.json');
-    
+
     // Create a test config file
     const config = { logLevel: 'info' };
     fs.writeFileSync(configPath, JSON.stringify(config));
@@ -53,7 +53,7 @@ describe('Runtime', () => {
         // Ignore errors during cleanup
       }
     }
-    
+
     if (fs.existsSync(tempDir)) {
       fs.rmSync(tempDir, { recursive: true });
     }
@@ -71,9 +71,9 @@ describe('Runtime', () => {
     });
 
     it('should load configuration file', async () => {
-      runtime = new Runtime({ 
+      runtime = new Runtime({
         logLevel: 'info',
-        configPath 
+        configPath,
       });
       expect(runtime).toBeDefined();
     });
@@ -169,7 +169,7 @@ describe('Runtime', () => {
 
       await runtime.start();
       await runtime.stop();
-      
+
       // Reset mocks
       module.onInit.mockClear();
       module.onStart.mockClear();
@@ -234,7 +234,7 @@ describe('Runtime', () => {
 
     it('should handle module initialization errors gracefully', async () => {
       const module = new MockModule('error-module');
-      
+
       runtime.registerModule(module);
 
       // Mock onInit to throw error
@@ -249,9 +249,9 @@ describe('Runtime', () => {
 
     it('should handle missing config file', () => {
       // Should not throw, should use default config
-      runtime = new Runtime({ 
+      runtime = new Runtime({
         logLevel: 'info',
-        configPath: '/non/existent/path.json'
+        configPath: '/non/existent/path.json',
       });
 
       expect(runtime).toBeDefined();

@@ -1,6 +1,6 @@
-import { decodeJ1939, DecodedJ1939Message } from "../pgn/PGNDecoder.js";
-import { buildJ1939Id } from "../id/J1939Id.js";
-import { CANFrame, CANInterface } from "@embedded32/can";
+import { decodeJ1939, DecodedJ1939Message } from '../pgn/PGNDecoder.js';
+import { buildJ1939Id } from '../id/J1939Id.js';
+import { CANFrame, CANInterface } from '@embedded32/can';
 
 /**
  * J1939 ↔ CAN Binding
@@ -32,7 +32,10 @@ import { CANFrame, CANInterface } from "@embedded32/can";
  *   });
  */
 export class J1939CANBinding {
-  constructor(private can: CANInterface, private bus: any) {}
+  constructor(
+    private can: CANInterface,
+    private bus: any
+  ) {}
 
   start(): void {
     this.setupRxPath();
@@ -46,11 +49,11 @@ export class J1939CANBinding {
     this.can.onMessage((frame: CANFrame) => {
       try {
         const decoded = decodeJ1939(frame);
-        this.bus.publish("j1939.rx", {
+        this.bus.publish('j1939.rx', {
           payload: decoded,
         });
       } catch (err) {
-        console.error("[J1939-CAN] RX error:", err);
+        console.error('[J1939-CAN] RX error:', err);
       }
     });
   }
@@ -59,13 +62,13 @@ export class J1939CANBinding {
    * J1939 → CAN: Subscribe to j1939.tx and send via CAN
    */
   private setupTxPath(): void {
-    this.bus.subscribe("j1939.tx", (msg: any) => {
+    this.bus.subscribe('j1939.tx', (msg: any) => {
       try {
         const payload = msg.payload;
 
         // Validate payload
-        if (!payload || typeof payload.pgn !== "number" || !Array.isArray(payload.data)) {
-          console.error("[J1939-CAN] Invalid j1939.tx payload");
+        if (!payload || typeof payload.pgn !== 'number' || !Array.isArray(payload.data)) {
+          console.error('[J1939-CAN] Invalid j1939.tx payload');
           return;
         }
 
@@ -86,7 +89,7 @@ export class J1939CANBinding {
 
         this.can.send(frame);
       } catch (err) {
-        console.error("[J1939-CAN] TX error:", err);
+        console.error('[J1939-CAN] TX error:', err);
       }
     });
   }

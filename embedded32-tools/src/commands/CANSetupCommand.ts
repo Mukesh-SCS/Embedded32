@@ -1,11 +1,11 @@
 /**
  * Virtual CAN Setup Command
- * 
+ *
  * Sets up virtual CAN interface (vcan0) on Linux/WSL
  */
 
-import { exec } from "child_process";
-import { promisify } from "util";
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
@@ -21,7 +21,7 @@ export interface CANSetupResult {
  */
 function detectPlatform(): 'linux' | 'wsl' | 'unsupported' {
   const platform = process.platform;
-  
+
   if (platform === 'linux') {
     // Check for WSL
     try {
@@ -37,7 +37,7 @@ function detectPlatform(): 'linux' | 'wsl' | 'unsupported' {
     }
     return 'linux';
   }
-  
+
   return 'unsupported';
 }
 
@@ -82,13 +82,14 @@ async function isInterfaceUp(ifname: string): Promise<boolean> {
  */
 export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetupResult> {
   const platform = detectPlatform();
-  
+
   if (platform === 'unsupported') {
     return {
       success: false,
       interface: ifname,
       platform: process.platform,
-      message: `Virtual CAN is not supported on ${process.platform}.\n\n` +
+      message:
+        `Virtual CAN is not supported on ${process.platform}.\n\n` +
         `To use virtual CAN, you need:\n` +
         `  • Linux with SocketCAN support, or\n` +
         `  • Windows with WSL2 (Windows Subsystem for Linux)\n\n` +
@@ -96,7 +97,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         `  1. Install WSL2: wsl --install\n` +
         `  2. Install Ubuntu: wsl --install -d Ubuntu\n` +
         `  3. Run this command inside WSL: embedded32 can up ${ifname}\n\n` +
-        `The simulation will use an in-memory virtual CAN bus instead.`
+        `The simulation will use an in-memory virtual CAN bus instead.`,
     };
   }
 
@@ -116,7 +117,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         success: false,
         interface: ifname,
         platform,
-        message: `Failed to load vcan module. Try:\n  sudo modprobe vcan\n\nError: ${e.message}`
+        message: `Failed to load vcan module. Try:\n  sudo modprobe vcan\n\nError: ${e.message}`,
       };
     }
   } else {
@@ -135,7 +136,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         success: false,
         interface: ifname,
         platform,
-        message: `Failed to create interface. Try:\n  sudo ip link add dev ${ifname} type vcan\n\nError: ${e.message}`
+        message: `Failed to create interface. Try:\n  sudo ip link add dev ${ifname} type vcan\n\nError: ${e.message}`,
       };
     }
   } else {
@@ -154,7 +155,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         success: false,
         interface: ifname,
         platform,
-        message: `Failed to bring interface up. Try:\n  sudo ip link set up ${ifname}\n\nError: ${e.message}`
+        message: `Failed to bring interface up. Try:\n  sudo ip link set up ${ifname}\n\nError: ${e.message}`,
       };
     }
   } else {
@@ -175,7 +176,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
     success: true,
     interface: ifname,
     platform,
-    message: `${ifname} is ready for CAN traffic`
+    message: `${ifname} is ready for CAN traffic`,
   };
 }
 

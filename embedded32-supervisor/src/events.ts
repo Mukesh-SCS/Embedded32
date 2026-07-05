@@ -14,7 +14,7 @@ export class RuntimeEventBus extends EventEmitter {
       type: 'module-started',
       moduleId,
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -24,7 +24,7 @@ export class RuntimeEventBus extends EventEmitter {
       type: 'module-stopped',
       moduleId,
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -34,7 +34,7 @@ export class RuntimeEventBus extends EventEmitter {
       type: 'module-failed',
       moduleId,
       timestamp: Date.now(),
-      data: { error: error.message }
+      data: { error: error.message },
     });
   }
 
@@ -43,7 +43,7 @@ export class RuntimeEventBus extends EventEmitter {
     this.recordEvent({
       type: 'config-loaded',
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -52,7 +52,7 @@ export class RuntimeEventBus extends EventEmitter {
     this.recordEvent({
       type: 'supervisor-started',
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -61,7 +61,7 @@ export class RuntimeEventBus extends EventEmitter {
     this.recordEvent({
       type: 'supervisor-stopped',
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -70,7 +70,7 @@ export class RuntimeEventBus extends EventEmitter {
     this.recordEvent({
       type: 'health-check',
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
