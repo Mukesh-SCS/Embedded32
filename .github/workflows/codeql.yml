@@ -34,5 +34,8 @@ jobs:
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v4
+        env:
+          # Local data-extension pack; packs: in codeql-config.yml only accepts GHCR packages.
+          CODEQL_ACTION_EXTRA_OPTIONS: '{"database":{"run-queries":["--additional-packs=${{ github.workspace }}/.github/codeql","--extension-packs=embedded32/log-sanitize-model"]}}'
         with:
           category: /language:javascript-typescript

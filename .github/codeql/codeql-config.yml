@@ -1,5 +1,4 @@
 name: embedded32-codeql
-packs:
-  - embedded32/log-sanitize-model
-resolve packs:
-  - embedded32/log-sanitize-model
+# Local model pack (embedded32/log-sanitize-model) is loaded via
+# CODEQL_ACTION_EXTRA_OPTIONS in .github/workflows/codeql.yml — packs: here
+# only accepts published GHCR packages and would fail init otherwise.

@@ -1,6 +1,7 @@
 name: embedded32/log-sanitize-model
 version: 0.0.1
-libraryPathDependencies:
-  - codeql/javascript-all
+library: true
+extensionTargets:
+  codeql/javascript-all: '*'
 dataExtensions:
   - log-sanitize-model.yml

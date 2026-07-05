@@ -22,12 +22,12 @@ describe('Logger', () => {
   describe('log levels', () => {
     it('should log info messages with constant format strings', () => {
       logger.info('Test info message');
-      expect(console.log).toHaveBeenCalledWith('%s', expect.any(String));
+      expect(console.log).toHaveBeenCalledWith('%s %s', expect.any(String), expect.any(String));
     });
 
     it('should log warn messages', () => {
       logger.warn('Test warning message');
-      expect(console.warn).toHaveBeenCalledWith('%s', expect.any(String));
+      expect(console.warn).toHaveBeenCalledWith('%s %s', expect.any(String), expect.any(String));
     });
 
     it('should log error messages', () => {
@@ -46,8 +46,8 @@ describe('Logger', () => {
     it('escapes forged log lines in messages', () => {
       logger.warn('client-1\n[ERROR] forged log entry');
       const call = (console.warn as jest.Mock).mock.calls[0];
-      expect(call[0]).toBe('%s');
-      expect(String(call[1])).toContain('client-1\\n[ERROR] forged log entry');
+      expect(call[0]).toBe('%s %s');
+      expect(String(call[2] ?? '')).toContain('client-1\\n[ERROR] forged log entry');
     });
   });
 
