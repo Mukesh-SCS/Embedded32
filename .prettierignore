@@ -9,4 +9,5 @@ docs/api/**
 apps/site/.next/**
 apps/site/out/**
 apps/site/public/api-ref/**
+apps/site/next-env.d.ts
 apps/demo/src/traces.ts
