@@ -10,7 +10,8 @@ export const SCENARIO_META: Record<string, ScenarioMeta> = {
     ecus: ['Engine ECU', 'Transmission ECU'],
     observations: ['Steady engine speed', 'Coolant within range', 'No fault lamps'],
     faultSeverity: 'none',
-    studentNotice: 'Notice how each ECU broadcasts on its own schedule with distinct source addresses.',
+    studentNotice:
+      'Notice how each ECU broadcasts on its own schedule with distinct source addresses.',
     relatedLab: 'lab-01-can-basics',
   },
   'engine-overheat': {
@@ -49,7 +50,8 @@ export const SCENARIO_META: Record<string, ScenarioMeta> = {
   'address-claim-conflict': {
     scenario: 'address-claim-conflict',
     title: 'Address Claim Conflict',
-    description: 'Two ECUs send Address Claimed (PGN 60928) for the same source address with different NAME values',
+    description:
+      'Two ECUs send Address Claimed (PGN 60928) for the same source address with different NAME values',
     concepts: ['Address claiming', 'NAME arbitration', 'PGN 60928'],
     ecus: ['Engine ECU', 'Transmission ECU'],
     observations: ['Two Address Claimed frames', 'Same source address', 'Different NAME values'],
@@ -60,7 +62,8 @@ export const SCENARIO_META: Record<string, ScenarioMeta> = {
   'multi-packet-message': {
     scenario: 'multi-packet-message',
     title: 'Multi-Packet Message (BAM)',
-    description: 'TP.CM BAM announce and TP.DT data frames for teaching (not full transport validation)',
+    description:
+      'TP.CM BAM announce and TP.DT data frames for teaching (not full transport validation)',
     concepts: ['TP.CM', 'TP.DT', 'BAM reassembly'],
     ecus: ['Engine ECU'],
     observations: ['BAM announcement', 'Sequential TP.DT packets', 'Reassembly progress'],

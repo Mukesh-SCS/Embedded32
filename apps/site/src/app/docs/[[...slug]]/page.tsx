@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!doc) return { title: 'Documentation' };
   return {
     title: doc.meta.title,
-    description: `${doc.meta.title} — Embedded32 documentation`,
+    description: `${doc.meta.title} - Embedded32 documentation`,
   };
 }
 

@@ -11,6 +11,16 @@ const badgeVariant: Record<Variant, string | undefined> = {
   dark: styles.badgeDark,
 };
 
-export function Badge({ variant = 'default', children }: { variant?: Variant; children: React.ReactNode }) {
-  return <span className={[styles.badge, badgeVariant[variant]].filter(Boolean).join(' ')}>{children}</span>;
+export function Badge({
+  variant = 'default',
+  children,
+}: {
+  variant?: Variant;
+  children: React.ReactNode;
+}) {
+  return (
+    <span className={[styles.badge, badgeVariant[variant]].filter(Boolean).join(' ')}>
+      {children}
+    </span>
+  );
 }

@@ -6,10 +6,10 @@ Private web dashboard for real-time CAN/J1939 monitoring during local developmen
 
 Browser-based dashboard components for monitoring Embedded32 simulations:
 
-- **Bus metrics** — frames/sec and estimated bus load
-- **PGN table** — browse decoded messages
-- **DM1 viewer** — active fault codes
-- **Filter and search panels** — narrow live traffic
+- **Bus metrics** - frames/sec and estimated bus load
+- **PGN table** - browse decoded messages
+- **DM1 viewer** - active fault codes
+- **Filter and search panels** - narrow live traffic
 
 This package is **private** and not published to npm. Use it from the monorepo:
 
@@ -31,7 +31,7 @@ npm run typecheck
 
 ## Scope notes
 
-- Requires a running simulation or gateway feeding dashboard state — not a hosted SaaS product
+- Requires a running simulation or gateway feeding dashboard state - not a hosted SaaS product
 - SocketCAN and MQTT integration are local-lab workflows only
 - Not part of the public GitHub Pages site
 

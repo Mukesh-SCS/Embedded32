@@ -61,7 +61,11 @@ export class MQTTClient extends EventEmitter {
         this.client = connect(this.options.brokerUrl, clientOptions);
 
         this.client.on('connect', () => {
-          safeConsoleWrite('info', '[MQTT]', `Connected: ${sanitizeLogText(this.options.clientId)}`);
+          safeConsoleWrite(
+            'info',
+            '[MQTT]',
+            `Connected: ${sanitizeLogText(this.options.clientId)}`
+          );
           this.isConnected = true;
           this.reconnectAttempts = 0;
 

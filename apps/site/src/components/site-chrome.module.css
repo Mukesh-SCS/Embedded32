@@ -61,6 +61,10 @@
 
 .mobileNav {
   display: none;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem 0.5rem;
 }
 
 .topNav {

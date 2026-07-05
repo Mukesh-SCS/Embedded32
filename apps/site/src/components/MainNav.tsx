@@ -83,7 +83,6 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={active ? styles.activeNav : undefined}
-              data-testid={item.testId}
             >
               {item.label}
             </Link>

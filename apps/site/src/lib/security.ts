@@ -2,13 +2,7 @@ export const LAB_SLUG_PATTERN = /^lab-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const MAX_LAB_SLUG_LENGTH = 64;
 export const MAX_TITLE_LENGTH = 200;
 
-const BLOCKED_URL_SCHEMES = new Set([
-  'javascript:',
-  'data:',
-  'vbscript:',
-  'file:',
-  'blob:',
-]);
+const BLOCKED_URL_SCHEMES = new Set(['javascript:', 'data:', 'vbscript:', 'file:', 'blob:']);
 
 const HTML_TAG_PATTERN = /<[^>]*>/g;
 const CONTROL_CHARS = /[\u0000-\u001F\u007F]/g;
@@ -35,9 +29,7 @@ export function sanitizePlainTextTitle(title: string, fallback = 'Untitled'): st
     .replace(/\s+/g, ' ')
     .trim();
   if (!stripped) return fallback;
-  return stripped.length > MAX_TITLE_LENGTH
-    ? `${stripped.slice(0, MAX_TITLE_LENGTH)}…`
-    : stripped;
+  return stripped.length > MAX_TITLE_LENGTH ? `${stripped.slice(0, MAX_TITLE_LENGTH)}…` : stripped;
 }
 
 /**
@@ -64,7 +56,10 @@ function hasBlockedScheme(value: string): boolean {
   return BLOCKED_SCHEME_PREFIXES.some((scheme) => lower.startsWith(scheme));
 }
 
-export function resolveSafeUrl(href: string, options?: { allowHttp?: boolean }): SafeUrlResult | null {
+export function resolveSafeUrl(
+  href: string,
+  options?: { allowHttp?: boolean }
+): SafeUrlResult | null {
   if (!href || typeof href !== 'string') return null;
   const trimmed = href.trim();
   if (!trimmed) return null;
@@ -81,7 +76,11 @@ export function resolveSafeUrl(href: string, options?: { allowHttp?: boolean }):
     return { kind: 'relative', href: trimmed };
   }
 
-  if (trimmed.startsWith('./') || trimmed.startsWith('../') || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+  if (
+    trimmed.startsWith('./') ||
+    trimmed.startsWith('../') ||
+    !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)
+  ) {
     if (trimmed.includes('..') || trimmed.includes('\\')) {
       return null;
     }
@@ -114,7 +113,7 @@ export function resolveSafeUrl(href: string, options?: { allowHttp?: boolean }):
 }
 
 /**
- * Validate image sources — repository-relative or approved HTTPS only.
+ * Validate image sources - repository-relative or approved HTTPS only.
  */
 export function resolveSafeImageSrc(
   src: string,

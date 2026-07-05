@@ -79,9 +79,7 @@ describe('CanEthernetBridge integration', () => {
 
     bus.emitFrame(buildJ1939Id({ pgn: 0xf004, sa: 0x01 }), [1, 2, 3]);
 
-    expect(eth.broadcast).toHaveBeenCalledWith(
-      expect.objectContaining({ data: [2, 3, 4] })
-    );
+    expect(eth.broadcast).toHaveBeenCalledWith(expect.objectContaining({ data: [2, 3, 4] }));
   });
 
   it('ignores eth-to-can rules for CAN ingress', async () => {

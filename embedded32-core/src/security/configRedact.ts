@@ -1,5 +1,4 @@
-const SECRET_KEY_PATTERN =
-  /(password|passwd|secret|token|api[_-]?key|authorization|credential)/i;
+const SECRET_KEY_PATTERN = /(password|passwd|secret|token|api[_-]?key|authorization|credential)/i;
 
 /**
  * Produce a log-safe copy of configuration with secret fields redacted.

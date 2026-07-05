@@ -35,15 +35,7 @@ const SCAN_ROOTS = [
   'examples',
 ];
 
-const SKIP_DIRS = new Set([
-  'node_modules',
-  '.next',
-  'out',
-  'dist',
-  'coverage',
-  'api',
-  '.git',
-]);
+const SKIP_DIRS = new Set(['node_modules', '.next', 'out', 'dist', 'coverage', 'api', '.git']);
 
 /** phrase, optional allowed path substring (if phrase is OK in that file) */
 const OBSOLETE_PATTERNS = [
@@ -60,7 +52,10 @@ const OBSOLETE_PATTERNS = [
   { pattern: /vercel\.com/i, hint: 'GitHub Pages is the deployment target' },
   { pattern: /deploy to Vercel/i, hint: 'Use GitHub Pages' },
   { pattern: /Complete SAE J1939 implementation/i, hint: 'Use educational J1939 subset' },
-  { pattern: /npm install embedded32-dashboard/i, hint: 'Dashboard is @embedded32/dashboard and private' },
+  {
+    pattern: /npm install embedded32-dashboard/i,
+    hint: 'Dashboard is @embedded32/dashboard and private',
+  },
   { pattern: /npm install -g embedded32-cli/i, hint: 'Use @embedded32/cli' },
   { pattern: /Planned lab 4/i, hint: 'Lab 4 exists at labs/lab-04-diagnostics-and-faults' },
   { pattern: /structured coursework \(Phase 5\)/i, hint: 'Phase 5 is complete' },
@@ -92,7 +87,12 @@ function collectFiles() {
     if (fs.statSync(full).isDirectory()) walk(full).forEach((f) => files.add(f));
     else files.add(full);
   }
-  return [...files].filter((f) => !f.includes(`${path.sep}docs${path.sep}maintainers${path.sep}documentation-consistency-audit.md`));
+  return [...files].filter(
+    (f) =>
+      !f.includes(
+        `${path.sep}docs${path.sep}maintainers${path.sep}documentation-consistency-audit.md`
+      )
+  );
 }
 
 function main() {

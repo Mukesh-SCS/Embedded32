@@ -3,7 +3,19 @@ import styles from '../demo.module.css';
 
 type Props = Pick<
   TracePlayerControls,
-  'play' | 'pause' | 'reset' | 'restart' | 'stepForward' | 'stepBackward' | 'setSpeed' | 'setLoop' | 'seekTime' | 'snapshot' | 'speed' | 'speeds' | 'loop'
+  | 'play'
+  | 'pause'
+  | 'reset'
+  | 'restart'
+  | 'stepForward'
+  | 'stepBackward'
+  | 'setSpeed'
+  | 'setLoop'
+  | 'seekTime'
+  | 'snapshot'
+  | 'speed'
+  | 'speeds'
+  | 'loop'
 > & {
   scenario: string;
   scenarios: { scenario: string; title?: string }[];
@@ -86,7 +98,12 @@ export function DemoToolbar({
         <button type="button" data-testid="demo-play" onClick={play} disabled={state === 'playing'}>
           Play
         </button>
-        <button type="button" data-testid="demo-pause" onClick={pause} disabled={state !== 'playing'}>
+        <button
+          type="button"
+          data-testid="demo-pause"
+          onClick={pause}
+          disabled={state !== 'playing'}
+        >
           Pause
         </button>
         <button type="button" data-testid="demo-step-back" onClick={stepBackward}>

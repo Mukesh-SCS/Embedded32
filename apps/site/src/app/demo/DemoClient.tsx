@@ -28,7 +28,9 @@ export function DemoClient() {
   const decoded = snapshot?.decoded ?? [];
   const selectedIndex = snapshot?.selectedIndex ?? -1;
   const selectedFrame =
-    selectedIndex >= 0 && selectedIndex < decoded.length ? decoded[selectedIndex] : snapshot?.currentFrame ?? null;
+    selectedIndex >= 0 && selectedIndex < decoded.length
+      ? decoded[selectedIndex]
+      : (snapshot?.currentFrame ?? null);
 
   const scenarios = useMemo(() => {
     const builtIn = TRACES.map((t) => ({
@@ -36,7 +38,10 @@ export function DemoClient() {
       title: SCENARIO_META[t.scenario]?.title ?? t.scenario,
     }));
     if (customTrace && !builtIn.some((b) => b.scenario === customTrace.scenario)) {
-      return [...builtIn, { scenario: customTrace.scenario, title: `${customTrace.scenario} (imported)` }];
+      return [
+        ...builtIn,
+        { scenario: customTrace.scenario, title: `${customTrace.scenario} (imported)` },
+      ];
     }
     return builtIn;
   }, [customTrace]);
@@ -61,8 +66,8 @@ export function DemoClient() {
   return (
     <div className={styles.root} data-testid="demo-root">
       <p className={styles.notice}>
-        Everything below runs <strong>entirely in your browser</strong> using synthetic traces. No server, WebSocket,
-        or hardware connection.
+        Everything below runs <strong>entirely in your browser</strong> using synthetic traces. No
+        server, WebSocket, or hardware connection.
       </p>
 
       <DemoToolbar

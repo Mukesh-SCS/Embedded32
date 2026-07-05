@@ -14,7 +14,11 @@ export function BusNetwork({ currentFrame }: { currentFrame: DecodedFrame | null
   const isBroadcast = currentFrame?.isBroadcast ?? true;
 
   return (
-    <section className={styles.network} data-testid="demo-bus-network" aria-label="ECU network view">
+    <section
+      className={styles.network}
+      data-testid="demo-bus-network"
+      aria-label="ECU network view"
+    >
       <div className={styles.networkGrid}>
         <div className={styles.ecuColumn}>
           {ECUS.slice(0, 3).map((ecu) => (
@@ -38,13 +42,17 @@ export function BusNetwork({ currentFrame }: { currentFrame: DecodedFrame | null
           <span>CAN BUS</span>
           {currentFrame && (
             <span className={styles.busState}>
-              {isBroadcast ? 'BROADCAST' : `→ DA 0x${currentFrame.destinationAddress.toString(16).padStart(2, '0')}`}
+              {isBroadcast
+                ? 'BROADCAST'
+                : `→ DA 0x${currentFrame.destinationAddress.toString(16).padStart(2, '0')}`}
             </span>
           )}
         </div>
         <div className={styles.ecuColumn}>
           <div
-            className={[styles.ecuNode, activeSa === 0xfa ? styles.ecuActive : ''].filter(Boolean).join(' ')}
+            className={[styles.ecuNode, activeSa === 0xfa ? styles.ecuActive : '']
+              .filter(Boolean)
+              .join(' ')}
           >
             Diagnostic Tool
             {activeSa === 0xfa && <span className={styles.activeTag}>TX</span>}

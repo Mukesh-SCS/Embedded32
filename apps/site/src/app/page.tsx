@@ -23,8 +23,9 @@ export default function HomePage() {
           <div className={styles.heroCopy}>
             <h1>UNDERSTAND THE BUS. CONTROL THE SYSTEM.</h1>
             <p>
-              Embedded32 teaches CAN, SAE J1939, ECU simulation, and diagnostics without requiring hardware first.
-              Run synthetic traces in your browser, complete four classroom labs, and explore ten open-source packages.
+              Embedded32 teaches CAN, SAE J1939, ECU simulation, and diagnostics without requiring
+              hardware first. Run synthetic traces in your browser, complete four classroom labs,
+              and explore ten open-source packages.
             </p>
             <div className={styles.heroActions}>
               <BrutalButton variant="yellow" href="/docs/getting-started">
@@ -48,10 +49,22 @@ export default function HomePage() {
 
       <div className={`page ${styles.home}`}>
         <section className={styles.metricsRow}>
-          <MetricBlock label="Public packages" value={metrics.packageCount} testId="metric-packages" />
+          <MetricBlock
+            label="Public packages"
+            value={metrics.packageCount}
+            testId="metric-packages"
+          />
           <MetricBlock label="Classroom labs" value={metrics.labCount} testId="metric-labs" />
-          <MetricBlock label="Demo scenarios" value={metrics.scenarioCount} testId="metric-scenarios" />
-          <MetricBlock label="Hardware required" value={metrics.hardwareRequired} testId="metric-hardware" />
+          <MetricBlock
+            label="Demo scenarios"
+            value={metrics.scenarioCount}
+            testId="metric-scenarios"
+          />
+          <MetricBlock
+            label="Hardware required"
+            value={metrics.hardwareRequired}
+            testId="metric-hardware"
+          />
         </section>
 
         <SectionHeading>Learning paths</SectionHeading>
@@ -87,7 +100,8 @@ export default function HomePage() {
 
         <SectionHeading>Live demo preview</SectionHeading>
         <Callout title="Browser CAN/J1939 player">
-          Play synthetic traces, step through frames, inspect PGN decoding, and export results — entirely client-side.
+          Play synthetic traces, step through frames, inspect PGN decoding, and export results -
+          entirely client-side.
           <p>
             <Link href="/demo">Open the interactive demo →</Link>
           </p>
@@ -101,7 +115,9 @@ export default function HomePage() {
               <BrutalCard key={lab.slug} variant="yellow">
                 <p className={styles.labNum}>LAB {card?.number ?? '??'}</p>
                 <h3>{card?.shortTitle ?? lab.title}</h3>
-                <p>{card?.duration} · {card?.hardware ?? 'NO HARDWARE'}</p>
+                <p>
+                  {card?.duration} · {card?.hardware ?? 'NO HARDWARE'}
+                </p>
                 <p>{card?.objective ?? lab.title}</p>
                 <Link href={`/labs/${lab.slug}`}>Start lab →</Link>
               </BrutalCard>
@@ -111,13 +127,14 @@ export default function HomePage() {
 
         <SectionHeading>Package map</SectionHeading>
         <p className="lead">
-          Ten public <code>@embedded32/*</code> packages are maintained in this monorepo. npm publishing requires
-          maintainer approval — packages are source-available today via GitHub and local install.
+          Ten public <code>@embedded32/*</code> packages are maintained in this monorepo. npm
+          publishing requires maintainer approval - packages are source-available today via GitHub
+          and local install.
         </p>
         <ul className={styles.pkgList}>
           {packages.slice(0, 6).map((p) => (
             <li key={p.slug}>
-              <Link href={`/packages/${p.slug}`}>{p.name}</Link> — {p.description}
+              <Link href={`/packages/${p.slug}`}>{p.name}</Link> - {p.description}
             </li>
           ))}
         </ul>
@@ -125,14 +142,16 @@ export default function HomePage() {
 
         <SectionHeading>Architecture overview</SectionHeading>
         <p>
-          Embedded32 layers CAN drivers, J1939 decoding, simulation, bridging, and a supervisor runtime. The browser
-          demo uses a teaching subset of the J1939 decoder — not a certified stack.
+          Embedded32 layers CAN drivers, J1939 decoding, simulation, bridging, and a supervisor
+          runtime. The browser demo uses a teaching subset of the J1939 decoder - not a certified
+          stack.
         </p>
         <Link href="/docs/architecture">Read architecture →</Link>
 
         <SectionHeading>For instructors</SectionHeading>
         <p>
-          Course module, student guide, instructor guide, rubrics, and verified solutions ship in the repository.
+          Course module, student guide, instructor guide, rubrics, and verified solutions ship in
+          the repository.
         </p>
         <Link href="/teach">Instructor resources →</Link>
 
@@ -142,8 +161,9 @@ export default function HomePage() {
 
         <SectionHeading>Honest maturity</SectionHeading>
         <Callout variant="warning" title="Limitations">
-          No SocketCAN in the browser. No WebSockets. No production transport-protocol compliance. J1939 coverage is a
-          teaching subset. npm packages are not automatically published — see the package guide for install options.
+          No SocketCAN in the browser. No WebSockets. No production transport-protocol compliance.
+          J1939 coverage is a teaching subset. npm packages are not automatically published - see
+          the package guide for install options.
         </Callout>
 
         <SectionHeading>Quickstart</SectionHeading>

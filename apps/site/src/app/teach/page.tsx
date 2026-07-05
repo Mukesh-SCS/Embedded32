@@ -15,12 +15,18 @@ export default function TeachPage() {
       <Breadcrumbs items={[{ label: 'Teach' }]} />
       <h1 className="pageTitle">For instructors</h1>
       <p className="lead">
-        Embedded32 ships classroom-ready labs, learning outcomes, and verified solutions. Use the browser demo for
-        live J1939 walkthroughs without hardware setup.
+        Embedded32 ships classroom-ready labs, learning outcomes, and verified solutions. Use the
+        browser demo for live J1939 walkthroughs without hardware setup.
       </p>
 
       <SectionHeading>Resources</SectionHeading>
-      <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
+      <div
+        style={{
+          display: 'grid',
+          gap: '1rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        }}
+      >
         <BrutalCard variant="cyan">
           <h3>Course module</h3>
           <p>Week-by-week structure and assessment alignment.</p>

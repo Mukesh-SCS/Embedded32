@@ -4,13 +4,13 @@
 
 ## Current project status
 
-| Area              | Status                                                                                |
-| ----------------- | ------------------------------------------------------------------------------------- |
-| **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                 |
-| **Maturity**      | Active development - suitable for learning, labs, and prototyping                     |
-| **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage |
-| **Documentation** | `apps/site/` Next.js site — local dev ready; GitHub Pages workflow ships on `main` (live URL after owner enables Pages) |
-| **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant              |
+| Area              | Status                                                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                                                   |
+| **Maturity**      | Active development - suitable for learning, labs, and prototyping                                                       |
+| **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage                                   |
+| **Documentation** | `apps/site/` Next.js site - local dev ready; GitHub Pages workflow ships on `main` (live URL after owner enables Pages) |
+| **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant                                                |
 
 Embedded32 is a teaching and experimentation platform. It is not positioned as a production-grade replacement for professional CAN tools or a complete J1939 implementation.
 
@@ -212,7 +212,7 @@ MIT License - see [LICENSE](LICENSE).
 
 ## Security reporting
 
-Report vulnerabilities privately — see [SECURITY.md](SECURITY.md).  
+Report vulnerabilities privately - see [SECURITY.md](SECURITY.md).  
 Do not post exploit details in public issues.
 
 ## Maintainer information

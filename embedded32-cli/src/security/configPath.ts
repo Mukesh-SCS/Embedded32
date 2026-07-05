@@ -22,7 +22,9 @@ export function validateConfigObject(
   depth = 0
 ): Record<string, unknown> {
   if (depth > MAX_CONFIG_PATH_DEPTH) {
-    throw new ConfigValidationError(`Configuration nesting exceeds maximum depth at ${path || 'root'}`);
+    throw new ConfigValidationError(
+      `Configuration nesting exceeds maximum depth at ${path || 'root'}`
+    );
   }
 
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {

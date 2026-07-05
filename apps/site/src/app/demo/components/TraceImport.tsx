@@ -91,7 +91,12 @@ export function TraceImport({ onImport, onClear }: Props) {
         </label>
       </div>
       {error && (
-        <p id="demo-trace-error" data-testid="demo-trace-error" className={styles.importError} role="alert">
+        <p
+          id="demo-trace-error"
+          data-testid="demo-trace-error"
+          className={styles.importError}
+          role="alert"
+        >
           {error}
         </p>
       )}

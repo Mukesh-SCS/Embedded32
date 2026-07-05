@@ -15,11 +15,14 @@ export function LearningPanel({ trace }: { trace: Trace | undefined }) {
           ))}
         </ul>
       ) : (
-        <p>Explore CAN/J1939 frames using playback controls. Select frames to inspect IDs, PGNs, and decoded signals.</p>
+        <p>
+          Explore CAN/J1939 frames using playback controls. Select frames to inspect IDs, PGNs, and
+          decoded signals.
+        </p>
       )}
       <p className={styles.hint}>
-        Supported teaching decoders: EEC1, ET1, AMB, ETC1, CCVS1, DM1, Address Claimed, TP.CM, TP.DT. This is not a
-        complete J1939 database.
+        Supported teaching decoders: EEC1, ET1, AMB, ETC1, CCVS1, DM1, Address Claimed, TP.CM,
+        TP.DT. This is not a complete J1939 database.
       </p>
     </section>
   );

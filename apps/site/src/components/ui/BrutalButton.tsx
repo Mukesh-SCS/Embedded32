@@ -25,7 +25,11 @@ export function BrutalButton({ variant = 'default', className, href, children, .
   if (href) {
     const resolved = href.startsWith('/') ? withBasePath(href) : href;
     return (
-      <a href={resolved} className={cls} {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>
+      <a
+        href={resolved}
+        className={cls}
+        {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+      >
         {children}
       </a>
     );

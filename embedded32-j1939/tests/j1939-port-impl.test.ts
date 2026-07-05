@@ -87,16 +87,7 @@ describe('J1939PortImpl', () => {
     j1939.onPGN(0x00fef1, (msg) => done.push(msg.data));
 
     const sa = 0x05;
-    receive(can, PGN.TP_CM, sa, [
-      TP_CM.BAM,
-      10,
-      0,
-      2,
-      0xff,
-      0xf1,
-      0xfe,
-      0x00,
-    ]);
+    receive(can, PGN.TP_CM, sa, [TP_CM.BAM, 10, 0, 2, 0xff, 0xf1, 0xfe, 0x00]);
 
     receive(can, PGN.TP_DT, sa, [1, 1, 2, 3, 4, 5, 6, 7]);
     receive(can, PGN.TP_DT, sa, [2, 8, 9, 10, 0xff, 0xff, 0xff, 0xff]);
@@ -134,9 +125,8 @@ describe('J1939PortImpl', () => {
 
 describe('PGN database helpers', () => {
   it('formats known and unknown PGN metadata', async () => {
-    const { getPGNInfo, formatPGN, getAllPGNs, formatJ1939Message, decodeJ1939 } = await import(
-      '../src/index.js'
-    );
+    const { getPGNInfo, formatPGN, getAllPGNs, formatJ1939Message, decodeJ1939 } =
+      await import('../src/index.js');
     expect(getPGNInfo(0xf004)?.name).toBeTruthy();
     expect(formatPGN(0xf004)).toMatch(/F004/i);
     expect(getAllPGNs().length).toBeGreaterThan(0);

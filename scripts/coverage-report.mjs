@@ -49,7 +49,16 @@ const PACKAGES = [
     id: 'bridge',
     dir: 'embedded32-bridge',
     minLines: 0,
-    command: ['npm', 'run', 'test', '--silent', '--', '--coverage', '--coverageReporters=json-summary', '--coverageReporters=text'],
+    command: [
+      'npm',
+      'run',
+      'test',
+      '--silent',
+      '--',
+      '--coverage',
+      '--coverageReporters=json-summary',
+      '--coverageReporters=text',
+    ],
   },
 ];
 

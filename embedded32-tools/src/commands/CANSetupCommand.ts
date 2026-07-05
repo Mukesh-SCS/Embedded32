@@ -137,8 +137,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         success: false,
         interface: safeIfname,
         platform,
-        message:
-          `Failed to create interface. Try:\n  sudo ip link add dev ${safeIfname} type vcan\n\nError: ${message}`,
+        message: `Failed to create interface. Try:\n  sudo ip link add dev ${safeIfname} type vcan\n\nError: ${message}`,
       };
     }
   } else {
@@ -157,8 +156,7 @@ export async function setupVirtualCAN(ifname: string = 'vcan0'): Promise<CANSetu
         success: false,
         interface: safeIfname,
         platform,
-        message:
-          `Failed to bring interface up. Try:\n  sudo ip link set dev ${safeIfname} up\n\nError: ${message}`,
+        message: `Failed to bring interface up. Try:\n  sudo ip link set dev ${safeIfname} up\n\nError: ${message}`,
       };
     }
   } else {

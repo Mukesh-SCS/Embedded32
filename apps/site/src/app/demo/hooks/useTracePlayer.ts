@@ -1,12 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  TracePlayer,
-  TRACES,
-  type PlayerSnapshot,
-  type Trace,
-} from '@embedded32/demo';
+import { TracePlayer, TRACES, type PlayerSnapshot, type Trace } from '@embedded32/demo';
 
 const SPEEDS = [0.5, 1, 2, 4, 10];
 

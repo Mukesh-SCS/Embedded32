@@ -18,7 +18,9 @@
   cursor: pointer;
   background: var(--surface);
   color: var(--ink);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .btn:hover:not(:disabled) {

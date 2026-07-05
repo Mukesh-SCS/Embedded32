@@ -24,9 +24,7 @@ function sanitizePlainTextTitle(title, fallback = 'Untitled') {
     .replace(/\s+/g, ' ')
     .trim();
   if (!stripped) return fallback;
-  return stripped.length > MAX_TITLE_LENGTH
-    ? `${stripped.slice(0, MAX_TITLE_LENGTH)}…`
-    : stripped;
+  return stripped.length > MAX_TITLE_LENGTH ? `${stripped.slice(0, MAX_TITLE_LENGTH)}…` : stripped;
 }
 
 const BLOCKED_SCHEME_PREFIXES = ['javascript:', 'data:', 'vbscript:', 'file:', 'blob:'];
@@ -45,7 +43,11 @@ function resolveSafeUrl(href, options = {}) {
   if (trimmed.startsWith('/') && !trimmed.startsWith('//')) {
     return { kind: 'relative', href: trimmed };
   }
-  if (trimmed.startsWith('./') || trimmed.startsWith('../') || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+  if (
+    trimmed.startsWith('./') ||
+    trimmed.startsWith('../') ||
+    !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)
+  ) {
     if (trimmed.includes('..') || trimmed.includes('\\')) return null;
     return { kind: 'relative', href: trimmed };
   }

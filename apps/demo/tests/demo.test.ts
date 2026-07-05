@@ -1,12 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { decodeFrame, parseId, resetBamState } from '../src/decoder';
 import { TracePlayer } from '../src/player';
+import { exportDecodedCsv, exportDecodedJson, validateTraceInput } from '../src/export';
 import {
-  exportDecodedCsv,
-  exportDecodedJson,
-  validateTraceInput,
-} from '../src/export';
-import { normalizeCanId, sanitizeCsvCell, MAX_FRAME_COUNT, MAX_TRACE_BYTES } from '../src/normalize';
+  normalizeCanId,
+  sanitizeCsvCell,
+  MAX_FRAME_COUNT,
+  MAX_TRACE_BYTES,
+} from '../src/normalize';
 import { createBamState, processBamFrame, isTpCmBam } from '../src/bam';
 import type { TraceFrame } from '../src/types';
 
@@ -47,23 +48,39 @@ describe('decoder', () => {
   });
 
   it('decodes ET1 coolant temperature', () => {
-    const decoded = decodeFrame({ id: '18FEEE00', timestampMs: 0, data: [90, 255, 255, 255, 255, 255, 255, 255] });
+    const decoded = decodeFrame({
+      id: '18FEEE00',
+      timestampMs: 0,
+      data: [90, 255, 255, 255, 255, 255, 255, 255],
+    });
     expect(decoded.signals[0]?.label).toBe('Coolant Temperature');
     expect(decoded.signals[0]?.value).toBe('50');
   });
 
   it('decodes AMB barometric pressure', () => {
-    const decoded = decodeFrame({ id: '18FEF500', timestampMs: 0, data: [200, 0, 0, 0, 0, 0, 0, 0] });
+    const decoded = decodeFrame({
+      id: '18FEF500',
+      timestampMs: 0,
+      data: [200, 0, 0, 0, 0, 0, 0, 0],
+    });
     expect(decoded.signals[0]?.value).toBe('100.0');
   });
 
   it('decodes ETC1', () => {
-    const decoded = decodeFrame({ id: '18F00003', timestampMs: 0, data: [0, 0x10, 0x00, 0, 0, 0, 0, 0] });
+    const decoded = decodeFrame({
+      id: '18F00003',
+      timestampMs: 0,
+      data: [0, 0x10, 0x00, 0, 0, 0, 0, 0],
+    });
     expect(decoded.name).toContain('ETC1');
   });
 
   it('decodes CCVS1 vehicle speed', () => {
-    const decoded = decodeFrame({ id: '18FEF100', timestampMs: 0, data: [0, 0x00, 0x40, 0, 0, 0, 0, 0] });
+    const decoded = decodeFrame({
+      id: '18FEF100',
+      timestampMs: 0,
+      data: [0, 0x00, 0x40, 0, 0, 0, 0, 0],
+    });
     expect(decoded.signals.some((s) => s.label === 'Vehicle Speed')).toBe(true);
   });
 
@@ -192,12 +209,17 @@ describe('TracePlayer', () => {
   });
 
   it('seeks to frame and time', () => {
-    const player = new TracePlayer({ onUpdate: () => {} });
+    let lastIndex = 0;
+    const player = new TracePlayer({
+      onUpdate: (s) => {
+        lastIndex = s.index;
+      },
+    });
     player.load(sampleTrace);
     player.seekFrame(2);
-    expect(player.decodeAll().length).toBe(2);
+    expect(lastIndex).toBe(2);
     player.seekTime(150);
-    expect(player.decodeAll().length).toBe(2);
+    expect(lastIndex).toBe(2);
   });
 
   it('changes speed', () => {
@@ -209,13 +231,20 @@ describe('TracePlayer', () => {
   });
 
   it('loops when enabled', () => {
-    const player = new TracePlayer({ loop: true, speed: 1000, onUpdate: () => {} });
+    const indices: number[] = [];
+    const player = new TracePlayer({
+      loop: true,
+      speed: 1000,
+      onUpdate: (s) => indices.push(s.index),
+    });
     player.load({
       ...sampleTrace,
       frames: [{ id: '18F0040E', timestampMs: 0, data: [0, 0, 0, 0x10, 0x00] }],
     });
     player.play();
-    vi.runAllTimers();
+    vi.advanceTimersByTime(5);
+    player.pause();
+    expect(indices.filter((i) => i === 0).length).toBeGreaterThan(1);
   });
 
   it('exposes extended snapshot fields', () => {

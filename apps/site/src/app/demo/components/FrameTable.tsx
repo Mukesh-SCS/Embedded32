@@ -22,23 +22,25 @@ export function FrameTable({ frames, selectedIndex, onSelect }: Props) {
   const filtered = useMemo(() => {
     const needle = pgnFilter.trim().toLowerCase().replace(/^0x/, '');
     const saNeedle = saFilter.trim().toLowerCase().replace(/^0x/, '');
-    return frames.filter((f, idx) => {
-      if (needle) {
-        const match =
-          f.pgnHex.toLowerCase().includes(needle) ||
-          f.pgn.toString(16).includes(needle) ||
-          f.name.toLowerCase().includes(needle);
-        if (!match) return false;
-      }
-      if (saNeedle && !f.sourceAddress.toString(16).includes(saNeedle)) return false;
-      if (faultOnly && !f.isFault) return false;
-      if (knownOnly === 'known' && !f.isKnown) return false;
-      if (knownOnly === 'unknown' && f.isKnown) return false;
-      return true;
-    }).map((f, _, arr) => {
-      const originalIndex = frames.indexOf(f);
-      return { frame: f, originalIndex };
-    });
+    return frames
+      .filter((f, idx) => {
+        if (needle) {
+          const match =
+            f.pgnHex.toLowerCase().includes(needle) ||
+            f.pgn.toString(16).includes(needle) ||
+            f.name.toLowerCase().includes(needle);
+          if (!match) return false;
+        }
+        if (saNeedle && !f.sourceAddress.toString(16).includes(saNeedle)) return false;
+        if (faultOnly && !f.isFault) return false;
+        if (knownOnly === 'known' && !f.isKnown) return false;
+        if (knownOnly === 'unknown' && f.isKnown) return false;
+        return true;
+      })
+      .map((f, _, arr) => {
+        const originalIndex = frames.indexOf(f);
+        return { frame: f, originalIndex };
+      });
   }, [frames, pgnFilter, saFilter, faultOnly, knownOnly]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -144,7 +146,7 @@ export function FrameTable({ frames, selectedIndex, onSelect }: Props) {
                 </td>
                 <td>
                   {frame.signals.length === 0
-                    ? '—'
+                    ? '-'
                     : frame.signals
                         .slice(0, 2)
                         .map((s) => `${s.label}: ${s.value}`)
@@ -164,7 +166,11 @@ export function FrameTable({ frames, selectedIndex, onSelect }: Props) {
           <span>
             Page {page + 1} / {totalPages} ({filtered.length} frames)
           </span>
-          <button type="button" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)}>
+          <button
+            type="button"
+            disabled={page >= totalPages - 1}
+            onClick={() => setPage((p) => p + 1)}
+          >
             Next
           </button>
         </div>

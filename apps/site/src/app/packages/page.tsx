@@ -26,9 +26,10 @@ export default function PackagesIndexPage() {
           @embedded32 packages
         </h1>
         <p className="lead">
-          Ten public npm packages are maintained in this monorepo at version <code>1.0.0</code>. Source is available
-          via GitHub and local workspace install. Publishing to the public npm registry requires maintainer approval —
-          see the <Link href="/docs/package-guide">package selection guide</Link>.
+          Ten public npm packages are maintained in this monorepo at version <code>1.0.0</code>.
+          Source is available via GitHub and local workspace install. Publishing to the public npm
+          registry requires maintainer approval - see the{' '}
+          <Link href="/docs/package-guide">package selection guide</Link>.
         </p>
 
         <div className={styles.cardGrid}>
@@ -51,7 +52,8 @@ export default function PackagesIndexPage() {
                 </div>
                 {card?.related && (
                   <p className={styles.related}>
-                    Related: <Link href={`/packages/${card.related}`}>@embedded32/{card.related}</Link>
+                    Related:{' '}
+                    <Link href={`/packages/${card.related}`}>@embedded32/{card.related}</Link>
                   </p>
                 )}
                 {card?.install && <CodePanel language="install" code={card.install} />}
@@ -88,8 +90,8 @@ export default function PackagesIndexPage() {
         </table>
 
         <p className={styles.private}>
-          Private packages in this monorepo: <code>@embedded32/dashboard</code>, <code>@embedded32/sdk-c</code>,{' '}
-          <code>@embedded32/sdk-python</code>.
+          Private packages in this monorepo: <code>@embedded32/dashboard</code>,{' '}
+          <code>@embedded32/sdk-c</code>, <code>@embedded32/sdk-python</code>.
         </p>
       </div>
     </div>

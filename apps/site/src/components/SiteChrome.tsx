@@ -7,35 +7,39 @@ import styles from './site-chrome.module.css';
 
 export function MaturityBanner() {
   return (
-    <StatusStrip variant="dark" role="note">
-      <span>EDUCATION BUILD // NOT SAFETY-CERTIFIED // SYNTHETIC DEMO DATA</span>
-      <span className={styles.bannerDetail}>
-        Embedded32 is for learning and prototyping — not automotive-certified, safety-certified, or a complete SAE
-        J1939 stack.
-      </span>
-    </StatusStrip>
+    <div role="banner" aria-label="Project maturity notice">
+      <StatusStrip variant="dark">
+        <span>EDUCATION BUILD // NOT SAFETY-CERTIFIED // SYNTHETIC DEMO DATA</span>
+        <span className={styles.bannerDetail}>
+          Embedded32 is for learning and prototyping - not automotive-certified, safety-certified,
+          or a complete SAE J1939 stack.
+        </span>
+      </StatusStrip>
+    </div>
   );
 }
 
 export function SiteHeader() {
   return (
-    <header className={styles.header} data-testid="site-header">
-      <a href="#main-content" className="skipLink">
-        Skip to main content
-      </a>
-      <div className={styles.headerInner}>
-        <Link href="/" className={styles.brand} data-testid="site-home-link">
-          <span className={styles.brandMark} aria-hidden="true">
-            E32
-          </span>
-          <span className={styles.brandText}>Embedded32</span>
-        </Link>
-        <div className={styles.desktopNav}>
-          <MainNav />
+    <>
+      <header className={styles.header} data-testid="site-header">
+        <a href="#main-content" className="skipLink">
+          Skip to main content
+        </a>
+        <div className={styles.headerInner}>
+          <Link href="/" className={styles.brand} data-testid="site-home-link">
+            <span className={styles.brandMark} aria-hidden="true">
+              E32
+            </span>
+            <span className={styles.brandText}>Embedded32</span>
+          </Link>
+          <div className={styles.desktopNav}>
+            <MainNav />
+          </div>
         </div>
-        <MobileNav />
-      </div>
-    </header>
+      </header>
+      <MobileNav />
+    </>
   );
 }
 
@@ -62,7 +66,9 @@ export function SiteFooter() {
           </div>
         ))}
       </div>
-      <p className={styles.footerCopy}>MIT © Mukesh Mani Tripathi — open-source CAN &amp; J1939 education platform.</p>
+      <p className={styles.footerCopy}>
+        MIT © Mukesh Mani Tripathi - open-source CAN &amp; J1939 education platform.
+      </p>
     </footer>
   );
 }

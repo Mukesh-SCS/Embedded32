@@ -202,12 +202,12 @@ export class TracePlayer {
   private scheduleNext(): void {
     this.clearTimer();
     if (this.state !== 'playing' || this.index >= this.frames.length) {
-      if (this.index >= this.frames.length) {
+      if (this.index >= this.frames.length && this.state === 'playing') {
         if (this.loop) {
           this.index = 0;
           this.decoded = [];
           resetBamState();
-          this.scheduleNext();
+          this.timer = setTimeout(() => this.scheduleNext(), 1);
         } else {
           this.state = 'finished';
           this.emit();
@@ -217,10 +217,8 @@ export class TracePlayer {
     }
 
     const frame = this.frames[this.index];
-    const prevTime =
-      this.index > 0 ? this.frames[this.index - 1].timestampMs : frame.timestampMs;
-    const delay =
-      this.index === 0 ? 0 : Math.max(0, (frame.timestampMs - prevTime) / this.speed);
+    const prevTime = this.index > 0 ? this.frames[this.index - 1].timestampMs : frame.timestampMs;
+    const delay = this.index === 0 ? 0 : Math.max(0, (frame.timestampMs - prevTime) / this.speed);
 
     this.timer = setTimeout(() => {
       this.decoded = [...this.decoded, decodeFrame(frame)];
@@ -230,14 +228,14 @@ export class TracePlayer {
           this.index = 0;
           this.decoded = [];
           resetBamState();
-        } else {
-          this.state = 'finished';
+          this.emit();
+          this.timer = setTimeout(() => this.scheduleNext(), 1);
+          return;
         }
+        this.state = 'finished';
       }
       this.emit();
       if (this.state === 'playing' && this.index < this.frames.length) {
-        this.scheduleNext();
-      } else if (this.state === 'playing' && this.loop && this.index === 0) {
         this.scheduleNext();
       }
     }, delay);
@@ -292,7 +290,10 @@ export class TracePlayer {
     const sources = this.decoded.map((f) => f.sourceAddress);
     const dur = this.durationMs();
     const cur = this.currentTimeMs();
-    const progress = dur > 0 ? Math.min(100, Math.round(((cur - (this.frames[0]?.timestampMs ?? 0)) / dur) * 100)) : 0;
+    const progress =
+      dur > 0
+        ? Math.min(100, Math.round(((cur - (this.frames[0]?.timestampMs ?? 0)) / dur) * 100))
+        : 0;
 
     this.onUpdate({
       state: this.state,

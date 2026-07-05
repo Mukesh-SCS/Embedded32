@@ -1,5 +1,4 @@
-const SECRET_KEY_PATTERN =
-  /(password|passwd|secret|token|api[_-]?key|authorization|credential)/i;
+const SECRET_KEY_PATTERN = /(password|passwd|secret|token|api[_-]?key|authorization|credential)/i;
 
 export function redactSecrets<T>(value: T): T {
   return redactValue(value) as T;

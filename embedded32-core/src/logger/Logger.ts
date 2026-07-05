@@ -33,7 +33,11 @@ export class Logger {
     this.log('error', message, context);
   }
 
-  private log(level: 'debug' | 'info' | 'warn' | 'error', message: string, context?: unknown): void {
+  private log(
+    level: 'debug' | 'info' | 'warn' | 'error',
+    message: string,
+    context?: unknown
+  ): void {
     if (this.levelPriority[level] < this.levelPriority[this.level]) {
       return;
     }

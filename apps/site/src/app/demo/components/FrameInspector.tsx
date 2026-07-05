@@ -44,7 +44,7 @@ export function FrameInspector({ frame }: { frame: DecodedFrame | null }) {
         </dd>
         <dt>Data (hex)</dt>
         <dd>
-          <code>{frame.rawDataHex || '—'}</code>
+          <code>{frame.rawDataHex || '-'}</code>
         </dd>
       </dl>
 
@@ -54,7 +54,7 @@ export function FrameInspector({ frame }: { frame: DecodedFrame | null }) {
           return (
             <div key={i} className={styles.byteCell}>
               <span>B{i}</span>
-              <code>{parts[i] ?? '—'}</code>
+              <code>{parts[i] ?? '-'}</code>
             </div>
           );
         })}

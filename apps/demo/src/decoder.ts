@@ -98,7 +98,10 @@ function decodeLampStatus(byte: number): string {
 function decodeDtc(bytes: number[], offset: number): DecodedSignal[] {
   if (offset + 4 > bytes.length) return [];
   const lamp = bytes[offset] ?? 0;
-  const spn = (bytes[offset + 2] ?? 0) | ((bytes[offset + 3] ?? 0) << 8) | (((bytes[offset + 4] ?? 0) & 0xe0) << 11);
+  const spn =
+    (bytes[offset + 2] ?? 0) |
+    ((bytes[offset + 3] ?? 0) << 8) |
+    (((bytes[offset + 4] ?? 0) & 0xe0) << 11);
   const fmi = (bytes[offset + 4] ?? 0) & 0x1f;
   const count = (bytes[offset + 5] ?? 0) & 0x7f;
   return [
@@ -208,7 +211,10 @@ const PGN_DECODERS: Record<number, Decoder> = {
           signal('Control', 'BAM (32)'),
           signal('Total Bytes', String(b[1] | (b[2] << 8))),
           signal('Packet Count', String(b[3] ?? 0)),
-          signal('Transported PGN', `0x${((b[5] ?? 0) | ((b[6] ?? 0) << 8)).toString(16).toUpperCase()}`),
+          signal(
+            'Transported PGN',
+            `0x${((b[5] ?? 0) | ((b[6] ?? 0) << 8)).toString(16).toUpperCase()}`
+          ),
         ];
       }
       return [signal('Control', String(ctrl))];
@@ -219,9 +225,16 @@ const PGN_DECODERS: Record<number, Decoder> = {
     name: 'TP.DT - Data Transfer',
     decode: (b) => [
       signal('Sequence', String(b[0] ?? 0)),
-      signal('Data', b.slice(1).map((x) => x.toString(16).padStart(2, '0')).join(' ')),
+      signal(
+        'Data',
+        b
+          .slice(1)
+          .map((x) => x.toString(16).padStart(2, '0'))
+          .join(' ')
+      ),
     ],
-    explain: () => 'Transport Protocol Data Transfer carries one sequence of a multi-packet message.',
+    explain: () =>
+      'Transport Protocol Data Transfer carries one sequence of a multi-packet message.',
   },
 };
 

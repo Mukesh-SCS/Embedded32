@@ -40,7 +40,11 @@ export function isTpDt(pgn: number): boolean {
 }
 
 export function processBamFrame(state: BamState, pgn: number, data: number[]): BamState {
-  const next = { ...state, receivedPackets: new Map(state.receivedPackets), errors: [...state.errors] };
+  const next = {
+    ...state,
+    receivedPackets: new Map(state.receivedPackets),
+    errors: [...state.errors],
+  };
 
   if (isTpCmBam(pgn, data)) {
     next.status = 'announced';

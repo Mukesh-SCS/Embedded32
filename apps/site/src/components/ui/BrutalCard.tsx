@@ -24,7 +24,10 @@ export function BrutalCard({
 } & React.HTMLAttributes<HTMLElement>) {
   const Tag = 'article';
   return (
-    <Tag className={[styles.card, cardVariant[variant], className].filter(Boolean).join(' ')} {...props}>
+    <Tag
+      className={[styles.card, cardVariant[variant], className].filter(Boolean).join(' ')}
+      {...props}
+    >
       {children}
     </Tag>
   );

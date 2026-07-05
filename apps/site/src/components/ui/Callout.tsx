@@ -22,9 +22,13 @@ export function Callout({
   children: ReactNode;
 }) {
   return (
-    <aside className={[styles.callout, calloutVariant[variant]].filter(Boolean).join(' ')}>
+    <div
+      className={[styles.callout, calloutVariant[variant]].filter(Boolean).join(' ')}
+      role="region"
+      aria-label={title ?? 'Information'}
+    >
       {title && <p className={styles.calloutTitle}>{title}</p>}
       <div className={styles.calloutBody}>{children}</div>
-    </aside>
+    </div>
   );
 }

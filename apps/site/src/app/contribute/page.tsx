@@ -6,7 +6,7 @@ import { CodePanel } from '@/components/ui/CodePanel';
 
 export const metadata: Metadata = {
   title: 'Contribute',
-  description: 'How to contribute to Embedded32 — code, docs, labs, and demo scenarios.',
+  description: 'How to contribute to Embedded32 - code, docs, labs, and demo scenarios.',
 };
 
 export default function ContributePage() {
@@ -15,8 +15,13 @@ export default function ContributePage() {
       <Breadcrumbs items={[{ label: 'Contribute' }]} />
       <h1 className="pageTitle">Contribute</h1>
       <p className="lead">
-        Embedded32 welcomes contributions to packages, documentation, labs, and the browser demo. See{' '}
-        <a href="https://github.com/Mukesh-SCS/Embedded32/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">
+        Embedded32 welcomes contributions to packages, documentation, labs, and the browser demo.
+        See{' '}
+        <a
+          href="https://github.com/Mukesh-SCS/Embedded32/blob/main/CONTRIBUTING.md"
+          target="_blank"
+          rel="noreferrer"
+        >
           CONTRIBUTING.md
         </a>{' '}
         on GitHub for the full process.

@@ -13,7 +13,7 @@ export function SignalPanel({ frame }: { frame: DecodedFrame | null }) {
   return (
     <section className={styles.signals} data-testid="demo-latest-decode">
       <h3 className={styles.panelTitle}>
-        Signals — {frame.name}{' '}
+        Signals - {frame.name}{' '}
         <span className={styles.sa}>SA 0x{frame.sourceAddress.toString(16).padStart(2, '0')}</span>
       </h3>
       <ul>

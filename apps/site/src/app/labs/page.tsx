@@ -25,8 +25,8 @@ export default function LabsIndexPage() {
           Classroom labs
         </h1>
         <p className="lead">
-          Four hardware-free labs for CAN, J1939, multi-ECU simulation, and diagnostics. Starter code, solutions,
-          rubrics, and instructor notes live in the repository.
+          Four hardware-free labs for CAN, J1939, multi-ECU simulation, and diagnostics. Starter
+          code, solutions, rubrics, and instructor notes live in the repository.
         </p>
 
         <div className={styles.labGrid}>
@@ -48,7 +48,11 @@ export default function LabsIndexPage() {
                     <strong>Prerequisites:</strong> {card.prerequisites.join('; ')}
                   </p>
                 )}
-                <Link href={labHref(lab.slug)} className={styles.startLink} data-testid={`lab-card-${lab.slug}`}>
+                <Link
+                  href={labHref(lab.slug)}
+                  className={styles.startLink}
+                  data-testid={`lab-card-${lab.slug}`}
+                >
                   Start lab →
                 </Link>
               </BrutalCard>

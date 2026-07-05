@@ -17,7 +17,8 @@ export const LAB_CARDS: Record<string, LabCardMeta> = {
     duration: '45–60 MIN',
     hardware: 'NO HARDWARE',
     difficulty: 'beginner',
-    objective: 'Identify CAN frame fields, interpret hex traces, and explain broadcast vs addressed frames.',
+    objective:
+      'Identify CAN frame fields, interpret hex traces, and explain broadcast vs addressed frames.',
     prerequisites: ['Basic programming', 'Completed getting-started guide'],
   },
   'lab-02-j1939-messaging': {

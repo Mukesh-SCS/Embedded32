@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 
 export default function RoadmapPage() {
   const roadmapPath = path.join(MONOREPO_ROOT, 'ROADMAP.md');
-  const content = fs.existsSync(roadmapPath) ? fs.readFileSync(roadmapPath, 'utf8') : '# Roadmap\n\nSee GitHub for updates.';
+  const content = fs.existsSync(roadmapPath)
+    ? fs.readFileSync(roadmapPath, 'utf8')
+    : '# Roadmap\n\nSee GitHub for updates.';
 
   return (
     <div className="page">
