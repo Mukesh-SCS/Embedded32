@@ -1,23 +1,33 @@
 {
   "name": "@embedded32/core",
   "version": "1.0.0",
-  "description": "Lightweight OS runtime for Embedded32 platform - scheduler, messaging, module registry",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Lightweight embedded runtime for Embedded32: scheduler, messaging, and module registry",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "dev": "tsc -w -p tsconfig.json",
     "test": "jest"
   },
   "keywords": [
-    "embedded",
-    "runtime",
+    "embedded-systems",
+    "ecu",
     "scheduler",
-    "messaging",
+    "typescript",
+    "education",
     "embedded32"
   ],
   "author": "Mukesh Mani Tripathi",
@@ -40,6 +50,13 @@
     "type": "git",
     "url": "https://github.com/Mukesh-SCS/Embedded32.git",
     "directory": "embedded32-core"
+  },
+  "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-core",
+  "bugs": {
+    "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "sideEffects": false,
   "optionalDependencies": {

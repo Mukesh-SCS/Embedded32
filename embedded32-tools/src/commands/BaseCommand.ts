@@ -1,5 +1,4 @@
-import { Runtime } from "@embedded32/core";
-import { Logger } from "@embedded32/core/dist/logger/Logger.js";
+import { Runtime, Logger } from "@embedded32/core";
 
 /**
  * Base class for all CLI commands

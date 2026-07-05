@@ -1,26 +1,36 @@
 {
   "name": "@embedded32/j1939",
   "version": "1.0.0",
-  "description": "Professional SAE J1939 protocol stack for heavy-duty vehicle communication",
+  "description": "TypeScript SAE J1939 stack for learning and simulation (PGN, SPN, diagnostics, transport subset)",
   "keywords": [
+    "sae-j1939",
     "j1939",
-    "can",
-    "protocol",
-    "vehicle",
+    "can-bus",
+    "ecu",
     "automotive",
-    "heavy-duty",
-    "truck",
-    "bus",
+    "simulation",
+    "typescript",
+    "education",
     "diagnostics",
-    "telematics",
     "embedded32"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
-  "files": ["dist", ".npmignore"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "dev": "tsc -w -p tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -52,10 +62,11 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-j1939",
   "bugs": {
     "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
-  }
+  },
+  "sideEffects": false
 }

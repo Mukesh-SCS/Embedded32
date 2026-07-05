@@ -1,13 +1,25 @@
 {
   "name": "@embedded32/sim",
   "version": "1.0.0",
-  "description": "Embedded32 Vehicle Simulator - Virtual ECU and hardware-in-the-loop testing",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Vehicle and multi-ECU simulation for Embedded32 learning labs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
-  "files": ["dist", "vehicle-profiles"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "vehicle-profiles",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "dev": "tsc -w -p tsconfig.json",
     "test": "npx jest --passWithNoTests",
     "test:acceptance": "npx jest tests/phase2-acceptance.test.ts"
@@ -32,5 +44,23 @@
     "url": "https://github.com/Mukesh-SCS/Embedded32.git",
     "directory": "embedded32-sim"
   },
-  "license": "MIT"
+  "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-sim",
+  "bugs": {
+    "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
+  },
+  "keywords": [
+    "ecu",
+    "simulation",
+    "sae-j1939",
+    "can-bus",
+    "education",
+    "typescript",
+    "embedded32"
+  ],
+  "author": "Mukesh Mani Tripathi",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false
 }

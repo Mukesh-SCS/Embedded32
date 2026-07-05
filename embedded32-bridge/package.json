@@ -1,25 +1,50 @@
 {
   "name": "@embedded32/bridge",
   "version": "1.0.0",
-  "description": "CAN ↔ Ethernet ↔ MQTT routing and bridging",
-  "type": "commonjs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "CAN to Ethernet and MQTT bridging with J1939-aware routing rules",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "test": "jest",
     "dev": "tsc --watch"
   },
   "keywords": [
     "bridge",
-    "routing",
-    "can",
     "mqtt",
+    "can-bus",
+    "j1939",
+    "typescript",
+    "education",
     "embedded32"
   ],
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
-  "files": ["dist"],
+  "dependencies": {
+    "@embedded32/core": "1.0.0",
+    "@embedded32/can": "1.0.0",
+    "@embedded32/j1939": "1.0.0",
+    "@embedded32/ethernet": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -28,17 +53,12 @@
     "url": "https://github.com/Mukesh-SCS/Embedded32.git",
     "directory": "embedded32-bridge"
   },
-  "dependencies": {
-    "@embedded32/core": "*",
-    "@embedded32/can": "*",
-    "@embedded32/j1939": "*",
-    "@embedded32/ethernet": "*"
+  "homepage": "https://github.com/Mukesh-SCS/Embedded32/tree/main/embedded32-bridge",
+  "bugs": {
+    "url": "https://github.com/Mukesh-SCS/Embedded32/issues"
   },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "jest": "^29.0.0",
-    "@types/jest": "^29.0.0"
-  }
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false
 }
-

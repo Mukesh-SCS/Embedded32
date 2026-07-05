@@ -27,7 +27,8 @@
     "clean": "lerna run clean",
     "bootstrap": "lerna bootstrap",
     "publish-packages": "lerna publish --yes",
-    "audit:packages": "node scripts/audit-packages.mjs"
+    "audit:packages": "node scripts/audit-packages.mjs",
+    "test:package-install": "node scripts/smoke-install-packages.mjs"
   },
 
   "devDependencies": {

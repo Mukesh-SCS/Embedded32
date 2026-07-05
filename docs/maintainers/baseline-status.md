@@ -96,14 +96,28 @@ Notable per-package behavior:
 
 Manually run on all 10 public packages after build. All commands exited **0** and produced tarballs with compiled `dist/` output.
 
-Pre-existing packaging gaps identified (see `repository-audit.md` and `npm run audit:packages`):
+**Resolved in Phase 2** (see commit on `feat/open-source-education-platform`):
 
-- **LICENSE** not included in any public package tarball (`files` arrays omit it)
-- **No `prepack` scripts** on publishable packages
-- **Workspace wildcard dependencies** (`"@embedded32/*": "*"`) in several packages
-- **Duplicate CLI bin name** `embedded32` in both `@embedded32/cli` and `@embedded32/tools`
-- **`@embedded32/cli`** missing `types` field
-- Mixed **ESM vs CommonJS** `type` fields across packages
+- `prepack` scripts copy root `LICENSE` and rebuild before pack
+- `files` arrays include `dist`, `README.md`, and `LICENSE`
+- Workspace `*` dependencies replaced with pinned `1.0.0` versions
+- Duplicate `embedded32` bin resolved: `@embedded32/tools` uses `embedded32-tools`
+- `@embedded32/cli` no longer depends on private `@embedded32/dashboard`
+- `@embedded32/bridge` converted to ESM for J1939 interop
+
+`npm run audit:packages` and `npm run test:package-install` both pass after Phase 2.
+
+---
+
+## Phase 2 commands (post-fix)
+
+| Command | Exit | Summary |
+|---------|------|---------|
+| `npm ci` | **0** | Works after lockfile update |
+| `npm run build` | **0** | All Lerna packages build |
+| `npm run test` | **0** | Includes wired `@embedded32/can` tests (9) and CLI packaging tests |
+| `npm run audit:packages` | **0** | All 10 public packages pass |
+| `npm run test:package-install` | **0** | All 10 packages install and smoke-test in isolated projects |
 
 ---
 
@@ -116,8 +130,8 @@ These were requested in later phases but do not exist yet:
 | `npm run lint` | Not defined |
 | `npm run typecheck` | Not defined |
 | `npm run format` | Not defined |
-| `npm run audit:packages` | Added in Phase 1 |
-| `npm run test:package-install` | Planned Phase 2 |
+| `npm run audit:packages` | Added Phase 1; **passes** after Phase 2 |
+| `npm run test:package-install` | Added Phase 2; **passes** |
 | `npm run verify` | Planned Phase 3 |
 
 ---

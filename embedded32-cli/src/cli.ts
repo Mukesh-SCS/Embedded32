@@ -12,6 +12,20 @@ import * as path from 'path';
  */
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
+
+  if (args.length === 0 || args[0] === 'help' || args[0] === '--help' || args[0] === '-h') {
+    showHelp();
+    return;
+  }
+
+  if (args[0] === '--version' || args[0] === '-v') {
+    const pkg = JSON.parse(
+      fs.readFileSync(path.join(__dirname, '../package.json'), 'utf8')
+    ) as { version?: string };
+    console.log(pkg.version ?? '1.0.0');
+    return;
+  }
+
   const command = args[0];
   const option = args[1];
 
@@ -32,14 +46,10 @@ async function main(): Promise<void> {
       case 'add':
         await addPlugin(option);
         break;
-      case 'help':
-        showHelp();
-        break;
       default:
-        if (command) {
-          console.error(`Unknown command: ${command}`);
-        }
+        console.error(`Unknown command: ${command}`);
         showHelp();
+        process.exit(1);
     }
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
@@ -268,37 +278,6 @@ async function addPlugin(pluginName?: string): Promise<void> {
     console.log('  Available plugins:');
     console.log('    - embedded32-ethernet');
     console.log('    - embedded32-bridge');
-
-/**
- * Attempt to start the embedded32-dashboard dev server (Vite) on port 5173.
- * Returns the spawned process or undefined if startup failed.
- */
-async function tryStartDashboardDevServer(): Promise<ChildProcessWithoutNullStreams | undefined> {
-  try {
-    const dashboardDir = path.resolve(process.cwd(), 'embedded32-dashboard');
-    // On Windows PowerShell, spawn via npm.cmd
-    const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-    const proc = spawn(npmCmd, ['run', 'dev'], {
-      cwd: dashboardDir,
-      stdio: 'inherit',
-      shell: false,
-    });
-
-    // Give it a short time to boot; non-blocking for the demo
-    proc.on('error', (err) => {
-      console.error(`  ⚠️  Dashboard dev server failed to start: ${err.message}`);
-    });
-    // Type guard: ensure stdio streams are not null
-    if (proc.stdin && proc.stdout && proc.stderr) {
-      return proc as ChildProcessWithoutNullStreams;
-    }
-    return undefined;
-  } catch (err) {
-    const e = err as Error;
-    console.error(`  ⚠️  Could not start dashboard dev server: ${e.message}`);
-    return undefined;
-  }
-}
     console.log('    - embedded32-dashboard');
     console.log('    - embedded32-simulator');
     return;
@@ -312,6 +291,34 @@ async function tryStartDashboardDevServer(): Promise<ChildProcessWithoutNullStre
   console.log('');
   console.log('  💡 Configure it in embedded32.yaml and restart');
   console.log('');
+}
+
+/**
+ * Attempt to start the embedded32-dashboard dev server (Vite) on port 5173.
+ * Returns the spawned process or undefined if startup failed.
+ */
+async function tryStartDashboardDevServer(): Promise<ChildProcessWithoutNullStreams | undefined> {
+  try {
+    const dashboardDir = path.resolve(process.cwd(), 'embedded32-dashboard');
+    const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+    const proc = spawn(npmCmd, ['run', 'dev'], {
+      cwd: dashboardDir,
+      stdio: 'inherit',
+      shell: false,
+    });
+
+    proc.on('error', (err) => {
+      console.error(`  ⚠️  Dashboard dev server failed to start: ${err.message}`);
+    });
+    if (proc.stdin && proc.stdout && proc.stderr) {
+      return proc as ChildProcessWithoutNullStreams;
+    }
+    return undefined;
+  } catch (err) {
+    const e = err as Error;
+    console.error(`  ⚠️  Could not start dashboard dev server: ${e.message}`);
+    return undefined;
+  }
 }
 
 /**
