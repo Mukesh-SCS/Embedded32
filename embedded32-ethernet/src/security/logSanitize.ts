@@ -60,6 +60,10 @@ export function serializeLogValue(value: unknown): string {
 
 export type SafeConsoleLevel = 'debug' | 'info' | 'warn' | 'error' | 'log';
 
+function composeSanitizedLogLine(parts: string[]): string {
+  return parts.filter((part) => part.length > 0).join(' ');
+}
+
 export function safeConsoleWrite(
   level: SafeConsoleLevel,
   prefix: string,
@@ -68,9 +72,12 @@ export function safeConsoleWrite(
 ): void {
   const sanitizedPrefix = sanitizeLogText(prefix);
   const sanitizedMessage = sanitizeLogText(message);
-  const sanitizedData = data === undefined ? '' : ` ${sanitizeLogText(data)}`;
-  const safePayload = `${sanitizedPrefix} ${sanitizedMessage}${sanitizedData}`;
-
+  const sanitizedData = data === undefined ? '' : sanitizeLogText(data);
+  const safePayload = composeSanitizedLogLine([
+    sanitizedPrefix,
+    sanitizedMessage,
+    sanitizedData
+  ]);
   switch (level) {
     case 'error':
       console.error('%s', safePayload);
