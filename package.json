@@ -31,6 +31,7 @@
     "publish-packages": "lerna publish --yes",
     "audit:packages": "node scripts/audit-packages.mjs",
     "test:package-install": "node scripts/smoke-install-packages.mjs",
+    "test:labs": "node scripts/verify-labs.mjs",
     "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install",
     "docs:api": "typedoc --options typedoc.json"
   },

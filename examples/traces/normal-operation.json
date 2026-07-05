@@ -1,0 +1,32 @@
+{
+  "format": "embedded32-trace-v1",
+  "source": "synthetic",
+  "scenario": "normal-operation",
+  "description": "Engine and transmission broadcasts at cruise-like values",
+  "frames": [
+    {
+      "timestampMs": 0,
+      "id": "0x18F00400",
+      "extended": true,
+      "data": [0, 0, 0, 125, 64, 31, 0, 0]
+    },
+    {
+      "timestampMs": 100,
+      "id": "0x18F00003",
+      "extended": true,
+      "data": [160, 1, 128, 1, 0, 255, 128, 128]
+    },
+    {
+      "timestampMs": 200,
+      "id": "0x18FEEE00",
+      "extended": true,
+      "data": [125, 255, 255, 255, 255, 255, 255, 255]
+    },
+    {
+      "timestampMs": 300,
+      "id": "0x18F00400",
+      "extended": true,
+      "data": [0, 0, 0, 125, 65, 31, 0, 0]
+    }
+  ]
+}

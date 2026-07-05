@@ -23,6 +23,8 @@ npm ci
 | `npm run format:check`         | Verify Prettier formatting without writing                          |
 | `npm run audit:packages`       | Verify npm tarball contents                                         |
 | `npm run test:package-install` | Smoke-test tarball installs                                         |
+| `npm run test:labs`            | Verify classroom lab solutions and hygiene                          |
+| `npm run docs:api`             | Generate TypeDoc HTML under `docs/api/`                             |
 | `npm run verify`               | Full pre-merge check (lint, typecheck, test, build, package audits) |
 
 ## Workspace layout
@@ -47,11 +49,12 @@ Package paths are unchanged from the original repository layout. Published impor
 
 ## Future directories
 
-| Path                 | Phase | Purpose                       |
-| -------------------- | ----- | ----------------------------- |
-| `apps/site/`         | 9     | Documentation website         |
-| `apps/demo/`         | 10    | Browser demo                  |
-| `labs/`              | 5     | Classroom labs                |
-| `docs/education/`    | 5     | Instructor and student guides |
-| `docs/api/`          | 4     | Generated API reference       |
-| `.github/workflows/` | 7–8   | CI and release automation     |
+| Path                 | Phase | Purpose                             |
+| -------------------- | ----- | ----------------------------------- |
+| `apps/site/`         | 9     | Documentation website               |
+| `apps/demo/`         | 10    | Browser demo                        |
+| `labs/`              | 5     | Classroom labs (four complete labs) |
+| `docs/education/`    | 5     | Instructor and student guides       |
+| `examples/traces/`   | 5     | Synthetic sample bus traces         |
+| `docs/api/`          | 4     | Generated API reference             |
+| `.github/workflows/` | 7–8   | CI and release automation           |

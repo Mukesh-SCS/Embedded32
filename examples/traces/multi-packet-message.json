@@ -1,0 +1,32 @@
+{
+  "format": "embedded32-trace-v1",
+  "source": "synthetic",
+  "scenario": "multi-packet-message",
+  "description": "Simplified TP.BAM announce and data frames for teaching (not full transport validation)",
+  "frames": [
+    {
+      "timestampMs": 0,
+      "id": "0x18ECFF00",
+      "extended": true,
+      "data": [32, 16, 0, 3, 255, 202, 254, 0]
+    },
+    {
+      "timestampMs": 20,
+      "id": "0x18EBFF00",
+      "extended": true,
+      "data": [1, 1, 2, 3, 4, 5, 6, 7]
+    },
+    {
+      "timestampMs": 40,
+      "id": "0x18EBFF00",
+      "extended": true,
+      "data": [2, 8, 9, 10, 11, 12, 13, 14]
+    },
+    {
+      "timestampMs": 60,
+      "id": "0x18EBFF00",
+      "extended": true,
+      "data": [3, 15, 16, 255, 255, 255, 255, 255]
+    }
+  ]
+}
