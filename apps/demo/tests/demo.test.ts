@@ -6,7 +6,7 @@ import {
   exportDecodedJson,
   validateTraceInput,
 } from '../src/export';
-import { normalizeCanId, sanitizeCsvCell, MAX_FRAME_COUNT, MAX_TRACE_BYTES } from '../src/normalize';
+import { normalizeCanId, sanitizeCsvCell, MAX_FRAME_COUNT } from '../src/normalize';
 import { createBamState, processBamFrame, isTpCmBam } from '../src/bam';
 import type { TraceFrame } from '../src/types';
 
