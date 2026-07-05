@@ -257,7 +257,7 @@ function main() {
 
   // Detect duplicate bin names across public packages
   const binOwners = new Map();
-  for (const { pkgJson, dir } of publicPackages) {
+  for (const { pkgJson } of publicPackages) {
     if (!pkgJson.bin) continue;
     const bins =
       typeof pkgJson.bin === "string"

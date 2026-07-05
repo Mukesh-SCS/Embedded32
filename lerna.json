@@ -10,6 +10,7 @@
     "embedded32-ethernet",
     "embedded32-supervisor",
     "embedded32-cli",
+    "embedded32-dashboard",
     "embedded32-sdk-js",
     "embedded32-sdk-c",
     "embedded32-sdk-python"

@@ -18,6 +18,8 @@
   ],
   "scripts": {
     "build": "tsc",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "node ../scripts/clean-dist.mjs",
     "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "watch": "tsc --watch",
     "test": "jest",

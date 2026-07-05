@@ -322,7 +322,7 @@ export class SimulationRunner extends EventEmitter {
 }
 
 // Re-export types
-export { VehicleProfile, ECUConfig, SimState } from "./interfaces/SimPort.js";
+export type { VehicleProfile, ECUConfig, SimState } from "./interfaces/SimPort.js";
 export { EngineECU } from "./ecus/EngineECU.js";
 export { TransmissionECU } from "./ecus/TransmissionECU.js";
 export { DiagnosticToolECU } from "./ecus/DiagnosticToolECU.js";
