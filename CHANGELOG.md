@@ -5,7 +5,22 @@ All notable changes to the Embedded32 platform will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.1] - 2026-07-05
+
+### Fixed
+
+- Resolved CodeQL security and code-quality findings.
+- Hardened configuration loading against prototype pollution.
+- Replaced unsafe shell command construction.
+- Improved log sanitization and sensitive-data handling.
+- Fixed npm packaging and clean-install validation.
+- Improved CAN and J1939 tests.
+- Updated documentation and GitHub Pages support.
+
+### Security
+
+- Added regression tests for command injection, log injection,
+  unsafe configuration keys, and untrusted content handling.
 
 ### Added
 
