@@ -1,6 +1,6 @@
 # @embedded32/bridge
 
-Route selected CAN/J1939 traffic to UDP, TCP, or MQTT using `@embedded32/ethernet` transports — gateway pattern for connected-vehicle labs.
+Route selected CAN/J1939 traffic to UDP, TCP, or MQTT using `@embedded32/ethernet` transports - gateway pattern for connected-vehicle labs.
 
 ## Installation
 
@@ -64,9 +64,9 @@ None when using `MockCANDriver`. Production gateways typically use Linux SocketC
 
 ## Related packages
 
-- `@embedded32/ethernet` — UDP, TCP, MQTT clients
-- `@embedded32/j1939` — PGN-aware filtering
-- `@embedded32/cli` — load bridge via supervisor config
+- `@embedded32/ethernet` - UDP, TCP, MQTT clients
+- `@embedded32/j1939` - PGN-aware filtering
+- `@embedded32/cli` - load bridge via supervisor config
 
 ## Version compatibility
 

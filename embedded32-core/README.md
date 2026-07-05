@@ -67,10 +67,10 @@ None for core runtime alone. GPIO/LED modules need Raspberry Pi hardware when en
 
 ## Related packages
 
-- `@embedded32/supervisor` — process-level module lifecycle
-- `@embedded32/cli` — launch runtime from configuration
-- `@embedded32/can` — CAN modules inside runtime apps
-- `@embedded32/j1939` — protocol modules
+- `@embedded32/supervisor` - process-level module lifecycle
+- `@embedded32/cli` - launch runtime from configuration
+- `@embedded32/can` - CAN modules inside runtime apps
+- `@embedded32/j1939` - protocol modules
 
 ## Version compatibility
 

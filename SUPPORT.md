@@ -41,8 +41,8 @@ This is a volunteer-maintained open-source project. Maintainers aim to respond t
 
 ## Security issues
 
-See [SECURITY.md](SECURITY.md) — do not post vulnerabilities in public issues.
+See [SECURITY.md](SECURITY.md) - do not post vulnerabilities in public issues.
 
 ## Commercial use
 
-MIT licensed — commercial use is permitted. No warranty or certification is implied. See [LICENSE](LICENSE).
+MIT licensed - commercial use is permitted. No warranty or certification is implied. See [LICENSE](LICENSE).

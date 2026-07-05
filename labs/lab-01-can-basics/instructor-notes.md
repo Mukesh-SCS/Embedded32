@@ -1,4 +1,4 @@
-# Lab 1 instructor notes — CAN communication basics
+# Lab 1 instructor notes - CAN communication basics
 
 ## Setup (5 minutes)
 
@@ -12,7 +12,7 @@
 | ------- | ----------------------------- | -------------------------------------------- |
 | 10 min  | Lecture: CAN frame fields     | Draw ID + 8 data bytes on board              |
 | 15 min  | Walk through `starter/lab.ts` | Emphasize handler registration before `send` |
-| 25 min  | Student implements filter     | Circulate — common bug is `===` vs hex typo  |
+| 25 min  | Student implements filter     | Circulate - common bug is `===` vs hex typo  |
 | 10 min  | Review + stretch goals        | Introduce `VirtualCANPort` for Lab 3 preview |
 
 ## Solution highlights
@@ -37,7 +37,7 @@ Expected markers in `expected-output/sample.txt`.
 
 **Why only one frame matches?** Three IDs are sent; filter keeps `0x200`.
 
-**Does this work on Windows?** Yes — mock driver is cross-platform.
+**Does this work on Windows?** Yes - mock driver is cross-platform.
 
 **Relation to J1939?** J1939 uses extended 29-bit IDs; that is Lab 2.
 

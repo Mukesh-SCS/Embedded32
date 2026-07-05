@@ -39,7 +39,7 @@ await client.send({ hello: 'embedded32' }, '127.0.0.1', 5000);
 
 ## Hardware requirements
 
-None — uses host networking stack. MQTT labs need a broker (local or classroom server).
+None - uses host networking stack. MQTT labs need a broker (local or classroom server).
 
 ## Browser compatibility
 
@@ -55,9 +55,9 @@ None — uses host networking stack. MQTT labs need a broker (local or classroom
 
 ## Related packages
 
-- `@embedded32/bridge` — CAN ↔ MQTT/UDP routing
-- `@embedded32/core` — runtime modules that publish telemetry
-- `@embedded32/sdk-js` — application consumers
+- `@embedded32/bridge` - CAN ↔ MQTT/UDP routing
+- `@embedded32/core` - runtime modules that publish telemetry
+- `@embedded32/sdk-js` - application consumers
 
 ## Version compatibility
 

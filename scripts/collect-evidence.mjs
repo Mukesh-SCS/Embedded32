@@ -159,7 +159,7 @@ function main() {
     const verify = run('npm', ['run', 'verify', '--silent']);
     verifyPassed = verify.ok;
     if (!verify.ok) {
-      console.error('verify failed — snapshot will record verifyPassed: false');
+      console.error('verify failed - snapshot will record verifyPassed: false');
     }
   }
 
@@ -213,7 +213,9 @@ function main() {
     automation: {
       workflowCount: listWorkflows().length,
       workflows: listWorkflows(),
-      rootScripts: Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).scripts ?? {}),
+      rootScripts: Object.keys(
+        JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).scripts ?? {}
+      ),
     },
     deployment: {
       githubPagesWorkflowPresent: fs.existsSync(
@@ -227,7 +229,7 @@ function main() {
       zenodoDoiIssued: zenodoDoiIssued(),
     },
     notes: [
-      'Metrics are collected from the repository and local commands — not from GitHub/npm download APIs.',
+      'Metrics are collected from the repository and local commands - not from GitHub/npm download APIs.',
       'Outreach metrics (stars, classroom pilots) are recorded manually in evidence/outreach-log.md.',
     ],
   };
@@ -242,9 +244,13 @@ function main() {
   console.log(`\nEvidence snapshot written:`);
   console.log(`  ${path.relative(ROOT, snapshotPath)}`);
   console.log(`  ${path.relative(ROOT, latestPath)}`);
-  console.log(`\nSummary: ${labs.length} labs, ${PUBLIC_PACKAGE_DIRS.length} public packages, ${metrics.documentation.markdownDocCount} docs markdown files`);
+  console.log(
+    `\nSummary: ${labs.length} labs, ${PUBLIC_PACKAGE_DIRS.length} public packages, ${metrics.documentation.markdownDocCount} docs markdown files`
+  );
   if (coverage.collected) {
-    console.log(`Coverage: j1939 ${coverage.packages.j1939?.lines}%, core ${coverage.packages.core?.lines}%, can ${coverage.packages.can?.lines}%`);
+    console.log(
+      `Coverage: j1939 ${coverage.packages.j1939?.lines}%, core ${coverage.packages.core?.lines}%, can ${coverage.packages.can?.lines}%`
+    );
   }
 }
 

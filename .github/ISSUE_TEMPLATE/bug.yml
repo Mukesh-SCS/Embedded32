@@ -88,6 +88,6 @@ body:
       options:
         - 'Yes'
         - 'No'
-        - 'Maybe — need guidance'
+        - 'Maybe - need guidance'
     validations:
       required: true

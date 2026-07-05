@@ -11,7 +11,7 @@ People responsible for triage, releases, and project direction.
 ## Contact
 
 - **General:** [GitHub Issues](https://github.com/Mukesh-SCS/Embedded32/issues) or [Discussions](https://github.com/Mukesh-SCS/Embedded32/discussions)
-- **Security:** [SECURITY.md](SECURITY.md) — private reporting only
+- **Security:** [SECURITY.md](SECURITY.md) - private reporting only
 - **Email:** Use GitHub profile contact for the lead maintainer (no phone numbers listed in repository docs)
 
 ## Emeritus

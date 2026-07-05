@@ -1,4 +1,4 @@
-# Lab 2 — J1939 messaging
+# Lab 2 - J1939 messaging
 
 **Time:** 90 minutes  
 **Hardware:** None
@@ -32,7 +32,7 @@ npx tsx labs/lab-02-j1939-messaging/starter/lab.ts
 
 ## Scope note
 
-Embedded32 ships a **partial** PGN catalog suitable for education — not full SAE J1939-71 coverage.
+Embedded32 ships a **partial** PGN catalog suitable for education - not full SAE J1939-71 coverage.
 
 ## Check your work
 

@@ -1,4 +1,4 @@
-# Lab 1 rubric — CAN communication basics
+# Lab 1 rubric - CAN communication basics
 
 Total: **100 points**
 

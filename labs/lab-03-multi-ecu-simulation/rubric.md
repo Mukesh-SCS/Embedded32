@@ -1,4 +1,4 @@
-# Lab 3 rubric — Multi-ECU simulation
+# Lab 3 rubric - Multi-ECU simulation
 
 Total: **100 points**
 

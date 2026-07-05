@@ -1,6 +1,6 @@
 # @embedded32/supervisor
 
-Process-level supervisor for Embedded32 — registers modules, tracks health, coordinates startup/shutdown, and backs `@embedded32/cli start` / `demo`.
+Process-level supervisor for Embedded32 - registers modules, tracks health, coordinates startup/shutdown, and backs `@embedded32/cli start` / `demo`.
 
 ## Installation
 
@@ -64,9 +64,9 @@ None for minimal supervisor example. Full fleet configs may enable SocketCAN mod
 
 ## Related packages
 
-- `@embedded32/cli` — primary user entry
-- `@embedded32/core` — runtime primitives inside modules
-- `@embedded32/bridge` — optional bridge modules
+- `@embedded32/cli` - primary user entry
+- `@embedded32/core` - runtime primitives inside modules
+- `@embedded32/bridge` - optional bridge modules
 
 ## Version compatibility
 

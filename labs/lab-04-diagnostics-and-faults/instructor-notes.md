@@ -1,9 +1,9 @@
-# Lab 4 instructor notes — Diagnostics and fault injection
+# Lab 4 instructor notes - Diagnostics and fault injection
 
 ## Teaching narrative
 
-1. Normal operation — EEC1 broadcasts coolant in ET1 PGN (Lab 3 context).
-2. Fault condition — coolant above range → ECU sets MIL and emits DM1.
+1. Normal operation - EEC1 broadcasts coolant in ET1 PGN (Lab 3 context).
+2. Fault condition - coolant above range → ECU sets MIL and emits DM1.
 3. Diagnostic tool listens (future: `diag_tool` in `basic-truck` profile).
 
 ## Solution payload
@@ -12,9 +12,9 @@
 [0x04, 0x1a, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00];
 ```
 
-- `0x04` — MIL bit set
-- `0x1a` — SPN 26 LSB
-- `0x20` — FMI 0, occurrence count 1
+- `0x04` - MIL bit set
+- `0x1a` - SPN 26 LSB
+- `0x20` - FMI 0, occurrence count 1
 
 ## Written answer key
 

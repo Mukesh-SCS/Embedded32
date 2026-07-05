@@ -13,7 +13,14 @@
     "generate:traces": "node scripts/generate-traces.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
-  "keywords": ["can", "j1939", "browser", "simulation", "education", "embedded32"],
+  "keywords": [
+    "can",
+    "j1939",
+    "browser",
+    "simulation",
+    "education",
+    "embedded32"
+  ],
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
   "devDependencies": {

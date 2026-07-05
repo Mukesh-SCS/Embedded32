@@ -12,7 +12,7 @@ body:
     id: lab_title
     attributes:
       label: Lab title
-      placeholder: 'Lab 5 — CAN to MQTT bridge'
+      placeholder: 'Lab 5 - CAN to MQTT bridge'
     validations:
       required: true
 
@@ -48,7 +48,7 @@ body:
     attributes:
       label: Hardware required?
       options:
-        - 'No — simulation only'
+        - 'No - simulation only'
         - 'Optional SocketCAN'
         - 'Required hardware'
     validations:
@@ -61,6 +61,6 @@ body:
       options:
         - 'Yes'
         - 'No'
-        - 'Maybe — need rubric template'
+        - 'Maybe - need rubric template'
     validations:
       required: true

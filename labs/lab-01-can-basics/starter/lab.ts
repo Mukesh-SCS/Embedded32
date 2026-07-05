@@ -1,5 +1,5 @@
 /**
- * Lab 1 — CAN communication basics (starter)
+ * Lab 1 - CAN communication basics (starter)
  *
  * Run from repository root after `npm run build`:
  *   npx tsx labs/lab-01-can-basics/starter/lab.ts

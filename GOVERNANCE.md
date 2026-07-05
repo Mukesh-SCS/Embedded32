@@ -36,7 +36,7 @@ Larger architectural changes (monorepo moves, new release systems) should be doc
 3. Be nominated by an existing maintainer or self-nominate with evidence of contributions.
 4. Lead maintainer adds entry to [MAINTAINERS.md](MAINTAINERS.md).
 
-There is no minimum time commitment defined — maintainers should set expectations with the lead maintainer.
+There is no minimum time commitment defined - maintainers should set expectations with the lead maintainer.
 
 ## Release approval
 
@@ -52,7 +52,7 @@ There is no minimum time commitment defined — maintainers should set expectati
 
 ## Inactivity
 
-If a listed maintainer is inactive for 12+ months with no communication, the lead maintainer may move them to **emeritus** status in [MAINTAINERS.md](MAINTAINERS.md). This is not punitive — roles can be restored on request.
+If a listed maintainer is inactive for 12+ months with no communication, the lead maintainer may move them to **emeritus** status in [MAINTAINERS.md](MAINTAINERS.md). This is not punitive - roles can be restored on request.
 
 ## What this project does not govern
 

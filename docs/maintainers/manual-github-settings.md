@@ -4,13 +4,13 @@ Actions the **repository owner** must perform in the GitHub web UI. These cannot
 
 ## Community and collaboration
 
-- [ ] **Enable Issues** — Settings → General → Features → Issues
-- [ ] **Enable Discussions** — Settings → General → Features → Discussions (categories: General, Q&A, Ideas, Show and tell)
-- [ ] **Enable private vulnerability reporting** — Security → Private vulnerability reporting → Enable
+- [ ] **Enable Issues** - Settings → General → Features → Issues
+- [ ] **Enable Discussions** - Settings → General → Features → Discussions (categories: General, Q&A, Ideas, Show and tell)
+- [ ] **Enable private vulnerability reporting** - Security → Private vulnerability reporting → Enable
 - [ ] Add repository **description** and **website URL** when `apps/site` is deployed
 - [ ] Add **topics:** `embedded-systems`, `can-bus`, `j1939`, `ecu`, `typescript`, `education`, `simulation`, `automotive`
 
-## Branch protection (after CI exists — Phase 7)
+## Branch protection (after CI exists - Phase 7)
 
 - [ ] Protect `main` (or default integration branch)
 - [ ] Require pull request before merging
@@ -20,7 +20,7 @@ Actions the **repository owner** must perform in the GitHub web UI. These cannot
 
 ## Security and dependencies
 
-- [ ] Enable **Dependabot alerts** — Settings → Security → Code security
+- [ ] Enable **Dependabot alerts** - Settings → Security → Code security
 - [ ] Enable **Dependabot security updates** (optional grouping)
 - [ ] Enable **secret scanning** and **push protection** if available for the account/org
 - [ ] Review default **Actions** permissions (read-only for GITHUB_TOKEN unless workflows need write)
@@ -28,7 +28,7 @@ Actions the **repository owner** must perform in the GitHub web UI. These cannot
 ## Social preview
 
 - [ ] Upload a **social preview image** (Repository settings → Social preview)
-- [ ] Use original artwork — do not copy third-party automotive branding
+- [ ] Use original artwork - do not copy third-party automotive branding
 
 ## Labels (for contributor issues)
 
@@ -94,4 +94,4 @@ After completing settings:
 3. Confirm Security → Advisories allows private reports
 4. Confirm branch protection blocks direct pushes (if enabled)
 
-Document completion date in a maintainer note or project discussion — do not store credentials in the repo.
+Document completion date in a maintainer note or project discussion - do not store credentials in the repo.

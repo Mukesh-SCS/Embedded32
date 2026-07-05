@@ -58,7 +58,7 @@ function main() {
   // API reference must be present under out/api-ref
   const apiIndex = path.join(OUT_DIR, 'api-ref', 'index.html');
   if (!fs.existsSync(apiIndex)) {
-    fail('api-ref/index.html missing — run npm run docs:api before building the site');
+    fail('api-ref/index.html missing - run npm run docs:api before building the site');
   }
 
   const files = walk(OUT_DIR);
@@ -71,11 +71,13 @@ function main() {
     if (nextAssetRefs.length === 0) {
       warnings.push('No /_next/ asset references found in index.html');
     } else if (prefixedRefs.length === 0) {
-      fail(`Assets in index.html are not prefixed with ${BASE_PATH} (found bare /_next/ references)`);
+      fail(
+        `Assets in index.html are not prefixed with ${BASE_PATH} (found bare /_next/ references)`
+      );
     }
     // Bare root-relative /assets/ references are a common Pages footgun
     if (/["'(]\/assets\//.test(html)) {
-      fail('index.html references bare /assets/ path — must be under /Embedded32/');
+      fail('index.html references bare /assets/ path - must be under /Embedded32/');
     }
   }
 

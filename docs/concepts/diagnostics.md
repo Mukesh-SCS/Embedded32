@@ -1,6 +1,6 @@
 # Diagnostics concepts
 
-Vehicle diagnostics in J1939-heavy networks often use **DM1** (active faults) and **DM2** (previously active) messages. Embedded32 exposes a **subset** for classroom fault observation and injection in simulation — not a full service bay tool chain.
+Vehicle diagnostics in J1939-heavy networks often use **DM1** (active faults) and **DM2** (previously active) messages. Embedded32 exposes a **subset** for classroom fault observation and injection in simulation - not a full service bay tool chain.
 
 ## DM1 mental model
 
@@ -35,7 +35,7 @@ A Diagnostic Trouble Code in J1939 combines:
 | Occurrence count  | How often        |
 | Conversion method | Encoding variant |
 
-Embedded32 decode output names fields when the PGN is in the catalog — use simulation labs to correlate hex payloads with text.
+Embedded32 decode output names fields when the PGN is in the catalog - use simulation labs to correlate hex payloads with text.
 
 ## Fault injection in labs
 
@@ -54,7 +54,7 @@ Planned lab 4 (`labs/04-diagnostics`) will walk through inject → observe → c
 
 ## DM2 and clearing
 
-**DM2** carries previously active faults. Clearing faults in real ECUs involves legislated workflows; in Embedded32 simulation, clearing is a **state reset** on the simulated ECU for teaching — not a claim of regulatory compliance.
+**DM2** carries previously active faults. Clearing faults in real ECUs involves legislated workflows; in Embedded32 simulation, clearing is a **state reset** on the simulated ECU for teaching - not a claim of regulatory compliance.
 
 ## Relationship to OBD-II
 
@@ -80,4 +80,4 @@ npx embedded32-tools monitor vcan0
 
 - [J1939 concepts](./j1939.md)
 - [ECU simulation](./ecu-simulation.md)
-- `@embedded32/j1939` README — PGN catalog section
+- `@embedded32/j1939` README - PGN catalog section

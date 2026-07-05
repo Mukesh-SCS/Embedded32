@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - "apps/site/**"
-      - "apps/demo/**"
-      - "docs/**"
-      - "labs/**"
-      - "embedded32-*/README.md"
-      - ".github/workflows/deploy-pages.yml"
-      - "package.json"
-      - "package-lock.json"
+      - 'apps/site/**'
+      - 'apps/demo/**'
+      - 'docs/**'
+      - 'labs/**'
+      - 'embedded32-*/README.md'
+      - '.github/workflows/deploy-pages.yml'
+      - 'package.json'
+      - 'package-lock.json'
 
   workflow_dispatch:
 

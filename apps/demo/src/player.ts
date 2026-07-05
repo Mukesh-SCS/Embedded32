@@ -24,7 +24,7 @@ const BITS_PER_FRAME = 128; // ~29-bit ID + 8 data bytes + overhead, teaching ap
 
 /**
  * Plays a trace by scheduling frames according to their relative timestamps.
- * Pure browser timers — no network or worker required. Safe to run during SSR guards
+ * Pure browser timers - no network or worker required. Safe to run during SSR guards
  * because it only starts on explicit play().
  */
 export class TracePlayer {

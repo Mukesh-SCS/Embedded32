@@ -55,13 +55,13 @@ sudo ip link add dev vcan0 type vcan
 sudo ip link set up vcan0
 ```
 
-Embedded32 SocketCAN support depends on the optional `socketcan` npm module and Linux — not required for graded labs.
+Embedded32 SocketCAN support depends on the optional `socketcan` npm module and Linux - not required for graded labs.
 
 ## Classroom deployment
 
 | Model                  | Notes                                             |
 | ---------------------- | ------------------------------------------------- |
-| Student laptops        | Default — each student clones repo                |
+| Student laptops        | Default - each student clones repo                |
 | Shared lab VM          | Pre-run `npm ci && npm run build` on golden image |
 | Codespaces / cloud IDE | Supported if Node 18+; verify `test:labs` timing  |
 

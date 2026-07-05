@@ -7,9 +7,9 @@
 | Area              | Status                                                                                |
 | ----------------- | ------------------------------------------------------------------------------------- |
 | **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                 |
-| **Maturity**      | Active development — suitable for learning, labs, and prototyping                     |
+| **Maturity**      | Active development - suitable for learning, labs, and prototyping                     |
 | **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage |
-| **Documentation** | `apps/site/` Next.js site — run locally; public deploy pending maintainer approval |
+| **Documentation** | `apps/site/` Next.js site - run locally; public deploy pending maintainer approval    |
 | **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant              |
 
 Embedded32 is a teaching and experimentation platform. It is not positioned as a production-grade replacement for professional CAN tools or a complete J1939 implementation.
@@ -58,7 +58,7 @@ The site deploys to **GitHub Pages** via `.github/workflows/deploy-pages.yml`. A
 
 ## Browser demo
 
-An interactive, **client-side** CAN/J1939 demo lives at `/demo` on the documentation site (source in `apps/demo/`). It plays synthetic traces and decodes a teaching subset of messages entirely in the browser — no server, WebSocket, or hardware required.
+An interactive, **client-side** CAN/J1939 demo lives at `/demo` on the documentation site (source in `apps/demo/`). It plays synthetic traces and decodes a teaching subset of messages entirely in the browser - no server, WebSocket, or hardware required.
 
 ## Fifteen-minute quickstart
 
@@ -157,7 +157,7 @@ Details: [docs/architecture.md](docs/architecture.md)
 | Windows      | PCAN or gateway                      | Often via bridge/gateway rather than direct SocketCAN    |
 | macOS        | Simulation                           | Use mock/virtual paths for development                   |
 
-SocketCAN setup is optional for courses — see [docs/getting-started.md](docs/getting-started.md#optional-socketcan-linux--wsl).
+SocketCAN setup is optional for courses - see [docs/getting-started.md](docs/getting-started.md#optional-socketcan-linux--wsl).
 
 ## Educational labs
 
@@ -183,7 +183,7 @@ Placeholder index: [labs/README.md](labs/README.md)
 
 ## Contributing
 
-Contributions are welcome — documentation, labs, tests, and packaging improvements are especially helpful.
+Contributions are welcome - documentation, labs, tests, and packaging improvements are especially helpful.
 
 - Read [CONTRIBUTING.md](CONTRIBUTING.md)
 - Run `npm run verify` before opening a pull request
@@ -191,12 +191,12 @@ Contributions are welcome — documentation, labs, tests, and packaging improvem
 
 ## Project roadmap
 
-| Milestone  | Focus                                       | Status on upgrade branch |
-| ---------- | ------------------------------------------- | ------------------------ |
+| Milestone  | Focus                                        | Status on upgrade branch                              |
+| ---------- | -------------------------------------------- | ----------------------------------------------------- |
 | **v1.0.x** | npm reliability, CI, docs, release, citation | Phases 1–13 complete; owner actions for npm/Pages/DOI |
-| **v1.1**   | Labs, instructor guides, traces              | Core materials shipped   |
-| **v1.2**   | Documentation site and browser demo         | Built; Pages deploy pending owner |
-| **v1.3**   | Community pilots and expanded labs          | Planned                  |
+| **v1.1**   | Labs, instructor guides, traces              | Core materials shipped                                |
+| **v1.2**   | Documentation site and browser demo          | Built; Pages deploy pending owner                     |
+| **v1.3**   | Community pilots and expanded labs           | Planned                                               |
 
 Full milestone detail, phase matrix, and owner checklist: [ROADMAP.md](ROADMAP.md) and [docs/maintainers/open-source-upgrade-summary.md](docs/maintainers/open-source-upgrade-summary.md).
 
@@ -204,15 +204,15 @@ Full milestone detail, phase matrix, and owner checklist: [ROADMAP.md](ROADMAP.m
 
 If you use Embedded32 in academic work, see [docs/citation.md](docs/citation.md).
 
-Machine-readable metadata: [CITATION.cff](CITATION.cff). A Zenodo DOI badge will be added after the first archived release — see [docs/maintainers/zenodo-release.md](docs/maintainers/zenodo-release.md). **Do not cite a DOI until it appears in those files.**
+Machine-readable metadata: [CITATION.cff](CITATION.cff). A Zenodo DOI badge will be added after the first archived release - see [docs/maintainers/zenodo-release.md](docs/maintainers/zenodo-release.md). **Do not cite a DOI until it appears in those files.**
 
 ## License
 
-MIT License — see [LICENSE](LICENSE).
+MIT License - see [LICENSE](LICENSE).
 
 ## Security reporting
 
-Report vulnerabilities privately — details will be documented in `SECURITY.md` (Phase 6).  
+Report vulnerabilities privately - details will be documented in `SECURITY.md` (Phase 6).  
 Do not post exploit details in public issues.
 
 ## Maintainer information

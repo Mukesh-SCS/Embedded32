@@ -1,5 +1,5 @@
 /**
- * Lab 4 — Diagnostics and fault injection (solution)
+ * Lab 4 - Diagnostics and fault injection (solution)
  */
 
 import {
@@ -17,7 +17,7 @@ function buildCoolantFaultDm1(): number[] {
 }
 
 function summarizeDtc(dtc: DiagnosticTroubleCode): string {
-  return `SPN ${dtc.spn} (${dtc.spnDescription}) FMI ${dtc.fmi} — ${dtc.fmiDescription}`;
+  return `SPN ${dtc.spn} (${dtc.spnDescription}) FMI ${dtc.fmi} - ${dtc.fmiDescription}`;
 }
 
 async function main(): Promise<void> {

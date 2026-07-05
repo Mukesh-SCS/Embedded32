@@ -6,7 +6,7 @@ Choose the smallest package set for your goal. All `@embedded32/*` packages are 
 
 | Goal                                         | Recommended package      | Required supporting packages                 | Works without hardware | Runtime        | Example                                                                                   |
 | -------------------------------------------- | ------------------------ | -------------------------------------------- | ---------------------- | -------------- | ----------------------------------------------------------------------------------------- |
-| Send/receive raw CAN frames (mock)           | `@embedded32/can`        | —                                            | Yes                    | Node.js 18+    | [embedded32-can/examples/basic-mock.ts](../embedded32-can/examples/basic-mock.ts)         |
+| Send/receive raw CAN frames (mock)           | `@embedded32/can`        | -                                            | Yes                    | Node.js 18+    | [embedded32-can/examples/basic-mock.ts](../embedded32-can/examples/basic-mock.ts)         |
 | Parse/decode J1939 IDs and PGNs              | `@embedded32/j1939`      | `@embedded32/can`                            | Yes                    | Node.js 18+    | [examples/j1939-basic.ts](../examples/j1939-basic.ts)                                     |
 | Simulate engine/transmission/diagnostic ECUs | `@embedded32/sim`        | `core`, `can`, `j1939`                       | Yes                    | Node.js 18+    | `npx embedded32-tools simulate vehicle/basic-truck`                                       |
 | Monitor/decode traffic in terminal           | `@embedded32/tools`      | `sim`, `can`, `j1939`, `core`                | Yes                    | Node.js 18+    | `npx embedded32-tools --help`                                                             |
@@ -17,9 +17,9 @@ Choose the smallest package set for your goal. All `@embedded32/*` packages are 
 | Route CAN to network/MQTT                    | `@embedded32/bridge`     | `ethernet`, `j1939`, `can`, `core`           | Yes                    | Node.js 18+    | Package README                                                                            |
 | Application SDK (virtual transport)          | `@embedded32/sdk-js`     | `@embedded32/j1939`                          | Yes                    | Node.js 18+    | [embedded32-sdk-js/examples/basic-j1939.ts](../embedded32-sdk-js/examples/basic-j1939.ts) |
 | Linux SocketCAN on real bus                  | `@embedded32/can`        | optional `socketcan` npm module              | No                     | Linux / WSL    | [embedded32-can/examples/socketcan-demo.ts](../embedded32-can/examples/socketcan-demo.ts) |
-| Python client (experimental)                 | `@embedded32/sdk-python` | —                                            | Partial                | Python 3.8+    | Private — not on npm yet                                                                  |
-| C embedded client                            | `@embedded32/sdk-c`      | —                                            | Platform-specific      | C / Linux      | Private — not on npm yet                                                                  |
-| React monitoring UI                          | `@embedded32/dashboard`  | —                                            | Yes (mock data)        | Browser + Vite | `cd embedded32-dashboard && npm run dev`                                                  |
+| Python client (experimental)                 | `@embedded32/sdk-python` | -                                            | Partial                | Python 3.8+    | Private - not on npm yet                                                                  |
+| C embedded client                            | `@embedded32/sdk-c`      | -                                            | Platform-specific      | C / Linux      | Private - not on npm yet                                                                  |
+| React monitoring UI                          | `@embedded32/dashboard`  | -                                            | Yes (mock data)        | Browser + Vite | `cd embedded32-dashboard && npm run dev`                                                  |
 
 ## CLI naming
 
@@ -34,23 +34,23 @@ Install globally only after packages are published to npm, or use `npx` from a b
 
 ## Typical learning paths
 
-### Path A — Protocol fundamentals (no hardware)
+### Path A - Protocol fundamentals (no hardware)
 
-1. `@embedded32/can` — mock driver
-2. `@embedded32/j1939` — parse and decode
-3. `@embedded32/tools` — `simulate vehicle/basic-truck`
+1. `@embedded32/can` - mock driver
+2. `@embedded32/j1939` - parse and decode
+3. `@embedded32/tools` - `simulate vehicle/basic-truck`
 
-### Path B — Runtime and modules
+### Path B - Runtime and modules
 
-1. `@embedded32/core` — scheduler and message bus
-2. `@embedded32/supervisor` — module lifecycle
-3. `@embedded32/cli` — `embedded32 demo`
+1. `@embedded32/core` - scheduler and message bus
+2. `@embedded32/supervisor` - module lifecycle
+3. `@embedded32/cli` - `embedded32 demo`
 
-### Path C — Connected systems
+### Path C - Connected systems
 
 1. `@embedded32/j1939` + `@embedded32/can`
-2. `@embedded32/ethernet` — MQTT/UDP
-3. `@embedded32/bridge` — selective routing
+2. `@embedded32/ethernet` - MQTT/UDP
+3. `@embedded32/bridge` - selective routing
 
 ## Version compatibility
 
@@ -62,4 +62,4 @@ Install globally only after packages are published to npm, or use `npx` from a b
 
 - [Getting started](./getting-started.md)
 - [Architecture](./architecture.md)
-- [Generated API reference](./api/) — run `npm run docs:api` from repository root
+- [Generated API reference](./api/) - run `npm run docs:api` from repository root

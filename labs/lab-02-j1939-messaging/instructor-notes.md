@@ -1,9 +1,9 @@
-# Lab 2 instructor notes — J1939 messaging
+# Lab 2 instructor notes - J1939 messaging
 
 ## Key teaching points
 
 - **0x18F00400** breaks down as priority 6, PGN `0xF004`, SA `0x00`.
-- Students often confuse PF/PS with PGN — use the diagram in `docs/concepts/j1939.md`.
+- Students often confuse PF/PS with PGN - use the diagram in `docs/concepts/j1939.md`.
 - `buildJ1939Id({ priority: 6, pgn: 0xf004, sa: 0x00 })` must match the sample parse.
 
 ## Demo script
@@ -23,7 +23,7 @@ npx tsx labs/lab-02-j1939-messaging/solution/lab.ts
 
 ## Verification
 
-`npm run test:labs` — lab 02 section.
+`npm run test:labs` - lab 02 section.
 
 ## Timeboxing
 
@@ -32,4 +32,4 @@ npx tsx labs/lab-02-j1939-messaging/solution/lab.ts
 - 20 min written questions
 - 10 min review
 
-Do **not** claim full SAE compliance — emphasize educational subset.
+Do **not** claim full SAE compliance - emphasize educational subset.

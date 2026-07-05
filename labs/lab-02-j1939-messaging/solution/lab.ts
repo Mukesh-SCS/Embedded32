@@ -1,5 +1,5 @@
 /**
- * Lab 2 — J1939 messaging (solution)
+ * Lab 2 - J1939 messaging (solution)
  */
 
 import { parseJ1939Id, buildJ1939Id, decodeJ1939, getPGNInfo } from '@embedded32/j1939';

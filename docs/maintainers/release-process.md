@@ -1,13 +1,13 @@
 # Release process
 
-Embedded32 uses **Lerna fixed versioning** for the `@embedded32/*` npm scope. Releases are **manual and approval-gated** — nothing publishes from CI without an explicit maintainer action.
+Embedded32 uses **Lerna fixed versioning** for the `@embedded32/*` npm scope. Releases are **manual and approval-gated** - nothing publishes from CI without an explicit maintainer action.
 
 ## Mechanism: Lerna (retained)
 
-| Decision | Rationale |
-|----------|-----------|
-| **Keep Lerna** | Already manages 12 packages, fixed `1.0.0` version in `lerna.json`, and `lerna run build/test` is wired |
-| **Do not add Changesets** | Would duplicate Lerna; increases release complexity for a small maintainer team |
+| Decision                  | Rationale                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Keep Lerna**            | Already manages 12 packages, fixed `1.0.0` version in `lerna.json`, and `lerna run build/test` is wired |
+| **Do not add Changesets** | Would duplicate Lerna; increases release complexity for a small maintainer team                         |
 
 Changesets may be reconsidered if packages need **independent versioning** later.
 
@@ -41,17 +41,17 @@ npm run release:dry-run -- --skip-verify
 
 Optional flags:
 
-| Flag | Purpose |
-|------|---------|
-| `--tag latest` | Production dist-tag (default) |
-| `--tag next` | Prerelease dist-tag |
+| Flag           | Purpose                                             |
+| -------------- | --------------------------------------------------- |
+| `--tag latest` | Production dist-tag (default)                       |
+| `--tag next`   | Prerelease dist-tag                                 |
 | `--bump patch` | Show proposed patch version (does not modify files) |
 
 ## Versioning policy
 
-- **Fixed monorepo version** — all public packages share one version in `lerna.json`
-- **Semver** — patch for fixes, minor for features, major only for documented breaking changes
-- **Internal deps** — `@embedded32/*` dependencies must match the release version (currently pinned `1.0.0`)
+- **Fixed monorepo version** - all public packages share one version in `lerna.json`
+- **Semver** - patch for fixes, minor for features, major only for documented breaking changes
+- **Internal deps** - `@embedded32/*` dependencies must match the release version (currently pinned `1.0.0`)
 
 ## Changelog
 
@@ -65,14 +65,14 @@ Update `CHANGELOG.md` under `[Unreleased]` before tagging:
 
 File: `.github/workflows/release.yml`
 
-| Trigger | Behavior |
-|---------|----------|
-| `workflow_dispatch` | Always runs verify + dry-run |
+| Trigger                    | Behavior                                                             |
+| -------------------------- | -------------------------------------------------------------------- |
+| `workflow_dispatch`        | Always runs verify + dry-run                                         |
 | `confirm_publish: PUBLISH` | Additional publish job (requires `npm-publish` environment approval) |
 
 **Default:** dry-run only. The publish job does not run unless the maintainer types `PUBLISH` **and** approves the GitHub Environment.
 
-## Manual publish (local — discouraged)
+## Manual publish (local - discouraged)
 
 Only if the workflow is unavailable:
 
@@ -94,12 +94,12 @@ Lerna passes through npm config when configured.
 
 ## npm tags
 
-| Tag | Use |
-|-----|-----|
-| `latest` | Stable releases |
-| `next` | Prereleases (beta, RC) |
+| Tag      | Use                    |
+| -------- | ---------------------- |
+| `latest` | Stable releases        |
+| `next`   | Prereleases (beta, RC) |
 
-Do not republish an existing version to hide mistakes — deprecate on npm if needed.
+Do not republish an existing version to hide mistakes - deprecate on npm if needed.
 
 ## Post-release
 

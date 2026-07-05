@@ -1,15 +1,15 @@
 # Zenodo release and DOI workflow
 
-Embedded32 uses [Zenodo](https://zenodo.org) to mint **version-specific DOIs** for GitHub releases. This is a **maintainer-only** process — nothing is archived automatically until Zenodo is connected and a release is published.
+Embedded32 uses [Zenodo](https://zenodo.org) to mint **version-specific DOIs** for GitHub releases. This is a **maintainer-only** process - nothing is archived automatically until Zenodo is connected and a release is published.
 
 ## Current status
 
-| Item | Status |
-|------|--------|
-| `CITATION.cff` in repository | **Present** — no DOI field until Zenodo issues one |
-| Zenodo GitHub integration | **Owner action required** |
-| Concept DOI (all versions) | **Not issued** |
-| Version DOI for v1.0.0 | **Not issued** |
+| Item                         | Status                                             |
+| ---------------------------- | -------------------------------------------------- |
+| `CITATION.cff` in repository | **Present** - no DOI field until Zenodo issues one |
+| Zenodo GitHub integration    | **Owner action required**                          |
+| Concept DOI (all versions)   | **Not issued**                                     |
+| Version DOI for v1.0.0       | **Not issued**                                     |
 
 Do **not** add a placeholder or fabricated DOI to `CITATION.cff`, `docs/citation.md`, or the README.
 
@@ -17,7 +17,7 @@ Do **not** add a placeholder or fabricated DOI to `CITATION.cff`, `docs/citation
 
 1. Sign in to [zenodo.org](https://zenodo.org) with your GitHub account ([@Mukesh-SCS](https://github.com/Mukesh-SCS)).
 2. Go to **Account** → **GitHub** → enable access for the `Mukesh-SCS/Embedded32` repository.
-3. On Zenodo, open **Upload** → **New upload** is not needed yet — instead use the **GitHub** tab to toggle **ON** for `Embedded32`.
+3. On Zenodo, open **Upload** → **New upload** is not needed yet - instead use the **GitHub** tab to toggle **ON** for `Embedded32`.
 4. Confirm Zenodo will create a new deposition on each **GitHub Release** (not on every tag push unless configured).
 
 See also [manual-github-settings.md](./manual-github-settings.md) (Zenodo checklist).
@@ -72,10 +72,10 @@ Place it near the citation section, not at the top of the README unless the DOI 
 
 ## Concept DOI vs version DOI
 
-| Type | Purpose |
-|------|---------|
-| **Concept DOI** | Resolves to the latest Zenodo record for the project — cite when you want “Embedded32” generally |
-| **Version DOI** | Points to one GitHub Release snapshot — cite for reproducibility |
+| Type            | Purpose                                                                                          |
+| --------------- | ------------------------------------------------------------------------------------------------ |
+| **Concept DOI** | Resolves to the latest Zenodo record for the project - cite when you want “Embedded32” generally |
+| **Version DOI** | Points to one GitHub Release snapshot - cite for reproducibility                                 |
 
 Instructors should cite the **version DOI** (or tag + commit) when assigning labs so students reproduce the same materials.
 
@@ -99,15 +99,15 @@ Document in the Zenodo description that the software is a TypeScript monorepo wi
 
 ## Troubleshooting
 
-| Problem | Action |
-|---------|--------|
+| Problem                       | Action                                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------------------------ |
 | Zenodo did not create a draft | Confirm GitHub integration is ON for this repo; release must be a GitHub Release, not only a tag |
-| Wrong files in archive | Zenodo uses GitHub’s release asset; tag the correct commit before releasing |
-| Duplicate deposition | Do not re-publish the same version; edit metadata on Zenodo or create a patch release |
-| DOI not showing on GitHub | GitHub reads `CITATION.cff` — add `identifiers` with type `doi` after Zenodo publish |
+| Wrong files in archive        | Zenodo uses GitHub’s release asset; tag the correct commit before releasing                      |
+| Duplicate deposition          | Do not re-publish the same version; edit metadata on Zenodo or create a patch release            |
+| DOI not showing on GitHub     | GitHub reads `CITATION.cff` - add `identifiers` with type `doi` after Zenodo publish             |
 
 ## Related
 
-- [docs/citation.md](../citation.md) — public citation guide
-- [release-process.md](./release-process.md) — npm and GitHub release order
-- [CITATION.cff](../../CITATION.cff) — machine-readable metadata
+- [docs/citation.md](../citation.md) - public citation guide
+- [release-process.md](./release-process.md) - npm and GitHub release order
+- [CITATION.cff](../../CITATION.cff) - machine-readable metadata

@@ -1,5 +1,5 @@
 // AUTO-GENERATED from examples/traces/ by apps/demo/scripts/generate-traces.mjs
-// Do not edit by hand — run `node apps/demo/scripts/generate-traces.mjs` to refresh.
+// Do not edit by hand - run `node apps/demo/scripts/generate-traces.mjs` to refresh.
 
 import type { Trace } from './types';
 

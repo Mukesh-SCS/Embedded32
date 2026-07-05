@@ -4,10 +4,10 @@ Recorded **2026-07-04** on branch `feat/open-source-education-platform` using `n
 
 ## Policy
 
-1. **Measure first** — baseline below; do not claim high coverage project-wide.
-2. **No global 90% gate yet** — `@embedded32/can` and `@embedded32/j1939` need more tests before strict thresholds.
-3. **Prevent regression on strong packages** — `@embedded32/core` should not drop below baseline without justification.
-4. **CI** — `npm run test:coverage` runs on Node 20 in the CI workflow.
+1. **Measure first** - baseline below; do not claim high coverage project-wide.
+2. **No global 90% gate yet** - `@embedded32/can` and `@embedded32/j1939` need more tests before strict thresholds.
+3. **Prevent regression on strong packages** - `@embedded32/core` should not drop below baseline without justification.
+4. **CI** - `npm run test:coverage` runs on Node 20 in the CI workflow.
 
 ## Baseline (2026-07-04)
 
@@ -38,8 +38,8 @@ cd embedded32-j1939 && npm run test:coverage
 | `core`  | Maintain ≥ 95% lines                       |
 | `can`   | Add driver tests; target 50% lines         |
 
-When enforcing in Jest `coverageThreshold`, add per-package config — not a monorepo-wide blanket.
+When enforcing in Jest `coverageThreshold`, add per-package config - not a monorepo-wide blanket.
 
 ## Related issues
 
-See [seed-issues.md](./seed-issues.md) — coverage reporting and bridge/dashboard test expansion.
+See [seed-issues.md](./seed-issues.md) - coverage reporting and bridge/dashboard test expansion.

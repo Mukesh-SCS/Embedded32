@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Release dry-run — reports what would be published without publishing anything.
+ * Release dry-run - reports what would be published without publishing anything.
  *
  * Usage:
  *   node scripts/release-dry-run.mjs
@@ -160,7 +160,7 @@ function main() {
     console.log('Running verification suite (npm run verify)...\n');
     const verify = run('npm', ['run', 'verify']);
     if (!verify.ok) {
-      console.error(`${colors.red}Verification failed — release blocked.${colors.reset}`);
+      console.error(`${colors.red}Verification failed - release blocked.${colors.reset}`);
       console.error(verify.stdout);
       process.exit(1);
     }
@@ -181,9 +181,7 @@ function main() {
     const internal = collectInternalDeps(pkg.pkgJson)
       .map((d) => `${d.name}@${d.range}`)
       .join(', ');
-    console.log(
-      `| ${pkg.pkgJson.name} | ${current} | ${proposed} | ${internal || '—'} |`
-    );
+    console.log(`| ${pkg.pkgJson.name} | ${current} | ${proposed} | ${internal || '-'} |`);
   }
 
   console.log('\nTarball dry-run:\n');
@@ -205,10 +203,7 @@ function main() {
     }
     const hasDist = pack.files.some((f) => f.startsWith('dist/'));
     const hasLicense = pack.files.includes('LICENSE');
-    const flags = [
-      hasDist ? 'dist' : 'NO-DIST',
-      hasLicense ? 'LICENSE' : 'NO-LICENSE',
-    ].join(', ');
+    const flags = [hasDist ? 'dist' : 'NO-DIST', hasLicense ? 'LICENSE' : 'NO-LICENSE'].join(', ');
     console.log(`${colors.green}${pack.filename}${colors.reset} (${flags})`);
   }
 
@@ -216,9 +211,7 @@ function main() {
   console.log(`  Public packages: ${packages.length}`);
   console.log(`  Private skipped: dashboard, sdk-c, sdk-python`);
   console.log(`  Publish command (maintainer only, not executed):`);
-  console.log(
-    `    npx lerna publish from-package --yes --dist-tag ${opts.tag}`
-  );
+  console.log(`    npx lerna publish from-package --yes --dist-tag ${opts.tag}`);
   console.log(`  Provenance: enable npm trusted publishing + \`NPM_CONFIG_PROVENANCE=true\``);
 
   if (failures > 0) {

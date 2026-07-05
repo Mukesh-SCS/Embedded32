@@ -29,7 +29,7 @@ Not every frame should leave the bus. Bridges typically filter by:
 
 - PGN or ID range
 - Source address
-- Rate limits (conceptual — check bridge config in supervisor JSON)
+- Rate limits (conceptual - check bridge config in supervisor JSON)
 
 ```mermaid
 flowchart TB
@@ -74,8 +74,8 @@ MQTT labs should use local brokers and TLS where possible. Do not expose unauthe
 
 ## Limitations
 
-- No CAN gateway hardware drivers in-tree — use SocketCAN + Linux gateway PC
-- Message serialization format may change — pin versions in course materials
+- No CAN gateway hardware drivers in-tree - use SocketCAN + Linux gateway PC
+- Message serialization format may change - pin versions in course materials
 - No guaranteed delivery semantics across all transport paths
 
 ## See also

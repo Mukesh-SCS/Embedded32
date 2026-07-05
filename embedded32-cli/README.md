@@ -1,6 +1,6 @@
 # @embedded32/cli
 
-Command-line launcher for the Embedded32 supervisor-backed runtime — `embedded32` executable for demo, start, init, and status.
+Command-line launcher for the Embedded32 supervisor-backed runtime - `embedded32` executable for demo, start, init, and status.
 
 ## Installation
 
@@ -55,7 +55,7 @@ Programmatic import of `@embedded32/cli` is supported for embedding; most users 
 
 ## Browser compatibility
 
-CLI is Node-only. Demo may print dashboard URL (`localhost:5173`) when dashboard is run separately — dashboard is a private package.
+CLI is Node-only. Demo may print dashboard URL (`localhost:5173`) when dashboard is run separately - dashboard is a private package.
 
 ## Common errors
 
@@ -67,9 +67,9 @@ CLI is Node-only. Demo may print dashboard URL (`localhost:5173`) when dashboard
 
 ## Related packages
 
-- `@embedded32/tools` — `embedded32-tools` simulation and monitoring
-- `@embedded32/supervisor` — module lifecycle behind `start`/`demo`
-- `@embedded32/bridge`, `@embedded32/ethernet` — networking in full configs
+- `@embedded32/tools` - `embedded32-tools` simulation and monitoring
+- `@embedded32/supervisor` - module lifecycle behind `start`/`demo`
+- `@embedded32/bridge`, `@embedded32/ethernet` - networking in full configs
 
 ## Version compatibility
 

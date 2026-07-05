@@ -30,7 +30,7 @@ interface CANFrame {
 }
 ```
 
-## Identifier — standard vs extended
+## Identifier - standard vs extended
 
 | Type     | ID bits | J1939 usage                   |
 | -------- | ------- | ----------------------------- |
@@ -75,7 +75,7 @@ sequenceDiagram
 
 ## Filtering
 
-`CANInterface` supports acceptance filters so modules only receive relevant IDs — useful when simulating multiple ECUs on one bus.
+`CANInterface` supports acceptance filters so modules only receive relevant IDs - useful when simulating multiple ECUs on one bus.
 
 ## Hardware-free learning path
 
@@ -87,7 +87,7 @@ sequenceDiagram
 
 - Forgetting `extended: true` for J1939 frames
 - Treating `id` as decimal when docs use hex (`0x18F00401`)
-- Expecting CAN FD — Embedded32 classic CAN labs use 8-byte payloads
+- Expecting CAN FD - Embedded32 classic CAN labs use 8-byte payloads
 
 ## See also
 

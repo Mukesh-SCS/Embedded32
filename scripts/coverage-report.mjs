@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Run Jest coverage on core libraries and print a summary table.
- * Baseline is recorded in docs/maintainers/coverage-baseline.md — do not lower thresholds without review.
+ * Baseline is recorded in docs/maintainers/coverage-baseline.md - do not lower thresholds without review.
  */
 
 import { spawnSync } from 'node:child_process';

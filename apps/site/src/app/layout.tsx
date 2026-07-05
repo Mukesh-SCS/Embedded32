@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Embedded32 — CAN & J1939 education platform',
+    default: 'Embedded32 - CAN & J1939 education platform',
     template: '%s · Embedded32',
   },
   description:

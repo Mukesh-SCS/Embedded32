@@ -11,7 +11,7 @@ Environment:
 | Node.js             | (system default; root `engines` requires `>=20.9.0`)       |
 | npm                 | 11.6.2 (warns about unknown `devdir` env config)           |
 | Branch              | `feat/open-source-education-platform`                      |
-| Pre-change baseline | Yes — no structural refactoring performed before recording |
+| Pre-change baseline | Yes - no structural refactoring performed before recording |
 
 ---
 
@@ -79,12 +79,12 @@ Notable per-package behavior:
 | `@embedded32/tools`      | `echo "no tests yet"`      | Exit 0 (no real tests)                           |
 | `@embedded32/sdk-c`      | echo stub                  | Exit 0 (no real tests)                           |
 | `@embedded32/sdk-python` | echo stub                  | Exit 0 (no real tests)                           |
-| `@embedded32/j1939`      | Jest — 45 tests            | Pass                                             |
-| `@embedded32/core`       | Jest — multiple suites     | Pass (expected console.error in scheduler tests) |
-| `@embedded32/bridge`     | Jest — 2 placeholder tests | Pass                                             |
-| `@embedded32/sim`        | Jest — 2 placeholder tests | Pass                                             |
-| `@embedded32/supervisor` | Jest — 2 placeholder tests | Pass                                             |
-| `@embedded32/cli`        | Jest — 2 placeholder tests | Pass                                             |
+| `@embedded32/j1939`      | Jest - 45 tests            | Pass                                             |
+| `@embedded32/core`       | Jest - multiple suites     | Pass (expected console.error in scheduler tests) |
+| `@embedded32/bridge`     | Jest - 2 placeholder tests | Pass                                             |
+| `@embedded32/sim`        | Jest - 2 placeholder tests | Pass                                             |
+| `@embedded32/supervisor` | Jest - 2 placeholder tests | Pass                                             |
+| `@embedded32/cli`        | Jest - 2 placeholder tests | Pass                                             |
 | `@embedded32/ethernet`   | Jest                       | Pass                                             |
 | `@embedded32/sdk-js`     | Jest (`--passWithNoTests`) | Pass                                             |
 
@@ -123,34 +123,34 @@ Manually run on all 10 public packages after build. All commands exited **0** an
 
 ## Commands not present at root (Phase 1)
 
-Updated in Phase 3 — all root workflow commands now exist:
+Updated in Phase 3 - all root workflow commands now exist:
 
 | Command                        | Status                                                              |
 | ------------------------------ | ------------------------------------------------------------------- |
-| `npm run lint`                 | **Added Phase 3** — ESLint 9 flat config                            |
-| `npm run typecheck`            | **Added Phase 3** — `lerna run typecheck` across 13 packages        |
+| `npm run lint`                 | **Added Phase 3** - ESLint 9 flat config                            |
+| `npm run typecheck`            | **Added Phase 3** - `lerna run typecheck` across 13 packages        |
 | `npm run format`               | **Added Phase 3**                                                   |
 | `npm run format:check`         | **Added Phase 3**                                                   |
 | `npm run audit:packages`       | Passes                                                              |
 | `npm run test:package-install` | Passes                                                              |
-| `npm run verify`               | **Added Phase 3** — passes on `feat/open-source-education-platform` |
+| `npm run verify`               | **Added Phase 3** - passes on `feat/open-source-education-platform` |
 
 ---
 
 ## CI / automation
 
-| Item                 | Status                                                                 |
-| -------------------- | ---------------------------------------------------------------------- |
-| `.github/workflows/` | **Present** — `ci.yml`, `codeql.yml`, `dependency-review.yml`, `release.yml` |
-| Dependabot           | **Present** — `.github/dependabot.yml`                               |
-| CodeQL               | **Present** — weekly + PR                                              |
-| Release dry-run      | **Present** — `npm run release:dry-run` (Phase 8)                      |
-| Documentation site   | **Present** — `apps/site` Next.js static export (Phase 9)              |
-| Browser demo         | **Present** — `apps/demo` client-side CAN/J1939 (Phase 10)             |
-| Pages deployment     | **Present** — `deploy-pages.yml` → GitHub Pages (Phase 11)             |
-| Citation / Zenodo    | **Present** — `CITATION.cff`, `test:citation`, zenodo runbook (Phase 12) |
-| Evidence metrics   | **Present** — `evidence/`, `evidence:collect`, `test:evidence` (Phase 13) |
-| Upgrade validation | **Present** — `validate:upgrade`, `open-source-upgrade-summary.md` (Phase 15) |
+| Item                 | Status                                                                        |
+| -------------------- | ----------------------------------------------------------------------------- |
+| `.github/workflows/` | **Present** - `ci.yml`, `codeql.yml`, `dependency-review.yml`, `release.yml`  |
+| Dependabot           | **Present** - `.github/dependabot.yml`                                        |
+| CodeQL               | **Present** - weekly + PR                                                     |
+| Release dry-run      | **Present** - `npm run release:dry-run` (Phase 8)                             |
+| Documentation site   | **Present** - `apps/site` Next.js static export (Phase 9)                     |
+| Browser demo         | **Present** - `apps/demo` client-side CAN/J1939 (Phase 10)                    |
+| Pages deployment     | **Present** - `deploy-pages.yml` → GitHub Pages (Phase 11)                    |
+| Citation / Zenodo    | **Present** - `CITATION.cff`, `test:citation`, zenodo runbook (Phase 12)      |
+| Evidence metrics     | **Present** - `evidence/`, `evidence:collect`, `test:evidence` (Phase 13)     |
+| Upgrade validation   | **Present** - `validate:upgrade`, `open-source-upgrade-summary.md` (Phase 15) |
 
 ---
 

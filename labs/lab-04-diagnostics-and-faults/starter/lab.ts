@@ -1,5 +1,5 @@
 /**
- * Lab 4 — Diagnostics and fault injection (starter)
+ * Lab 4 - Diagnostics and fault injection (starter)
  *
  *   npx tsx labs/lab-04-diagnostics-and-faults/starter/lab.ts
  */
@@ -28,7 +28,7 @@ function buildCoolantFaultDm1(): number[] {
 }
 
 function summarizeDtc(dtc: DiagnosticTroubleCode): string {
-  return `SPN ${dtc.spn} (${dtc.spnDescription}) FMI ${dtc.fmi} — ${dtc.fmiDescription}`;
+  return `SPN ${dtc.spn} (${dtc.spnDescription}) FMI ${dtc.fmi} - ${dtc.fmiDescription}`;
 }
 
 async function main(): Promise<void> {

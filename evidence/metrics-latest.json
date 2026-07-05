@@ -115,7 +115,7 @@
     "zenodoDoiIssued": false
   },
   "notes": [
-    "Metrics are collected from the repository and local commands — not from GitHub/npm download APIs.",
+    "Metrics are collected from the repository and local commands - not from GitHub/npm download APIs.",
     "Outreach metrics (stars, classroom pilots) are recorded manually in evidence/outreach-log.md."
   ]
 }

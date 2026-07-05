@@ -5,4 +5,4 @@ contact_links:
     about: Ask questions and share ideas (not for bug reports)
   - name: Security advisory
     url: https://github.com/Mukesh-SCS/Embedded32/security/policy
-    about: Report vulnerabilities privately — do not use public issues
+    about: Report vulnerabilities privately - do not use public issues

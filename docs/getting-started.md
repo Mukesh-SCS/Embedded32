@@ -1,6 +1,6 @@
 # Getting started
 
-Complete this guide in about **15 minutes** using only a Node.js workstation — no CAN adapter required.
+Complete this guide in about **15 minutes** using only a Node.js workstation - no CAN adapter required.
 
 ## Prerequisites
 
@@ -91,7 +91,7 @@ Run from repo root after `npm run build`:
 node my-first-j1939.mjs
 ```
 
-## 6. Optional — runtime demo
+## 6. Optional - runtime demo
 
 ```bash
 npx embedded32 demo
@@ -125,7 +125,7 @@ Then:
 npx embedded32-tools monitor vcan0
 ```
 
-## Next step — first lab
+## Next step - first lab
 
 Continue to [labs/README.md](../labs/README.md) for the structured lab sequence (Phase 5).
 

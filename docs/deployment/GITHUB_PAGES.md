@@ -12,24 +12,24 @@ Because this is a **project site** (not a user/org root site), all assets are se
 
 ## Framework and output
 
-| Property | Value |
-|----------|-------|
-| Framework | Next.js 15 (App Router) |
-| Mode | Static export (`output: 'export'`) |
-| Build command | `npm run build --workspace apps/site` |
-| Output directory | `apps/site/out` |
-| Base path | `/Embedded32` (production only) |
-| Asset prefix | `/Embedded32/` (production only) |
+| Property         | Value                                 |
+| ---------------- | ------------------------------------- |
+| Framework        | Next.js 15 (App Router)               |
+| Mode             | Static export (`output: 'export'`)    |
+| Build command    | `npm run build --workspace apps/site` |
+| Output directory | `apps/site/out`                       |
+| Base path        | `/Embedded32` (production only)       |
+| Asset prefix     | `/Embedded32/` (production only)      |
 
 Every route is pre-rendered to static HTML (`trailingSlash: true`), so nested routes work without a client-side router fallback. The workflow still copies `index.html` to `404.html` as a safety net.
 
 ## Workflow
 
-| Item | Value |
-|------|-------|
-| File | `.github/workflows/deploy-pages.yml` |
-| Name | `Deploy Embedded32 Documentation to GitHub Pages` |
-| Environment | `github-pages` |
+| Item        | Value                                             |
+| ----------- | ------------------------------------------------- |
+| File        | `.github/workflows/deploy-pages.yml`              |
+| Name        | `Deploy Embedded32 Documentation to GitHub Pages` |
+| Environment | `github-pages`                                    |
 
 ### Triggers
 
@@ -128,17 +128,17 @@ https://mukesh-scs.github.io/Embedded32/packages/
 https://mukesh-scs.github.io/Embedded32/demo/
 ```
 
-Refreshing must not produce a GitHub Pages 404 — each route is a real static HTML file.
+Refreshing must not produce a GitHub Pages 404 - each route is a real static HTML file.
 
 ## Diagnosing failures
 
-| Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| CSS/JS 404, unstyled page | Assets not under `/Embedded32/` | Confirm `basePath`/`assetPrefix`; production build uses `NODE_ENV=production` |
-| Blank page, console 404 on `_next/` | Base path missing | Rebuild with `npm run build --workspace apps/site` |
-| Nested route 404 on refresh | Missing static HTML | Ensure `generateStaticParams` covers the route; `trailingSlash: true` |
-| `verify-pages-build` fails | Missing `out/`, `api-ref/`, or bad asset prefix | Run `npm run docs:api` then rebuild |
-| Deploy step skipped | Pages source not set to GitHub Actions | Settings → Pages → Source = GitHub Actions |
+| Symptom                             | Likely cause                                    | Fix                                                                           |
+| ----------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------- |
+| CSS/JS 404, unstyled page           | Assets not under `/Embedded32/`                 | Confirm `basePath`/`assetPrefix`; production build uses `NODE_ENV=production` |
+| Blank page, console 404 on `_next/` | Base path missing                               | Rebuild with `npm run build --workspace apps/site`                            |
+| Nested route 404 on refresh         | Missing static HTML                             | Ensure `generateStaticParams` covers the route; `trailingSlash: true`         |
+| `verify-pages-build` fails          | Missing `out/`, `api-ref/`, or bad asset prefix | Run `npm run docs:api` then rebuild                                           |
+| Deploy step skipped                 | Pages source not set to GitHub Actions          | Settings → Pages → Source = GitHub Actions                                    |
 
 ## Static-only constraints
 

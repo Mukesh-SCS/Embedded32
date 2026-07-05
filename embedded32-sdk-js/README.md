@@ -38,7 +38,7 @@ See `embedded32-sdk-js/examples/basic-j1939.ts` in the monorepo.
 | `PGN`, `SA`                         | Common parameter group and source-address constants       |
 | `J1939ClientConfig`, `J1939Message` | Public types                                              |
 
-**Not public:** `@embedded32/sdk-js/internal` — may change without notice.
+**Not public:** `@embedded32/sdk-js/internal` - may change without notice.
 
 ## Runtime requirements
 
@@ -64,9 +64,9 @@ Virtual transport and decode-only paths may be bundled for future browser demo (
 
 ## Related packages
 
-- `@embedded32/j1939` — protocol decoding layer
-- `@embedded32/can` — CAN drivers for socketcan transport
-- `@embedded32/bridge` — network-fed virtual transports (advanced)
+- `@embedded32/j1939` - protocol decoding layer
+- `@embedded32/can` - CAN drivers for socketcan transport
+- `@embedded32/bridge` - network-fed virtual transports (advanced)
 
 ## Version compatibility
 
