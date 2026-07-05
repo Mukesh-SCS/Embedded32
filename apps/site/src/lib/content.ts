@@ -114,16 +114,19 @@ export function listLabs(): LabMeta[] {
 
   return fs
     .readdirSync(labsRoot, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && isValidLabSlug(d.name))
+    .filter((d) => d.isDirectory())
     .map((d) => {
-      const readme = path.join(labsRoot, d.name, 'README.md');
+      const safeSlug = encodeRouteSegment(d.name).toLowerCase();
+      if (!isValidLabSlug(safeSlug)) return null;
+      const readme = path.join(labsRoot, safeSlug, 'README.md');
       const content = fs.existsSync(readme) ? readText(readme) : '';
       return {
-        slug: d.name,
-        title: titleFromMarkdown(content, d.name),
-        dirName: d.name,
+        slug: safeSlug,
+        title: titleFromMarkdown(content, safeSlug),
+        dirName: safeSlug,
       };
     })
+    .filter((lab): lab is LabMeta => lab !== null)
     .sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
