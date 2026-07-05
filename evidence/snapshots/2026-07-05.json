@@ -1,10 +1,10 @@
 {
   "format": "embedded32-evidence-v1",
-  "collectedAt": "2026-07-05T03:54:24.531Z",
+  "collectedAt": "2026-07-05T04:16:34.318Z",
   "git": {
     "branch": "feat/open-source-education-platform",
-    "commit": "146161f2958604fcaac1e7a96621fd9f3e353eaa",
-    "commitShort": "146161f"
+    "commit": "bfd5efe469d5bced6d24ebf2c57b6641b4f84922",
+    "commitShort": "bfd5efe"
   },
   "verification": {
     "npmVerifyPassed": null,
@@ -38,7 +38,7 @@
     "browserDemoPresent": true
   },
   "documentation": {
-    "markdownDocCount": 33,
+    "markdownDocCount": 34,
     "siteStaticRouteCount": 40,
     "apiReferenceIndexPresent": true,
     "citationDocPresent": true
@@ -97,6 +97,7 @@
       "test:citation",
       "evidence:collect",
       "test:evidence",
+      "validate:upgrade",
       "test:coverage",
       "verify:pages",
       "seed:issues",
