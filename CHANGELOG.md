@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/demo/` — client-side CAN/J1939 browser demo with synthetic trace playback
 - GitHub Pages deployment: `.github/workflows/deploy-pages.yml`, `scripts/verify-pages-build.mjs`, `docs/deployment/GITHUB_PAGES.md`
 - Citation and Zenodo: `CITATION.cff`, `docs/citation.md`, `docs/maintainers/zenodo-release.md`, `npm run test:citation`
+- Evidence tracking: `evidence/`, `npm run evidence:collect`, `npm run test:evidence`
 - Maintainer docs: `release-process.md`, `manual-npm-settings.md`
 
 ### Changed

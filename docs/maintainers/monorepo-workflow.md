@@ -27,8 +27,10 @@ npm ci
 | `npm run test:examples`        | Run key examples after build                         |
 | `npm run test:docs`            | Generate API docs and build `apps/site`              |
 | `npm run test:citation`        | Validate `CITATION.cff` and citation docs (no fake DOI) |
+| `npm run test:evidence`        | Validate committed evidence snapshots                   |
+| `npm run evidence:collect`     | Generate metrics snapshot under `evidence/`             |
 | `npm run test:coverage`        | Coverage report for j1939, core, can                 |
-| `npm run verify`               | Full pre-merge check (includes labs, examples, docs, citation) |
+| `npm run verify`               | Full pre-merge check (includes citation and evidence) |
 
 ## Workspace layout
 
@@ -62,4 +64,5 @@ Package paths are unchanged from the original repository layout. Published impor
 | `docs/api/`          | 4     | Generated API reference                       |
 | `docs/deployment/`   | 11    | GitHub Pages deployment runbook               |
 | `docs/maintainers/zenodo-release.md` | 12 | Zenodo DOI workflow for maintainers |
+| `evidence/`              | 13    | Metrics snapshots and outreach log          |
 | `.github/workflows/` | 7, 11 | CI, CodeQL, dependency review, Pages deploy   |

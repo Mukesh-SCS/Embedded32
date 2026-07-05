@@ -149,6 +149,7 @@ Updated in Phase 3 — all root workflow commands now exist:
 | Browser demo         | **Present** — `apps/demo` client-side CAN/J1939 (Phase 10)             |
 | Pages deployment     | **Present** — `deploy-pages.yml` → GitHub Pages (Phase 11)             |
 | Citation / Zenodo    | **Present** — `CITATION.cff`, `test:citation`, zenodo runbook (Phase 12) |
+| Evidence metrics   | **Present** — `evidence/`, `evidence:collect`, `test:evidence` (Phase 13) |
 
 ---
 

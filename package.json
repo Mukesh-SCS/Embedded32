@@ -38,10 +38,12 @@
     "test:examples": "node scripts/verify-examples.mjs",
     "test:docs": "node scripts/verify-docs.mjs",
     "test:citation": "node scripts/verify-citation.mjs",
+    "evidence:collect": "node scripts/collect-evidence.mjs",
+    "test:evidence": "node scripts/verify-evidence.mjs",
     "test:coverage": "node scripts/coverage-report.mjs",
     "verify:pages": "node scripts/verify-pages-build.mjs",
     "seed:issues": "node scripts/seed-contributor-issues.mjs",
-    "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install && npm run test:labs && npm run test:examples && npm run test:docs && npm run test:citation",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install && npm run test:labs && npm run test:examples && npm run test:docs && npm run test:citation && npm run test:evidence",
     "docs:api": "typedoc --options typedoc.json"
   },
   "devDependencies": {
