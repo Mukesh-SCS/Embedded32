@@ -123,16 +123,17 @@ Manually run on all 10 public packages after build. All commands exited **0** an
 
 ## Commands not present at root (Phase 1)
 
-These were requested in later phases but do not exist yet:
+Updated in Phase 3 — all root workflow commands now exist:
 
-| Command                        | Status                                  |
-| ------------------------------ | --------------------------------------- |
-| `npm run lint`                 | Not defined                             |
-| `npm run typecheck`            | Not defined                             |
-| `npm run format`               | Not defined                             |
-| `npm run audit:packages`       | Added Phase 1; **passes** after Phase 2 |
-| `npm run test:package-install` | Added Phase 2; **passes**               |
-| `npm run verify`               | Planned Phase 3                         |
+| Command | Status |
+| ------- | ------ |
+| `npm run lint` | **Added Phase 3** — ESLint 9 flat config |
+| `npm run typecheck` | **Added Phase 3** — `lerna run typecheck` across 13 packages |
+| `npm run format` | **Added Phase 3** |
+| `npm run format:check` | **Added Phase 3** |
+| `npm run audit:packages` | Passes |
+| `npm run test:package-install` | Passes |
+| `npm run verify` | **Added Phase 3** — passes on `feat/open-source-education-platform` |
 
 ---
 
