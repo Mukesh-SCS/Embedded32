@@ -59,6 +59,7 @@ embedded32 demo
 ```
 
 This starts a full simulation with:
+
 - Virtual CAN bus
 - Engine/transmission/brake simulators
 - J1939 decoder
@@ -77,7 +78,7 @@ import { J1939Client, PGN, SA } from '@embedded32/sdk-js';
 
 const client = new J1939Client({
   interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_2
+  sourceAddress: SA.DIAG_TOOL_2,
 });
 
 await client.connect();
@@ -110,13 +111,13 @@ client.request_pgn(PGN.EEC1)
 
 ## Hardware Support
 
-| Platform | CAN Interface | Status |
-|----------|--------------|--------|
-| Linux | SocketCAN | ✅ Full support |
+| Platform     | CAN Interface      | Status          |
+| ------------ | ------------------ | --------------- |
+| Linux        | SocketCAN          | ✅ Full support |
 | Raspberry Pi | SocketCAN, MCP2515 | ✅ Full support |
-| WSL | Virtual CAN | ✅ Full support |
-| Windows | PCAN-USB | ⚠️ Gateway mode |
-| macOS | Simulator | ✅ Testing only |
+| WSL          | Virtual CAN        | ✅ Full support |
+| Windows      | PCAN-USB           | ⚠️ Gateway mode |
+| macOS        | Simulator          | ✅ Testing only |
 
 ## Next Steps
 

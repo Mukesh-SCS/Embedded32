@@ -1,33 +1,33 @@
 /**
  * Brake ECU Simulator
- * 
+ *
  * Simulates:
  * - ABS (Anti-lock Braking System)
  * - Brake Circuit Pressures (Front/Rear)
  * - Brake Pedal Position
  * - Wheel Speeds (FL, FR, RL, RR)
- * 
+ *
  * Broadcasts:
  * - PGN FEEE (ABS Status)
  * - PGN FEAE (Brake Pressure / Air Suspension Control 2)
  */
 
 export interface WheelSpeeds {
-  frontLeft: number;   // km/h
-  frontRight: number;  // km/h
-  rearLeft: number;    // km/h
-  rearRight: number;   // km/h
+  frontLeft: number; // km/h
+  frontRight: number; // km/h
+  rearLeft: number; // km/h
+  rearRight: number; // km/h
 }
 
 export interface BrakeState {
   absActive: boolean;
   tractionControlActive: boolean;
-  brakePedalPosition: number;      // 0-100%
-  frontBrakePressure: number;      // kPa
-  rearBrakePressure: number;       // kPa
+  brakePedalPosition: number; // 0-100%
+  frontBrakePressure: number; // kPa
+  rearBrakePressure: number; // kPa
   parkingBrakeEngaged: boolean;
   wheelSpeeds: WheelSpeeds;
-  airPressure: number;             // kPa (for air brake systems)
+  airPressure: number; // kPa (for air brake systems)
 }
 
 /**
@@ -92,10 +92,8 @@ export class BrakeSimulator {
     const frontBias = 0.6; // 60% front, 40% rear
     const rearBias = 0.4;
 
-    this.state.frontBrakePressure =
-      (this.state.brakePedalPosition / 100) * maxPressure * frontBias;
-    this.state.rearBrakePressure =
-      (this.state.brakePedalPosition / 100) * maxPressure * rearBias;
+    this.state.frontBrakePressure = (this.state.brakePedalPosition / 100) * maxPressure * frontBias;
+    this.state.rearBrakePressure = (this.state.brakePedalPosition / 100) * maxPressure * rearBias;
 
     // Parking brake adds pressure to rear
     if (this.state.parkingBrakeEngaged) {
@@ -104,11 +102,11 @@ export class BrakeSimulator {
 
     // Update wheel speeds (all equal unless ABS active)
     const baseWheelSpeed = vehicleSpeed;
-    
+
     if (this.state.brakePedalPosition > 70 && vehicleSpeed > 20) {
       // Heavy braking at speed - ABS activates
       this.state.absActive = true;
-      
+
       // ABS causes slight wheel speed variations
       this.state.wheelSpeeds = {
         frontLeft: baseWheelSpeed * (0.95 + Math.random() * 0.05),
@@ -118,7 +116,7 @@ export class BrakeSimulator {
       };
     } else {
       this.state.absActive = false;
-      
+
       // Normal operation - all wheels equal
       this.state.wheelSpeeds = {
         frontLeft: baseWheelSpeed,

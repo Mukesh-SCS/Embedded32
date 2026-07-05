@@ -1,4 +1,4 @@
-import { Message, MessageHandler } from "../types.js";
+import { Message, MessageHandler } from '../types.js';
 
 export class MessageBus {
   private handlers: Map<string, Set<MessageHandler>> = new Map();
@@ -39,9 +39,7 @@ export class MessageBus {
 
     const handlers = this.handlers.get(topic);
     if (handlers) {
-      const promises = Array.from(handlers).map(handler => 
-        Promise.resolve(handler(message))
-      );
+      const promises = Array.from(handlers).map((handler) => Promise.resolve(handler(message)));
       await Promise.all(promises);
     }
   }

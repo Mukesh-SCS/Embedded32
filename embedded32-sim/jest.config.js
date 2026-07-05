@@ -15,15 +15,10 @@ export default {
       },
     ],
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(@embedded32)/)',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(@embedded32)/)'],
   testMatch: ['**/tests/**/*.test.ts', '!**/tests/phase2-acceptance.test.ts'],
   testPathIgnorePatterns: ['/node_modules/', 'phase2-acceptance.test.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
   testTimeout: 15000,
 };

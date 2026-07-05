@@ -20,7 +20,16 @@ const EngineChartFallback: React.FC = () => (
     <div className="card-header">
       <span>Engine Telemetry</span>
     </div>
-    <div className="card-body" style={{ minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af' }}>
+    <div
+      className="card-body"
+      style={{
+        minHeight: 200,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#9ca3af',
+      }}
+    >
       Loading chart...
     </div>
   </div>

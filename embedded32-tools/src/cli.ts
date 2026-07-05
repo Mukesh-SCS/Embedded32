@@ -2,29 +2,29 @@
 
 /**
  * Embedded32 CLI - Phase 2
- * 
+ *
  * Main entry point for all Embedded32 commands.
  */
 
 // MUST be first import - suppresses non-critical warnings from dependencies
-import "./suppress-warnings.js";
+import './suppress-warnings.js';
 
 // Phase 2 command imports
-import { setupVirtualCAN, printManualSetupInstructions } from "./commands/CANSetupCommand.js";
-import { runSimulateCommand } from "./commands/SimulateCommand.js";
-import { runMonitorCommand } from "./commands/MonitorCommand.js";
-import { runLogCommand } from "./commands/LogCommand.js";
+import { setupVirtualCAN, printManualSetupInstructions } from './commands/CANSetupCommand.js';
+import { runSimulateCommand } from './commands/SimulateCommand.js';
+import { runMonitorCommand } from './commands/MonitorCommand.js';
+import { runLogCommand } from './commands/LogCommand.js';
 
 // Legacy command imports (Phase 1 compatibility)
-import { J1939MonitorCommand } from "./commands/J1939MonitorCommand.js";
-import { CANMonitorCommand } from "./commands/CANMonitorCommand.js";
-import { J1939SendCommand } from "./commands/J1939SendCommand.js";
-import { J1939DumpCommand } from "./commands/J1939DumpCommand.js";
-import { ECUSimulateCommand } from "./commands/ECUSimulateCommand.js";
-import DashboardBridgeCommand from "./commands/DashboardBridgeCommand.js";
-import type { BaseCommand } from "./commands/BaseCommand.js";
+import { J1939MonitorCommand } from './commands/J1939MonitorCommand.js';
+import { CANMonitorCommand } from './commands/CANMonitorCommand.js';
+import { J1939SendCommand } from './commands/J1939SendCommand.js';
+import { J1939DumpCommand } from './commands/J1939DumpCommand.js';
+import { ECUSimulateCommand } from './commands/ECUSimulateCommand.js';
+import DashboardBridgeCommand from './commands/DashboardBridgeCommand.js';
+import type { BaseCommand } from './commands/BaseCommand.js';
 
-const VERSION = "1.0.0";
+const VERSION = '1.0.0';
 
 function printMainHelp() {
   console.log(`
@@ -97,12 +97,12 @@ License: MIT
 async function main() {
   const args = process.argv.slice(2);
 
-  if (args.length === 0 || args[0] === "help" || args[0] === "--help" || args[0] === "-h") {
+  if (args.length === 0 || args[0] === 'help' || args[0] === '--help' || args[0] === '-h') {
     printMainHelp();
     return;
   }
 
-  if (args[0] === "--version" || args[0] === "-v") {
+  if (args[0] === '--version' || args[0] === '-v') {
     console.log(`Embedded32 CLI v${VERSION}`);
     return;
   }
@@ -118,46 +118,46 @@ async function main() {
 
   try {
     // simulate vehicle/basic-truck
-    if (command === "simulate") {
+    if (command === 'simulate') {
       await runSimulateCommand(cmdArgs);
       return;
     }
 
     // monitor vcan0
-    if (command === "monitor" && subcommand && !subcommand.startsWith("-")) {
+    if (command === 'monitor' && subcommand && !subcommand.startsWith('-')) {
       await runMonitorCommand(cmdArgs);
       return;
     }
 
     // log vcan0 --out file.jsonl
-    if (command === "log") {
+    if (command === 'log') {
       await runLogCommand(cmdArgs);
       return;
     }
 
     // can up vcan0
-    if (command === "can" && subcommand === "up") {
-      const ifname = args[2] || "vcan0";
-      console.log("");
-      console.log("╔════════════════════════════════════════════════════════════╗");
-      console.log("║              EMBEDDED32 VIRTUAL CAN SETUP                  ║");
-      console.log("╚════════════════════════════════════════════════════════════╝");
-      console.log("");
-      
+    if (command === 'can' && subcommand === 'up') {
+      const ifname = args[2] || 'vcan0';
+      console.log('');
+      console.log('╔════════════════════════════════════════════════════════════╗');
+      console.log('║              EMBEDDED32 VIRTUAL CAN SETUP                  ║');
+      console.log('╚════════════════════════════════════════════════════════════╝');
+      console.log('');
+
       const result = await setupVirtualCAN(ifname);
-      
+
       if (result.success) {
-        console.log("");
+        console.log('');
         console.log(`  ✓ ${result.message}`);
-        console.log("");
-        console.log("  You can now run:");
+        console.log('');
+        console.log('  You can now run:');
         console.log(`    embedded32 simulate vehicle/basic-truck`);
         console.log(`    embedded32 monitor ${ifname}`);
-        console.log("");
+        console.log('');
       } else {
-        console.log("");
+        console.log('');
         console.log(`  ❌ ${result.message}`);
-        console.log("");
+        console.log('');
         printManualSetupInstructions(ifname);
       }
       return;
@@ -169,17 +169,17 @@ async function main() {
 
     let cmd: BaseCommand | null = null;
 
-    if (command === "can" && subcommand === "monitor") {
+    if (command === 'can' && subcommand === 'monitor') {
       cmd = new CANMonitorCommand();
-    } else if (command === "j1939" && subcommand === "monitor") {
+    } else if (command === 'j1939' && subcommand === 'monitor') {
       cmd = new J1939MonitorCommand();
-    } else if (command === "j1939" && subcommand === "send") {
+    } else if (command === 'j1939' && subcommand === 'send') {
       cmd = new J1939SendCommand();
-    } else if (command === "j1939" && subcommand === "dump") {
+    } else if (command === 'j1939' && subcommand === 'dump') {
       cmd = new J1939DumpCommand();
-    } else if (command === "ecu" && subcommand === "simulate") {
+    } else if (command === 'ecu' && subcommand === 'simulate') {
       cmd = new ECUSimulateCommand();
-    } else if (command === "dashboard" && subcommand === "bridge") {
+    } else if (command === 'dashboard' && subcommand === 'bridge') {
       const bridgeArgs = ['node', 'script', ...legacyArgs];
       DashboardBridgeCommand.parse(bridgeArgs);
       return;
@@ -190,7 +190,7 @@ async function main() {
     }
 
     if (cmd) {
-      if (legacyArgs.includes("--help") || legacyArgs.includes("-h")) {
+      if (legacyArgs.includes('--help') || legacyArgs.includes('-h')) {
         console.log(cmd.getHelp());
         return;
       }
@@ -205,6 +205,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error("Fatal error:", err);
+  console.error('Fatal error:', err);
   process.exit(1);
 });

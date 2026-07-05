@@ -102,28 +102,28 @@ const decoded = J1939NanoProto.decode(encoded);
 
 ### UDPServer
 
-| Method | Description |
-|--------|-------------|
-| `start()` | Start listening |
-| `broadcast(msg)` | Send to all clients |
+| Method                   | Description              |
+| ------------------------ | ------------------------ |
+| `start()`                | Start listening          |
+| `broadcast(msg)`         | Send to all clients      |
 | `on('message', handler)` | Handle incoming messages |
 
 ### TCPServer
 
-| Method | Description |
-|--------|-------------|
-| `start()` | Start listening |
-| `broadcast(msg)` | Send to all connected clients |
-| `on('connection', handler)` | Handle new connections |
+| Method                      | Description                   |
+| --------------------------- | ----------------------------- |
+| `start()`                   | Start listening               |
+| `broadcast(msg)`            | Send to all connected clients |
+| `on('connection', handler)` | Handle new connections        |
 
 ### MQTTClient
 
-| Method | Description |
-|--------|-------------|
-| `connect()` | Connect to broker |
-| `subscribe(topic, qos)` | Subscribe to topic |
-| `publish(topic, msg)` | Publish message |
-| `announceDevice(info)` | Announce device for discovery |
+| Method                  | Description                   |
+| ----------------------- | ----------------------------- |
+| `connect()`             | Connect to broker             |
+| `subscribe(topic, qos)` | Subscribe to topic            |
+| `publish(topic, msg)`   | Publish message               |
+| `announceDevice(info)`  | Announce device for discovery |
 
 ## License
 

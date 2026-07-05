@@ -17,16 +17,7 @@ export class J1939MessageBuilder {
       pgn: 0xf004,
       sa,
       priority: 3,
-      data: [
-        (rpm & 0xff),
-        ((rpm >> 8) & 0xff),
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ],
+      data: [rpm & 0xff, (rpm >> 8) & 0xff, 0, 0, 0, 0, 0, 0],
     };
   }
 
@@ -48,7 +39,7 @@ export class J1939MessageBuilder {
   static createEngineTemperature(celsius: number, sa: number = 0): any {
     // Convert to Celsius + 40 offset (K = °C + 40)
     const k = celsius + 40;
-    const scaled = Math.round((k * 4) - 273); // Scale and offset
+    const scaled = Math.round(k * 4 - 273); // Scale and offset
     return {
       pgn: 0xfeee,
       sa,
@@ -60,26 +51,12 @@ export class J1939MessageBuilder {
   /**
    * Create DM1 fault message (PGN 0xFECA)
    */
-  static createDM1Fault(
-    spn: number,
-    fmi: number,
-    occurrence: number = 1,
-    sa: number = 0
-  ): any {
+  static createDM1Fault(spn: number, fmi: number, occurrence: number = 1, sa: number = 0): any {
     return {
       pgn: 0xfeca,
       sa,
       priority: 3,
-      data: [
-        fmi,
-        spn & 0xff,
-        (spn >> 8) & 0xff,
-        (spn >> 16) & 0xff,
-        occurrence,
-        0,
-        0,
-        0,
-      ],
+      data: [fmi, spn & 0xff, (spn >> 8) & 0xff, (spn >> 16) & 0xff, occurrence, 0, 0, 0],
     };
   }
 }

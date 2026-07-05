@@ -72,8 +72,8 @@ export class ModuleLoader {
         enabled: true,
         priority: 50,
         restartPolicy: 'on-failure',
-        maxRestarts: 5
-      }
+        maxRestarts: 5,
+      },
     };
   }
 
@@ -81,7 +81,9 @@ export class ModuleLoader {
    * Get all module info
    */
   getAllModuleInfo(): ModuleInfo[] {
-    return this.getModules().map(m => this.getModuleInfo(m.id)!).filter(Boolean);
+    return this.getModules()
+      .map((m) => this.getModuleInfo(m.id)!)
+      .filter(Boolean);
   }
 
   /**
@@ -197,7 +199,7 @@ export class ModuleLoader {
       return;
     }
 
-    const files = fs.readdirSync(directory).filter(f => f.endsWith('.ts') || f.endsWith('.js'));
+    const files = fs.readdirSync(directory).filter((f) => f.endsWith('.ts') || f.endsWith('.js'));
 
     for (const file of files) {
       try {

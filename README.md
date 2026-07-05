@@ -22,6 +22,7 @@ embedded32 demo
 ```
 
 This starts:
+
 - Virtual CAN bus simulation
 - Engine, transmission, and brake ECUs
 - J1939 decoder with live traffic
@@ -94,7 +95,7 @@ import { J1939Client, PGN, SA } from '@embedded32/sdk-js';
 
 const client = new J1939Client({
   interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_2
+  sourceAddress: SA.DIAG_TOOL_2,
 });
 
 await client.connect();
@@ -131,14 +132,14 @@ client.request_pgn(PGN.EEC1)
 
 ## Hardware Support
 
-| Platform | CAN Interface | Status |
-|----------|--------------|--------|
-| Linux | SocketCAN | ✅ Full support |
-| Raspberry Pi | SocketCAN, MCP2515 | ✅ Full support |
-| WSL | Virtual CAN | ✅ Full support |
-| Windows | PCAN-USB | ⚠️ Gateway mode |
-| macOS | Simulator | ✅ Testing only |
-| STM32 / ESP32 | C SDK | ✅ Platform HAL |
+| Platform      | CAN Interface      | Status          |
+| ------------- | ------------------ | --------------- |
+| Linux         | SocketCAN          | ✅ Full support |
+| Raspberry Pi  | SocketCAN, MCP2515 | ✅ Full support |
+| WSL           | Virtual CAN        | ✅ Full support |
+| Windows       | PCAN-USB           | ⚠️ Gateway mode |
+| macOS         | Simulator          | ✅ Testing only |
+| STM32 / ESP32 | C SDK              | ✅ Platform HAL |
 
 ### Virtual CAN Setup (Linux/WSL)
 
@@ -159,11 +160,11 @@ sudo ip link set up can0
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [docs/getting-started.md](./docs/getting-started.md) | Installation and setup |
-| [docs/J1939_QUICKSTART.md](./docs/J1939_QUICKSTART.md) | J1939 protocol tutorial |
-| [docs/J1939_ARCHITECTURE.md](./docs/J1939_ARCHITECTURE.md) | Protocol stack reference |
+| Document                                                     | Description               |
+| ------------------------------------------------------------ | ------------------------- |
+| [docs/getting-started.md](./docs/getting-started.md)         | Installation and setup    |
+| [docs/J1939_QUICKSTART.md](./docs/J1939_QUICKSTART.md)       | J1939 protocol tutorial   |
+| [docs/J1939_ARCHITECTURE.md](./docs/J1939_ARCHITECTURE.md)   | Protocol stack reference  |
 | [docs/tutorials/first-run.md](./docs/tutorials/first-run.md) | First simulation tutorial |
 
 ### Package Documentation

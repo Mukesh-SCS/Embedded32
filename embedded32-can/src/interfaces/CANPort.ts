@@ -1,26 +1,26 @@
 /**
  * CAN Port Interface - Phase 2 Locked Interface
- * 
+ *
  * This is the ONLY interface between modules and raw CAN frames.
  * All J1939 and simulation code must use J1939Port, not this directly.
- * 
+ *
  * DO NOT MODIFY without updating phase2-checklist.md
  */
 
-import { CANFrame } from "../CANTypes.js";
+import { CANFrame } from '../CANTypes.js';
 
 /**
  * CAN filter definition
  */
 export interface CANFilter {
-  id: number;        // CAN ID to match
-  mask: number;      // Mask for ID matching (1 = must match, 0 = ignore)
+  id: number; // CAN ID to match
+  mask: number; // Mask for ID matching (1 = must match, 0 = ignore)
   extended?: boolean; // Match extended (29-bit) frames only
 }
 
 /**
  * CAN Port - Raw CAN frame interface
- * 
+ *
  * This port handles:
  * - Sending raw CAN frames
  * - Receiving raw CAN frames via callback

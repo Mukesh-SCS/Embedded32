@@ -24,25 +24,25 @@ npm install @embedded32/j1939
 ### Parse J1939 CAN Identifier
 
 ```typescript
-import { parseJ1939Id, buildJ1939Id } from "@embedded32/j1939";
+import { parseJ1939Id, buildJ1939Id } from '@embedded32/j1939';
 
 // Parse a 29-bit J1939 ID
 const msg = parseJ1939Id(0x18f00401);
 // { priority: 3, pgn: 0xF004, sa: 0x01, pf: 0xF0, ps: 0x04, dp: 0, extended: true }
 
 // Build a J1939 ID
-const id = buildJ1939Id({ pgn: 0xF004, sa: 0x01, priority: 3 });
+const id = buildJ1939Id({ pgn: 0xf004, sa: 0x01, priority: 3 });
 // 0x18F00401
 ```
 
 ### Decode J1939 Messages
 
 ```typescript
-import { decodeJ1939, formatJ1939Message } from "@embedded32/j1939";
+import { decodeJ1939, formatJ1939Message } from '@embedded32/j1939';
 
 const frame = {
-  id: 0x18F00401,
-  data: [0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80]
+  id: 0x18f00401,
+  data: [0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80],
 };
 
 const msg = decodeJ1939(frame);
@@ -77,15 +77,15 @@ runtime.getMessageBus().publish("j1939.tx", {
 ### Transport Protocol (Multi-Packet)
 
 ```typescript
-import { J1939TransportProtocol } from "@embedded32/j1939";
+import { J1939TransportProtocol } from '@embedded32/j1939';
 
 const tp = new J1939TransportProtocol();
 
 // Send large message using BAM
 tp.sendBAM({
-  pgn: 0xFECA,
+  pgn: 0xfeca,
   sa: 0x01,
-  data: new Uint8Array(50)
+  data: new Uint8Array(50),
 });
 
 // Listen for multi-packet messages
@@ -97,7 +97,7 @@ tp.onMessageComplete((message) => {
 ### DM1/DM2 Fault Code Decoding
 
 ```typescript
-import { DiagnosticsManager } from "@embedded32/j1939";
+import { DiagnosticsManager } from '@embedded32/j1939';
 
 const dm = new DiagnosticsManager();
 
@@ -106,7 +106,7 @@ const result = dm.processDM1(0x01, dm1Data);
 console.log('Lamp Status:', result.lamps);
 // { mil: true, flash: false, amber: false, protect: false }
 
-result.activeDTCs.forEach(dtc => {
+result.activeDTCs.forEach((dtc) => {
   console.log(`SPN: ${dtc.spn} (${dtc.spnDescription})`);
   console.log(`FMI: ${dtc.fmi} (${dtc.fmiDescription})`);
 });
@@ -114,16 +114,16 @@ result.activeDTCs.forEach(dtc => {
 
 ## PGN Constants
 
-| PGN | Name | Description |
-|-----|------|-------------|
-| 0xF004 | EEC1 | Electronic Engine Controller 1 |
-| 0xF003 | ETC1 | Electronic Transmission Controller 1 |
-| 0xFEEE | ET1 | Engine Temperature 1 |
-| 0xFEEF | EFL | Engine Fluid Level |
-| 0xFEF7 | VEP1 | Vehicle Electrical Power 1 |
-| 0xFECA | DM1 | Active Diagnostic Trouble Codes |
-| 0xFECB | DM2 | Previously Active DTCs |
-| 0xEA00 | Request | Request PGN |
+| PGN    | Name    | Description                          |
+| ------ | ------- | ------------------------------------ |
+| 0xF004 | EEC1    | Electronic Engine Controller 1       |
+| 0xF003 | ETC1    | Electronic Transmission Controller 1 |
+| 0xFEEE | ET1     | Engine Temperature 1                 |
+| 0xFEEF | EFL     | Engine Fluid Level                   |
+| 0xFEF7 | VEP1    | Vehicle Electrical Power 1           |
+| 0xFECA | DM1     | Active Diagnostic Trouble Codes      |
+| 0xFECB | DM2     | Previously Active DTCs               |
+| 0xEA00 | Request | Request PGN                          |
 
 ## License
 

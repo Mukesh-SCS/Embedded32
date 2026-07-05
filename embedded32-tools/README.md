@@ -89,12 +89,12 @@ embedded32 ecu simulate --engine --fault 100
 
 ## Platform Support
 
-| OS | CAN Drivers | Status |
-|----|-------------|--------|
-| Linux | SocketCAN, vcan | ✅ Full Support |
+| OS           | CAN Drivers        | Status          |
+| ------------ | ------------------ | --------------- |
+| Linux        | SocketCAN, vcan    | ✅ Full Support |
 | Raspberry Pi | SocketCAN, MCP2515 | ✅ Full Support |
-| Windows | PCAN-USB | ⚠️ Gateway mode |
-| macOS | Mock/Simulator | ✅ Testing only |
+| Windows      | PCAN-USB           | ⚠️ Gateway mode |
+| macOS        | Mock/Simulator     | ✅ Testing only |
 
 ## License
 

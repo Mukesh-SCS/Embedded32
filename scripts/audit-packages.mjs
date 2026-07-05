@@ -9,21 +9,21 @@
  *  4. Prints a human-readable summary and exits non-zero on failure
  */
 
-import { spawnSync } from "node:child_process";
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, '..');
 
 const colors = {
-  reset: "\x1b[0m",
-  green: "\x1b[32m",
-  red: "\x1b[31m",
-  yellow: "\x1b[33m",
-  cyan: "\x1b[36m",
-  dim: "\x1b[2m",
+  reset: '\x1b[0m',
+  green: '\x1b[32m',
+  red: '\x1b[31m',
+  yellow: '\x1b[33m',
+  cyan: '\x1b[36m',
+  dim: '\x1b[2m',
 };
 
 function log(message) {
@@ -31,37 +31,37 @@ function log(message) {
 }
 
 function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
     cwd,
-    encoding: "utf8",
-    shell: process.platform === "win32",
+    encoding: 'utf8',
+    shell: process.platform === 'win32',
   });
   return {
     ok: result.status === 0,
     status: result.status ?? 1,
-    stdout: result.stdout ?? "",
-    stderr: result.stderr ?? "",
+    stdout: result.stdout ?? '',
+    stderr: result.stderr ?? '',
   };
 }
 
 function isPublicPackage(pkgJson) {
   if (pkgJson.private === true) return false;
-  if (pkgJson.publishConfig?.access === "public") return true;
-  if (pkgJson.name?.startsWith("@embedded32/")) return true;
+  if (pkgJson.publishConfig?.access === 'public') return true;
+  if (pkgJson.name?.startsWith('@embedded32/')) return true;
   return false;
 }
 
 function discoverWorkspaces() {
-  const rootPkg = readJson(path.join(ROOT, "package.json"));
+  const rootPkg = readJson(path.join(ROOT, 'package.json'));
   const workspaces = rootPkg.workspaces ?? [];
   return workspaces
     .map((entry) => {
       const dir = path.join(ROOT, entry);
-      const pkgPath = path.join(dir, "package.json");
+      const pkgPath = path.join(dir, 'package.json');
       if (!fs.existsSync(pkgPath)) return null;
       return { dir, pkgJson: readJson(pkgPath), pkgPath };
     })
@@ -70,7 +70,7 @@ function discoverWorkspaces() {
 
 function normalizeEntry(entry) {
   if (!entry) return null;
-  return entry.replace(/^\.\//, "");
+  return entry.replace(/^\.\//, '');
 }
 
 function resolvePackageFile(packageDir, entry) {
@@ -85,11 +85,11 @@ function parsePackListing(stdout) {
   let inContents = false;
 
   for (const line of lines) {
-    if (line.includes("Tarball Contents")) {
+    if (line.includes('Tarball Contents')) {
       inContents = true;
       continue;
     }
-    if (inContents && line.includes("Tarball Details")) {
+    if (inContents && line.includes('Tarball Details')) {
       break;
     }
     if (!inContents) continue;
@@ -105,7 +105,7 @@ function parsePackListing(stdout) {
 
 function hasFile(files, pattern) {
   return files.some((file) => {
-    if (typeof pattern === "string") return file === pattern || file.endsWith(`/${pattern}`);
+    if (typeof pattern === 'string') return file === pattern || file.endsWith(`/${pattern}`);
     return pattern.test(file);
   });
 }
@@ -118,24 +118,24 @@ function auditPackage({ dir, pkgJson }) {
 
   // Build
   if (pkgJson.scripts?.build) {
-    const build = run("npm", ["run", "build"], dir);
+    const build = run('npm', ['run', 'build'], dir);
     if (!build.ok) {
       issues.push(`build failed (exit ${build.status})`);
-      if (build.stderr.trim()) issues.push(`build stderr: ${build.stderr.trim().split("\n")[0]}`);
+      if (build.stderr.trim()) issues.push(`build stderr: ${build.stderr.trim().split('\n')[0]}`);
     } else {
-      checks.push("build");
+      checks.push('build');
     }
   } else {
-    warnings.push("no build script");
+    warnings.push('no build script');
   }
 
   // Pack dry-run
-  const pack = run("npm", ["pack", "--dry-run"], dir);
+  const pack = run('npm', ['pack', '--dry-run'], dir);
   if (!pack.ok) {
     issues.push(`npm pack --dry-run failed (exit ${pack.status})`);
     return { name, dir, issues, warnings, checks, packedFiles: [], fileCount: 0 };
   }
-  checks.push("npm pack --dry-run");
+  checks.push('npm pack --dry-run');
 
   const packedFiles = parsePackListing(pack.stdout + pack.stderr);
   const fileCount = packedFiles.length;
@@ -143,7 +143,7 @@ function auditPackage({ dir, pkgJson }) {
   // Entry point on disk
   const mainEntry = normalizeEntry(pkgJson.main);
   if (!mainEntry) {
-    issues.push("missing package.json main field");
+    issues.push('missing package.json main field');
   } else {
     const mainPath = resolvePackageFile(dir, mainEntry);
     if (!fs.existsSync(mainPath)) {
@@ -151,14 +151,14 @@ function auditPackage({ dir, pkgJson }) {
     } else if (!hasFile(packedFiles, mainEntry)) {
       issues.push(`main entry not included in tarball: ${mainEntry}`);
     } else {
-      checks.push("main entry");
+      checks.push('main entry');
     }
   }
 
   // Types
   const typesEntry = normalizeEntry(pkgJson.types ?? pkgJson.typings);
   if (!typesEntry) {
-    warnings.push("missing types field in package.json");
+    warnings.push('missing types field in package.json');
   } else {
     const typesPath = resolvePackageFile(dir, typesEntry);
     if (!fs.existsSync(typesPath)) {
@@ -166,42 +166,42 @@ function auditPackage({ dir, pkgJson }) {
     } else if (!hasFile(packedFiles, typesEntry)) {
       issues.push(`types entry not included in tarball: ${typesEntry}`);
     } else {
-      checks.push("types entry");
+      checks.push('types entry');
     }
   }
 
   // Compiled artifacts in tarball
-  const hasJs = packedFiles.some((f) => f.endsWith(".js"));
-  const hasDts = packedFiles.some((f) => f.endsWith(".d.ts"));
-  if (!hasJs) issues.push("tarball contains no .js files");
-  else checks.push("compiled JavaScript");
-  if (!hasDts) issues.push("tarball contains no .d.ts files");
-  else checks.push("TypeScript declarations");
+  const hasJs = packedFiles.some((f) => f.endsWith('.js'));
+  const hasDts = packedFiles.some((f) => f.endsWith('.d.ts'));
+  if (!hasJs) issues.push('tarball contains no .js files');
+  else checks.push('compiled JavaScript');
+  if (!hasDts) issues.push('tarball contains no .d.ts files');
+  else checks.push('TypeScript declarations');
 
   // README
-  if (!hasFile(packedFiles, "README.md")) {
-    issues.push("README.md not included in tarball");
+  if (!hasFile(packedFiles, 'README.md')) {
+    issues.push('README.md not included in tarball');
   } else {
-    checks.push("README.md");
+    checks.push('README.md');
   }
 
   // LICENSE
   const licenseOnDisk =
-    fs.existsSync(path.join(dir, "LICENSE")) || fs.existsSync(path.join(ROOT, "LICENSE"));
-  if (!hasFile(packedFiles, "LICENSE")) {
+    fs.existsSync(path.join(dir, 'LICENSE')) || fs.existsSync(path.join(ROOT, 'LICENSE'));
+  if (!hasFile(packedFiles, 'LICENSE')) {
     if (licenseOnDisk) {
-      issues.push("LICENSE exists in repo but is not included in tarball (add to files array)");
+      issues.push('LICENSE exists in repo but is not included in tarball (add to files array)');
     } else {
-      issues.push("LICENSE file missing");
+      issues.push('LICENSE file missing');
     }
   } else {
-    checks.push("LICENSE");
+    checks.push('LICENSE');
   }
 
   // Bin entries for CLI packages
   if (pkgJson.bin) {
     for (const [binName, binPath] of Object.entries(
-      typeof pkgJson.bin === "string" ? { [path.basename(pkgJson.bin)]: pkgJson.bin } : pkgJson.bin
+      typeof pkgJson.bin === 'string' ? { [path.basename(pkgJson.bin)]: pkgJson.bin } : pkgJson.bin
     )) {
       const resolved = resolvePackageFile(dir, binPath);
       if (!fs.existsSync(resolved)) {
@@ -212,8 +212,8 @@ function auditPackage({ dir, pkgJson }) {
         issues.push(`bin "${binName}" not included in tarball: ${binPath}`);
         continue;
       }
-      const content = fs.readFileSync(resolved, "utf8");
-      if (!content.startsWith("#!")) {
+      const content = fs.readFileSync(resolved, 'utf8');
+      if (!content.startsWith('#!')) {
         warnings.push(`bin "${binName}" missing shebang in ${binPath}`);
       }
       checks.push(`bin:${binName}`);
@@ -222,23 +222,23 @@ function auditPackage({ dir, pkgJson }) {
 
   // Workspace-only dependency versions
   for (const [depName, depVersion] of Object.entries(pkgJson.dependencies ?? {})) {
-    if (depName.startsWith("@embedded32/") && depVersion === "*") {
+    if (depName.startsWith('@embedded32/') && depVersion === '*') {
       warnings.push(`dependency ${depName} uses workspace wildcard "*" (not valid on npm publish)`);
     }
   }
 
   // prepack
   if (!pkgJson.scripts?.prepack) {
-    warnings.push("no prepack script (tarball may ship stale dist without manual build)");
+    warnings.push('no prepack script (tarball may ship stale dist without manual build)');
   } else {
-    checks.push("prepack");
+    checks.push('prepack');
   }
 
   // Metadata
-  if (!pkgJson.description) warnings.push("missing description");
-  if (!pkgJson.license) warnings.push("missing license field");
-  if (!pkgJson.repository?.url) warnings.push("missing repository URL");
-  if (!pkgJson.publishConfig?.access) warnings.push("missing publishConfig.access");
+  if (!pkgJson.description) warnings.push('missing description');
+  if (!pkgJson.license) warnings.push('missing license field');
+  if (!pkgJson.repository?.url) warnings.push('missing repository URL');
+  if (!pkgJson.publishConfig?.access) warnings.push('missing publishConfig.access');
 
   return { name, dir, issues, warnings, checks, packedFiles, fileCount };
 }
@@ -251,7 +251,9 @@ function main() {
   const publicPackages = workspaces.filter(({ pkgJson }) => isPublicPackage(pkgJson));
   const privatePackages = workspaces.filter(({ pkgJson }) => !isPublicPackage(pkgJson));
 
-  log(`Found ${workspaces.length} workspace packages (${publicPackages.length} public, ${privatePackages.length} private)\n`);
+  log(
+    `Found ${workspaces.length} workspace packages (${publicPackages.length} public, ${privatePackages.length} private)\n`
+  );
 
   const results = publicPackages.map(auditPackage);
 
@@ -260,8 +262,8 @@ function main() {
   for (const { pkgJson } of publicPackages) {
     if (!pkgJson.bin) continue;
     const bins =
-      typeof pkgJson.bin === "string"
-        ? { [path.basename(pkgJson.bin, ".js")]: pkgJson.bin }
+      typeof pkgJson.bin === 'string'
+        ? { [path.basename(pkgJson.bin, '.js')]: pkgJson.bin }
         : pkgJson.bin;
     for (const binName of Object.keys(bins)) {
       if (!binOwners.has(binName)) binOwners.set(binName, []);
@@ -272,7 +274,9 @@ function main() {
     if (owners.length > 1) {
       for (const result of results) {
         if (owners.includes(result.name)) {
-          result.issues.push(`duplicate bin name "${binName}" shared with: ${owners.filter((o) => o !== result.name).join(", ")}`);
+          result.issues.push(
+            `duplicate bin name "${binName}" shared with: ${owners.filter((o) => o !== result.name).join(', ')}`
+          );
         }
       }
     }
@@ -290,10 +294,12 @@ function main() {
           ? `${colors.yellow}WARN${colors.reset}`
           : `${colors.green}PASS${colors.reset}`;
 
-    log(`${status}  ${colors.cyan}${result.name}${colors.reset}  ${colors.dim}(${relDir}, ${result.fileCount} tarball files)${colors.reset}`);
+    log(
+      `${status}  ${colors.cyan}${result.name}${colors.reset}  ${colors.dim}(${relDir}, ${result.fileCount} tarball files)${colors.reset}`
+    );
 
     if (result.checks.length) {
-      log(`       ${colors.green}✓${colors.reset} ${result.checks.join(", ")}`);
+      log(`       ${colors.green}✓${colors.reset} ${result.checks.join(', ')}`);
     }
     for (const issue of result.issues) {
       log(`       ${colors.red}✗${colors.reset} ${issue}`);
@@ -303,7 +309,7 @@ function main() {
       log(`       ${colors.yellow}!${colors.reset} ${warning}`);
       warned += 1;
     }
-    log("");
+    log('');
   }
 
   if (privatePackages.length) {
@@ -311,13 +317,13 @@ function main() {
     for (const { pkgJson, dir } of privatePackages) {
       log(`  - ${pkgJson.name} (${path.relative(ROOT, dir)})`);
     }
-    log("");
+    log('');
   }
 
   const packagesWithIssues = results.filter((r) => r.issues.length > 0).length;
   const packagesWithWarnings = results.filter((r) => r.warnings.length > 0).length;
 
-  log("─".repeat(60));
+  log('─'.repeat(60));
   log(
     `Summary: ${results.length} public packages audited | ` +
       `${colors.green}${results.length - packagesWithIssues} passed checks${colors.reset} | ` +

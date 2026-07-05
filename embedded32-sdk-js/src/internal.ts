@@ -1,11 +1,11 @@
 /**
  * Embedded32 SDK - Internal/Advanced APIs
- * 
+ *
  * ⚠️  WARNING: These APIs are NOT part of the public SDK contract.
  * They may change or be removed without notice between versions.
- * 
+ *
  * If you import from this module, you are on your own.
- * 
+ *
  * @module @embedded32/sdk-js/internal
  * @internal
  */
@@ -22,7 +22,7 @@ export {
   decodeSPNs,
   encodePGNData,
   decodeFrame,
-  encodeFrame
+  encodeFrame,
 } from './j1939/index.js';
 
 // Legacy CAN API (internal, deprecated)

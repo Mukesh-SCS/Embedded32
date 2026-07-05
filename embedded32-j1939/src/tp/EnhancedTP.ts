@@ -16,7 +16,7 @@ import {
   parseEndOfMessage,
   PGN_TP_BAM,
   PGN_TP_CM,
-} from "./TransportProtocol.js";
+} from './TransportProtocol.js';
 
 /**
  * Reassembled multi-packet message
@@ -24,12 +24,12 @@ import {
 export interface ReassembledMessage {
   pgn: number;
   sourceAddress: number;
-  destinationAddress?: number;  // For RTS/CTS (point-to-point)
+  destinationAddress?: number; // For RTS/CTS (point-to-point)
   data: number[];
   timestamp: number;
   totalFrames: number;
   assemblyTimeMs: number;
-  isBroadcast: boolean;  // true = BAM, false = RTS/CTS
+  isBroadcast: boolean; // true = BAM, false = RTS/CTS
 }
 
 /**
@@ -48,7 +48,7 @@ export interface TPEventCallbacks {
  * Transport Protocol errors
  */
 export interface TPError {
-  code: "BAM_TIMEOUT" | "RTS_TIMEOUT" | "CTS_TIMEOUT" | "ASSEMBLY_FAILED" | "INVALID_PACKET";
+  code: 'BAM_TIMEOUT' | 'RTS_TIMEOUT' | 'CTS_TIMEOUT' | 'ASSEMBLY_FAILED' | 'INVALID_PACKET';
   pgn: number;
   sourceAddress: number;
   message: string;
@@ -86,10 +86,10 @@ export class EnhancedJ1939TP {
   ): void {
     if (data.length < 8) {
       this.triggerError({
-        code: "INVALID_PACKET",
+        code: 'INVALID_PACKET',
         pgn: 0,
         sourceAddress,
-        message: "Invalid TP control message length",
+        message: 'Invalid TP control message length',
       });
       return;
     }
@@ -117,7 +117,7 @@ export class EnhancedJ1939TP {
 
         default:
           this.triggerError({
-            code: "INVALID_PACKET",
+            code: 'INVALID_PACKET',
             pgn: 0,
             sourceAddress,
             message: `Unknown TP message type: ${byte0}`,
@@ -125,7 +125,7 @@ export class EnhancedJ1939TP {
       }
     } catch (error) {
       this.triggerError({
-        code: "ASSEMBLY_FAILED",
+        code: 'ASSEMBLY_FAILED',
         pgn: (data[6] << 16) | (data[5] << 8) | data[4],
         sourceAddress,
         message: `TP processing error: ${error}`,
@@ -143,7 +143,7 @@ export class EnhancedJ1939TP {
 
     if (data.length !== 7) {
       this.triggerError({
-        code: "INVALID_PACKET",
+        code: 'INVALID_PACKET',
         pgn,
         sourceAddress,
         message: `Invalid TP data frame length: ${data.length}`,
@@ -202,7 +202,11 @@ export class EnhancedJ1939TP {
     this.tp.processCTS(cts.pgn, sourceAddress, cts);
   }
 
-  private handleEndOfMessage(data: number[], sourceAddress: number, destinationAddress: number): void {
+  private handleEndOfMessage(
+    data: number[],
+    sourceAddress: number,
+    destinationAddress: number
+  ): void {
     const eom = parseEndOfMessage(data, sourceAddress);
 
     // Session complete - trigger callback with reassembled message

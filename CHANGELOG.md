@@ -12,13 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added (Phase 3 - Web Dashboard & Real-Time Monitoring UI)
 
 #### @embedded32/dashboard - Complete Web UI Package:
+
 - **Professional React + Vite Web Dashboard**
   - Modern TypeScript + React 18 development
   - Vite build system with hot module replacement
   - Responsive CSS Grid layout with professional styling
   - Real-time WebSocket client (`src/services/ws.ts`)
-  
+
 #### Dashboard Components:
+
 - **PGNTable.tsx** - Live J1939 message table
   - Color-coded message rows by PGN type (EEC1→Blue, ETC1→Orange, Fuel→Green, DM1→Red)
   - Formatted SPN values with proper units (RPM, °C, L/h, etc.)
@@ -87,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ready for WebSocket command integration
 
 #### Dashboard Infrastructure:
+
 - **useDashboardState.tsx** - Global React Context state management
   - Connection state tracking
   - Message and CAN frame storage
@@ -101,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All components integrated and wired
 
 #### Styling & Theming:
+
 - **App.css** - Professional dashboard styling
   - CSS Grid layout system (2-column responsive)
   - Card-based section styling with shadows
@@ -117,6 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Utility classes for common patterns
 
 #### WebSocket Bridge (@embedded32/tools):
+
 - **DashboardBridgeCommand.ts** - WebSocket server command
   - HTTP server with WebSocket support (`ws` library)
   - Mock J1939 data generation for testing
@@ -131,6 +136,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Help text in CLI
 
 #### Documentation:
+
 - **DASHBOARD_README.md** - Comprehensive dashboard guide
   - Architecture overview with diagrams
   - Installation and setup instructions
@@ -155,10 +161,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comparison of before/after states
 
 ### Changed
+
 - Updated main CHANGELOG with Phase 3 completion
 - Enhanced monorepo documentation with dashboard guides
 
 ### Technical Improvements
+
 - **Performance Optimizations:**
   - Throttled chart updates to 10fps maximum
   - Limited data point retention (last 50 for charts)
@@ -183,12 +191,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - No console errors or warnings
 
 ### Known Limitations
+
 - Mock data sent from bridge (real CAN/J1939 integration in progress)
 - ECU simulator controls ready for WebSocket integration
 - Search limited to top 10 results (expandable in future)
 - Bus load calculation assumes 500kbps CAN bus
 
 ### Next Steps
+
 - Integrate real CAN/J1939 runtime with bridge
 - Implement bidirectional WebSocket for ECU control
 - Add session save/load functionality
@@ -203,6 +213,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added (Phase 2 - Transport Protocol & Diagnostics)
 
 #### @embedded32/j1939 Enhancements:
+
 - **Full Transport Protocol (TP) Implementation** (`src/tp/TransportProtocol.ts` - 353 lines)
   - BAM (Broadcast Announce Message) session management with multi-packet reassembly
   - RTS/CTS (Request-to-Send/Clear-to-Send) point-to-point flow control
@@ -224,6 +235,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Query APIs: `getActiveDTCs()`, `getSummary()`, `processDM1()`, `processDM2()`
 
 #### @embedded32/tools J1939 Monitoring Commands:
+
 - **j1939-monitor.ts** (135 lines) - Real-time network monitoring
   - Live message rate (messages/sec) calculation
   - Active PGN and device address tracking
@@ -245,6 +257,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive input validation and error reporting
 
 #### Examples and Documentation:
+
 - **examples/j1939-basic.ts** (130 lines) - Basic J1939 operations
   - ID parsing and construction demonstration
   - PGN database lookup
@@ -264,6 +277,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Session lifecycle management
 
 #### Comprehensive Test Suite (174+ tests, 650+ lines):
+
 - **embedded32-j1939/tests/j1939-tp.test.ts** (59 test cases)
   - BAM session creation, packet addition, assembly completion
   - RTS/CTS flow control and state transitions
@@ -296,10 +310,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Large diagnostic database handling
 
 #### Documentation:
+
 - **J1939_QUICKSTART.md** - User guide with CLI references and code examples
 - **J1939_ARCHITECTURE.md** - System design, data flows, state machines, performance metrics
 
 #### Module Exports Updates:
+
 - Updated `embedded32-j1939/src/index.ts` with new exports:
   - `J1939TransportProtocol`, `parseBAM`, `parseCTS`, `parseRTS`, `parseEndOfMessage`
   - `PGN_TP_BAM`, `PGN_TP_CT`, `PGN_TP_CM`
@@ -307,11 +323,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DM1Message`, `DM2Message`, `DiagnosticTroubleCode`, `LampStatus`
 
 ### Changed
+
 - Refactored `src/tp/TransportProtocol.ts` from skeleton to complete implementation (353 lines)
 - Refactored `src/dm/DM1.ts` from skeleton to complete implementation (406 lines)
 - Enhanced module exports for better API surface
 
 ### Security
+
 - Input validation for J1939 messages (PGN range, data length checks)
 - CAN frame validation in gateway binding
 - Safe DTC parsing with bounds checking
@@ -319,6 +337,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - Initial Release (Phase 1)
 
 ### Added
+
 - Initial project structure
 - Core runtime skeleton (embedded32-core)
 - CAN abstraction layer skeleton (embedded32-can)
@@ -346,23 +365,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Jest and ts-jest configuration for TypeScript test support
 
 ### Changed
+
 - N/A
 
 ### Deprecated
+
 - N/A
 
 ### Removed
+
 - N/A
 
 ### Fixed
+
 - N/A
 
 ### Security
+
 - N/A
 
 ## [0.2.0] - 2025-12-09
 
 ### Added
+
 - **embedded32-core** full implementation:
   - Runtime class with module lifecycle management
   - Logger with log levels (debug, info, warn, error) and history tracking
@@ -377,11 +402,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript compilation support with tsconfig configuration
 
 ### Changed
+
 - Updated package.json to use @embedded32/core naming convention
 - Fixed monorepo package.json dependencies to use workspace references
 - Refactored module lifecycle methods for consistency
 
 ### Fixed
+
 - Resolved TypeScript compilation errors
 - Fixed import paths for proper ES module support
 - Corrected package naming for npm compatibility
@@ -389,6 +416,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-12-09
 
 ### Added
+
 - Initial project setup
 - Platform architecture defined
 - Module structure created
@@ -396,6 +424,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 **Legend:**
+
 - `Added` - New features
 - `Changed` - Changes in existing functionality
 - `Deprecated` - Soon-to-be removed features

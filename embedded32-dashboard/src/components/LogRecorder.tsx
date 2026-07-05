@@ -20,7 +20,7 @@ const LogRecorder: React.FC = () => {
   const downloadLog = () => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
     const filename = `j1939_${timestamp}.json`;
-    
+
     const logData = {
       metadata: {
         recordedAt: new Date().toISOString(),
@@ -40,20 +40,20 @@ const LogRecorder: React.FC = () => {
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
-    
+
     console.log('Downloaded log:', filename);
   };
 
   const exportCSV = () => {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
     const filename = `j1939_${timestamp}.csv`;
-    
+
     // Create CSV header
     let csv = 'Timestamp,Type,PGN,SA,Priority,Name,SPN Values\n';
-    
+
     // Add data rows
-    state.messages.forEach(msg => {
-      const spnValues = msg.parameters.spnValues 
+    state.messages.forEach((msg) => {
+      const spnValues = msg.parameters.spnValues
         ? JSON.stringify(msg.parameters.spnValues).replace(/"/g, '""')
         : '';
       csv += `${new Date(msg.timestamp * 1000).toISOString()},`;
@@ -72,7 +72,7 @@ const LogRecorder: React.FC = () => {
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
-    
+
     console.log('Exported CSV:', filename);
   };
 
@@ -83,12 +83,12 @@ const LogRecorder: React.FC = () => {
           <span>Recording Controls</span>
           {isRecording && <span className="status-pill warning">⏺ Recording</span>}
         </div>
-        <div className="card-body" style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div
+          className="card-body"
+          style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}
+        >
           {!isRecording ? (
-            <button
-              onClick={startRecording}
-              className="btn btn-primary"
-            >
+            <button onClick={startRecording} className="btn btn-primary">
               ⏺ Start
             </button>
           ) : (
@@ -98,7 +98,7 @@ const LogRecorder: React.FC = () => {
               style={{
                 background: '#f97316',
                 color: 'white',
-                animation: 'pulse 2s infinite'
+                animation: 'pulse 2s infinite',
               }}
             >
               ⏹ Stop

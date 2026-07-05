@@ -28,7 +28,7 @@ import { Runtime } from '@embedded32/core';
 
 const runtime = new Runtime({
   logLevel: 'info',
-  configPath: './config.json'
+  configPath: './config.json',
 });
 
 await runtime.start();
@@ -105,14 +105,14 @@ logger.error('Error message');
 
 ## Built-in Modules
 
-| Module | Description |
-|--------|-------------|
-| `HeartbeatModule` | Periodic heartbeat signals |
-| `SystemHealthModule` | CPU/memory monitoring |
-| `LEDModule` | Software-based LED control |
-| `RaspberryPiLEDModule` | Hardware GPIO LED control |
-| `CANGatewayModule` | CAN bus gateway |
-| `J1939EngineModule` | J1939 engine ECU simulation |
+| Module                 | Description                 |
+| ---------------------- | --------------------------- |
+| `HeartbeatModule`      | Periodic heartbeat signals  |
+| `SystemHealthModule`   | CPU/memory monitoring       |
+| `LEDModule`            | Software-based LED control  |
+| `RaspberryPiLEDModule` | Hardware GPIO LED control   |
+| `CANGatewayModule`     | CAN bus gateway             |
+| `J1939EngineModule`    | J1939 engine ECU simulation |
 
 ## API Reference
 
@@ -120,15 +120,15 @@ logger.error('Error message');
 
 ```typescript
 class Runtime {
-  constructor(config: Partial<RuntimeConfig>)
-  registerModule(module: Module): void
-  start(): Promise<void>
-  stop(): Promise<void>
-  isRunning(): boolean
-  getMessageBus(): MessageBus
-  getScheduler(): Scheduler
-  getLogger(): Logger
-  getConfig(): any
+  constructor(config: Partial<RuntimeConfig>);
+  registerModule(module: Module): void;
+  start(): Promise<void>;
+  stop(): Promise<void>;
+  isRunning(): boolean;
+  getMessageBus(): MessageBus;
+  getScheduler(): Scheduler;
+  getLogger(): Logger;
+  getConfig(): any;
 }
 ```
 
@@ -136,14 +136,14 @@ class Runtime {
 
 ```typescript
 abstract class BaseModule implements Module {
-  constructor(name: string, version?: string)
-  abstract onInit(): Promise<void> | void
-  abstract onStart(): Promise<void> | void
-  abstract onStop(): Promise<void> | void
-  protected log(message: string): void
-  protected logger: Logger
-  protected bus: MessageBus
-  protected scheduler: Scheduler
+  constructor(name: string, version?: string);
+  abstract onInit(): Promise<void> | void;
+  abstract onStart(): Promise<void> | void;
+  abstract onStop(): Promise<void> | void;
+  protected log(message: string): void;
+  protected logger: Logger;
+  protected bus: MessageBus;
+  protected scheduler: Scheduler;
 }
 ```
 
@@ -151,9 +151,9 @@ abstract class BaseModule implements Module {
 
 ```typescript
 class MessageBus {
-  publish(topic: string, payload: any): void
-  subscribe(topic: string, handler: MessageHandler): void
-  unsubscribe(topic: string, handler: MessageHandler): void
+  publish(topic: string, payload: any): void;
+  subscribe(topic: string, handler: MessageHandler): void;
+  unsubscribe(topic: string, handler: MessageHandler): void;
 }
 ```
 
@@ -161,10 +161,10 @@ class MessageBus {
 
 ```typescript
 class Scheduler {
-  every(intervalMs: number, task: () => void): string
-  once(delayMs: number, task: () => void): string
-  clear(taskId: string): void
-  stopAll(): void
+  every(intervalMs: number, task: () => void): string;
+  once(delayMs: number, task: () => void): string;
+  clear(taskId: string): void;
+  stopAll(): void;
 }
 ```
 

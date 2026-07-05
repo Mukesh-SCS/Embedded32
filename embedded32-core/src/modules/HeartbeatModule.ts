@@ -1,21 +1,24 @@
-import { BaseModule } from "./Module.js";
+import { BaseModule } from './Module.js';
 
 export class HeartbeatModule extends BaseModule {
   private intervalId: any;
 
-  constructor(name = "heartbeat", private interval = 1000) {
-    super(name, "1.0.0");
+  constructor(
+    name = 'heartbeat',
+    private interval = 1000
+  ) {
+    super(name, '1.0.0');
   }
 
   onInit() {
-    this.log("Heartbeat module initialized");
+    this.log('Heartbeat module initialized');
   }
 
   onStart() {
     this.log(`Heartbeat started (interval: ${this.interval}ms)`);
 
     this.intervalId = this.scheduler.every(this.interval, () => {
-      this.bus.publish("system.heartbeat", {
+      this.bus.publish('system.heartbeat', {
         timestamp: Date.now(),
         module: this.name,
       });
@@ -23,7 +26,7 @@ export class HeartbeatModule extends BaseModule {
   }
 
   onStop() {
-    this.log("Heartbeat module stopped");
+    this.log('Heartbeat module stopped');
     if (this.intervalId) this.scheduler.clear(this.intervalId);
   }
 }

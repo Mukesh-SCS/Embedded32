@@ -3,6 +3,7 @@
 **The ONE example that demonstrates everything.**
 
 This example shows:
+
 1. Start simulation with Engine ECU
 2. JS SDK subscribes to engine data
 3. Python SDK sends engine control command
@@ -30,6 +31,7 @@ npx embedded32 simulate vehicle/basic-truck
 ```
 
 Expected output:
+
 ```
 [Simulation] Starting basic-truck...
 [Simulation] Engine ECU (SA=0x00) initialized
@@ -51,11 +53,13 @@ node examples/canonical/js-monitor.mjs
 ```
 
 The JS SDK will:
+
 - Connect as SA=0xF9 (Diagnostic Tool 1)
 - Subscribe to EEC1 (engine speed)
 - Display engine data as it arrives
 
 Expected output:
+
 ```
 [JS SDK] Connected as SA=0xF9
 [JS SDK] Subscribed to PGN 0xF004 (EEC1)
@@ -76,11 +80,13 @@ python examples/canonical/py-command.py 1500
 ```
 
 This sends:
+
 - PGN 0xEF00 (ENGINE_CONTROL_CMD)
 - targetRpm = 1500
 - enable = true
 
 Expected output:
+
 ```
 [Python SDK] Connected as SA=0xFA
 [Python SDK] Sending ENGINE_CONTROL_CMD
@@ -111,11 +117,11 @@ The engine gradually ramps to the commanded RPM.
 
 ## Files
 
-| File | Purpose |
-|------|---------|
+| File             | Purpose                                   |
+| ---------------- | ----------------------------------------- |
 | `js-monitor.mjs` | JS SDK: Subscribe and display engine data |
-| `py-command.py` | Python SDK: Send engine control command |
-| `README.md` | This file |
+| `py-command.py`  | Python SDK: Send engine control command   |
+| `README.md`      | This file                                 |
 
 ---
 
@@ -138,6 +144,7 @@ python examples/canonical/py-command.py --fault overheat
 ```
 
 Expected result in Terminal 2:
+
 ```
 [JS SDK] Engine Speed: 1500 RPM (torque: 0%)
 [JS SDK] WARNING: Coolant temp rising!

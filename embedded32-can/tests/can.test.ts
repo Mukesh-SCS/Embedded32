@@ -1,18 +1,18 @@
-import { CANInterface, MockCANDriver, CANFrame } from "../src/index.js";
+import { CANInterface, MockCANDriver, CANFrame } from '../src/index.js';
 
 /**
  * Basic tests for @embedded32/can
  * Run with: npm test (after setting up Jest or similar)
  */
 
-describe("@embedded32/can", () => {
-  describe("MockCANDriver", () => {
-    it("should send and receive frames", (done) => {
+describe('@embedded32/can', () => {
+  describe('MockCANDriver', () => {
+    it('should send and receive frames', (done) => {
       const can = new CANInterface(new MockCANDriver());
       const testFrame: CANFrame = {
         id: 0x123,
         data: [0x01, 0x02, 0x03],
-        extended: false
+        extended: false,
       };
 
       can.onMessage((frame) => {
@@ -26,17 +26,17 @@ describe("@embedded32/can", () => {
       can.send(testFrame);
     });
 
-    it("should support extended frames", (done) => {
+    it('should support extended frames', (done) => {
       const can = new CANInterface(new MockCANDriver());
       const testFrame: CANFrame = {
-        id: 0x18FEDF00,
-        data: [0xAA, 0xBB, 0xCC],
-        extended: true
+        id: 0x18fedf00,
+        data: [0xaa, 0xbb, 0xcc],
+        extended: true,
       };
 
       can.onMessage((frame) => {
         expect(frame.extended).toBe(true);
-        expect(frame.id).toBe(0x18FEDF00);
+        expect(frame.id).toBe(0x18fedf00);
         can.close();
         done();
       });
@@ -44,7 +44,7 @@ describe("@embedded32/can", () => {
       can.send(testFrame);
     });
 
-    it("should handle multiple message listeners", (done) => {
+    it('should handle multiple message listeners', (done) => {
       const can = new CANInterface(new MockCANDriver());
       let count = 0;
 
@@ -67,16 +67,16 @@ describe("@embedded32/can", () => {
       can.send({
         id: 0x100,
         data: [0x11],
-        extended: false
+        extended: false,
       });
     });
 
-    it("should include timestamp on received frames", (done) => {
+    it('should include timestamp on received frames', (done) => {
       const can = new CANInterface(new MockCANDriver());
 
       can.onMessage((frame) => {
         expect(frame.timestamp).toBeDefined();
-        expect(typeof frame.timestamp).toBe("number");
+        expect(typeof frame.timestamp).toBe('number');
         expect(frame.timestamp! > 0).toBe(true);
         can.close();
         done();
@@ -84,14 +84,14 @@ describe("@embedded32/can", () => {
 
       can.send({
         id: 0x200,
-        data: [0xFF],
-        extended: false
+        data: [0xff],
+        extended: false,
       });
     });
   });
 
-  describe("CANInterface", () => {
-    it("should wrap driver correctly", () => {
+  describe('CANInterface', () => {
+    it('should wrap driver correctly', () => {
       const driver = new MockCANDriver();
       const can = new CANInterface(driver);
 
@@ -103,40 +103,40 @@ describe("@embedded32/can", () => {
       can.close();
     });
 
-    it("should close without error", () => {
+    it('should close without error', () => {
       const can = new CANInterface(new MockCANDriver());
       expect(() => can.close()).not.toThrow();
     });
   });
 
-  describe("CANFrame", () => {
-    it("should support 11-bit standard frames", () => {
+  describe('CANFrame', () => {
+    it('should support 11-bit standard frames', () => {
       const frame: CANFrame = {
         id: 0x123,
         data: [1, 2, 3],
-        extended: false
+        extended: false,
       };
 
       expect(frame.id).toBeLessThan(0x800); // 11-bit max
       expect(frame.extended).toBe(false);
     });
 
-    it("should support 29-bit extended frames", () => {
+    it('should support 29-bit extended frames', () => {
       const frame: CANFrame = {
-        id: 0x18FEDF00,
+        id: 0x18fedf00,
         data: [1, 2, 3, 4, 5, 6, 7, 8],
-        extended: true
+        extended: true,
       };
 
       expect(frame.id).toBeGreaterThan(0x800);
       expect(frame.extended).toBe(true);
     });
 
-    it("should validate data length", () => {
+    it('should validate data length', () => {
       const frame: CANFrame = {
         id: 0x100,
         data: [0, 1, 2, 3, 4, 5, 6, 7], // 8 bytes max
-        extended: false
+        extended: false,
       };
 
       expect(frame.data.length).toBeLessThanOrEqual(8);

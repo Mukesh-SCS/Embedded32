@@ -1,6 +1,6 @@
-import { parseJ1939Id, ParsedJ1939Id } from "../id/J1939Id.js";
-import { getPGNInfo, formatPGN } from "./PGNDatabase.js";
-import { CANFrame } from "@embedded32/can";
+import { parseJ1939Id, ParsedJ1939Id } from '../id/J1939Id.js';
+import { getPGNInfo, formatPGN } from './PGNDatabase.js';
+import { CANFrame } from '@embedded32/can';
 
 export interface DecodedJ1939Message extends ParsedJ1939Id {
   name: string;
@@ -25,7 +25,7 @@ export function decodeJ1939(frame: CANFrame): DecodedJ1939Message {
 
   return {
     ...parsed,
-    name: pgnInfo?.name ?? "Unknown PGN",
+    name: pgnInfo?.name ?? 'Unknown PGN',
     raw: frame.data,
   };
 }
@@ -35,7 +35,7 @@ export function decodeJ1939(frame: CANFrame): DecodedJ1939Message {
  */
 export function formatJ1939Message(msg: DecodedJ1939Message): string {
   const pgnHex = formatPGN(msg.pgn);
-  const dataHex = msg.raw.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(", ");
+  const dataHex = msg.raw.map((b) => `0x${b.toString(16).padStart(2, '0')}`).join(', ');
 
   return `[J1939] ${msg.name} (${pgnHex}) from SA=0x${msg.sa
     .toString(16)

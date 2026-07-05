@@ -11,35 +11,35 @@
  * - 0x00ED00: Transport Protocol Connection Management (RTS/CTS/EndOfMessage)
  */
 
-export const PGN_TP_BAM = 0x00ec00;  // Broadcast Announce Message
-export const PGN_TP_CT = 0x00eb00;   // Continuous Transfer
-export const PGN_TP_CM = 0x00ed00;   // Connection Management
+export const PGN_TP_BAM = 0x00ec00; // Broadcast Announce Message
+export const PGN_TP_CT = 0x00eb00; // Continuous Transfer
+export const PGN_TP_CM = 0x00ed00; // Connection Management
 
 export interface BAMMessage {
-  messageLength: number;      // Total bytes in message
-  numberOfPackets: number;    // Total 7-byte packets
-  pgn: number;                // PGN being sent
+  messageLength: number; // Total bytes in message
+  numberOfPackets: number; // Total 7-byte packets
+  pgn: number; // PGN being sent
 }
 
 export interface CTSMessage {
-  nextPacketNumber: number;   // First packet to send (1-based)
-  numberOfPackets: number;    // Number of packets to send
+  nextPacketNumber: number; // First packet to send (1-based)
+  numberOfPackets: number; // Number of packets to send
   reserved: number;
-  pgn: number;                // PGN for this session
+  pgn: number; // PGN for this session
 }
 
 export interface RTSMessage {
-  messageLength: number;      // Total bytes
-  numberOfPackets: number;    // Total packets
+  messageLength: number; // Total bytes
+  numberOfPackets: number; // Total packets
   destinationAddress: number; // Target device
-  pgn: number;                // PGN being requested
+  pgn: number; // PGN being requested
 }
 
 export interface EndOfMessageMessage {
   totalMessageLength: number; // Bytes received
-  totalPackets: number;       // Packets received
+  totalPackets: number; // Packets received
   destinationAddress: number; // Device that sent data
-  pgn: number;                // PGN that was transmitted
+  pgn: number; // PGN that was transmitted
 }
 
 /**
@@ -98,9 +98,9 @@ export function parseEndOfMessage(data: number[], destinationAddress: number): E
  * - Packet sequencing
  */
 export class J1939TransportProtocol {
-  private readonly TP_RX_TIMEOUT_MS = 1000;      // Max time to wait for TP packet
-  private readonly TP_CTS_TIMEOUT_MS = 500;      // Max time between CTS messages
-  private readonly PG_MAX_LENGTH = 1785;         // Max TP message length
+  private readonly TP_RX_TIMEOUT_MS = 1000; // Max time to wait for TP packet
+  private readonly TP_CTS_TIMEOUT_MS = 500; // Max time between CTS messages
+  private readonly PG_MAX_LENGTH = 1785; // Max TP message length
 
   private bamSessions: Map<string, BAMSession> = new Map();
   private rtsSessions: Map<string, RTSSession> = new Map();
@@ -162,7 +162,7 @@ export class J1939TransportProtocol {
       destinationAddress,
       packets: [],
       assembledData: [],
-      state: "waiting_cts",
+      state: 'waiting_cts',
       startTime: Date.now(),
       lastActivityTime: Date.now(),
       complete: false,
@@ -181,7 +181,7 @@ export class J1939TransportProtocol {
 
     if (!session) return null;
 
-    session.state = "transferring";
+    session.state = 'transferring';
     session.nextPacketToSend = cts.nextPacketNumber;
     session.packetsToSendInThisBlock = cts.numberOfPackets;
     session.lastActivityTime = Date.now();
@@ -192,7 +192,12 @@ export class J1939TransportProtocol {
   /**
    * Add packet to RTS session
    */
-  addRTSPacket(pgn: number, destinationAddress: number, packetNumber: number, data: number[]): RTSSession | null {
+  addRTSPacket(
+    pgn: number,
+    destinationAddress: number,
+    packetNumber: number,
+    data: number[]
+  ): RTSSession | null {
     const key = `rts_${pgn}_${destinationAddress}`;
     const session = this.rtsSessions.get(key);
 
@@ -204,7 +209,7 @@ export class J1939TransportProtocol {
     if (Object.keys(session.packets).length === session.numberOfPackets) {
       this.assembleRTSData(session);
       session.complete = true;
-      session.state = "complete";
+      session.state = 'complete';
     }
 
     return session;
@@ -217,8 +222,8 @@ export class J1939TransportProtocol {
     return {
       activeBamSessions: this.bamSessions.size,
       activeRtsSessions: this.rtsSessions.size,
-      completeBamMessages: Array.from(this.bamSessions.values()).filter(s => s.complete).length,
-      completeRtsMessages: Array.from(this.rtsSessions.values()).filter(s => s.complete).length,
+      completeBamMessages: Array.from(this.bamSessions.values()).filter((s) => s.complete).length,
+      completeRtsMessages: Array.from(this.rtsSessions.values()).filter((s) => s.complete).length,
     };
   }
 
@@ -273,7 +278,7 @@ interface RTSSession {
   destinationAddress: number;
   packets: number[][];
   assembledData: number[];
-  state: "waiting_cts" | "transferring" | "complete";
+  state: 'waiting_cts' | 'transferring' | 'complete';
   startTime: number;
   lastActivityTime: number;
   nextPacketToSend?: number;

@@ -1,4 +1,4 @@
-import { Module } from "../types.js";
+import { Module } from '../types.js';
 
 export class ModuleRegistry {
   private modules = new Map<string, Module>();

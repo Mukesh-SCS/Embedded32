@@ -1,4 +1,4 @@
-import { Runtime, Logger } from "@embedded32/core";
+import { Runtime, Logger } from '@embedded32/core';
 
 /**
  * Base class for all CLI commands
@@ -24,8 +24,8 @@ export abstract class BaseCommand {
     if (this.runtime) return;
 
     this.runtime = new Runtime({
-      logLevel: "info",
-      configPath: configPath || "./config.json",
+      logLevel: 'info',
+      configPath: configPath || './config.json',
     });
 
     this.logger = this.runtime.getLogger();
@@ -53,10 +53,10 @@ export abstract class BaseCommand {
   /**
    * Log output to console
    */
-  protected log(message: string, level: "info" | "warn" | "error" = "info") {
-    if (level === "error") {
+  protected log(message: string, level: 'info' | 'warn' | 'error' = 'info') {
+    if (level === 'error') {
       console.error(`[${this.commandName}] ❌ ${message}`);
-    } else if (level === "warn") {
+    } else if (level === 'warn') {
       console.warn(`[${this.commandName}] ⚠️  ${message}`);
     } else {
       console.log(`[${this.commandName}] ℹ️  ${message}`);
@@ -66,26 +66,24 @@ export abstract class BaseCommand {
   /**
    * Parse command-line arguments
    */
-  protected parseArgs(
-    args: string[]
-  ): { [key: string]: string | boolean | string[] } {
+  protected parseArgs(args: string[]): { [key: string]: string | boolean | string[] } {
     const parsed: { [key: string]: string | boolean | string[] } = {};
 
     for (let i = 0; i < args.length; i++) {
       const arg = args[i];
 
-      if (arg.startsWith("--")) {
+      if (arg.startsWith('--')) {
         const key = arg.slice(2);
         const nextArg = args[i + 1];
 
         // Check if next arg is a value or another flag
-        if (nextArg && !nextArg.startsWith("--")) {
+        if (nextArg && !nextArg.startsWith('--')) {
           parsed[key] = nextArg;
           i++;
         } else {
           parsed[key] = true;
         }
-      } else if (arg.startsWith("-")) {
+      } else if (arg.startsWith('-')) {
         const key = arg.slice(1);
         parsed[key] = true;
       }
@@ -103,7 +101,7 @@ export abstract class BaseCommand {
     description: string
   ): string {
     const value = args[key];
-    if (!value || typeof value === "boolean") {
+    if (!value || typeof value === 'boolean') {
       throw new Error(`Missing required argument: --${key} (${description})`);
     }
     return value as string;

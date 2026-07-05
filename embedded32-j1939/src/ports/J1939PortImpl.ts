@@ -1,14 +1,14 @@
 /**
  * J1939 Port Implementation
- * 
+ *
  * Provides J1939 PGN-level communication over a CAN port.
  * Handles Transport Protocol (BAM, RTS/CTS) automatically.
  */
 
-import { IJ1939Port, J1939Message, PGNCallback, PGN, TP_CM } from "../interfaces/J1939Port.js";
-import { ICANPort, CANFrame } from "@embedded32/can";
-import { parseJ1939Id, buildJ1939Id } from "../id/J1939Id.js";
-import { EventEmitter } from "events";
+import { IJ1939Port, J1939Message, PGNCallback, PGN, TP_CM } from '../interfaces/J1939Port.js';
+import { ICANPort, CANFrame } from '@embedded32/can';
+import { parseJ1939Id, buildJ1939Id } from '../id/J1939Id.js';
+import { EventEmitter } from 'events';
 
 /**
  * Transport Protocol session state
@@ -32,12 +32,12 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
   private priority: number = 6;
   private pgnCallbacks: Map<number | '*', PGNCallback[]> = new Map();
   private tpSessions: Map<string, TPSession> = new Map();
-  
+
   // TP constants
   private readonly TP_TIMEOUT_MS = 1250;
   private readonly MAX_TP_BYTES = 1785;
 
-  constructor(canPort: ICANPort, sourceAddress: number = 0xFE) {
+  constructor(canPort: ICANPort, sourceAddress: number = 0xfe) {
     super();
     this.canPort = canPort;
     this.sourceAddress = sourceAddress;
@@ -49,13 +49,13 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
   /**
    * Send a PGN message
    */
-  async sendPGN(pgn: number, data: number[], da: number = 0xFF): Promise<void> {
+  async sendPGN(pgn: number, data: number[], da: number = 0xff): Promise<void> {
     if (data.length <= 8) {
       // Single frame
       await this.sendSingleFrame(pgn, data, da);
     } else if (data.length <= this.MAX_TP_BYTES) {
       // Multi-frame via BAM (broadcast) or RTS/CTS (destination-specific)
-      if (da === 0xFF) {
+      if (da === 0xff) {
         await this.sendBAM(pgn, data);
       } else {
         // For now, use BAM for all multi-packet (RTS/CTS in future)
@@ -73,21 +73,21 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
     // Pad to 8 bytes with 0xFF
     const paddedData = [...data];
     while (paddedData.length < 8) {
-      paddedData.push(0xFF);
+      paddedData.push(0xff);
     }
 
     const id = buildJ1939Id({
       priority: this.priority,
       pgn,
       sa: this.sourceAddress,
-      da
+      da,
     });
 
     const frame: CANFrame = {
       id,
       data: paddedData,
       extended: true,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     await this.canPort.send(frame);
@@ -105,25 +105,25 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
       priority: 7,
       pgn: PGN.TP_CM,
       sa: this.sourceAddress,
-      da: 0xFF
+      da: 0xff,
     });
 
     const bamData = [
-      TP_CM.BAM,                    // Control byte
-      totalBytes & 0xFF,            // Message size LSB
-      (totalBytes >> 8) & 0xFF,     // Message size MSB
-      totalPackets,                 // Number of packets
-      0xFF,                         // Reserved
-      pgn & 0xFF,                   // PGN LSB
-      (pgn >> 8) & 0xFF,            // PGN middle
-      (pgn >> 16) & 0xFF            // PGN MSB
+      TP_CM.BAM, // Control byte
+      totalBytes & 0xff, // Message size LSB
+      (totalBytes >> 8) & 0xff, // Message size MSB
+      totalPackets, // Number of packets
+      0xff, // Reserved
+      pgn & 0xff, // PGN LSB
+      (pgn >> 8) & 0xff, // PGN middle
+      (pgn >> 16) & 0xff, // PGN MSB
     ];
 
     await this.canPort.send({
       id: bamId,
       data: bamData,
       extended: true,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     // Send data packets with 50-200ms delay between each
@@ -131,27 +131,27 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
       priority: 7,
       pgn: PGN.TP_DT,
       sa: this.sourceAddress,
-      da: 0xFF
+      da: 0xff,
     });
 
     for (let i = 0; i < totalPackets; i++) {
       const start = i * 7;
       const end = Math.min(start + 7, totalBytes);
       const packetData = [
-        i + 1,  // Sequence number (1-based)
-        ...data.slice(start, end)
+        i + 1, // Sequence number (1-based)
+        ...data.slice(start, end),
       ];
 
       // Pad to 8 bytes
       while (packetData.length < 8) {
-        packetData.push(0xFF);
+        packetData.push(0xff);
       }
 
       await this.canPort.send({
         id: dtId,
         data: packetData,
         extended: true,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       // Small delay between packets (50ms per J1939-21)
@@ -189,12 +189,8 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
   /**
    * Request a PGN (sends Request PGN 59904)
    */
-  async requestPGN(pgn: number, da: number = 0xFF): Promise<void> {
-    const requestData = [
-      pgn & 0xFF,
-      (pgn >> 8) & 0xFF,
-      (pgn >> 16) & 0xFF
-    ];
+  async requestPGN(pgn: number, da: number = 0xff): Promise<void> {
+    const requestData = [pgn & 0xff, (pgn >> 8) & 0xff, (pgn >> 16) & 0xff];
 
     await this.sendPGN(PGN.REQUEST, requestData, da);
   }
@@ -232,7 +228,7 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
       sa: parsed.sa,
       da: parsed.ps, // For PDU1, PS is destination
       data: frame.data,
-      timestamp: frame.timestamp
+      timestamp: frame.timestamp,
     };
 
     this.notifyCallbacks(pgn, message);
@@ -256,9 +252,9 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
         totalBytes,
         totalPackets,
         receivedPackets: [],
-        data: new Array(totalBytes).fill(0xFF),
+        data: new Array(totalBytes).fill(0xff),
         startTime: Date.now(),
-        sourceAddress: parsed.sa
+        sourceAddress: parsed.sa,
       });
     }
   }
@@ -287,9 +283,9 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
             pgn: session.pgn,
             priority: 7,
             sa: session.sourceAddress,
-            da: 0xFF,
+            da: 0xff,
             data: session.data.slice(0, session.totalBytes),
-            timestamp: Date.now()
+            timestamp: Date.now(),
           };
 
           this.notifyCallbacks(session.pgn, message);
@@ -305,7 +301,7 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
    */
   private handleRequest(frame: CANFrame, parsed: any): void {
     const requestedPGN = frame.data[0] | (frame.data[1] << 8) | (frame.data[2] << 16);
-    this.emit("request", requestedPGN, parsed.sa);
+    this.emit('request', requestedPGN, parsed.sa);
   }
 
   /**
@@ -319,7 +315,7 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
         try {
           cb(message);
         } catch (err) {
-          this.emit("error", err);
+          this.emit('error', err);
         }
       }
     }
@@ -331,7 +327,7 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
         try {
           cb(message);
         } catch (err) {
-          this.emit("error", err);
+          this.emit('error', err);
         }
       }
     }
@@ -357,7 +353,7 @@ export class J1939PortImpl extends EventEmitter implements IJ1939Port {
    * Helper delay function
    */
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**

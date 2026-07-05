@@ -3,7 +3,7 @@
  */
 
 export interface RuntimeConfig {
-  logLevel: "debug" | "info" | "warn" | "error";
+  logLevel: 'debug' | 'info' | 'warn' | 'error';
   configPath?: string;
   enableMetrics?: boolean;
 }
@@ -36,7 +36,7 @@ export interface Message {
 export type MessageHandler = (message: Message) => void | Promise<void>;
 
 export interface LogEntry {
-  level: "debug" | "info" | "warn" | "error";
+  level: 'debug' | 'info' | 'warn' | 'error';
   message: string;
   timestamp: number;
   context?: any;

@@ -19,9 +19,9 @@ async function main(): Promise<void> {
   }
 
   if (args[0] === '--version' || args[0] === '-v') {
-    const pkg = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '../package.json'), 'utf8')
-    ) as { version?: string };
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf8')) as {
+      version?: string;
+    };
     console.log(pkg.version ?? '1.0.0');
     return;
   }
@@ -92,7 +92,11 @@ async function startRuntime(configPath?: string): Promise<never> {
     supervisor.registerModule(pluginManager.createModule('j1939', config));
   }
 
-  if (config.ethernet?.udp?.enabled || config.ethernet?.tcp?.enabled || config.ethernet?.mqtt?.enabled) {
+  if (
+    config.ethernet?.udp?.enabled ||
+    config.ethernet?.tcp?.enabled ||
+    config.ethernet?.mqtt?.enabled
+  ) {
     supervisor.registerModule(pluginManager.createModule('ethernet', config));
   }
 
@@ -169,17 +173,17 @@ async function startDemo(): Promise<never> {
   demoConfig.simulator = {
     engine: true,
     transmission: true,
-    brakes: true
+    brakes: true,
   };
   demoConfig.bridge = {
     canEthernet: {
       enabled: true,
       whitelist: [0xf004, 0xfeca, 0xff00],
-      rateLimit: { default: 20, 0xf004: 50 }
+      rateLimit: { default: 20, 0xf004: 50 },
     },
     canMqtt: {
-      enabled: false
-    }
+      enabled: false,
+    },
   };
 
   const logger = new Logger('info');
@@ -346,7 +350,9 @@ async function showStatus(configPath?: string): Promise<void> {
     for (const [moduleId, status] of Object.entries(health.modules)) {
       const moduleStatus = status as any;
       const icon = moduleStatus.state === 'running' ? '✅' : '⚠️';
-      console.log(`    ${icon} ${moduleId}: ${moduleStatus.state} (uptime: ${Math.floor(moduleStatus.uptime / 1000)}s, restarts: ${moduleStatus.restarts})`);
+      console.log(
+        `    ${icon} ${moduleId}: ${moduleStatus.state} (uptime: ${Math.floor(moduleStatus.uptime / 1000)}s, restarts: ${moduleStatus.restarts})`
+      );
     }
 
     console.log('');
@@ -395,7 +401,7 @@ function showHelp(): void {
 }
 
 // Run CLI
-main().catch(error => {
+main().catch((error) => {
   console.error('Fatal error:', error);
   process.exit(1);
 });

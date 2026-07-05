@@ -1,6 +1,6 @@
 /**
  * Module Registry
- * 
+ *
  * Manages registration and lifecycle of Embedded32 modules.
  */
 
@@ -37,7 +37,7 @@ export class ModuleRegistry {
    * Initialize all registered modules
    */
   async initAll(): Promise<void> {
-    const promises = Array.from(this.modules.values()).map(module =>
+    const promises = Array.from(this.modules.values()).map((module) =>
       Promise.resolve(module.onInit())
     );
     await Promise.all(promises);
@@ -47,7 +47,7 @@ export class ModuleRegistry {
    * Start all registered modules
    */
   async startAll(): Promise<void> {
-    const promises = Array.from(this.modules.values()).map(module =>
+    const promises = Array.from(this.modules.values()).map((module) =>
       Promise.resolve(module.onStart())
     );
     await Promise.all(promises);
@@ -57,7 +57,7 @@ export class ModuleRegistry {
    * Shutdown all registered modules
    */
   async stopAll(): Promise<void> {
-    const promises = Array.from(this.modules.values()).map(module =>
+    const promises = Array.from(this.modules.values()).map((module) =>
       Promise.resolve(module.onStop())
     );
     await Promise.all(promises);

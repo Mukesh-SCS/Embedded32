@@ -40,10 +40,7 @@ export class CANBus {
    * Send J1939 message
    */
   async sendJ1939(msg: any): Promise<void> {
-    const id =
-      ((msg.priority & 0x7) << 26) |
-      ((msg.pgn & 0x3ffff) << 8) |
-      (msg.sa & 0xff);
+    const id = ((msg.priority & 0x7) << 26) | ((msg.pgn & 0x3ffff) << 8) | (msg.sa & 0xff);
 
     return this.send({
       id,

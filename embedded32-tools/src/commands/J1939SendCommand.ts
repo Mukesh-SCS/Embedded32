@@ -1,17 +1,17 @@
-import { BaseCommand } from "./BaseCommand.js";
+import { BaseCommand } from './BaseCommand.js';
 
 /**
  * J1939 Send Command
- * 
+ *
  * Send J1939 messages on CAN bus
- * 
+ *
  * Usage:
  *   embedded32 j1939 send --pgn F004 --data "00 FF 10 20"
  *   embedded32 j1939 send --pgn F004 --data "00 FF 10 20" --sa 0x01 --iface can0
  */
 export class J1939SendCommand extends BaseCommand {
   constructor() {
-    super("j1939-send");
+    super('j1939-send');
   }
 
   getHelp(): string {
@@ -43,14 +43,14 @@ Examples:
       const parsed = this.parseArgs(this.args);
 
       // Get required arguments
-      const pgn = this.expectArg(parsed, "pgn", "PGN in hex (e.g., F004)");
-      const data = this.expectArg(parsed, "data", "payload data as hex bytes");
+      const pgn = this.expectArg(parsed, 'pgn', 'PGN in hex (e.g., F004)');
+      const data = this.expectArg(parsed, 'data', 'payload data as hex bytes');
 
       // Get optional arguments
       const sa = parsed.sa ? parseInt(parsed.sa as string, 16) : 0x80;
       const da = parsed.da ? parseInt(parsed.da as string, 16) : 0xff;
       const priority = parsed.priority ? parseInt(parsed.priority as string) : 3;
-      const iface = parsed.iface ? (parsed.iface as string) : "can0";
+      const iface = parsed.iface ? (parsed.iface as string) : 'can0';
       const repeat = parsed.repeat ? parseInt(parsed.repeat as string) : 1;
       const interval = parsed.interval ? parseInt(parsed.interval as string) : 100;
 
@@ -78,28 +78,20 @@ Examples:
       }
 
       // Display message details
+      this.log(`Will send J1939 message on interface: ${iface}`);
+      this.log(`PGN: 0x${pgnValue.toString(16).toUpperCase().padStart(5, '0')}`);
       this.log(
-        `Will send J1939 message on interface: ${iface}`
+        `Data: ${dataBytes.map((b) => b.toString(16).toUpperCase().padStart(2, '0')).join(' ')}`
       );
-      this.log(
-        `PGN: 0x${pgnValue.toString(16).toUpperCase().padStart(5, "0")}`
-      );
-      this.log(
-        `Data: ${dataBytes.map(b => b.toString(16).toUpperCase().padStart(2, "0")).join(" ")}`
-      );
-      this.log(
-        `SA: 0x${sa.toString(16).toUpperCase().padStart(2, "0")}`
-      );
-      this.log(
-        `DA: 0x${da.toString(16).toUpperCase().padStart(2, "0")}`
-      );
+      this.log(`SA: 0x${sa.toString(16).toUpperCase().padStart(2, '0')}`);
+      this.log(`DA: 0x${da.toString(16).toUpperCase().padStart(2, '0')}`);
       this.log(`Priority: ${priority}`);
 
       if (repeat > 1) {
         this.log(`Will send ${repeat} times with ${interval}ms interval`);
       }
 
-      this.log("═".repeat(80));
+      this.log('═'.repeat(80));
 
       // Build CAN ID
       const canId = this.buildJ1939CanId({
@@ -109,9 +101,7 @@ Examples:
         destAddress: da,
       });
 
-      this.log(
-        `Calculated CAN ID: 0x${canId.toString(16).toUpperCase().padStart(8, "0")}`
-      );
+      this.log(`Calculated CAN ID: 0x${canId.toString(16).toUpperCase().padStart(8, '0')}`);
 
       console.log(`
 Integration Status:
@@ -119,8 +109,8 @@ Integration Status:
 This command will integrate with the CAN runtime to send J1939 messages.
 
 Message summary:
-- CAN ID:  0x${canId.toString(16).toUpperCase().padStart(8, "0")} (29-bit)
-- Payload: ${dataBytes.map(b => "0x" + b.toString(16).toUpperCase().padStart(2, "0")).join(", ")}
+- CAN ID:  0x${canId.toString(16).toUpperCase().padStart(8, '0')} (29-bit)
+- Payload: ${dataBytes.map((b) => '0x' + b.toString(16).toUpperCase().padStart(2, '0')).join(', ')}
 - Length:  ${dataBytes.length} bytes
 - Repeats: ${repeat}x every ${interval}ms
 
@@ -141,13 +131,13 @@ Would produce CAN message:
       `);
 
       // Handle graceful shutdown
-      process.on("SIGINT", async () => {
-        this.log("Send cancelled by user");
+      process.on('SIGINT', async () => {
+        this.log('Send cancelled by user');
         await this.cleanup();
         process.exit(0);
       });
     } catch (err) {
-      this.log(`Error: ${err}`, "error");
+      this.log(`Error: ${err}`, 'error');
       await this.cleanup();
       throw err;
     }

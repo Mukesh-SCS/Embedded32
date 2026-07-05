@@ -79,7 +79,9 @@ export class TCPServer extends EventEmitter {
         if (this.options.maxConnections) {
           this.server.maxConnections = this.options.maxConnections;
         }
-        console.log(`TCP Server listening on ${this.options.address || '0.0.0.0'}:${this.options.port}`);
+        console.log(
+          `TCP Server listening on ${this.options.address || '0.0.0.0'}:${this.options.port}`
+        );
         resolve();
       });
     });
@@ -124,7 +126,10 @@ export class TCPClient extends EventEmitter {
   private socket: Socket | null = null;
   private buffer = Buffer.alloc(0);
 
-  constructor(private host: string, private port: number) {
+  constructor(
+    private host: string,
+    private port: number
+  ) {
     super();
   }
 

@@ -1,8 +1,8 @@
 /**
  * Embedded32 SDK for JavaScript/TypeScript
- * 
+ *
  * PUBLIC API - This is the only supported entry point.
- * 
+ *
  * @module @embedded32/sdk-js
  * @version 1.0.0
  */
@@ -15,12 +15,7 @@
 export { J1939Client } from './client.js';
 
 // Public types
-export type {
-  J1939ClientConfig,
-  J1939Message,
-  PGNData,
-  PGNHandler,
-} from './types.js';
+export type { J1939ClientConfig, J1939Message, PGNData, PGNHandler } from './types.js';
 
 // Constants
 export { PGN, SA } from './types.js';

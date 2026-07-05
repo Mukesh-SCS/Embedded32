@@ -38,6 +38,7 @@ embedded32 demo
 ```
 
 Runs everything with all features enabled:
+
 - Virtual CAN bus
 - J1939 decoder
 - Engine/transmission/brake simulators

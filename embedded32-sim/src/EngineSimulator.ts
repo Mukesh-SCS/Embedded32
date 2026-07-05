@@ -1,6 +1,6 @@
 /**
  * Engine ECU Simulator
- * 
+ *
  * Simulates:
  * - Engine Speed (RPM): 0-2500
  * - Engine Load: 0-100%
@@ -8,7 +8,7 @@
  * - Fuel Rate: 0-50 L/h
  * - Air Intake Pressure
  * - Turbo Boost Pressure
- * 
+ *
  * Broadcasts PGN F004 (EEC1) and F005 (EEC2)
  */
 
@@ -88,7 +88,7 @@ export class EngineSimulator {
    */
   static getIdleScenario(): EngineScenario {
     return {
-      name: "idle",
+      name: 'idle',
       duration: Infinity,
       targetRpm: () => 600,
       targetLoad: () => 0,
@@ -100,7 +100,7 @@ export class EngineSimulator {
    */
   static getAccelerationScenario(): EngineScenario {
     return {
-      name: "accel",
+      name: 'accel',
       duration: 10000, // 10 seconds
       targetRpm: (elapsed) => {
         return Math.min(600 + (elapsed / 10000) * 1900, 2500);
@@ -116,7 +116,7 @@ export class EngineSimulator {
    */
   static getCruiseScenario(): EngineScenario {
     return {
-      name: "cruise",
+      name: 'cruise',
       duration: Infinity,
       targetRpm: () => 1800,
       targetLoad: () => 30,
@@ -128,7 +128,7 @@ export class EngineSimulator {
    */
   static getDecelerationScenario(): EngineScenario {
     return {
-      name: "decel",
+      name: 'decel',
       duration: 5000,
       targetRpm: (elapsed) => {
         return Math.max(2500 - (elapsed / 5000) * 1900, 600);

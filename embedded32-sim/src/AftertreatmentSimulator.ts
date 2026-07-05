@@ -1,12 +1,12 @@
 /**
  * Aftertreatment ECU Simulator
- * 
+ *
  * Simulates:
  * - DEF Tank Level: 0-100%
  * - SCR Catalyst Temperature: 200-600°C
  * - DPF Soot Level: 0-100%
  * - Regeneration Status
- * 
+ *
  * Broadcasts PGN F470 (DEF Level), F471 (SCR Temp), F472 (DPF Status)
  */
 
@@ -52,14 +52,16 @@ export class AftertreatmentSimulator {
    */
   tick(engineRpm: number, fuelRate: number, load: number) {
     // DEF consumption (about 3-5% of fuel consumption)
-    const defConsumptionRate = fuelRate * 0.04 * (this.updateInterval / 1000) / 100;
+    const defConsumptionRate = (fuelRate * 0.04 * (this.updateInterval / 1000)) / 100;
     this.state.defTankLevel = Math.max(0, this.state.defTankLevel - defConsumptionRate);
 
     // Exhaust temperature based on RPM and load
     const baseTemp = 150;
     const maxTemp = 600;
-    this.state.exhausTemp = baseTemp + (engineRpm / 2500) * 0.5 * (maxTemp - baseTemp) +
-                           (load / 100) * 0.5 * (maxTemp - baseTemp);
+    this.state.exhausTemp =
+      baseTemp +
+      (engineRpm / 2500) * 0.5 * (maxTemp - baseTemp) +
+      (load / 100) * 0.5 * (maxTemp - baseTemp);
 
     // SCR catalyst temperature follows exhaust temperature (with lag)
     this.state.scrCatalystTemp +=
@@ -70,7 +72,7 @@ export class AftertreatmentSimulator {
     const loadNox = (load / 100) * baseNox;
     const egrReduction = (this.state.egrValvePosition / 100) * 0.3; // EGR reduces NOx by up to 30%
     const scrReduction = this.state.scrCatalystTemp > 250 ? 0.9 : 0.5; // SCR reduces NOx by 50-90%
-    
+
     this.state.noxLevel = loadNox * (1 - egrReduction) * (1 - scrReduction);
 
     // EGR valve position based on load (closes at high load)
@@ -81,10 +83,9 @@ export class AftertreatmentSimulator {
     }
 
     // DPF soot accumulation (increases during idle, decreases during regen)
-    const sootAccumulationRate = (
-      (2500 - engineRpm) / 2500 * 0.05 + // More soot when idling
-      (load / 100) * 0.03 // Some soot during load
-    );
+    const sootAccumulationRate =
+      ((2500 - engineRpm) / 2500) * 0.05 + // More soot when idling
+      (load / 100) * 0.03; // Some soot during load
 
     if (this.state.regenerationStatus === RegenerationStatus.Active) {
       // Regeneration reduces soot

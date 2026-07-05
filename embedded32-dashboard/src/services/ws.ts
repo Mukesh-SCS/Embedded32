@@ -8,9 +8,9 @@ export function connectWS(url: string, onMessage: (msg: any) => void) {
     onMessage(data);
   };
 
-  socket.onopen = () => console.log("Connected to Embedded32 bridge");
-  socket.onclose = () => console.log("Disconnected");
-  socket.onerror = (error) => console.error("WebSocket error:", error);
+  socket.onopen = () => console.log('Connected to Embedded32 bridge');
+  socket.onclose = () => console.log('Disconnected');
+  socket.onerror = (error) => console.error('WebSocket error:', error);
 }
 
 export function disconnectWS() {

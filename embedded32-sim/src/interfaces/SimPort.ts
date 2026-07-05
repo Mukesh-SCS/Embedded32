@@ -1,13 +1,13 @@
 /**
  * Simulation Port Interface - Phase 2 Locked Interface
- * 
+ *
  * This is the interface for deterministic simulation.
  * All ECU simulators MUST implement this interface.
- * 
+ *
  * DO NOT MODIFY without updating phase2-checklist.md
  */
 
-import { IJ1939Port } from "@embedded32/j1939";
+import { IJ1939Port } from '@embedded32/j1939';
 
 /**
  * Simulation lifecycle state
@@ -16,22 +16,22 @@ export enum SimState {
   STOPPED = 'stopped',
   RUNNING = 'running',
   PAUSED = 'paused',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 /**
  * ECU configuration
  */
 export interface ECUConfig {
-  name: string;           // ECU name (e.g., "engine", "transmission")
-  address: number;        // J1939 source address (0-253)
-  rateMs: number;         // Broadcast rate in milliseconds
-  enabled?: boolean;      // Whether ECU is active (default: true)
+  name: string; // ECU name (e.g., "engine", "transmission")
+  address: number; // J1939 source address (0-253)
+  rateMs: number; // Broadcast rate in milliseconds
+  enabled?: boolean; // Whether ECU is active (default: true)
 }
 
 /**
  * Simulation Port - Deterministic simulation interface
- * 
+ *
  * This port provides:
  * - Deterministic tick-based execution
  * - Lifecycle management (start/stop)
@@ -40,7 +40,7 @@ export interface ECUConfig {
 export interface ISimPort {
   /**
    * Called every simulation tick
-   * 
+   *
    * @param nowMs - Current simulation time in milliseconds
    * @param deltaMs - Time since last tick
    */
@@ -100,14 +100,14 @@ export interface VehicleProfile {
   name: string;
   description?: string;
   bus: {
-    interface: string;    // CAN interface name (e.g., "vcan0")
-    bitrate: number;      // Bitrate (typically 250000 or 500000)
+    interface: string; // CAN interface name (e.g., "vcan0")
+    bitrate: number; // Bitrate (typically 250000 or 500000)
   };
   ecus: ECUConfig[];
   faults?: Record<string, boolean>;
   simulation?: {
-    tickMs?: number;      // Simulation tick rate (default: 10)
-    durationMs?: number;  // Run duration (0 = infinite)
+    tickMs?: number; // Simulation tick rate (default: 10)
+    durationMs?: number; // Run duration (0 = infinite)
   };
 }
 

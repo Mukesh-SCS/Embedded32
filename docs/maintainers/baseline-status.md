@@ -4,13 +4,13 @@ Recorded during **Phase 1** audit on branch `feat/open-source-education-platform
 
 Environment:
 
-| Item | Value |
-|------|-------|
-| OS | Windows 10 (10.0.26200) |
-| Shell | PowerShell |
-| Node.js | (system default; root `engines` requires `>=18.0.0`) |
-| npm | 11.6.2 (warns about unknown `devdir` env config) |
-| Branch | `feat/open-source-education-platform` |
+| Item                | Value                                                      |
+| ------------------- | ---------------------------------------------------------- |
+| OS                  | Windows 10 (10.0.26200)                                    |
+| Shell               | PowerShell                                                 |
+| Node.js             | (system default; root `engines` requires `>=18.0.0`)       |
+| npm                 | 11.6.2 (warns about unknown `devdir` env config)           |
+| Branch              | `feat/open-source-education-platform`                      |
 | Pre-change baseline | Yes — no structural refactoring performed before recording |
 
 ---
@@ -19,13 +19,13 @@ Environment:
 
 ### `npm ci`
 
-| Field | Value |
-|-------|-------|
-| Command | `npm ci` |
-| Exit code | **1** |
-| Affected package | Root workspace |
-| Pre-existing | **Yes** |
-| Summary | `package-lock.json` is out of sync with `package.json`. Missing lockfile entries: `encoding@0.1.13`, `iconv-lite@0.6.3`. |
+| Field            | Value                                                                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Command          | `npm ci`                                                                                                                 |
+| Exit code        | **1**                                                                                                                    |
+| Affected package | Root workspace                                                                                                           |
+| Pre-existing     | **Yes**                                                                                                                  |
+| Summary          | `package-lock.json` is out of sync with `package.json`. Missing lockfile entries: `encoding@0.1.13`, `iconv-lite@0.6.3`. |
 
 **Workaround used for subsequent baseline steps:** `npm install` (exit 0, 914 packages added).
 
@@ -33,25 +33,25 @@ Environment:
 
 ### `npm install` (fallback)
 
-| Field | Value |
-|-------|-------|
-| Command | `npm install` |
-| Exit code | **0** |
-| Affected package | Root workspace |
-| Pre-existing | Lockfile drift is pre-existing |
-| Summary | Install succeeded with deprecation warnings (`inflight`, `glob@7`) and `41` reported vulnerabilities (1 critical, 28 high). |
+| Field            | Value                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Command          | `npm install`                                                                                                               |
+| Exit code        | **0**                                                                                                                       |
+| Affected package | Root workspace                                                                                                              |
+| Pre-existing     | Lockfile drift is pre-existing                                                                                              |
+| Summary          | Install succeeded with deprecation warnings (`inflight`, `glob@7`) and `41` reported vulnerabilities (1 critical, 28 high). |
 
 ---
 
 ### `npm run build`
 
-| Field | Value |
-|-------|-------|
-| Command | `npm run build` → `lerna run build` |
-| Exit code | **0** |
-| Affected package | 11 Lerna-managed packages |
-| Pre-existing | **Yes** (partial coverage) |
-| Summary | All invoked package builds succeeded. `@embedded32/sdk-c` build is a no-op echo. `@embedded32/dashboard` is **not** included in Lerna build graph despite being an npm workspace member. |
+| Field            | Value                                                                                                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Command          | `npm run build` → `lerna run build`                                                                                                                                                      |
+| Exit code        | **0**                                                                                                                                                                                    |
+| Affected package | 11 Lerna-managed packages                                                                                                                                                                |
+| Pre-existing     | **Yes** (partial coverage)                                                                                                                                                               |
+| Summary          | All invoked package builds succeeded. `@embedded32/sdk-c` build is a no-op echo. `@embedded32/dashboard` is **not** included in Lerna build graph despite being an npm workspace member. |
 
 Packages built:
 
@@ -63,30 +63,30 @@ Packages built:
 
 ### `npm run test`
 
-| Field | Value |
-|-------|-------|
-| Command | `npm run test` → `lerna run test` |
-| Exit code | **0** |
-| Affected package | 12 Lerna-managed packages |
-| Pre-existing | **Yes** (shallow coverage) |
-| Summary | Lerna reported success for all packages, but several packages use placeholder test scripts that only echo messages. |
+| Field            | Value                                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Command          | `npm run test` → `lerna run test`                                                                                   |
+| Exit code        | **0**                                                                                                               |
+| Affected package | 12 Lerna-managed packages                                                                                           |
+| Pre-existing     | **Yes** (shallow coverage)                                                                                          |
+| Summary          | Lerna reported success for all packages, but several packages use placeholder test scripts that only echo messages. |
 
 Notable per-package behavior:
 
-| Package | Test behavior | Result |
-|---------|---------------|--------|
-| `@embedded32/can` | `echo "no tests yet"` | Exit 0 (no real tests) |
-| `@embedded32/tools` | `echo "no tests yet"` | Exit 0 (no real tests) |
-| `@embedded32/sdk-c` | echo stub | Exit 0 (no real tests) |
-| `@embedded32/sdk-python` | echo stub | Exit 0 (no real tests) |
-| `@embedded32/j1939` | Jest — 45 tests | Pass |
-| `@embedded32/core` | Jest — multiple suites | Pass (expected console.error in scheduler tests) |
-| `@embedded32/bridge` | Jest — 2 placeholder tests | Pass |
-| `@embedded32/sim` | Jest — 2 placeholder tests | Pass |
-| `@embedded32/supervisor` | Jest — 2 placeholder tests | Pass |
-| `@embedded32/cli` | Jest — 2 placeholder tests | Pass |
-| `@embedded32/ethernet` | Jest | Pass |
-| `@embedded32/sdk-js` | Jest (`--passWithNoTests`) | Pass |
+| Package                  | Test behavior              | Result                                           |
+| ------------------------ | -------------------------- | ------------------------------------------------ |
+| `@embedded32/can`        | `echo "no tests yet"`      | Exit 0 (no real tests)                           |
+| `@embedded32/tools`      | `echo "no tests yet"`      | Exit 0 (no real tests)                           |
+| `@embedded32/sdk-c`      | echo stub                  | Exit 0 (no real tests)                           |
+| `@embedded32/sdk-python` | echo stub                  | Exit 0 (no real tests)                           |
+| `@embedded32/j1939`      | Jest — 45 tests            | Pass                                             |
+| `@embedded32/core`       | Jest — multiple suites     | Pass (expected console.error in scheduler tests) |
+| `@embedded32/bridge`     | Jest — 2 placeholder tests | Pass                                             |
+| `@embedded32/sim`        | Jest — 2 placeholder tests | Pass                                             |
+| `@embedded32/supervisor` | Jest — 2 placeholder tests | Pass                                             |
+| `@embedded32/cli`        | Jest — 2 placeholder tests | Pass                                             |
+| `@embedded32/ethernet`   | Jest                       | Pass                                             |
+| `@embedded32/sdk-js`     | Jest (`--passWithNoTests`) | Pass                                             |
 
 `@embedded32/dashboard` is not executed by root `npm run test`.
 
@@ -111,13 +111,13 @@ Manually run on all 10 public packages after build. All commands exited **0** an
 
 ## Phase 2 commands (post-fix)
 
-| Command | Exit | Summary |
-|---------|------|---------|
-| `npm ci` | **0** | Works after lockfile update |
-| `npm run build` | **0** | All Lerna packages build |
-| `npm run test` | **0** | Includes wired `@embedded32/can` tests (9) and CLI packaging tests |
-| `npm run audit:packages` | **0** | All 10 public packages pass |
-| `npm run test:package-install` | **0** | All 10 packages install and smoke-test in isolated projects |
+| Command                        | Exit  | Summary                                                            |
+| ------------------------------ | ----- | ------------------------------------------------------------------ |
+| `npm ci`                       | **0** | Works after lockfile update                                        |
+| `npm run build`                | **0** | All Lerna packages build                                           |
+| `npm run test`                 | **0** | Includes wired `@embedded32/can` tests (9) and CLI packaging tests |
+| `npm run audit:packages`       | **0** | All 10 public packages pass                                        |
+| `npm run test:package-install` | **0** | All 10 packages install and smoke-test in isolated projects        |
 
 ---
 
@@ -125,24 +125,24 @@ Manually run on all 10 public packages after build. All commands exited **0** an
 
 These were requested in later phases but do not exist yet:
 
-| Command | Status |
-|---------|--------|
-| `npm run lint` | Not defined |
-| `npm run typecheck` | Not defined |
-| `npm run format` | Not defined |
-| `npm run audit:packages` | Added Phase 1; **passes** after Phase 2 |
-| `npm run test:package-install` | Added Phase 2; **passes** |
-| `npm run verify` | Planned Phase 3 |
+| Command                        | Status                                  |
+| ------------------------------ | --------------------------------------- |
+| `npm run lint`                 | Not defined                             |
+| `npm run typecheck`            | Not defined                             |
+| `npm run format`               | Not defined                             |
+| `npm run audit:packages`       | Added Phase 1; **passes** after Phase 2 |
+| `npm run test:package-install` | Added Phase 2; **passes**               |
+| `npm run verify`               | Planned Phase 3                         |
 
 ---
 
 ## CI / automation
 
-| Item | Status |
-|------|--------|
+| Item                 | Status     |
+| -------------------- | ---------- |
 | `.github/workflows/` | **Absent** |
-| Dependabot | **Absent** |
-| CodeQL | **Absent** |
+| Dependabot           | **Absent** |
+| CodeQL               | **Absent** |
 
 ---
 

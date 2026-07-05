@@ -68,13 +68,13 @@ client = J1939Client(
 
 ### Methods
 
-| Method | Description |
-|--------|-------------|
-| `connect()` | Connect to J1939 network |
-| `disconnect()` | Disconnect and cleanup |
-| `on_pgn(pgn, handler)` | Subscribe to PGN (decorator or direct) |
-| `request_pgn(pgn, dest)` | Request data from network |
-| `send_pgn(pgn, data, dest)` | Send PGN with data |
+| Method                      | Description                            |
+| --------------------------- | -------------------------------------- |
+| `connect()`                 | Connect to J1939 network               |
+| `disconnect()`              | Disconnect and cleanup                 |
+| `on_pgn(pgn, handler)`      | Subscribe to PGN (decorator or direct) |
+| `request_pgn(pgn, dest)`    | Request data from network              |
+| `send_pgn(pgn, data, dest)` | Send PGN with data                     |
 
 ### Context Manager
 
@@ -83,7 +83,7 @@ with J1939Client(interface="vcan0", source_address=0xFA) as client:
     @client.on_pgn(PGN.EEC1)
     def on_engine(msg):
         print(msg.spns["engineSpeed"])
-    
+
     client.request_pgn(PGN.EEC1)
     time.sleep(10)
 # Automatically disconnects
@@ -129,16 +129,17 @@ SA.GLOBAL              # 0xFF
 
 The public SDK API is considered **stable as of v1.0.0**:
 
-| API | Status |
-|-----|--------|
-| `J1939Client` | ✅ Stable |
+| API                          | Status    |
+| ---------------------------- | --------- |
+| `J1939Client`                | ✅ Stable |
 | `connect()` / `disconnect()` | ✅ Stable |
-| `on_pgn(pgn, handler)` | ✅ Stable |
-| `request_pgn(pgn)` | ✅ Stable |
-| `send_pgn(pgn, data)` | ✅ Stable |
-| `PGN` / `SA` constants | ✅ Stable |
+| `on_pgn(pgn, handler)`       | ✅ Stable |
+| `request_pgn(pgn)`           | ✅ Stable |
+| `send_pgn(pgn, data)`        | ✅ Stable |
+| `PGN` / `SA` constants       | ✅ Stable |
 
 **Internal modules** (importable via `embedded32._codec`, `embedded32._transport`) are **not part of the public API** and may change without notice:
+
 - Transport implementations
 - Codec functions
 - Low-level CAN types

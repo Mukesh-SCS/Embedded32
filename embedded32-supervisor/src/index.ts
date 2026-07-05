@@ -9,5 +9,5 @@ export type {
   RuntimeConfig,
   ModuleInfo,
   RuntimeEvent,
-  HealthStatus
+  HealthStatus,
 } from './types';

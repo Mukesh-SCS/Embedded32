@@ -15,12 +15,12 @@ The C SDK provides a portable J1939 client library for resource-constrained embe
 
 ## Supported Platforms
 
-| Platform | CAN Interface | Status |
-|----------|--------------|--------|
-| Linux | SocketCAN | ✅ Supported |
-| STM32 | bxCAN | Platform HAL |
-| ESP32 | TWAI | Platform HAL |
-| Windows | PCAN/Kvaser | Platform HAL |
+| Platform | CAN Interface | Status       |
+| -------- | ------------- | ------------ |
+| Linux    | SocketCAN     | ✅ Supported |
+| STM32    | bxCAN         | Platform HAL |
+| ESP32    | TWAI          | Platform HAL |
+| Windows  | PCAN/Kvaser   | Platform HAL |
 
 ## Usage
 
@@ -91,21 +91,21 @@ e32_j1939_destroy(client);
 
 ### Client Lifecycle
 
-| Function | Description |
-|----------|-------------|
-| `e32_j1939_create()` | Create new J1939 client |
-| `e32_j1939_connect()` | Connect to CAN network |
+| Function                 | Description             |
+| ------------------------ | ----------------------- |
+| `e32_j1939_create()`     | Create new J1939 client |
+| `e32_j1939_connect()`    | Connect to CAN network  |
 | `e32_j1939_disconnect()` | Disconnect from network |
-| `e32_j1939_destroy()` | Free client resources |
+| `e32_j1939_destroy()`    | Free client resources   |
 
 ### Message Handling
 
-| Function | Description |
-|----------|-------------|
-| `e32_j1939_on_pgn()` | Subscribe to PGN with callback |
-| `e32_j1939_request_pgn()` | Request PGN from ECU |
-| `e32_j1939_poll()` | Process incoming messages |
-| `e32_j1939_send_engine_control()` | Send engine control command |
+| Function                          | Description                    |
+| --------------------------------- | ------------------------------ |
+| `e32_j1939_on_pgn()`              | Subscribe to PGN with callback |
+| `e32_j1939_request_pgn()`         | Request PGN from ECU           |
+| `e32_j1939_poll()`                | Process incoming messages      |
+| `e32_j1939_send_engine_control()` | Send engine control command    |
 
 ## Constants
 
@@ -149,16 +149,17 @@ gcc -I include -o example examples/engine_monitor.c src/*.c
 
 The public SDK API is considered **stable as of v1.0.0**:
 
-| API | Status |
-|-----|--------|
-| `e32_j1939_create()` / `e32_j1939_destroy()` | ✅ Stable |
+| API                                              | Status    |
+| ------------------------------------------------ | --------- |
+| `e32_j1939_create()` / `e32_j1939_destroy()`     | ✅ Stable |
 | `e32_j1939_connect()` / `e32_j1939_disconnect()` | ✅ Stable |
-| `e32_j1939_on_pgn()` | ✅ Stable |
-| `e32_j1939_request_pgn()` | ✅ Stable |
-| `e32_j1939_send_engine_control()` | ✅ Stable |
-| `E32_PGN_*` / `E32_SA_*` constants | ✅ Stable |
+| `e32_j1939_on_pgn()`                             | ✅ Stable |
+| `e32_j1939_request_pgn()`                        | ✅ Stable |
+| `e32_j1939_send_engine_control()`                | ✅ Stable |
+| `E32_PGN_*` / `E32_SA_*` constants               | ✅ Stable |
 
 **Internal APIs** (marked with `@internal` in headers) are **not part of the public API** and may change without notice:
+
 - `e32_j1939_send_raw()` - Low-level raw frame access
 - Codec utilities in `e32_codec.h`
 

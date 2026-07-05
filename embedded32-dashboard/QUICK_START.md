@@ -3,18 +3,21 @@
 ## 🚀 Start the System
 
 ### Terminal 1: WebSocket Bridge
+
 ```powershell
 cd C:\Users\tripa\Downloads\GitHub_Projects\1Embedded_projectsrepo\Embedded32
 node embedded32-tools/dist/cli.js dashboard bridge --port 9000 --iface vcan0
 ```
 
 ### Terminal 2: Dashboard UI
+
 ```powershell
 cd C:\Users\tripa\Downloads\GitHub_Projects\1Embedded_projectsrepo\Embedded32\embedded32-dashboard
 npm run dev
 ```
 
 ### Browser
+
 Open: http://localhost:5173
 
 ---
@@ -22,11 +25,13 @@ Open: http://localhost:5173
 ## 🎮 Using the Dashboard
 
 ### 1. Connect to Bridge
+
 - URL should show: `ws://localhost:9000`
 - Click **Connect** button
 - Status should change to "Connected" (green dot)
 
 ### 2. Engine Controls
+
 - **Start Engine** - Begin simulation
 - **Stop Engine** - Stop simulation
 - **+100 / -100** - Adjust RPM (only when running)
@@ -34,21 +39,25 @@ Open: http://localhost:5173
 - **Clear DM1 Fault** - Remove fault
 
 ### 3. View Live Data
+
 - **PGN Table** - All J1939 messages
 - **Engine Charts** - Real-time graphs
 - **DM1 Viewer** - Active faults with severity
 - **Bus Stats** - FPS and load percentage
 
 ### 4. Search & Filter
+
 - **Search Box** (top right) - Find messages by PGN, SA, name
 - **Filter Panel** - Filter by PGN, SA, priority
 - **Click Rows** - Open details panel
 
 ### 5. Pause & Resume
+
 - **⏸ Pause** - Freeze table (data still buffers)
 - **▶ Resume** - Show all buffered data
 
 ### 6. Record & Export
+
 - **💾 Download JSON** - Full log with metadata
 - **📊 Export CSV** - Spreadsheet format
 - Files saved as: `j1939_YYYYMMDD_HHMMSS.json/csv`
@@ -58,17 +67,20 @@ Open: http://localhost:5173
 ## 🎨 Visual Indicators
 
 ### Colors
+
 - 🔵 **Blue rows** - Engine messages (EEC1)
 - 🟠 **Orange rows** - Transmission (ETC1)
 - 🟢 **Green rows** - Aftertreatment
 - 🔴 **Red rows** - Faults (DM1)
 
 ### Severity Badges
+
 - 🔴 **High** - FMI 0 (critical)
 - 🟠 **Medium** - FMI 1 (warning)
 - 🟡 **Low** - FMI 3 (informational)
 
 ### Bus Load
+
 - 🟢 **Green** - < 50% (healthy)
 - 🟠 **Orange** - 50-80% (busy)
 - 🔴 **Red** - > 80% (overloaded)
@@ -78,16 +90,19 @@ Open: http://localhost:5173
 ## 🐛 Troubleshooting
 
 ### "Cannot connect"
+
 - Check bridge is running on port 9000
 - Check firewall settings
 - Try: `ws://127.0.0.1:9000`
 
 ### "No data showing"
+
 - Click "Start Engine" in ECU controls
 - Check browser console for errors
 - Verify WebSocket connection status
 
 ### "Search not working"
+
 - Clear search box
 - Check for active filters
 - Try lowercase search terms
@@ -97,6 +112,7 @@ Open: http://localhost:5173
 ## 📝 Command Examples
 
 ### From Dashboard to Bridge
+
 ```json
 // Start engine
 { "type": "command", "target": "engine", "action": "start" }
@@ -109,6 +125,7 @@ Open: http://localhost:5173
 ```
 
 ### From Bridge to Dashboard
+
 ```json
 // J1939 message
 {

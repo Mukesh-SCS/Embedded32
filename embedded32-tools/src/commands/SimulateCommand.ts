@@ -1,15 +1,15 @@
 /**
  * Simulate Command - Phase 2
- * 
+ *
  * Runs vehicle simulation from a profile.
- * 
+ *
  * Usage:
  *   embedded32 simulate vehicle/basic-truck
  */
 
-import * as path from "path";
-import * as fs from "fs";
-import { fileURLToPath } from "url";
+import * as path from 'path';
+import * as fs from 'fs';
+import { fileURLToPath } from 'url';
 
 // ESM equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -26,9 +26,9 @@ export interface SimulateOptions {
 function getProfilesDir(): string {
   // Try multiple locations
   const locations = [
-    path.resolve(__dirname, "../../../embedded32-sim/vehicle-profiles"),
-    path.resolve(__dirname, "../../embedded32-sim/vehicle-profiles"),
-    path.resolve(process.cwd(), "embedded32-sim/vehicle-profiles"),
+    path.resolve(__dirname, '../../../embedded32-sim/vehicle-profiles'),
+    path.resolve(__dirname, '../../embedded32-sim/vehicle-profiles'),
+    path.resolve(process.cwd(), 'embedded32-sim/vehicle-profiles'),
   ];
 
   for (const loc of locations) {
@@ -45,7 +45,7 @@ function getProfilesDir(): string {
  */
 function parseProfileName(profileArg: string): string {
   // Handle "vehicle/basic-truck" format
-  if (profileArg.startsWith("vehicle/")) {
+  if (profileArg.startsWith('vehicle/')) {
     return profileArg.substring(8);
   }
   return profileArg;
@@ -70,26 +70,27 @@ export async function runSimulateCommand(args: string[]): Promise<void> {
     console.error(`\n  ❌ Profile not found: ${profileName}`);
     console.error(`     Looking in: ${profilesDir}`);
     console.error(`\n  Available profiles:`);
-    
+
     try {
-      const profiles = fs.readdirSync(profilesDir)
-        .filter(f => f.endsWith('.json'))
-        .map(f => f.replace('.json', ''));
-      
+      const profiles = fs
+        .readdirSync(profilesDir)
+        .filter((f) => f.endsWith('.json'))
+        .map((f) => f.replace('.json', ''));
+
       for (const p of profiles) {
         console.error(`    • vehicle/${p}`);
       }
     } catch (e) {
       console.error(`    (no profiles found)`);
     }
-    
+
     process.exit(1);
   }
 
   // Dynamic import of SimulationRunner
   try {
-    const { SimulationRunner } = await import("@embedded32/sim");
-    
+    const { SimulationRunner } = await import('@embedded32/sim');
+
     const runner = new SimulationRunner();
     runner.loadProfile(profilePath);
 
@@ -98,28 +99,27 @@ export async function runSimulateCommand(args: string[]): Promise<void> {
     const handleShutdown = () => {
       if (isShuttingDown) return;
       isShuttingDown = true;
-      console.log("\n\n  ⏹️  Stopping simulation...");
+      console.log('\n\n  ⏹️  Stopping simulation...');
       runner.stop();
       process.exit(0);
     };
 
-    process.on("SIGINT", handleShutdown);
-    process.on("SIGTERM", handleShutdown);
+    process.on('SIGINT', handleShutdown);
+    process.on('SIGTERM', handleShutdown);
 
     // Start simulation
     await runner.start();
 
     // Keep running
     await new Promise(() => {});
-    
   } catch (err: any) {
     console.error(`\n  ❌ Failed to start simulation: ${err.message}`);
-    
+
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
       console.error(`\n  Please build the project first:`);
       console.error(`    npm run build`);
     }
-    
+
     process.exit(1);
   }
 }

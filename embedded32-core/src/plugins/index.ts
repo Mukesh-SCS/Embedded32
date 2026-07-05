@@ -1,6 +1,6 @@
 /**
  * Embedded32 - Plugin System
- * 
+ *
  * Plugin contract and loader.
  */
 
@@ -9,12 +9,9 @@ export type {
   PluginContext,
   PluginConfig,
   PluginFactory,
-  PGNData
+  PGNData,
 } from './plugin-interface';
 
-export {
-  PluginPGN,
-  PluginSA
-} from './plugin-interface';
+export { PluginPGN, PluginSA } from './plugin-interface';
 
 export { PluginLoader } from './plugin-loader';

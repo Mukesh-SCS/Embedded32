@@ -20,31 +20,31 @@ npm install @embedded32/can
 
 ## Platform Support
 
-| Platform | Driver | Status |
-|----------|--------|--------|
-| Linux / Raspberry Pi / WSL | SocketCAN | ✅ Full support |
-| macOS / Windows | MockCANDriver | ✅ Simulation only |
+| Platform                   | Driver        | Status             |
+| -------------------------- | ------------- | ------------------ |
+| Linux / Raspberry Pi / WSL | SocketCAN     | ✅ Full support    |
+| macOS / Windows            | MockCANDriver | ✅ Simulation only |
 
 ## Usage
 
 ### SocketCAN (Linux)
 
 ```typescript
-import { CANInterface, SocketCANDriver } from "@embedded32/can";
+import { CANInterface, SocketCANDriver } from '@embedded32/can';
 
-const driver = new SocketCANDriver("can0");
+const driver = new SocketCANDriver('can0');
 const can = new CANInterface(driver);
 
 // Send a CAN frame
 can.send({
   id: 0x123,
   data: [0x01, 0x02, 0x03],
-  extended: false
+  extended: false,
 });
 
 // Receive frames
 can.onMessage((frame) => {
-  console.log("CAN RX:", frame);
+  console.log('CAN RX:', frame);
 });
 
 // Cleanup
@@ -54,22 +54,22 @@ can.close();
 ### MockCANDriver (Cross-Platform Testing)
 
 ```typescript
-import { CANInterface, MockCANDriver } from "@embedded32/can";
+import { CANInterface, MockCANDriver } from '@embedded32/can';
 
 const can = new CANInterface(new MockCANDriver());
 
-can.onMessage((f) => console.log("Mock RX:", f));
+can.onMessage((f) => console.log('Mock RX:', f));
 
 can.send({
   id: 0x456,
-  data: [0x10, 0x20, 0x30]
+  data: [0x10, 0x20, 0x30],
 });
 ```
 
 ### Custom Driver
 
 ```typescript
-import { ICANDriver, CANFrame } from "@embedded32/can";
+import { ICANDriver, CANFrame } from '@embedded32/can';
 
 export class MyDriver implements ICANDriver {
   send(frame: CANFrame) {
@@ -96,18 +96,18 @@ const can = new CANInterface(new MyDriver());
 interface CANFrame {
   id: number;
   data: number[];
-  extended?: boolean;  // true = 29-bit, false = 11-bit
+  extended?: boolean; // true = 29-bit, false = 11-bit
   timestamp?: number;
 }
 ```
 
 ### CANInterface
 
-| Method | Description |
-|--------|-------------|
-| `send(frame)` | Send a CAN frame |
+| Method               | Description              |
+| -------------------- | ------------------------ |
+| `send(frame)`        | Send a CAN frame         |
 | `onMessage(handler)` | Register message handler |
-| `close()` | Close the interface |
+| `close()`            | Close the interface      |
 
 ### ICANDriver
 

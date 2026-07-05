@@ -13,17 +13,17 @@ npm ci
 
 ## Daily development
 
-| Command | Purpose |
-|---------|---------|
-| `npm run build` | Compile all Lerna-managed packages |
-| `npm run test` | Run package unit tests |
-| `npm run typecheck` | TypeScript `--noEmit` in every package |
-| `npm run lint` | ESLint across TypeScript sources |
-| `npm run format` | Apply Prettier formatting |
-| `npm run format:check` | Verify Prettier formatting without writing |
-| `npm run audit:packages` | Verify npm tarball contents |
-| `npm run test:package-install` | Smoke-test tarball installs |
-| `npm run verify` | Full pre-merge check (lint, typecheck, test, build, package audits) |
+| Command                        | Purpose                                                             |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `npm run build`                | Compile all Lerna-managed packages                                  |
+| `npm run test`                 | Run package unit tests                                              |
+| `npm run typecheck`            | TypeScript `--noEmit` in every package                              |
+| `npm run lint`                 | ESLint across TypeScript sources                                    |
+| `npm run format`               | Apply Prettier formatting                                           |
+| `npm run format:check`         | Verify Prettier formatting without writing                          |
+| `npm run audit:packages`       | Verify npm tarball contents                                         |
+| `npm run test:package-install` | Smoke-test tarball installs                                         |
+| `npm run verify`               | Full pre-merge check (lint, typecheck, test, build, package audits) |
 
 ## Workspace layout
 
@@ -35,23 +35,23 @@ Package paths are unchanged from the original repository layout. Published impor
 
 ## Package groups
 
-| Profile | Packages | Module system |
-|---------|----------|---------------|
-| Node ESM (Node16) | `can`, `j1939`, `bridge`, `tools` | `import` / `type: module` |
-| Node ESM (bundler) | `core` | ESM with bundler resolution |
-| Node ESM (legacy) | `sim` | ESNext + node resolution |
-| Node ESM (NodeNext) | `sdk-js` | NodeNext |
-| Node CommonJS | `ethernet`, `supervisor`, `cli` | `require` |
-| Browser (Vite) | `dashboard` | React + `noEmit` typecheck |
-| Non-TypeScript | `sdk-c`, `sdk-python` | stub scripts only |
+| Profile             | Packages                          | Module system               |
+| ------------------- | --------------------------------- | --------------------------- |
+| Node ESM (Node16)   | `can`, `j1939`, `bridge`, `tools` | `import` / `type: module`   |
+| Node ESM (bundler)  | `core`                            | ESM with bundler resolution |
+| Node ESM (legacy)   | `sim`                             | ESNext + node resolution    |
+| Node ESM (NodeNext) | `sdk-js`                          | NodeNext                    |
+| Node CommonJS       | `ethernet`, `supervisor`, `cli`   | `require`                   |
+| Browser (Vite)      | `dashboard`                       | React + `noEmit` typecheck  |
+| Non-TypeScript      | `sdk-c`, `sdk-python`             | stub scripts only           |
 
 ## Future directories
 
-| Path | Phase | Purpose |
-|------|-------|---------|
-| `apps/site/` | 9 | Documentation website |
-| `apps/demo/` | 10 | Browser demo |
-| `labs/` | 5 | Classroom labs |
-| `docs/education/` | 5 | Instructor and student guides |
-| `docs/api/` | 4 | Generated API reference |
-| `.github/workflows/` | 7–8 | CI and release automation |
+| Path                 | Phase | Purpose                       |
+| -------------------- | ----- | ----------------------------- |
+| `apps/site/`         | 9     | Documentation website         |
+| `apps/demo/`         | 10    | Browser demo                  |
+| `labs/`              | 5     | Classroom labs                |
+| `docs/education/`    | 5     | Instructor and student guides |
+| `docs/api/`          | 4     | Generated API reference       |
+| `.github/workflows/` | 7–8   | CI and release automation     |

@@ -33,13 +33,13 @@ const bridge = new CanEthernetBridge({
   canBus,
   ethServer,
   pgnFilters: {
-    whitelist: [0xF004, 0xFECA],
-    blacklist: []
+    whitelist: [0xf004, 0xfeca],
+    blacklist: [],
   },
   rateLimits: {
-    0xF004: 10,  // 10 Hz for Engine Speed
-    default: 5   // 5 Hz for others
-  }
+    0xf004: 10, // 10 Hz for Engine Speed
+    default: 5, // 5 Hz for others
+  },
 });
 
 await bridge.start();
@@ -60,11 +60,11 @@ const bridge = new CanMqttBridge({
   mqtt,
   topicPrefix: 'fleet/truck1',
   pgnTopics: {
-    0xF004: 'engine/speed',
-    0xFECA: 'engine/controller'
+    0xf004: 'engine/speed',
+    0xfeca: 'engine/controller',
   },
   deviceName: 'Truck ECU 1',
-  payloadFormat: 'nanoproto'
+  payloadFormat: 'nanoproto',
 });
 
 await bridge.start();
@@ -81,21 +81,21 @@ const engine = new RuleEngine({
     {
       id: 1,
       priority: 100,
-      pgn: 0xF004,
+      pgn: 0xf004,
       action: 'forward',
       destinations: ['ethernet', 'mqtt'],
-      rateLimit: 10
+      rateLimit: 10,
     },
     {
       id: 2,
       priority: 80,
-      pgn: 0xFECA,
+      pgn: 0xfeca,
       spnFilter: [190, 191],
       action: 'forward',
       destinations: ['mqtt'],
-      rateLimit: 1
-    }
-  ]
+      rateLimit: 1,
+    },
+  ],
 });
 
 const decision = engine.route(canMessage);
@@ -105,24 +105,24 @@ const decision = engine.route(canMessage);
 
 ### CanEthernetConfig
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `canBus` | CANBus | CAN interface instance |
-| `ethServer` | UDPServer | UDP server instance |
-| `pgnFilters` | object | Whitelist/blacklist PGNs |
-| `rateLimits` | object | Rate limit per PGN (Hz) |
-| `statsInterval` | number | Statistics reporting interval (ms) |
+| Option          | Type      | Description                        |
+| --------------- | --------- | ---------------------------------- |
+| `canBus`        | CANBus    | CAN interface instance             |
+| `ethServer`     | UDPServer | UDP server instance                |
+| `pgnFilters`    | object    | Whitelist/blacklist PGNs           |
+| `rateLimits`    | object    | Rate limit per PGN (Hz)            |
+| `statsInterval` | number    | Statistics reporting interval (ms) |
 
 ### CanMqttConfig
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `canBus` | CANBus | CAN interface instance |
-| `mqtt` | MQTTClient | MQTT client instance |
-| `topicPrefix` | string | Base topic path |
-| `pgnTopics` | object | PGN to topic mapping |
-| `deviceName` | string | Device identifier |
-| `payloadFormat` | string | 'nanoproto' or 'json' |
+| Option          | Type       | Description            |
+| --------------- | ---------- | ---------------------- |
+| `canBus`        | CANBus     | CAN interface instance |
+| `mqtt`          | MQTTClient | MQTT client instance   |
+| `topicPrefix`   | string     | Base topic path        |
+| `pgnTopics`     | object     | PGN to topic mapping   |
+| `deviceName`    | string     | Device identifier      |
+| `payloadFormat` | string     | 'nanoproto' or 'json'  |
 
 ## License
 

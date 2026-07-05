@@ -12,10 +12,10 @@ console.log('======================================\n');
 // Test 1: Create J1939Client with virtual transport
 console.log('Test 1: J1939Client with virtual transport');
 const client = new J1939Client({
-    interface: 'vcan0',
-    sourceAddress: SA.DIAG_TOOL_1,
-    transport: 'virtual',
-    debug: true
+  interface: 'vcan0',
+  sourceAddress: SA.DIAG_TOOL_1,
+  transport: 'virtual',
+  debug: true,
 });
 console.log(`  ✓ Client created with SA=0x${SA.DIAG_TOOL_1.toString(16).toUpperCase()}\n`);
 
@@ -29,13 +29,15 @@ console.log('Test 3: PGN Subscription');
 let messageCount = 0;
 
 client.onPGN(PGN.EEC1, (msg) => {
-    messageCount++;
-    console.log(`  Received EEC1: PGN=0x${msg.pgn.toString(16)}, SA=0x${msg.sourceAddress.toString(16)}`);
-    if (msg.spns) {
-        for (const [name, value] of Object.entries(msg.spns)) {
-            console.log(`    ${name}: ${value}`);
-        }
+  messageCount++;
+  console.log(
+    `  Received EEC1: PGN=0x${msg.pgn.toString(16)}, SA=0x${msg.sourceAddress.toString(16)}`
+  );
+  if (msg.spns) {
+    for (const [name, value] of Object.entries(msg.spns)) {
+      console.log(`    ${name}: ${value}`);
     }
+  }
 });
 console.log('  ✓ Subscribed to EEC1 (PGN 0xF004)\n');
 
@@ -46,10 +48,14 @@ console.log('  ✓ Sent request for ET1 to Engine ECU\n');
 
 // Test 5: Send command
 console.log('Test 5: Send Engine Control Command');
-await client.sendPGN(PGN.ENGINE_CONTROL_CMD, {
+await client.sendPGN(
+  PGN.ENGINE_CONTROL_CMD,
+  {
     targetRpm: 1500,
-    enable: true
-}, SA.ENGINE);
+    enable: true,
+  },
+  SA.ENGINE
+);
 console.log('  ✓ Sent engine control command (1500 RPM, enable)\n');
 
 // Test 6: Get client status

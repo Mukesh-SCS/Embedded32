@@ -1,6 +1,6 @@
 /**
  * Runtime class - Core runtime orchestrator
- * 
+ *
  * Manages the lifecycle of all Embedded32 modules:
  * - Module registration and initialization
  * - Task scheduling
@@ -44,7 +44,7 @@ export class Runtime {
    */
   registerModule(module: Module): void {
     this.logger.info(`Registering module: ${module.name}`);
-    
+
     // Bind module context
     module.bind({
       logger: this.logger,
@@ -52,7 +52,7 @@ export class Runtime {
       scheduler: this.scheduler,
       config: {},
     });
-    
+
     this.registry.register(module);
   }
 
@@ -61,7 +61,7 @@ export class Runtime {
    */
   async start(): Promise<void> {
     this.logger.info('Starting Embedded32 Runtime...');
-    
+
     // Load configuration
     if (this.config.configPath) {
       const configLoader = new ConfigLoader();
@@ -86,7 +86,7 @@ export class Runtime {
    */
   async stop(): Promise<void> {
     this.logger.info('Stopping Embedded32 Runtime...');
-    
+
     this.scheduler.stop();
     await this.registry.stopAll();
     this.running = false;

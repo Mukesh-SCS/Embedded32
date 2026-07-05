@@ -8,24 +8,24 @@
  * - Timeout handling and cleanup
  */
 
-import { describe, it, expect, beforeEach } from "@jest/globals";
+import { describe, it, expect, beforeEach } from '@jest/globals';
 import {
   J1939TransportProtocol,
   parseBAM,
   parseCTS,
   parseRTS,
   parseEndOfMessage,
-} from "../src/index.js";
+} from '../src/index.js';
 
-describe("J1939 Transport Protocol", () => {
+describe('J1939 Transport Protocol', () => {
   let tp: J1939TransportProtocol;
 
   beforeEach(() => {
     tp = new J1939TransportProtocol();
   });
 
-  describe("BAM Session", () => {
-    it("should create BAM session correctly", () => {
+  describe('BAM Session', () => {
+    it('should create BAM session correctly', () => {
       const pgn = 0xfef1;
       const messageLength = 50;
       const numberOfPackets = 8;
@@ -38,7 +38,7 @@ describe("J1939 Transport Protocol", () => {
       expect(session.complete).toBe(false);
     });
 
-    it("should add packets to BAM session", () => {
+    it('should add packets to BAM session', () => {
       const pgn = 0xfef1;
       const session = tp.startBAM(pgn, 14, 2);
 
@@ -50,7 +50,7 @@ describe("J1939 Transport Protocol", () => {
       expect(updated1?.packets).toContainEqual(expect.arrayContaining(packet1));
     });
 
-    it("should mark BAM session complete when all packets received", () => {
+    it('should mark BAM session complete when all packets received', () => {
       const pgn = 0xfef1;
       const messageLength = 14;
       const session = tp.startBAM(pgn, messageLength, 2);
@@ -64,12 +64,12 @@ describe("J1939 Transport Protocol", () => {
       expect(session.assembledData).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
     });
 
-    it("should return null for unknown PGN", () => {
+    it('should return null for unknown PGN', () => {
       const result = tp.addBAMPacket(0xfeff, 1, [1, 2, 3]);
       expect(result).toBeNull();
     });
 
-    it("should truncate assembled data to message length", () => {
+    it('should truncate assembled data to message length', () => {
       const pgn = 0xfef1;
       const messageLength = 10;
       const session = tp.startBAM(pgn, messageLength, 2);
@@ -83,8 +83,8 @@ describe("J1939 Transport Protocol", () => {
     });
   });
 
-  describe("RTS/CTS Session", () => {
-    it("should create RTS session correctly", () => {
+  describe('RTS/CTS Session', () => {
+    it('should create RTS session correctly', () => {
       const pgn = 0xfef2;
       const dest = 0x03;
 
@@ -94,11 +94,11 @@ describe("J1939 Transport Protocol", () => {
       expect(session.messageLength).toBe(100);
       expect(session.numberOfPackets).toBe(15);
       expect(session.destinationAddress).toBe(dest);
-      expect(session.state).toBe("waiting_cts");
+      expect(session.state).toBe('waiting_cts');
       expect(session.complete).toBe(false);
     });
 
-    it("should process CTS response", () => {
+    it('should process CTS response', () => {
       const pgn = 0xfef2;
       const dest = 0x03;
       const session = tp.startRTS(pgn, 100, 15, dest);
@@ -112,12 +112,12 @@ describe("J1939 Transport Protocol", () => {
 
       const updated = tp.processCTS(pgn, dest, ctsMessage);
 
-      expect(updated?.state).toBe("transferring");
+      expect(updated?.state).toBe('transferring');
       expect(updated?.nextPacketToSend).toBe(1);
       expect(updated?.packetsToSendInThisBlock).toBe(5);
     });
 
-    it("should add packets to RTS session", () => {
+    it('should add packets to RTS session', () => {
       const pgn = 0xfef2;
       const dest = 0x03;
       const session = tp.startRTS(pgn, 14, 2, dest);
@@ -129,14 +129,14 @@ describe("J1939 Transport Protocol", () => {
       expect(session.assembledData).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
     });
 
-    it("should return null for unknown RTS session", () => {
+    it('should return null for unknown RTS session', () => {
       const result = tp.addRTSPacket(0xfeff, 0x01, 1, [1, 2, 3]);
       expect(result).toBeNull();
     });
   });
 
-  describe("Message Parsing", () => {
-    it("should parse BAM message", () => {
+  describe('Message Parsing', () => {
+    it('should parse BAM message', () => {
       const data = [50, 0, 8, 0, 0xf1, 0xfe, 0x00, 0xff];
       const bam = parseBAM(data);
 
@@ -145,7 +145,7 @@ describe("J1939 Transport Protocol", () => {
       expect(bam.pgn).toBe(0x00fef1);
     });
 
-    it("should parse CTS message", () => {
+    it('should parse CTS message', () => {
       const data = [5, 0x0f, 0x00, 0x00, 0xf2, 0xfe, 0x00, 0xff];
       const cts = parseCTS(data);
 
@@ -154,7 +154,7 @@ describe("J1939 Transport Protocol", () => {
       expect(cts.pgn).toBe(0x00fef2);
     });
 
-    it("should parse RTS message", () => {
+    it('should parse RTS message', () => {
       const data = [100, 0, 15, 0, 0xf3, 0xfe, 0x00, 0xff];
       const rts = parseRTS(data, 0x03);
 
@@ -164,7 +164,7 @@ describe("J1939 Transport Protocol", () => {
       expect(rts.pgn).toBe(0x00fef3);
     });
 
-    it("should parse End Of Message", () => {
+    it('should parse End Of Message', () => {
       const data = [100, 0, 15, 0, 0xf4, 0xfe, 0x00, 0xff];
       const eom = parseEndOfMessage(data, 0x03);
 
@@ -175,8 +175,8 @@ describe("J1939 Transport Protocol", () => {
     });
   });
 
-  describe("Session Management", () => {
-    it("should return correct session status", () => {
+  describe('Session Management', () => {
+    it('should return correct session status', () => {
       tp.startBAM(0xfef1, 50, 8);
       tp.startRTS(0xfef2, 100, 15, 0x03);
 
@@ -188,7 +188,7 @@ describe("J1939 Transport Protocol", () => {
       expect(status.completeRtsMessages).toBe(0);
     });
 
-    it("should clean up timed-out sessions", () => {
+    it('should clean up timed-out sessions', () => {
       const pgn1 = 0xfef1;
       const pgn2 = 0xfef2;
 
@@ -207,7 +207,7 @@ describe("J1939 Transport Protocol", () => {
       expect(status.activeRtsSessions).toBe(0);
     });
 
-    it("should not remove recent sessions during cleanup", () => {
+    it('should not remove recent sessions during cleanup', () => {
       tp.startBAM(0xfef1, 50, 8);
       tp.startRTS(0xfef2, 100, 15, 0x03);
 
@@ -220,8 +220,8 @@ describe("J1939 Transport Protocol", () => {
     });
   });
 
-  describe("Edge Cases", () => {
-    it("should handle single-packet messages", () => {
+  describe('Edge Cases', () => {
+    it('should handle single-packet messages', () => {
       const pgn = 0xfef1;
       const messageLength = 7;
       const session = tp.startBAM(pgn, messageLength, 1);
@@ -232,7 +232,7 @@ describe("J1939 Transport Protocol", () => {
       expect(session.assembledData.length).toBe(7);
     });
 
-    it("should handle maximum packet count", () => {
+    it('should handle maximum packet count', () => {
       const pgn = 0xfef1;
       const maxPackets = 255;
       const session = tp.startBAM(pgn, maxPackets * 7, maxPackets);
@@ -240,7 +240,7 @@ describe("J1939 Transport Protocol", () => {
       expect(session.numberOfPackets).toBe(maxPackets);
     });
 
-    it("should handle zero-length payloads", () => {
+    it('should handle zero-length payloads', () => {
       const pgn = 0xfef1;
       const session = tp.startBAM(pgn, 0, 0);
 

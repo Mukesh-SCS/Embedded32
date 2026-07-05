@@ -43,13 +43,13 @@ You should see:
 
 ## What's Running
 
-| Component | Description |
-|-----------|-------------|
-| Virtual CAN Bus | In-memory CAN bus simulation |
-| Engine ECU (SA=0x00) | Broadcasts engine speed every 100ms |
-| Transmission ECU (SA=0x03) | Broadcasts gear state every 100ms |
-| Brake ECU (SA=0x0B) | Broadcasts brake pressure |
-| Web Dashboard | http://localhost:5173 |
+| Component                  | Description                         |
+| -------------------------- | ----------------------------------- |
+| Virtual CAN Bus            | In-memory CAN bus simulation        |
+| Engine ECU (SA=0x00)       | Broadcasts engine speed every 100ms |
+| Transmission ECU (SA=0x03) | Broadcasts gear state every 100ms   |
+| Brake ECU (SA=0x0B)        | Broadcasts brake pressure           |
+| Web Dashboard              | http://localhost:5173               |
 
 ## Using Real Virtual CAN
 
@@ -97,7 +97,7 @@ import { J1939Client, PGN, SA } from '@embedded32/sdk-js';
 
 const client = new J1939Client({
   interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_2
+  sourceAddress: SA.DIAG_TOOL_2,
 });
 
 await client.connect();

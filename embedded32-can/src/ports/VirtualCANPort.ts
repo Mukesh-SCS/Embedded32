@@ -1,17 +1,17 @@
 /**
  * Virtual CAN Port Implementation
- * 
+ *
  * Provides a software CAN bus for testing without hardware.
  * On Linux/WSL, can interface with vcan kernel module.
  */
 
-import { ICANPort, CANFilter } from "../interfaces/CANPort.js";
-import { CANFrame } from "../CANTypes.js";
-import { EventEmitter } from "events";
+import { ICANPort, CANFilter } from '../interfaces/CANPort.js';
+import { CANFrame } from '../CANTypes.js';
+import { EventEmitter } from 'events';
 
 /**
  * Virtual CAN Port
- * 
+ *
  * Features:
  * - In-memory message routing
  * - Optional connection to Linux vcan
@@ -22,11 +22,11 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
   private connected: boolean = false;
   private filters: CANFilter[] = [];
   private frameCallbacks: ((frame: CANFrame) => void)[] = [];
-  
+
   // Shared bus for all VirtualCANPort instances on same interface
   private static buses: Map<string, VirtualCANPort[]> = new Map();
 
-  constructor(interfaceName: string = "vcan0") {
+  constructor(interfaceName: string = 'vcan0') {
     super();
     this.interfaceName = interfaceName;
     this.connect();
@@ -41,7 +41,7 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
     }
     bus.push(this);
     this.connected = true;
-    this.emit("connected");
+    this.emit('connected');
   }
 
   async send(frame: CANFrame): Promise<void> {
@@ -52,7 +52,7 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
     // Add timestamp if not present
     const framedFrame: CANFrame = {
       ...frame,
-      timestamp: frame.timestamp ?? Date.now()
+      timestamp: frame.timestamp ?? Date.now(),
     };
 
     // Broadcast to all ports on this bus (including self for loopback)
@@ -65,7 +65,7 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
   private receiveFrame(frame: CANFrame): void {
     // Apply filters
     if (this.filters.length > 0) {
-      const matches = this.filters.some(f => this.matchesFilter(frame, f));
+      const matches = this.filters.some((f) => this.matchesFilter(frame, f));
       if (!matches) return;
     }
 
@@ -74,11 +74,11 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
       try {
         cb(frame);
       } catch (err) {
-        this.emit("error", err);
+        this.emit('error', err);
       }
     }
 
-    this.emit("frame", frame);
+    this.emit('frame', frame);
   }
 
   private matchesFilter(frame: CANFrame, filter: CANFilter): boolean {
@@ -122,7 +122,7 @@ export class VirtualCANPort extends EventEmitter implements ICANPort {
 
     this.connected = false;
     this.frameCallbacks = [];
-    this.emit("disconnected");
+    this.emit('disconnected');
   }
 
   /**

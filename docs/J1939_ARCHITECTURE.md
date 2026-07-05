@@ -59,14 +59,14 @@ A 29-bit J1939 CAN identifier contains:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-| Field | Bits | Description |
-|-------|------|-------------|
-| Priority | 26-28 | Message priority (0=highest, 7=lowest) |
-| Reserved | 25 | Reserved, always 0 |
-| DP | 24 | Data Page selector |
-| PF | 16-23 | PDU Format |
-| PS | 8-15 | PDU Specific (destination or group extension) |
-| SA | 0-7 | Source Address |
+| Field    | Bits  | Description                                   |
+| -------- | ----- | --------------------------------------------- |
+| Priority | 26-28 | Message priority (0=highest, 7=lowest)        |
+| Reserved | 25    | Reserved, always 0                            |
+| DP       | 24    | Data Page selector                            |
+| PF       | 16-23 | PDU Format                                    |
+| PS       | 8-15  | PDU Specific (destination or group extension) |
+| SA       | 0-7   | Source Address                                |
 
 ### PDU Types
 
@@ -120,11 +120,11 @@ Used for peer-to-peer multi-packet messages.
 
 PGN 0xFECA broadcasts active faults:
 
-| Byte | Content |
-|------|---------|
-| 0 | Lamp status (MIL, warning lamps) |
-| 1-4 | SPN (19 bits) + FMI (5 bits) + OC (7 bits) |
-| 5-7 | Additional DTCs or padding |
+| Byte | Content                                    |
+| ---- | ------------------------------------------ |
+| 0    | Lamp status (MIL, warning lamps)           |
+| 1-4  | SPN (19 bits) + FMI (5 bits) + OC (7 bits) |
+| 5-7  | Additional DTCs or padding                 |
 
 ### DM2 - Previously Active DTCs
 
@@ -132,21 +132,21 @@ Same format as DM1, but for historical faults.
 
 ### Lamp Status Bits
 
-| Bit | Lamp |
-|-----|------|
-| 0-1 | Protect lamp |
-| 2-3 | Amber warning |
-| 4-5 | Red stop lamp |
+| Bit | Lamp                        |
+| --- | --------------------------- |
+| 0-1 | Protect lamp                |
+| 2-3 | Amber warning               |
+| 4-5 | Red stop lamp               |
 | 6-7 | Malfunction indicator (MIL) |
 
 ## Common PGNs Reference
 
-| PGN | Hex | Name | Rate |
-|-----|-----|------|------|
-| 61444 | 0xF004 | EEC1 - Engine Controller 1 | 100ms |
-| 61443 | 0xF003 | ETC1 - Transmission Controller 1 | 100ms |
-| 65262 | 0xFEEE | ET1 - Engine Temperature 1 | 1000ms |
-| 65226 | 0xFECA | DM1 - Active Fault Codes | On change |
-| 59904 | 0xEA00 | Request PGN | On demand |
-| 60416 | 0xEC00 | TP.CM - Connection Management | As needed |
-| 60160 | 0xEB00 | TP.DT - Data Transfer | As needed |
+| PGN   | Hex    | Name                             | Rate      |
+| ----- | ------ | -------------------------------- | --------- |
+| 61444 | 0xF004 | EEC1 - Engine Controller 1       | 100ms     |
+| 61443 | 0xF003 | ETC1 - Transmission Controller 1 | 100ms     |
+| 65262 | 0xFEEE | ET1 - Engine Temperature 1       | 1000ms    |
+| 65226 | 0xFECA | DM1 - Active Fault Codes         | On change |
+| 59904 | 0xEA00 | Request PGN                      | On demand |
+| 60416 | 0xEC00 | TP.CM - Connection Management    | As needed |
+| 60160 | 0xEB00 | TP.DT - Data Transfer            | As needed |

@@ -38,7 +38,7 @@ export class UDPServer {
       this.socket.on('message', (buffer, remoteInfo) => {
         try {
           const msg = J1939NanoProto.decode(buffer);
-          this.listeners.forEach(listener => listener(msg, remoteInfo));
+          this.listeners.forEach((listener) => listener(msg, remoteInfo));
         } catch (error) {
           console.error('Error decoding UDP message:', error);
         }
@@ -50,7 +50,9 @@ export class UDPServer {
         if (this.options.broadcast) {
           this.socket.setBroadcast(true);
         }
-        console.log(`UDP Server listening on ${this.options.address || '0.0.0.0'}:${this.options.port}`);
+        console.log(
+          `UDP Server listening on ${this.options.address || '0.0.0.0'}:${this.options.port}`
+        );
         resolve();
       });
     });

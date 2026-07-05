@@ -47,27 +47,18 @@ export class CanEthernetBridge {
    */
   addRule(rule: BridgeRule): void {
     this.rules.push(rule);
-    console.log(
-      `Added bridge rule: ${rule.direction} (${rule.pgn ? `PGN ${rule.pgn}` : 'all'})`
-    );
+    console.log(`Added bridge rule: ${rule.direction} (${rule.pgn ? `PGN ${rule.pgn}` : 'all'})`);
   }
 
   /**
    * Check if message matches rule
    */
-  private matchesRule(
-    rule: BridgeRule,
-    pgn: number,
-    spn?: number,
-    value?: number
-  ): boolean {
+  private matchesRule(rule: BridgeRule, pgn: number, spn?: number, value?: number): boolean {
     if (!rule.enabled) return false;
     if (rule.pgn && rule.pgn !== pgn) return false;
     if (rule.spn && rule.spn !== spn) return false;
-    if (rule.minValue !== undefined && value !== undefined && value < rule.minValue)
-      return false;
-    if (rule.maxValue !== undefined && value !== undefined && value > rule.maxValue)
-      return false;
+    if (rule.minValue !== undefined && value !== undefined && value < rule.minValue) return false;
+    if (rule.maxValue !== undefined && value !== undefined && value > rule.maxValue) return false;
     return true;
   }
 
@@ -107,10 +98,7 @@ export class CanEthernetBridge {
         let transformedData = j1939Msg.raw;
 
         for (const rule of this.rules) {
-          if (
-            rule.direction !== 'eth-to-can' &&
-            this.matchesRule(rule, j1939Msg.pgn)
-          ) {
+          if (rule.direction !== 'eth-to-can' && this.matchesRule(rule, j1939Msg.pgn)) {
             if (this.checkRateLimit(rule, j1939Msg.pgn)) {
               shouldForward = true;
 

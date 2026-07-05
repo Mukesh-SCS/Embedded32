@@ -4,7 +4,6 @@
   "private": true,
   "description": "Embedded32 Platform - Monorepo workspace",
   "type": "module",
-
   "workspaces": [
     "embedded32-core",
     "embedded32-can",
@@ -20,7 +19,6 @@
     "embedded32-sdk-c",
     "embedded32-sdk-python"
   ],
-
   "scripts": {
     "build": "lerna run build",
     "test": "lerna run test",
@@ -35,7 +33,6 @@
     "test:package-install": "node scripts/smoke-install-packages.mjs",
     "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install"
   },
-
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@vitejs/plugin-react": "^4.7.0",
@@ -48,15 +45,12 @@
     "typescript-eslint": "^8.0.0",
     "vite": "^4.0.0"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/Mukesh-SCS/Embedded32.git"
   },
-
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
-
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"

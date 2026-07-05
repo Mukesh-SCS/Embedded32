@@ -9,11 +9,13 @@ All requested features have been successfully implemented to transform the Embed
 ## 1️⃣ **WebSocket Command System** ✅
 
 ### Frontend (Dashboard)
+
 - **File**: `src/services/ws.ts`
 - Added `sendCommand()` function for bidirectional WebSocket communication
 - All commands are sent as JSON with proper error handling
 
 ### Backend (Bridge Server)
+
 - **File**: `embedded32-tools/src/commands/DashboardBridgeCommand.ts`
 - Handles incoming commands from dashboard
 - Maintains engine state (running, RPM, faults)
@@ -23,6 +25,7 @@ All requested features have been successfully implemented to transform the Embed
   - DM1 fault injection/clearing
 
 ### Example Commands:
+
 ```typescript
 // Engine control
 { type: "command", target: "engine", action: "start" }
@@ -43,6 +46,7 @@ All requested features have been successfully implemented to transform the Embed
 ### File: `src/components/ECUSimulatorControls.tsx`
 
 **Functionality:**
+
 - ✅ Start/Stop Engine buttons send WebSocket commands
 - ✅ RPM adjustment (+100/-100) with real-time updates
 - ✅ DM1 fault injection/clearing with proper feedback
@@ -50,6 +54,7 @@ All requested features have been successfully implemented to transform the Embed
 - ✅ Active indicator replacing "TODO" warning
 
 **Visual Improvements:**
+
 - Color-coded buttons (green=start, red=stop, orange=fault)
 - Disabled state handling
 - Live status display
@@ -61,6 +66,7 @@ All requested features have been successfully implemented to transform the Embed
 ### File: `src/components/DM1Viewer.tsx`
 
 **Features:**
+
 - ✅ Displays real DM1 faults from WebSocket
 - ✅ Shows: SPN, FMI, Severity, Description, Count, Occurrence
 - ✅ Color-coded severity badges:
@@ -71,6 +77,7 @@ All requested features have been successfully implemented to transform the Embed
 - ✅ Proper fault state management
 
 ### State Management:
+
 - New `dm1Faults` array in dashboard state
 - Separate from J1939 messages for better organization
 - Updates in real-time from WebSocket
@@ -82,6 +89,7 @@ All requested features have been successfully implemented to transform the Embed
 ### File: `src/components/PGNDetailsPanel.tsx`
 
 **Features:**
+
 - ✅ Click any PGN row to open details drawer
 - ✅ Fixed right-side panel with smooth appearance
 - ✅ Displays:
@@ -97,6 +105,7 @@ All requested features have been successfully implemented to transform the Embed
 - ✅ Close button to dismiss
 
 **PGN Database Included:**
+
 - EEC1 (0xF004) - Electronic Engine Controller 1
 - EEC2 (0xF003) - Electronic Engine Controller 2
 - Engine Temperature (0xFEEE)
@@ -108,11 +117,13 @@ All requested features have been successfully implemented to transform the Embed
 
 ## 5️⃣ **Color Badges for SPN Severity** ✅
 
-### Files: 
+### Files:
+
 - `src/components/DM1Viewer.tsx`
 - `src/styles/global.css`
 
 **Implementation:**
+
 - CSS classes: `.severity-0`, `.severity-1`, `.severity-3`
 - Inline styles with proper color contrast
 - Used in DM1 Viewer and details panel
@@ -125,6 +136,7 @@ All requested features have been successfully implemented to transform the Embed
 ### File: `src/components/BusLoadIndicator.tsx`
 
 **Features:**
+
 - ✅ Receives real stats from WebSocket bridge
 - ✅ Displays:
   - **Frames/sec** with large, bold font
@@ -137,6 +149,7 @@ All requested features have been successfully implemented to transform the Embed
 - ✅ Shows "PAUSED" indicator when updates are paused
 
 ### Bridge Implementation:
+
 - Sends `{ type: "stats", fps: 450, load: 12.5 }` every second
 - Calculates based on 250kbps CAN bus
 - Formula: `busLoad = (bitsPerSecond / 250000) * 100`
@@ -148,6 +161,7 @@ All requested features have been successfully implemented to transform the Embed
 ### File: `src/components/PGNTable.tsx`
 
 **Features:**
+
 - ✅ Search box in table header
 - ✅ Searches across:
   - PGN numbers
@@ -160,6 +174,7 @@ All requested features have been successfully implemented to transform the Embed
 - ✅ Case-insensitive search
 
 **Visual:**
+
 - Highlighted matches use `<mark>` tags with yellow background
 - Search persists in state for consistent highlighting
 
@@ -168,11 +183,13 @@ All requested features have been successfully implemented to transform the Embed
 ## 8️⃣ **Auto-Pause/Resume** ✅
 
 ### Files:
+
 - `src/components/PGNTable.tsx` (Pause button)
 - `src/components/BusLoadIndicator.tsx` (Pause indicator)
 - `src/hooks/useDashboardState.tsx` (State management)
 
 **Features:**
+
 - ✅ Pause/Resume button in PGN table header
 - ✅ Visual indicator: Orange "⏸ PAUSED" badge
 - ✅ When paused:
@@ -192,6 +209,7 @@ Freeze the table to inspect specific messages without losing incoming data.
 ### File: `src/components/LogRecorder.tsx`
 
 **Features:**
+
 - ✅ **Start/Stop Recording** button with pulse animation
 - ✅ **Download JSON** - Full log with metadata
   - Includes: messages, CAN frames, DM1 faults
@@ -206,6 +224,7 @@ Freeze the table to inspect specific messages without losing incoming data.
 **File Formats:**
 
 **JSON:**
+
 ```json
 {
   "metadata": {
@@ -221,6 +240,7 @@ Freeze the table to inspect specific messages without losing incoming data.
 ```
 
 **CSV:**
+
 ```csv
 Timestamp,Type,PGN,SA,Priority,Name,SPN Values
 2025-12-10T12:34:56.789Z,j1939,0xF004,0x00,3,EEC1,"{""engineSpeed"":1580,""coolantTemp"":82}"
@@ -231,6 +251,7 @@ Timestamp,Type,PGN,SA,Priority,Name,SPN Values
 ## UI/UX Enhancements
 
 ### Visual Improvements:
+
 1. **Search highlighting** - Yellow `<mark>` tags
 2. **Severity badges** - Color-coded FMI indicators
 3. **Hover effects** - Table rows highlight on hover
@@ -240,6 +261,7 @@ Timestamp,Type,PGN,SA,Priority,Name,SPN Values
 7. **Responsive layout** - Adapts to content
 
 ### CSS Additions (`global.css`):
+
 ```css
 .severity { ... }
 .severity-0 { background: #f44336; }
@@ -256,6 +278,7 @@ mark { background: #ffeb3b; }
 ## State Management Updates
 
 ### New State Properties:
+
 ```typescript
 export type DashboardState = {
   // Existing
@@ -263,17 +286,18 @@ export type DashboardState = {
   messages: J1939Message[];
   canFrames: CANFrame[];
   filters: Filters;
-  
+
   // NEW
-  busStats: BusStats;           // FPS & bus load
-  dm1Faults: DM1Fault[];        // Separate DM1 array
-  isPaused: boolean;            // Pause state
-  selectedPGN: J1939Message | null;  // Details panel
-  searchQuery: string;          // Search term
+  busStats: BusStats; // FPS & bus load
+  dm1Faults: DM1Fault[]; // Separate DM1 array
+  isPaused: boolean; // Pause state
+  selectedPGN: J1939Message | null; // Details panel
+  searchQuery: string; // Search term
 };
 ```
 
 ### New Actions:
+
 - `UPDATE_BUS_STATS` - Bus statistics from WebSocket
 - `SET_DM1_FAULTS` - DM1 fault updates
 - `TOGGLE_PAUSE` - Pause/resume data flow
@@ -286,6 +310,7 @@ export type DashboardState = {
 ## Bridge Server Enhancements
 
 ### Command Handling:
+
 ```typescript
 // Engine state tracking
 let engineRunning = false;
@@ -296,21 +321,22 @@ let frameCount = 0;
 // WebSocket message handler
 ws.on('message', (data) => {
   const command = JSON.parse(data.toString());
-  
+
   // Process commands and update simulator
   // Send responses back to dashboard
 });
 ```
 
 ### Outbound Messages:
+
 1. **J1939 Messages** (10 Hz)
    - Engine speed reflects commanded RPM
    - Coolant temp varies realistically
-   
+
 2. **Bus Statistics** (1 Hz)
    - FPS calculation
    - Bus load percentage
-   
+
 3. **DM1 Faults** (on change)
    - Injected faults
    - Cleared faults
@@ -320,6 +346,7 @@ ws.on('message', (data) => {
 ## Testing Checklist
 
 ### ✅ All Features Implemented:
+
 - [x] WebSocket command sending
 - [x] Engine controls (start/stop/RPM)
 - [x] DM1 fault injection/clearing
@@ -332,6 +359,7 @@ ws.on('message', (data) => {
 - [x] Log recording (JSON & CSV)
 
 ### How to Test:
+
 1. **Start Bridge**: `node embedded32-tools/dist/cli.js dashboard bridge --port 9000 --iface vcan0`
 2. **Start Dashboard**: `cd embedded32-dashboard && npm run dev`
 3. **Open Browser**: http://localhost:5173
@@ -368,10 +396,12 @@ While all requested features are complete, consider:
 ## Files Modified/Created
 
 ### Created:
+
 - `src/components/PGNDetailsPanel.tsx` ✨
 - `src/components/LogRecorder.tsx` ✨
 
 ### Modified:
+
 - `src/services/ws.ts` - Added sendCommand()
 - `src/hooks/useDashboardState.tsx` - Extended state & actions
 - `src/components/ECUSimulatorControls.tsx` - Integrated commands
@@ -396,9 +426,10 @@ While all requested features are complete, consider:
 
 ## Summary
 
-**The Embedded32 Dashboard is now a production-grade J1939 diagnostic tool** comparable to commercial solutions like Vector CANalyzer. 
+**The Embedded32 Dashboard is now a production-grade J1939 diagnostic tool** comparable to commercial solutions like Vector CANalyzer.
 
 All requested features have been implemented with professional quality:
+
 - ✅ Bidirectional WebSocket communication
 - ✅ Real-time control of ECU simulators
 - ✅ Professional DM1 fault display
@@ -408,6 +439,7 @@ All requested features have been implemented with professional quality:
 - ✅ Visual polish and UX refinements
 
 The dashboard is ready for:
+
 - Development and testing
 - System integration
 - Field diagnostics

@@ -1,5 +1,5 @@
-import { BaseModule } from "./Module.js";
-import { CANInterface, SocketCANDriver, CANFrame } from "@embedded32/can";
+import { BaseModule } from './Module.js';
+import { CANInterface, SocketCANDriver, CANFrame } from '@embedded32/can';
 
 interface J1939TxPayload {
   pgn: number;
@@ -43,10 +43,10 @@ export class J1939GatewayModule extends BaseModule {
   private can: CANInterface | null = null;
 
   constructor(
-    name = "j1939-gateway",
-    private iface: string = "can0"
+    name = 'j1939-gateway',
+    private iface: string = 'can0'
   ) {
-    super(name, "1.0.0");
+    super(name, '1.0.0');
   }
 
   onInit() {
@@ -58,16 +58,16 @@ export class J1939GatewayModule extends BaseModule {
 
   onStart() {
     if (!this.can) {
-      throw new Error("CAN interface not initialized");
+      throw new Error('CAN interface not initialized');
     }
 
-    this.log("J1939 Gateway started");
+    this.log('J1939 Gateway started');
 
     // J1939 -> CAN
-    this.bus.subscribe("j1939.tx", (msg: any) => {
+    this.bus.subscribe('j1939.tx', (msg: any) => {
       const payload: J1939TxPayload = msg.payload;
-      if (!payload || typeof payload.pgn !== "number" || !Array.isArray(payload.data)) {
-        this.log("Invalid j1939.tx payload");
+      if (!payload || typeof payload.pgn !== 'number' || !Array.isArray(payload.data)) {
+        this.log('Invalid j1939.tx payload');
         return;
       }
 
@@ -75,7 +75,7 @@ export class J1939GatewayModule extends BaseModule {
       const frame: CANFrame = {
         id: canId,
         data: payload.data,
-        extended: true
+        extended: true,
       };
 
       this.log(`TX J1939 PGN ${payload.pgn.toString(16)} -> CAN ID 0x${canId.toString(16)}`);
@@ -84,16 +84,16 @@ export class J1939GatewayModule extends BaseModule {
 
     // CAN -> J1939 (very simplified – no full decode yet)
     this.can.onMessage((frame: CANFrame) => {
-      this.bus.publish("j1939.rx", {
+      this.bus.publish('j1939.rx', {
         canId: frame.id,
         data: frame.data,
-        timestamp: frame.timestamp ?? Date.now()
+        timestamp: frame.timestamp ?? Date.now(),
       });
     });
   }
 
   onStop() {
-    this.log("J1939 Gateway stopped");
+    this.log('J1939 Gateway stopped');
     if (this.can) {
       this.can.close();
       this.can = null;

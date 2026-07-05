@@ -60,6 +60,7 @@ Fixes #123
 **Types:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 **Examples:**
+
 ```
 feat(j1939): add DM2 diagnostic support
 fix(can): resolve SocketCAN buffer overflow

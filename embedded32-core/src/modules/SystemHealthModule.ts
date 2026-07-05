@@ -1,5 +1,5 @@
-import * as os from "os";
-import { BaseModule } from "./Module.js";
+import * as os from 'os';
+import { BaseModule } from './Module.js';
 
 interface HeartbeatInfo {
   lastSeen: number;
@@ -11,35 +11,31 @@ export class SystemHealthModule extends BaseModule {
   private heartbeats = new Map<string, HeartbeatInfo>();
 
   constructor(
-    name = "system-health",
+    name = 'system-health',
     private heartbeatTimeoutMs = 5000,
     private healthSampleMs = 1000
   ) {
-    super(name, "1.0.0");
+    super(name, '1.0.0');
   }
 
   onInit() {
-    this.log("System Health Monitor initialized");
+    this.log('System Health Monitor initialized');
   }
 
   onStart() {
-    this.log("System Health Monitor started");
+    this.log('System Health Monitor started');
 
     // Listen to heartbeats from other modules
-    this.bus.subscribe("system.heartbeat", (msg: any) => {
-      const moduleName = msg.payload?.module || "unknown";
+    this.bus.subscribe('system.heartbeat', (msg: any) => {
+      const moduleName = msg.payload?.module || 'unknown';
       this.heartbeats.set(moduleName, { lastSeen: Date.now() });
     });
 
     // Periodic health sampling
-    this.healthInterval = this.scheduler.every(this.healthSampleMs, () =>
-      this.sampleHealth()
-    );
+    this.healthInterval = this.scheduler.every(this.healthSampleMs, () => this.sampleHealth());
 
     // Periodic heartbeat supervision
-    this.heartbeatCheckInterval = this.scheduler.every(1000, () =>
-      this.checkHeartbeats()
-    );
+    this.heartbeatCheckInterval = this.scheduler.every(1000, () => this.checkHeartbeats());
   }
 
   private sampleHealth() {
@@ -54,7 +50,7 @@ export class SystemHealthModule extends BaseModule {
       timestamp: Date.now(),
     };
 
-    this.bus.publish("system.health", payload);
+    this.bus.publish('system.health', payload);
 
     // Simple thresholds – adjust as needed
     if (load > 2.0) {
@@ -77,7 +73,7 @@ export class SystemHealthModule extends BaseModule {
   }
 
   onStop() {
-    this.log("System Health Monitor stopped");
+    this.log('System Health Monitor stopped');
 
     if (this.healthInterval) {
       this.scheduler.clear(this.healthInterval);

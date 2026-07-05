@@ -1,4 +1,4 @@
-import { Module, ModuleContext } from "../types.js";
+import { Module, ModuleContext } from '../types.js';
 
 export abstract class BaseModule implements Module {
   name: string;
@@ -9,7 +9,7 @@ export abstract class BaseModule implements Module {
   protected scheduler: any;
   protected config: any;
 
-  constructor(name: string, version = "1.0.0") {
+  constructor(name: string, version = '1.0.0') {
     this.name = name;
     this.version = version;
   }

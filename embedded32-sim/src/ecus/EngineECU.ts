@@ -1,36 +1,36 @@
 /**
  * Engine ECU Simulator
- * 
+ *
  * Broadcasts:
  * - PGN 61444 (0xF004) - Electronic Engine Controller 1 (EEC1)
  * - PGN 65262 (0xFEEE) - Engine Temperature 1 (ET1)
- * 
+ *
  * Responds to:
  * - PGN Request (59904) for engine data
- * 
+ *
  * Accepts commands:
  * - PGN 61184 (0xEF00) - Engine Control Command (Proprietary B)
  *   Bytes 0-1: Target RPM, Byte 2: Enable (0=ignore, 1=apply)
  */
 
-import { IECUSimulator, ECUConfig, SimState } from "../interfaces/SimPort.js";
-import { IJ1939Port, PGN, J1939Message } from "@embedded32/j1939";
-import { EventEmitter } from "events";
+import { IECUSimulator, ECUConfig, SimState } from '../interfaces/SimPort.js';
+import { IJ1939Port, PGN, J1939Message } from '@embedded32/j1939';
+import { EventEmitter } from 'events';
 
 // Engine Control Command PGN (Proprietary B)
-const PGN_ENGINE_CONTROL_CMD = 0xEF00;
+const PGN_ENGINE_CONTROL_CMD = 0xef00;
 
 /**
  * Engine state data
  */
 export interface EngineECUState {
   running: boolean;
-  rpm: number;           // 0-8000 RPM
-  load: number;          // 0-100%
-  coolantTemp: number;   // -40 to 210°C
-  fuelRate: number;      // 0-3200 L/h
-  throttle: number;      // 0-100%
-  torque: number;        // 0-100%
+  rpm: number; // 0-8000 RPM
+  load: number; // 0-100%
+  coolantTemp: number; // -40 to 210°C
+  fuelRate: number; // 0-3200 L/h
+  throttle: number; // 0-100%
+  torque: number; // 0-100%
 }
 
 /**
@@ -41,7 +41,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
   private state: SimState = SimState.STOPPED;
   private j1939Port: IJ1939Port | null = null;
   private lastBroadcastMs: number = 0;
-  
+
   private ecuState: EngineECUState = {
     running: true,
     rpm: 800,
@@ -49,7 +49,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
     coolantTemp: 85,
     fuelRate: 12,
     throttle: 20,
-    torque: 30
+    torque: 30,
   };
 
   // Simulation parameters
@@ -60,7 +60,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
     super();
     this.config = {
       ...config,
-      rateMs: config.rateMs || 100
+      rateMs: config.rateMs || 100,
     };
   }
 
@@ -72,12 +72,12 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
     this.j1939Port.setSourceAddress(this.config.address);
 
     // Listen for requests
-    this.j1939Port.on("request", (pgn: number, requesterSA: number) => {
+    this.j1939Port.on('request', (pgn: number, requesterSA: number) => {
       this.handleRequest(pgn, requesterSA);
     });
 
     // Listen for Engine Control Commands
-    this.j1939Port.on("message", (msg: J1939Message) => {
+    this.j1939Port.on('message', (msg: J1939Message) => {
       this.handleMessage(msg);
     });
   }
@@ -94,7 +94,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
 
   /**
    * Handle Engine Control Command (PGN 0xEF00)
-   * 
+   *
    * Payload:
    * - Bytes 0-1: Target RPM (uint16, rpm)
    * - Byte 2: Enable flag (0 = ignore, 1 = apply)
@@ -102,7 +102,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
    */
   private handleEngineControlCommand(msg: J1939Message): void {
     if (msg.data.length < 3) {
-      this.emit("warning", "Engine Control Command: insufficient data");
+      this.emit('warning', 'Engine Control Command: insufficient data');
       return;
     }
 
@@ -114,18 +114,20 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
       if (targetRpm >= 0 && targetRpm <= 8000) {
         const oldTarget = this.targetRpm;
         this.targetRpm = targetRpm;
-        
-        this.emit("command-received", {
+
+        this.emit('command-received', {
           pgn: PGN_ENGINE_CONTROL_CMD,
           from: msg.sa,
           targetRpm,
-          oldTargetRpm: oldTarget
+          oldTargetRpm: oldTarget,
         });
 
         // Log for visibility
-        console.log(`  🎮 Engine received command from SA=0x${msg.sa.toString(16).toUpperCase()}: Target RPM = ${targetRpm}`);
+        console.log(
+          `  🎮 Engine received command from SA=0x${msg.sa.toString(16).toUpperCase()}: Target RPM = ${targetRpm}`
+        );
       } else {
-        this.emit("warning", `Engine Control Command: invalid RPM ${targetRpm}`);
+        this.emit('warning', `Engine Control Command: invalid RPM ${targetRpm}`);
       }
     }
   }
@@ -140,7 +142,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
       // Respond with current engine data
       const data = this.buildEEC1Data();
       await this.j1939Port.sendPGN(PGN.EEC1, data, requesterSA);
-      this.emit("responded", { pgn, requesterSA });
+      this.emit('responded', { pgn, requesterSA });
     }
   }
 
@@ -150,7 +152,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
   async start(): Promise<void> {
     this.state = SimState.RUNNING;
     this.ecuState.running = true;
-    this.emit("started");
+    this.emit('started');
   }
 
   /**
@@ -160,7 +162,7 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
     this.state = SimState.STOPPED;
     this.ecuState.running = false;
     this.ecuState.rpm = 0;
-    this.emit("stopped");
+    this.emit('stopped');
   }
 
   /**
@@ -222,19 +224,19 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
       const et1Data = this.buildET1Data();
       await this.j1939Port.sendPGN(PGN.ET1, et1Data);
 
-      this.emit("broadcast", { 
-        pgn: PGN.EEC1, 
+      this.emit('broadcast', {
+        pgn: PGN.EEC1,
         rpm: this.ecuState.rpm,
-        load: this.ecuState.load 
+        load: this.ecuState.load,
       });
     } catch (err) {
-      this.emit("error", err);
+      this.emit('error', err);
     }
   }
 
   /**
    * Build EEC1 data (PGN 61444)
-   * 
+   *
    * Byte 0-1: Engine Torque Mode (bits 0-3), Reserved
    * Byte 2: Driver Demand Engine Torque
    * Byte 3: Actual Engine Torque
@@ -245,25 +247,25 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
   private buildEEC1Data(): number[] {
     // Engine speed in 0.125 RPM resolution
     const rpmRaw = Math.round(this.ecuState.rpm / 0.125);
-    
+
     // Torque in % (offset -125, resolution 1%)
     const torqueRaw = Math.round(this.ecuState.torque + 125);
 
     return [
-      0xF0,                        // Byte 0: Torque mode
-      0xFF,                        // Byte 1: Reserved
-      torqueRaw & 0xFF,            // Byte 2: Driver demand torque
-      torqueRaw & 0xFF,            // Byte 3: Actual torque
-      rpmRaw & 0xFF,               // Byte 4: Engine speed LSB
-      (rpmRaw >> 8) & 0xFF,        // Byte 5: Engine speed MSB
-      0xFF,                        // Byte 6: Source address
-      0xFF                         // Byte 7: Reserved
+      0xf0, // Byte 0: Torque mode
+      0xff, // Byte 1: Reserved
+      torqueRaw & 0xff, // Byte 2: Driver demand torque
+      torqueRaw & 0xff, // Byte 3: Actual torque
+      rpmRaw & 0xff, // Byte 4: Engine speed LSB
+      (rpmRaw >> 8) & 0xff, // Byte 5: Engine speed MSB
+      0xff, // Byte 6: Source address
+      0xff, // Byte 7: Reserved
     ];
   }
 
   /**
    * Build ET1 data (PGN 65262)
-   * 
+   *
    * Byte 0: Engine Coolant Temperature (offset -40°C, 1°C/bit)
    * Byte 1: Engine Fuel Temperature 1
    * Byte 2-3: Engine Oil Temperature 1
@@ -276,12 +278,14 @@ export class EngineECU extends EventEmitter implements IECUSimulator {
     const coolantRaw = Math.round(this.ecuState.coolantTemp + 40);
 
     return [
-      coolantRaw & 0xFF,           // Byte 0: Coolant temp
-      0xFF,                        // Byte 1: Fuel temp
-      0xFF, 0xFF,                  // Byte 2-3: Oil temp
-      0xFF, 0xFF,                  // Byte 4-5: Turbo oil temp
-      0xFF,                        // Byte 6: Intercooler temp
-      0xFF                         // Byte 7: Reserved
+      coolantRaw & 0xff, // Byte 0: Coolant temp
+      0xff, // Byte 1: Fuel temp
+      0xff,
+      0xff, // Byte 2-3: Oil temp
+      0xff,
+      0xff, // Byte 4-5: Turbo oil temp
+      0xff, // Byte 6: Intercooler temp
+      0xff, // Byte 7: Reserved
     ];
   }
 

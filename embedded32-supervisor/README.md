@@ -21,7 +21,7 @@ import { Supervisor } from 'embedded32-supervisor';
 
 const config: RuntimeConfig = {
   can: { interface: 'vcan0', enabled: true },
-  logging: { level: 'info' }
+  logging: { level: 'info' },
 };
 
 const supervisor = new Supervisor(config);
@@ -34,9 +34,13 @@ supervisor.registerModule({
   id: 'my-module',
   name: 'My Module',
   version: '1.0.0',
-  start: async () => { /* ... */ },
-  stop: async () => { /* ... */ },
-  getStatus: () => ({ /* ... */ })
+  start: async () => {
+    /* ... */
+  },
+  stop: async () => {
+    /* ... */
+  },
+  getStatus: () => ({/* ... */}),
 });
 ```
 
@@ -62,19 +66,19 @@ RUNNING → STOPPING → STOPPED
 
 ### Supervisor
 
-| Method | Description |
-|--------|-------------|
-| `start()` | Start supervisor and all modules |
-| `stop()` | Stop supervisor and all modules |
-| `registerModule(module)` | Register a module |
-| `startModule(id)` | Start specific module |
-| `stopModule(id)` | Stop specific module |
-| `restartModule(id)` | Restart specific module |
-| `getHealthStatus()` | Get runtime health status |
-| `getModuleInfo()` | Get all module information |
-| `getEventBus()` | Get runtime event bus |
-| `getLogger()` | Get logger instance |
-| `isRunningFlag()` | Check if running |
+| Method                   | Description                      |
+| ------------------------ | -------------------------------- |
+| `start()`                | Start supervisor and all modules |
+| `stop()`                 | Stop supervisor and all modules  |
+| `registerModule(module)` | Register a module                |
+| `startModule(id)`        | Start specific module            |
+| `stopModule(id)`         | Stop specific module             |
+| `restartModule(id)`      | Restart specific module          |
+| `getHealthStatus()`      | Get runtime health status        |
+| `getModuleInfo()`        | Get all module information       |
+| `getEventBus()`          | Get runtime event bus            |
+| `getLogger()`            | Get logger instance              |
+| `isRunningFlag()`        | Check if running                 |
 
 ### Module Interface
 

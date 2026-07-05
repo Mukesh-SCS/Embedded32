@@ -1,9 +1,9 @@
-import { Logger } from "../logger/Logger.js";
-import { Scheduler } from "../scheduler/Scheduler.js";
-import { MessageBus } from "../messaging/MessageBus.js";
-import { ModuleRegistry } from "../registry/ModuleRegistry.js";
-import { ConfigLoader } from "../config/ConfigLoader.js";
-import { RuntimeConfig, Module } from "../types.js";
+import { Logger } from '../logger/Logger.js';
+import { Scheduler } from '../scheduler/Scheduler.js';
+import { MessageBus } from '../messaging/MessageBus.js';
+import { ModuleRegistry } from '../registry/ModuleRegistry.js';
+import { ConfigLoader } from '../config/ConfigLoader.js';
+import { RuntimeConfig, Module } from '../types.js';
 
 export class Runtime {
   private logger: Logger;
@@ -14,13 +14,13 @@ export class Runtime {
   private running = false;
 
   constructor(options: Partial<RuntimeConfig> = {}) {
-    this.logger = new Logger(options.logLevel || "info");
+    this.logger = new Logger(options.logLevel || 'info');
     this.scheduler = new Scheduler();
     this.bus = new MessageBus();
     this.registry = new ModuleRegistry();
 
     const loader = new ConfigLoader();
-    this.config = loader.load(options.configPath || "./config.json");
+    this.config = loader.load(options.configPath || './config.json');
   }
 
   registerModule(module: Module) {
@@ -37,20 +37,20 @@ export class Runtime {
   }
 
   async start() {
-    this.logger.info("Runtime initializing...");
+    this.logger.info('Runtime initializing...');
     await this.registry.initAll();
 
-    this.logger.info("Starting modules...");
+    this.logger.info('Starting modules...');
     await this.registry.startAll();
 
     this.running = true;
-    this.logger.info("Runtime started.");
+    this.logger.info('Runtime started.');
   }
 
   async stop() {
     if (!this.running) return;
 
-    this.logger.info("Stopping runtime...");
+    this.logger.info('Stopping runtime...');
     await this.registry.stopAll();
 
     this.scheduler.stopAll();

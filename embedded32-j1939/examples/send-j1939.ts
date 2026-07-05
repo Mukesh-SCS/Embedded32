@@ -11,7 +11,7 @@
  * Run: npx ts-node examples/send-j1939.ts
  */
 
-import { buildJ1939Id, parseJ1939Id } from "../src/index.js";
+import { buildJ1939Id, parseJ1939Id } from '../src/index.js';
 
 /**
  * J1939 Message Builder
@@ -99,32 +99,44 @@ class J1939MessageBuilder {
 }
 
 // Demo
-console.log("=== J1939 Message Builder Demo ===\n");
+console.log('=== J1939 Message Builder Demo ===\n');
 
 // Build EEC1 message
 const eec1 = J1939MessageBuilder.buildEEC1(0x01, 1500, 50);
-console.log("EEC1 (Engine Speed) Message:");
-console.log(`  CAN ID: 0x${eec1.id.toString(16).padStart(8, "0").toUpperCase()}`);
-console.log(`  Data: [${eec1.data.map((b) => `0x${b.toString(16).padStart(2, "0").toUpperCase()}`).join(", ")}]`);
+console.log('EEC1 (Engine Speed) Message:');
+console.log(`  CAN ID: 0x${eec1.id.toString(16).padStart(8, '0').toUpperCase()}`);
+console.log(
+  `  Data: [${eec1.data.map((b) => `0x${b.toString(16).padStart(2, '0').toUpperCase()}`).join(', ')}]`
+);
 const parsed = parseJ1939Id(eec1.id);
-console.log(`  Parsed - Priority: ${parsed.priority}, PGN: 0x${parsed.pgn.toString(16).padStart(5, "0").toUpperCase()}, SA: 0x${parsed.sa.toString(16).padStart(2, "0").toUpperCase()}\n`);
+console.log(
+  `  Parsed - Priority: ${parsed.priority}, PGN: 0x${parsed.pgn.toString(16).padStart(5, '0').toUpperCase()}, SA: 0x${parsed.sa.toString(16).padStart(2, '0').toUpperCase()}\n`
+);
 
 // Build Cruise Control message
 const cc = J1939MessageBuilder.buildCruiseControl(0x01, 8000, 1);
-console.log("Cruise Control Message:");
-console.log(`  CAN ID: 0x${cc.id.toString(16).padStart(8, "0").toUpperCase()}`);
-console.log(`  Data: [${cc.data.map((b) => `0x${b.toString(16).padStart(2, "0").toUpperCase()}`).join(", ")}]`);
-console.log(`  Parsed - PGN: 0x${parseJ1939Id(cc.id).pgn.toString(16).padStart(5, "0").toUpperCase()}\n`);
+console.log('Cruise Control Message:');
+console.log(`  CAN ID: 0x${cc.id.toString(16).padStart(8, '0').toUpperCase()}`);
+console.log(
+  `  Data: [${cc.data.map((b) => `0x${b.toString(16).padStart(2, '0').toUpperCase()}`).join(', ')}]`
+);
+console.log(
+  `  Parsed - PGN: 0x${parseJ1939Id(cc.id).pgn.toString(16).padStart(5, '0').toUpperCase()}\n`
+);
 
 // Build Fuel Rate message
 const fuel = J1939MessageBuilder.buildFuelRate(0x01, 25.5);
-console.log("Fuel Rate Message:");
-console.log(`  CAN ID: 0x${fuel.id.toString(16).padStart(8, "0").toUpperCase()}`);
-console.log(`  Data: [${fuel.data.map((b) => `0x${b.toString(16).padStart(2, "0").toUpperCase()}`).join(", ")}]`);
-console.log(`  Parsed - PGN: 0x${parseJ1939Id(fuel.id).pgn.toString(16).padStart(5, "0").toUpperCase()}\n`);
+console.log('Fuel Rate Message:');
+console.log(`  CAN ID: 0x${fuel.id.toString(16).padStart(8, '0').toUpperCase()}`);
+console.log(
+  `  Data: [${fuel.data.map((b) => `0x${b.toString(16).padStart(2, '0').toUpperCase()}`).join(', ')}]`
+);
+console.log(
+  `  Parsed - PGN: 0x${parseJ1939Id(fuel.id).pgn.toString(16).padStart(5, '0').toUpperCase()}\n`
+);
 
 // Example: Integration with embedded32-can
-console.log("=== Integration with embedded32-can ===");
+console.log('=== Integration with embedded32-can ===');
 console.log(`
 To send J1939 messages over CAN:
 

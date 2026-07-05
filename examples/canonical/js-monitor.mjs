@@ -1,14 +1,14 @@
 /**
  * Canonical Example: JS SDK Engine Monitor
- * 
+ *
  * This is the reference JS SDK client that:
  * 1. Connects to the simulation
  * 2. Subscribes to engine data (EEC1, ET1)
  * 3. Displays decoded SPNs in real-time
- * 
+ *
  * Usage:
  *   node examples/canonical/js-monitor.mjs
- * 
+ *
  * Prerequisites:
  *   - Simulation running: npx embedded32 simulate vehicle/basic-truck
  */
@@ -23,9 +23,9 @@ console.log();
 // Create client
 const client = new J1939Client({
   interface: 'vcan0',
-  sourceAddress: SA.DIAG_TOOL_1,  // 0xF9
+  sourceAddress: SA.DIAG_TOOL_1, // 0xF9
   transport: 'virtual',
-  debug: false
+  debug: false,
 });
 
 // Track state
@@ -38,7 +38,7 @@ client.onPGN(PGN.EEC1, (msg) => {
   messageCount++;
   const rpm = msg.spns?.engineSpeed ?? 0;
   const torque = msg.spns?.actualTorque ?? 0;
-  
+
   // Only print if RPM changed
   if (Math.abs(rpm - lastRpm) > 5) {
     console.log(`[JS SDK] Engine Speed: ${rpm.toFixed(0)} RPM (torque: ${torque}%)`);
@@ -50,7 +50,7 @@ client.onPGN(PGN.EEC1, (msg) => {
 client.onPGN(PGN.ET1, (msg) => {
   messageCount++;
   const coolant = msg.spns?.coolantTemp ?? 0;
-  
+
   if (coolant !== lastCoolant) {
     if (coolant > 105) {
       console.log(`[JS SDK] WARNING: Coolant temp rising!`);
