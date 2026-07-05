@@ -1,4 +1,5 @@
 name: embedded32-codeql
-# Local model pack (embedded32/log-sanitize-model) is loaded via
-# CODEQL_ACTION_EXTRA_OPTIONS in .github/workflows/codeql.yml — packs: here
-# only accepts published GHCR packages and would fail init otherwise.
+# Log-injection findings are remediated in source (constant format strings +
+# sanitizeLogText, which strips CR/LF/ANSI/control characters). JavaScript data
+# extensions have no way to express a custom sanitizer (summaryModel only
+# supports taint/value), so no local model pack is loaded here.
