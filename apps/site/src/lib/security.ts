@@ -31,10 +31,7 @@ export function sanitizePlainTextTitle(title: string, fallback = 'Untitled'): st
     withoutTags = withoutTags.replace(HTML_TAG_PATTERN, '');
   } while (withoutTags !== previous);
 
-  const stripped = withoutTags
-    .replace(CONTROL_CHARS, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  const stripped = withoutTags.replace(CONTROL_CHARS, '').replace(/\s+/g, ' ').trim();
   if (!stripped) return fallback;
   return stripped.length > MAX_TITLE_LENGTH ? `${stripped.slice(0, MAX_TITLE_LENGTH)}…` : stripped;
 }

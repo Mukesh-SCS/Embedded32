@@ -49,7 +49,10 @@ const OBSOLETE_PATTERNS = [
   { pattern: /browser demo \(planned\)/i, hint: 'Demo is built' },
   { pattern: /will appear in `SECURITY\.md` \(Phase 6\)/i, hint: 'SECURITY.md is complete' },
   { pattern: /details will be documented in `SECURITY\.md`/i, hint: 'Link SECURITY.md directly' },
-  { pattern: /(^|[^a-z0-9.-])vercel\.com([^a-z0-9.-]|$)/i, hint: 'GitHub Pages is the deployment target' },
+  {
+    pattern: /(^|[^a-z0-9.-])vercel\.com([^a-z0-9.-]|$)/i,
+    hint: 'GitHub Pages is the deployment target',
+  },
   { pattern: /deploy to Vercel/i, hint: 'Use GitHub Pages' },
   { pattern: /Complete SAE J1939 implementation/i, hint: 'Use educational J1939 subset' },
   {

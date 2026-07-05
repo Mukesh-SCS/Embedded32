@@ -1,7 +1,7 @@
 /**
  * Logger for the supervisor system
  */
-import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
+import { safeConsoleWrite } from './security/logSanitize';
 
 export class Logger {
   private level: 'debug' | 'info' | 'warn' | 'error';
@@ -26,11 +26,7 @@ export class Logger {
 
     const timestamp = this.formatTimestamp();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
-    const sanitizedMessage = sanitizeLogText(message);
-    const payload =
-      data === undefined ? sanitizedMessage : `${sanitizedMessage} ${sanitizeLogText(data)}`;
-
-    safeConsoleWrite(level, prefix, payload);
+    safeConsoleWrite(level, prefix, message, data);
 
     // TODO: Write to log file if configured
     if (this.logFile && data !== undefined) {

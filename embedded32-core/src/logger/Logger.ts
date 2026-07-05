@@ -55,12 +55,7 @@ export class Logger {
     }
 
     const prefix = `[${new Date().toISOString()}] [${level.toUpperCase()}]`;
-    const payload =
-      context === undefined
-        ? sanitizeLogText(message)
-        : `${sanitizeLogText(message)} ${sanitizeLogText(context)}`;
-
-    safeConsoleWrite(level, prefix, payload);
+    safeConsoleWrite(level, prefix, message, context);
   }
 
   setLevel(level: 'debug' | 'info' | 'warn' | 'error'): void {

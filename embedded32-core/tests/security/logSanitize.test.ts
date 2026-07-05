@@ -44,7 +44,11 @@ describe('logSanitize', () => {
   it('uses constant format strings when writing to console', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     safeConsoleWrite('error', '[TEST]', 'client-1\nforged');
-    expect(spy).toHaveBeenCalledWith('%s', expect.stringContaining('client-1\\nforged'));
+    expect(spy).toHaveBeenCalledWith(
+      '%s %s',
+      '[TEST]',
+      expect.stringContaining('client-1\\nforged')
+    );
     spy.mockRestore();
   });
 });

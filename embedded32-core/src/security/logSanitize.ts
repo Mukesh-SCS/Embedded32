@@ -2,6 +2,10 @@ const ANSI_ESCAPE =
   /[\u001B\u009B][[\]()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nq-uy=><]/g;
 const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
 
+/** Fixed console format strings — never derived from runtime input. */
+const LOG_FORMAT_TWO = '%s %s';
+const LOG_FORMAT_THREE = '%s %s %s';
+
 export const MAX_LOG_VALUE_LENGTH = 8_192;
 
 /**
@@ -54,8 +58,26 @@ export function serializeLogValue(value: unknown): string {
 
 export type SafeConsoleLevel = 'debug' | 'info' | 'warn' | 'error' | 'log';
 
+type ConsoleWriter = (format: string, ...args: unknown[]) => void;
+
+function getConsoleWriter(level: SafeConsoleLevel): ConsoleWriter {
+  switch (level) {
+    case 'error':
+      return console.error.bind(console);
+    case 'warn':
+      return console.warn.bind(console);
+    case 'debug':
+      return console.debug.bind(console);
+    case 'info':
+    case 'log':
+    default:
+      return console.log.bind(console);
+  }
+}
+
 /**
- * Write to console with a constant format string and sanitized payload.
+ * Write to console with constant format strings and sanitized arguments.
+ * Each user-controlled field is passed through sanitizeLogText as a separate argument.
  */
 export function safeConsoleWrite(
   level: SafeConsoleLevel,
@@ -63,25 +85,14 @@ export function safeConsoleWrite(
   message: string,
   data?: unknown
 ): void {
-  const sanitizedPrefix = sanitizeLogText(prefix);
-  const sanitizedMessage = sanitizeLogText(message);
-  const line = `${sanitizedPrefix} ${sanitizedMessage}`;
-  const payload = data === undefined ? line : `${line} ${sanitizeLogText(data)}`;
+  const writer = getConsoleWriter(level);
+  const safePrefix = sanitizeLogText(prefix);
+  const safeMessage = sanitizeLogText(message);
 
-  switch (level) {
-    case 'error':
-      console.error('%s', payload);
-      break;
-    case 'warn':
-      console.warn('%s', payload);
-      break;
-    case 'debug':
-      console.debug('%s', payload);
-      break;
-    case 'info':
-    case 'log':
-    default:
-      console.log('%s', payload);
-      break;
+  if (data === undefined) {
+    writer(LOG_FORMAT_TWO, safePrefix, safeMessage);
+    return;
   }
+
+  writer(LOG_FORMAT_THREE, safePrefix, safeMessage, sanitizeLogText(data));
 }
