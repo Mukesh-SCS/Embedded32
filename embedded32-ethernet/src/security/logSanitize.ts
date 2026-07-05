@@ -70,21 +70,22 @@ export function safeConsoleWrite(
   const sanitizedMessage = sanitizeLogText(message);
   const line = `${sanitizedPrefix} ${sanitizedMessage}`;
   const payload = data === undefined ? line : `${line} ${sanitizeLogText(data)}`;
+  const safePayload = sanitizeLogText(payload);
 
   switch (level) {
     case 'error':
-      console.error('%s', payload);
+      console.error('%s', safePayload);
       break;
     case 'warn':
-      console.warn('%s', payload);
+      console.warn('%s', safePayload);
       break;
     case 'debug':
-      console.debug('%s', payload);
+      console.debug('%s', safePayload);
       break;
     case 'info':
     case 'log':
     default:
-      console.log('%s', payload);
+      console.log('%s', safePayload);
       break;
   }
 }
