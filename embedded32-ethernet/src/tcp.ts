@@ -5,7 +5,7 @@
 import { Server, Socket, createServer } from 'net';
 import { J1939NanoProto } from './nanoproto';
 import { EventEmitter } from 'events';
-import { safeConsoleWrite } from './security/logSanitize';
+import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
 import { formatClientIdForLog } from './tcpClientId';
 
 export interface TCPOptions {
