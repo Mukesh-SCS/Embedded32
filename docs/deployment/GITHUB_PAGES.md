@@ -46,7 +46,7 @@ Every route is pre-rendered to static HTML (`trailingSlash: true`), so nested ro
 6. `node scripts/verify-pages-build.mjs` (build validation)
 7. Copy `index.html` → `404.html` fallback
 8. Upload `apps/site/out` as the Pages artifact
-9. `actions/deploy-pages` publishes it
+9. `actions/deploy-pages` publishes it (up to 3 attempts with backoff on transient Pages API failures)
 
 ## Local commands
 
@@ -138,6 +138,7 @@ Refreshing must not produce a GitHub Pages 404 - each route is a real static HTM
 | Blank page, console 404 on `_next/` | Base path missing                               | Rebuild with `npm run build --workspace apps/site`                            |
 | Nested route 404 on refresh         | Missing static HTML                             | Ensure `generateStaticParams` covers the route; `trailingSlash: true`         |
 | `verify-pages-build` fails          | Missing `out/`, `api-ref/`, or bad asset prefix | Run `npm run docs:api` then rebuild                                           |
+| Deploy step: "try again later"      | Transient GitHub Pages API failure              | Workflow retries deploy up to 3 times; rerun failed jobs if all attempts fail |
 | Deploy step skipped                 | Pages source not set to GitHub Actions          | Settings → Pages → Source = GitHub Actions                                    |
 
 ## Static-only constraints
