@@ -12,8 +12,20 @@ export function sanitizeLogText(value: unknown): string {
         ? `${text.slice(0, MAX_LOG_VALUE_LENGTH)}…[truncated]`
         : text;
     return truncated
-      .replace(/\r/g, '\\r')
-      .replace(/\n/g, '\\n')
+      .replace(/\r|\n|\u2028|\u2029/g, (ch) => {
+        switch (ch) {
+          case '\r':
+            return '\\r';
+          case '\n':
+            return '\\n';
+          case '\u2028':
+            return '\\u2028';
+          case '\u2029':
+            return '\\u2029';
+          default:
+            return '';
+        }
+      })
       .replace(ANSI_ESCAPE, '')
       .replace(CONTROL_CHARS, '');
   } catch {
