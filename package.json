@@ -32,8 +32,11 @@
     "audit:packages": "node scripts/audit-packages.mjs",
     "test:package-install": "node scripts/smoke-install-packages.mjs",
     "test:labs": "node scripts/verify-labs.mjs",
+    "test:examples": "node scripts/verify-examples.mjs",
+    "test:docs": "node scripts/verify-docs.mjs",
+    "test:coverage": "node scripts/coverage-report.mjs",
     "seed:issues": "node scripts/seed-contributor-issues.mjs",
-    "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run audit:packages && npm run test:package-install && npm run test:labs && npm run test:examples && npm run test:docs",
     "docs:api": "typedoc --options typedoc.json"
   },
   "devDependencies": {

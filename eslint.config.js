@@ -9,11 +9,13 @@ export default tseslint.config(
       '**/node_modules/**',
       '**/coverage/**',
       '**/*.config.cjs',
+      'docs/api/**',
       'embedded32-sdk-c/**',
       'embedded32-sdk-python/**',
       'examples/**',
       'embedded32-*/examples/**',
       'embedded32-*/**/*.mjs',
+      'labs/**/starter/**',
     ],
   },
   js.configs.recommended,
@@ -54,7 +56,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['embedded32-*/tests/**/*.ts', '**/*.test.ts'],
+    files: ['embedded32-*/tests/**/*.ts', '**/*.test.ts', 'labs/**/solution/**/*.ts'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

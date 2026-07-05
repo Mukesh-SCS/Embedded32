@@ -13,19 +13,21 @@ npm ci
 
 ## Daily development
 
-| Command                        | Purpose                                                             |
-| ------------------------------ | ------------------------------------------------------------------- |
-| `npm run build`                | Compile all Lerna-managed packages                                  |
-| `npm run test`                 | Run package unit tests                                              |
-| `npm run typecheck`            | TypeScript `--noEmit` in every package                              |
-| `npm run lint`                 | ESLint across TypeScript sources                                    |
-| `npm run format`               | Apply Prettier formatting                                           |
-| `npm run format:check`         | Verify Prettier formatting without writing                          |
-| `npm run audit:packages`       | Verify npm tarball contents                                         |
-| `npm run test:package-install` | Smoke-test tarball installs                                         |
-| `npm run test:labs`            | Verify classroom lab solutions and hygiene                          |
-| `npm run docs:api`             | Generate TypeDoc HTML under `docs/api/`                             |
-| `npm run verify`               | Full pre-merge check (lint, typecheck, test, build, package audits) |
+| Command                        | Purpose                                              |
+| ------------------------------ | ---------------------------------------------------- |
+| `npm run build`                | Compile all Lerna-managed packages                   |
+| `npm run test`                 | Run package unit tests                               |
+| `npm run typecheck`            | TypeScript `--noEmit` in every package               |
+| `npm run lint`                 | ESLint across TypeScript sources                     |
+| `npm run format`               | Apply Prettier formatting                            |
+| `npm run format:check`         | Verify Prettier formatting without writing           |
+| `npm run audit:packages`       | Verify npm tarball contents                          |
+| `npm run test:package-install` | Smoke-test tarball installs                          |
+| `npm run test:labs`            | Verify classroom lab solutions and hygiene           |
+| `npm run test:examples`        | Run key examples after build                         |
+| `npm run test:docs`            | Generate and verify API documentation                |
+| `npm run test:coverage`        | Coverage report for j1939, core, can                 |
+| `npm run verify`               | Full pre-merge check (includes labs, examples, docs) |
 
 ## Workspace layout
 
@@ -57,4 +59,4 @@ Package paths are unchanged from the original repository layout. Published impor
 | `docs/education/`    | 5     | Instructor and student guides       |
 | `examples/traces/`   | 5     | Synthetic sample bus traces         |
 | `docs/api/`          | 4     | Generated API reference             |
-| `.github/workflows/` | 7–8   | CI and release automation           |
+| `.github/workflows/` | 7     | CI, CodeQL, dependency review       |
