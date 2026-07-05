@@ -66,6 +66,18 @@ After merge, confirm [@Mukesh-SCS](https://github.com/Mukesh-SCS) receives revie
 - [ ] Enable this repository for archiving on release
 - [ ] Add DOI badge to README after first archive
 
+## npm publish environment (Phase 8)
+
+Before the first npm release:
+
+- [ ] Settings → Environments → create **`npm-publish`**
+- [ ] Add **required reviewers** (lead maintainer minimum)
+- [ ] Restrict deployment branches to `main` (optional)
+- [ ] Configure npm **trusted publishing** (see [manual-npm-settings.md](./manual-npm-settings.md))
+- [ ] Add `NPM_TOKEN` secret only if trusted publishing is unavailable
+
+The [Release workflow](../../.github/workflows/release.yml) runs dry-run by default. The publish job runs only when `confirm_publish` is exactly `PUBLISH` **and** the environment is approved.
+
 ## Verification checklist
 
 After completing settings:

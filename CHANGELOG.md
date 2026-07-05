@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Open-source education platform: labs, course docs, community files, CI workflows, and maintainer runbooks
+- `npm run release:dry-run` — verification + tarball preview without publishing
+- `.github/workflows/release.yml` — approval-gated release workflow (dry-run by default)
+- Maintainer docs: `release-process.md`, `manual-npm-settings.md`
+
+### Changed
+
+- Root `README.md`, package READMEs, TypeDoc API docs, and verification scripts (`verify`, `test:labs`, `test:examples`, `test:docs`)
+- `embedded32-tools` CLI binary renamed to avoid collision with `@embedded32/cli`
+
+### Fixed
+
+- npm install reliability: committed lockfile, `prepack`, LICENSE in tarballs, pinned `@embedded32/*` deps
+- ESLint ignores for generated `docs/api/**` and lab starter templates
+
 ## [0.3.0] - 2025-12-10 - Dashboard & UI Phase Complete
 
 ### Added (Phase 3 - Web Dashboard & Real-Time Monitoring UI)

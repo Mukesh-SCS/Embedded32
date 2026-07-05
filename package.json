@@ -29,6 +29,7 @@
     "clean": "lerna run clean --ignore @embedded32/sdk-c --ignore @embedded32/sdk-python",
     "bootstrap": "lerna bootstrap",
     "publish-packages": "lerna publish --yes",
+    "release:dry-run": "node scripts/release-dry-run.mjs",
     "audit:packages": "node scripts/audit-packages.mjs",
     "test:package-install": "node scripts/smoke-install-packages.mjs",
     "test:labs": "node scripts/verify-labs.mjs",

@@ -139,11 +139,12 @@ Updated in Phase 3 — all root workflow commands now exist:
 
 ## CI / automation
 
-| Item                 | Status     |
-| -------------------- | ---------- |
-| `.github/workflows/` | **Absent** |
-| Dependabot           | **Absent** |
-| CodeQL               | **Absent** |
+| Item                 | Status                                                                 |
+| -------------------- | ---------------------------------------------------------------------- |
+| `.github/workflows/` | **Present** — `ci.yml`, `codeql.yml`, `dependency-review.yml`, `release.yml` |
+| Dependabot           | **Present** — `.github/dependabot.yml`                               |
+| CodeQL               | **Present** — weekly + PR                                              |
+| Release dry-run      | **Present** — `npm run release:dry-run` (Phase 8)                      |
 
 ---
 

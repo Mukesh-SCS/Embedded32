@@ -3,6 +3,7 @@
 | Workflow          | File                                             | Trigger             | Purpose                                                           |
 | ----------------- | ------------------------------------------------ | ------------------- | ----------------------------------------------------------------- |
 | CI                | [ci.yml](./ci.yml)                               | PR + push to `main` | Lint, format, test, build, audits, labs, examples, docs, coverage |
+| Release           | [release.yml](./release.yml)                     | Manual only         | Verify + dry-run; publish only with `PUBLISH` + environment approval |
 | CodeQL            | [codeql.yml](./codeql.yml)                       | PR, push, weekly    | Security and quality analysis (JS/TS)                             |
 | Dependency review | [dependency-review.yml](./dependency-review.yml) | Pull requests       | Block new high-severity dependency vulnerabilities                |
 

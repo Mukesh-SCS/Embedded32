@@ -11,8 +11,8 @@ Milestone-based plan for the Embedded32 education platform. Dates are tentative.
 - [x] Core documentation rewrite and TypeDoc API
 - [x] Four classroom labs with automated verification
 - [x] Community files and issue templates
-- [ ] GitHub Actions CI and security automation (Phase 7)
-- [ ] Controlled release dry-run (Phase 8)
+- [x] GitHub Actions CI and security automation (Phase 7)
+- [x] Controlled release dry-run (Phase 8)
 - [ ] npm publish with maintainer approval
 
 ## v1.1 — Education foundation
