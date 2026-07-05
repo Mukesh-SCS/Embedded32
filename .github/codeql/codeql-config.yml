@@ -1,5 +1,5 @@
 name: embedded32-codeql
 packs:
-  - embedded32-log-sanitize-model
+  - embedded32/log-sanitize-model
 resolve packs:
-  - embedded32-log-sanitize-model
+  - embedded32/log-sanitize-model

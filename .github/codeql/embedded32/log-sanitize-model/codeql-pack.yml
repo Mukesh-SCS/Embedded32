@@ -1,4 +1,4 @@
-name: embedded32-log-sanitize-model
+name: embedded32/log-sanitize-model
 version: 0.0.1
 libraryPathDependencies:
   - codeql/javascript-all
