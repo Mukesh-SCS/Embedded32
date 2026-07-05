@@ -1,6 +1,6 @@
 const ANSI_ESCAPE =
   /[\u001B\u009B][[\]()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nq-uy=><]/g;
-const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g;
 
 export const MAX_LOG_VALUE_LENGTH = 8_192;
 
@@ -14,6 +14,8 @@ export function sanitizeLogText(value: unknown): string {
     return truncated
       .replace(/\r/g, '\\r')
       .replace(/\n/g, '\\n')
+      .replace(/\u2028/g, '\\u2028')
+      .replace(/\u2029/g, '\\u2029')
       .replace(ANSI_ESCAPE, '')
       .replace(CONTROL_CHARS, '');
   } catch {
