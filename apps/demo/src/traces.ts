@@ -294,11 +294,41 @@ export const TRACES: Trace[] = [
   {
     "format": "embedded32-trace-v1",
     "source": "synthetic",
-    "scenario": "address-conflict",
-    "description": "Two devices broadcasting EEC1 from the same source address 0x00",
+    "scenario": "address-claim-conflict",
+    "description": "Two ECUs send Address Claimed (PGN 60928) for source address 0x00 with different NAME values",
     "frames": [
       {
         "timestampMs": 0,
+        "id": "0x18EEFF00",
+        "extended": true,
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "timestampMs": 50,
+        "id": "0x18EEFF00",
+        "extended": true,
+        "data": [
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "timestampMs": 100,
         "id": "0x18F00400",
         "extended": true,
         "data": [
@@ -308,21 +338,6 @@ export const TRACES: Trace[] = [
           125,
           40,
           25,
-          0,
-          0
-        ]
-      },
-      {
-        "timestampMs": 50,
-        "id": "0x18F00400",
-        "extended": true,
-        "data": [
-          0,
-          0,
-          0,
-          125,
-          200,
-          80,
           0,
           0
         ]

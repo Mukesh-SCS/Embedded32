@@ -1,0 +1,57 @@
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pkgCard h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.75rem 0;
+}
+
+.related {
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.compareTitle {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  margin: 2rem 0 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: var(--border);
+  box-shadow: var(--shadow-small);
+}
+
+.table th,
+.table td {
+  border: 2px solid var(--ink);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+}
+
+.table th {
+  background: var(--yellow);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.private {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}

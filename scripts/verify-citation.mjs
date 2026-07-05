@@ -164,7 +164,10 @@ function main() {
       'docs/citation.md mentions a Zenodo DOI but CITATION.cff has no identifiers.doi - sync after archive'
     );
   }
-  if (/doi\.org\/10\./.test(citationText) && PLACEHOLDER_DOI.test(citationText)) {
+  if (
+    citationText.includes('https://doi.org/10.') &&
+    PLACEHOLDER_DOI.test(citationText)
+  ) {
     fail('docs/citation.md contains placeholder DOI URL');
   }
 

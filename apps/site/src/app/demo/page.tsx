@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <div className="page">
-      <h1 className="pageTitle">Browser CAN/J1939 demo</h1>
+      <h1 className="pageTitle" data-testid="demo-page-title">
+        Browser CAN/J1939 demo
+      </h1>
       <p className="lead">
         A hardware-free, client-side demo that plays synthetic J1939 traces and decodes a teaching
         subset of messages in your browser. It mirrors the scaling used by{' '}

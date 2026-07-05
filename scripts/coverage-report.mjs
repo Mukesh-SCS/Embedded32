@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * Run Jest coverage on core libraries and print a summary table.
- * Baseline is recorded in docs/maintainers/coverage-baseline.md - do not lower thresholds without review.
+ * Run Jest coverage on core libraries and enforce per-package line thresholds.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -14,8 +13,15 @@ const ROOT = path.resolve(__dirname, '..');
 
 const PACKAGES = [
   {
+    id: 'can',
+    dir: 'embedded32-can',
+    minLines: 60,
+    command: ['npm', 'run', 'test:coverage', '--silent'],
+  },
+  {
     id: 'j1939',
     dir: 'embedded32-j1939',
+    minLines: 70,
     command: [
       'npm',
       'run',
@@ -29,6 +35,7 @@ const PACKAGES = [
   {
     id: 'core',
     dir: 'embedded32-core',
+    minLines: 0,
     command: [
       'npx',
       'jest',
@@ -39,17 +46,10 @@ const PACKAGES = [
     ],
   },
   {
-    id: 'can',
-    dir: 'embedded32-can',
-    command: [
-      'node',
-      '--experimental-vm-modules',
-      '../node_modules/jest/bin/jest.js',
-      '--coverage',
-      '--coverageReporters=json-summary',
-      '--coverageReporters=text',
-      '--silent',
-    ],
+    id: 'bridge',
+    dir: 'embedded32-bridge',
+    minLines: 0,
+    command: ['npm', 'run', 'test', '--silent', '--', '--coverage', '--coverageReporters=json-summary', '--coverageReporters=text'],
   },
 ];
 
@@ -104,16 +104,21 @@ function main() {
       failed++;
       continue;
     }
+    if (pkg.minLines > 0 && summary.lines < pkg.minLines) {
+      console.log(`FAIL (lines ${summary.lines}% < ${pkg.minLines}%)`);
+      failed++;
+      continue;
+    }
     console.log('ok');
-    rows.push({ id: pkg.id, ...summary });
+    rows.push({ id: pkg.id, minLines: pkg.minLines, ...summary });
   }
 
   if (rows.length > 0) {
-    console.log('\n| Package | Lines | Statements | Functions | Branches |');
-    console.log('|---------|-------|------------|-----------|----------|');
+    console.log('\n| Package | Min lines | Lines | Statements | Functions | Branches |');
+    console.log('|---------|-----------|-------|------------|-----------|----------|');
     for (const row of rows) {
       console.log(
-        `| ${row.id} | ${row.lines}% | ${row.statements}% | ${row.functions}% | ${row.branches}% |`
+        `| ${row.id} | ${row.minLines || '-'} | ${row.lines}% | ${row.statements}% | ${row.functions}% | ${row.branches}% |`
       );
     }
   }

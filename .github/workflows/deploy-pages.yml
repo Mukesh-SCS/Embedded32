@@ -63,6 +63,14 @@ jobs:
       - name: Validate GitHub Pages build
         run: node scripts/verify-pages-build.mjs
 
+      - name: Install Playwright browser
+        run: npx playwright install chromium --with-deps
+
+      - name: End-to-end tests (production export)
+        run: |
+          E2E_STAGE_ONLY=1 node scripts/prepare-e2e-pages.mjs
+          npx playwright test
+
       - name: Add SPA fallback (safety net)
         run: |
           if [ -f apps/site/out/index.html ] && [ ! -f apps/site/out/404.html ]; then

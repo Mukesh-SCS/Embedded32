@@ -1,5 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  encodeRouteSegment,
+  isValidLabSlug,
+  resolveSafeUrl,
+  sanitizePlainTextTitle,
+} from './security';
 
 export const MONOREPO_ROOT = path.resolve(process.cwd(), '../..');
 
@@ -44,7 +50,7 @@ function readText(filePath: string): string {
 
 function titleFromMarkdown(content: string, fallback: string): string {
   const match = content.match(/^#\s+(.+)$/m);
-  return match ? match[1].trim() : fallback;
+  return sanitizePlainTextTitle(match ? match[1].trim() : fallback, fallback);
 }
 
 function walkMarkdownFiles(dir: string, baseDir: string, acc: string[] = []): string[] {
@@ -108,7 +114,7 @@ export function listLabs(): LabMeta[] {
 
   return fs
     .readdirSync(labsRoot, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && d.name.startsWith('lab-'))
+    .filter((d) => d.isDirectory() && isValidLabSlug(d.name))
     .map((d) => {
       const readme = path.join(labsRoot, d.name, 'README.md');
       const content = fs.existsSync(readme) ? readText(readme) : '';
@@ -122,6 +128,7 @@ export function listLabs(): LabMeta[] {
 }
 
 export function getLabReadme(slug: string): { meta: LabMeta; content: string } | null {
+  if (!isValidLabSlug(slug)) return null;
   const readme = path.join(MONOREPO_ROOT, 'labs', slug, 'README.md');
   if (!fs.existsSync(readme)) return null;
   const content = readText(readme);
@@ -133,6 +140,10 @@ export function getLabReadme(slug: string): { meta: LabMeta; content: string } |
     },
     content: rewriteMarkdownLinks(content, `labs/${slug}`),
   };
+}
+
+export function labHref(slug: string): string {
+  return `/labs/${encodeRouteSegment(slug)}`;
 }
 
 export function listPackages(): PackageMeta[] {
@@ -175,13 +186,18 @@ function rewriteMarkdownLinks(content: string, baseRel: string): string {
 }
 
 function resolveHref(href: string, baseRel: string): string {
-  if (!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) {
-    return href;
+  const safe = resolveSafeUrl(href, { allowHttp: false });
+  if (!safe || safe.kind === 'blocked') {
+    return '#';
+  }
+  if (safe.kind === 'fragment' || safe.kind === 'https' || safe.kind === 'mailto') {
+    return safe.href;
+  }
+  if (safe.kind === 'relative' && safe.href.startsWith('/')) {
+    return safe.href;
   }
 
-  if (href.startsWith('/')) return href;
-
-  const monorepoRelative = normalizeRepoPath(path.normalize(path.join(baseRel, href)));
+  const monorepoRelative = normalizeRepoPath(path.normalize(path.join(baseRel, safe.href)));
 
   if (monorepoRelative.endsWith('.md')) {
     if (monorepoRelative.startsWith('docs/')) {
@@ -191,8 +207,8 @@ function resolveHref(href: string, baseRel: string): string {
     }
     if (monorepoRelative.startsWith('labs/')) {
       const parts = monorepoRelative.split('/');
-      if (parts.length >= 2 && parts[1].startsWith('lab-')) {
-        return parts[2] === 'README.md' ? `/labs/${parts[1]}` : `/labs`;
+      if (parts.length >= 2 && isValidLabSlug(parts[1])) {
+        return parts[2] === 'README.md' ? labHref(parts[1]) : '/labs';
       }
       return '/labs';
     }
@@ -206,9 +222,12 @@ function resolveHref(href: string, baseRel: string): string {
     }
   }
 
-  if (monorepoRelative.startsWith('labs/lab-')) {
+  if (monorepoRelative.startsWith('labs/')) {
     const labSlug = monorepoRelative.split('/')[1];
-    return `/labs/${labSlug}`;
+    if (isValidLabSlug(labSlug)) {
+      return labHref(labSlug);
+    }
+    return '/labs';
   }
 
   for (const [slug, dir] of Object.entries(PACKAGE_DIRS)) {

@@ -1,6 +1,8 @@
 /**
  * Logger for the supervisor system
  */
+import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
+
 export class Logger {
   private level: 'debug' | 'info' | 'warn' | 'error';
   private logFile?: string;
@@ -19,26 +21,20 @@ export class Logger {
     return new Date().toISOString();
   }
 
-  private write(level: string, message: string, data?: unknown): void {
+  private write(level: 'debug' | 'info' | 'warn' | 'error', message: string, data?: unknown): void {
     if (!this.shouldLog(level)) return;
 
     const timestamp = this.formatTimestamp();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
-    const output = data ? `${prefix} ${message}` : `${prefix} ${message}`;
+    const sanitizedMessage = sanitizeLogText(message);
+    const payload =
+      data === undefined ? sanitizedMessage : `${sanitizedMessage} ${sanitizeLogText(data)}`;
 
-    if (level === 'error' && data) {
-      console.error(output, data);
-    } else if (level === 'warn') {
-      console.warn(output);
-    } else if (level === 'debug') {
-      console.debug(output);
-    } else {
-      console.log(output);
-    }
+    safeConsoleWrite(level, prefix, payload);
 
     // TODO: Write to log file if configured
-    if (this.logFile && data) {
-      // fs.appendFileSync(this.logFile, `${output}\n${JSON.stringify(data, null, 2)}\n`);
+    if (this.logFile && data !== undefined) {
+      // fs.appendFileSync(this.logFile, `${prefix} ${payload}\n`);
     }
   }
 

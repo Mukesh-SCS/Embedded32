@@ -1,73 +1,178 @@
 .markdown {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
+  line-height: 1.65;
+  max-width: 52rem;
 }
 
-.markdown :global(h1) {
-  margin-top: 0;
-  font-size: 1.9rem;
-  line-height: 1.25;
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 1rem;
 }
 
-.markdown :global(h2) {
-  margin-top: 2rem;
+.markdown h1 {
+  font-size: 2rem;
+  border-bottom: var(--border);
   padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--border);
 }
 
-.markdown :global(h3) {
-  margin-top: 1.5rem;
+.markdown h2 {
+  font-size: 1.35rem;
+  margin-top: 2rem;
+  border-left: 4px solid var(--ink);
+  padding-left: 0.5rem;
 }
 
-.markdown :global(p),
-.markdown :global(li) {
-  color: #1e293b;
+.markdown h3 {
+  font-size: 1.1rem;
 }
 
-.markdown :global(code) {
-  background: #f1f5f9;
-  padding: 0.15rem 0.35rem;
-  border-radius: 4px;
-  font-size: 0.9em;
+.markdown p,
+.markdown li {
+  font-size: 1rem;
 }
 
-.markdown :global(pre) {
-  background: #0f172a;
-  color: #e2e8f0;
+.markdown code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius);
+}
+
+.markdown pre {
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+  background: var(--ink);
+  color: #e8e8e8;
   padding: 1rem;
-  border-radius: 10px;
-  overflow: auto;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
 }
 
-.markdown :global(pre code) {
+.markdown pre code {
   background: transparent;
+  border: none;
   padding: 0;
   color: inherit;
 }
 
-.markdown :global(table) {
+.markdown table {
   width: 100%;
   border-collapse: collapse;
+  border: var(--border);
   margin: 1rem 0;
 }
 
-.markdown :global(th),
-.markdown :global(td) {
-  border: 1px solid var(--border);
+.markdown th,
+.markdown td {
+  border: 2px solid var(--ink);
   padding: 0.5rem 0.75rem;
   text-align: left;
 }
 
-.markdown :global(blockquote) {
-  margin: 1rem 0;
-  padding: 0.75rem 1rem;
-  border-left: 4px solid var(--accent);
-  background: var(--accent-soft);
-  color: #0c4a6e;
+.markdown th {
+  background: var(--yellow);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
 }
 
-.markdown :global(img) {
+.markdown blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: var(--border);
+  border-left-width: 6px;
+  background: var(--surface);
+  box-shadow: var(--shadow-small);
+}
+
+.markdown hr {
+  border: none;
+  border-top: var(--border);
+  margin: 2rem 0;
+}
+
+.markdown img {
   max-width: 100%;
+  border: var(--border);
+  box-shadow: var(--shadow-small);
+}
+
+.markdown a {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.5rem;
+}
+
+.toc {
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+}
+
+.tocTitle {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.toc a {
+  text-decoration: none;
+}
+
+.toc a:hover {
+  background: var(--yellow);
+}
+
+.tocH3 {
+  padding-left: 1rem;
+}
+
+.withToc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 2rem;
+}
+
+.tocAside {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+@media (max-width: 900px) {
+  .withToc {
+    grid-template-columns: 1fr;
+  }
+
+  .tocAside {
+    order: -1;
+    position: static;
+  }
 }

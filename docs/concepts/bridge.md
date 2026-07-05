@@ -70,7 +70,7 @@ Exact schema is documented in package READMEs and will expand in v1.1 labs.
 
 ## Security note (classroom)
 
-MQTT labs should use local brokers and TLS where possible. Do not expose unauthenticated bridges to the public internet. Detailed guidance will appear in `SECURITY.md` (Phase 6).
+MQTT labs should use local brokers and TLS where possible. Do not expose unauthenticated bridges to the public internet. See [SECURITY.md](../../SECURITY.md) for credential and deployment guidance.
 
 ## Limitations
 

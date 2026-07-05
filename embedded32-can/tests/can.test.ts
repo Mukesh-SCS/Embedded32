@@ -88,6 +88,36 @@ describe('@embedded32/can', () => {
         extended: false,
       });
     });
+
+    it('should not deliver after driver close', (done) => {
+      const driver = new MockCANDriver();
+      const can = new CANInterface(driver);
+      let called = false;
+
+      can.onMessage(() => {
+        called = true;
+      });
+      can.close();
+
+      can.send({ id: 0x300, data: [1], extended: false });
+
+      setTimeout(() => {
+        expect(called).toBe(false);
+        done();
+      }, 50);
+    });
+
+    it('should echo oversized payloads without truncation', (done) => {
+      const can = new CANInterface(new MockCANDriver());
+
+      can.onMessage((frame) => {
+        expect(frame.data).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        can.close();
+        done();
+      });
+
+      can.send({ id: 0x400, data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], extended: false });
+    });
   });
 
   describe('CANInterface', () => {

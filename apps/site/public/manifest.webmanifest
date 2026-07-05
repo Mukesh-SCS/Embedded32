@@ -1,0 +1,10 @@
+{
+  "name": "Embedded32",
+  "short_name": "E32",
+  "description": "CAN and J1939 education platform",
+  "start_url": "/Embedded32/",
+  "display": "standalone",
+  "background_color": "#f4f0e6",
+  "theme_color": "#111111",
+  "icons": []
+}

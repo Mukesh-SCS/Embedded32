@@ -1,184 +1,457 @@
-.notice {
-  background: var(--accent-soft);
-  border: 1px solid #bae6fd;
-  color: #0c4a6e;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 1rem;
-  margin: 1.5rem 0 0.5rem;
-}
-
-.controls label {
+.root {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  font-size: 0.85rem;
-  color: var(--muted);
+  gap: 1rem;
 }
 
-.controls select {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.95rem;
+.notice {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
   background: var(--surface);
+  box-shadow: var(--shadow-small);
+  margin: 0;
 }
 
-.buttons {
+.toolbar {
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  background: var(--surface);
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--accent);
-  color: white;
-  font-weight: 600;
+.toolbarRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.toolbar label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.toolbar select,
+.toolbar input[type='text'],
+.filters input,
+.filters select,
+.importPanel textarea {
+  min-height: 44px;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  background: var(--paper);
+}
+
+.toolbar button,
+.importActions button {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+  background: var(--yellow);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
-.buttons button:disabled {
-  background: #cbd5e1;
+.toolbar button:hover:not(:disabled),
+.importActions button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.toolbar button:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-.buttons button:nth-child(2),
-.buttons button:nth-child(3) {
-  background: var(--surface);
-  color: var(--text);
+.checkboxLabel {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.5rem !important;
 }
 
-.scenarioDesc {
-  color: var(--muted);
-  margin: 0.25rem 0 1rem;
+.stateBadge {
+  padding: 0.35rem 0.75rem;
+  border: 2px solid var(--ink);
+  background: var(--cyan);
+  font-family: var(--font-mono);
+  font-weight: 700;
 }
 
-.meters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.meter {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
+.seekLabel {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
 
-.meter span {
-  font-size: 0.8rem;
-  color: var(--muted);
+.mono {
+  font-family: var(--font-mono);
 }
 
-.meter strong {
-  font-size: 1.4rem;
+.dashboard {
+  display: grid;
+  grid-template-columns: 240px 1fr 280px;
+  gap: 1rem;
 }
 
-.barTrack {
-  height: 8px;
-  background: #e2e8f0;
-  border-radius: 999px;
-  overflow: hidden;
+.colLearning,
+.colCenter,
+.colInspector {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.barFill {
-  height: 100%;
-  transition: width 0.2s ease;
-}
-
-.signals {
+.panel,
+.learningPanel,
+.importPanel,
+.inspector,
+.signals,
+.network,
+.timeline,
+.metrics {
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-small);
+  padding: 1rem;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
 }
 
-.signals h3 {
+.panelTitle {
   margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  text-transform: uppercase;
 }
 
-.sa {
+.networkGrid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.ecuColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ecuNode {
+  border: 2px solid var(--ink);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
+  background: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ecuActive {
+  background: var(--green);
+  box-shadow: var(--shadow-small);
+}
+
+.ecuFault {
+  background: var(--red);
+}
+
+.activeTag {
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.busLine {
+  border: var(--border);
+  padding: 1rem 0.5rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  background: var(--yellow);
+  min-width: 100px;
+}
+
+.busState {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.timelineTrack {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+}
+
+.timelineFrame {
+  flex: 0 0 auto;
+  min-width: 72px;
+  min-height: 44px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  padding: 0.35rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.timelineSelected {
+  background: var(--yellow);
+  box-shadow: var(--shadow-small);
+}
+
+.timelineFault {
+  border-color: var(--red);
+  background: #ffe0e0;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.5rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.metric span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
   color: var(--muted);
-  font-weight: 400;
+}
+
+.metric strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.inspectGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  margin: 0 0 1rem;
+}
+
+.inspectGrid dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.byteGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.byteCell {
+  border: 2px solid var(--ink);
+  padding: 0.35rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.byteCell span {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+.explanation {
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.5rem;
+  border-left: 4px solid var(--ink);
+  background: var(--paper);
 }
 
 .signals ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.5rem;
 }
 
 .signals li {
   display: flex;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: #f8fafc;
-  border-radius: 8px;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
 }
 
-.log {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: auto;
-  max-height: 420px;
-}
-
-.log table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.log th,
-.log td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-  white-space: nowrap;
-}
-
-.log th {
-  position: sticky;
-  top: 0;
-  background: #f8fafc;
+.sa {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   color: var(--muted);
 }
 
-.log td:last-child,
-.log th:last-child {
-  white-space: normal;
+.frameLog {
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  background: var(--surface);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.frameLog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.frameLog th,
+.frameLog td {
+  border: 2px solid var(--ink);
+  padding: 0.4rem 0.5rem;
+  text-align: left;
+}
+
+.frameLog th {
+  background: var(--yellow);
+  text-transform: uppercase;
+  font-size: 0.7rem;
 }
 
 .faultRow {
-  background: #fef2f2;
+  background: #ffe8e8;
 }
 
-.empty {
-  text-align: center;
+.selectedRow {
+  background: var(--cyan);
+  outline: 3px solid var(--ink);
+}
+
+.empty,
+.emptyHint {
   color: var(--muted);
-  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+.importActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.importError {
+  color: var(--red);
+  font-weight: 700;
+  margin: 0.5rem 0 0;
+}
+
+.fileLabel input {
+  display: none;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sev_none {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.sev_low {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.sev_medium {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.sev_high {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.pagination button {
+  min-height: 44px;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.learningPanel ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 1000px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar button:hover:not(:disabled),
+  .importActions button:hover {
+    transform: none;
+  }
 }

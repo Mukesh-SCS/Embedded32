@@ -1,180 +1,104 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { TracePlayer, TRACES, type DecodedFrame, type PlayerSnapshot } from '@embedded32/demo';
+import { useMemo } from 'react';
+import {
+  TRACES,
+  SCENARIO_META,
+  exportDecodedCsv,
+  exportDecodedJson,
+  exportTraceJson,
+} from '@embedded32/demo';
+import { downloadBlob, useTracePlayer } from './hooks/useTracePlayer';
+import { DemoToolbar } from './components/DemoToolbar';
+import { ScenarioOverview } from './components/ScenarioOverview';
+import { BusNetwork } from './components/BusNetwork';
+import { PlaybackTimeline } from './components/PlaybackTimeline';
+import { MetricPanel } from './components/MetricPanel';
+import { FrameTable } from './components/FrameTable';
+import { FrameInspector } from './components/FrameInspector';
+import { SignalPanel } from './components/SignalPanel';
+import { TraceImport } from './components/TraceImport';
+import { LearningPanel } from './components/LearningPanel';
 import styles from './demo.module.css';
 
-const SPEEDS = [1, 2, 4, 10];
-
 export function DemoClient() {
-  const [scenario, setScenario] = useState(TRACES[0]?.scenario ?? '');
-  const [speed, setSpeed] = useState(4);
-  const [snapshot, setSnapshot] = useState<PlayerSnapshot | null>(null);
-  const playerRef = useRef<TracePlayer | null>(null);
+  const player = useTracePlayer();
+  const { trace, snapshot, customTrace } = player;
 
-  const trace = useMemo(() => TRACES.find((t) => t.scenario === scenario) ?? TRACES[0], [scenario]);
+  const decoded = snapshot?.decoded ?? [];
+  const selectedIndex = snapshot?.selectedIndex ?? -1;
+  const selectedFrame =
+    selectedIndex >= 0 && selectedIndex < decoded.length ? decoded[selectedIndex] : snapshot?.currentFrame ?? null;
 
-  useEffect(() => {
-    const player = new TracePlayer({ speed, onUpdate: setSnapshot });
-    playerRef.current = player;
-    if (trace) player.load(trace);
-    return () => player.stop();
-  }, [trace, speed]);
+  const scenarios = useMemo(() => {
+    const builtIn = TRACES.map((t) => ({
+      scenario: t.scenario,
+      title: SCENARIO_META[t.scenario]?.title ?? t.scenario,
+    }));
+    if (customTrace && !builtIn.some((b) => b.scenario === customTrace.scenario)) {
+      return [...builtIn, { scenario: customTrace.scenario, title: `${customTrace.scenario} (imported)` }];
+    }
+    return builtIn;
+  }, [customTrace]);
 
-  const decoded: DecodedFrame[] = snapshot?.decoded ?? [];
-  const state = snapshot?.state ?? 'idle';
-  const busLoad = snapshot?.busLoadPercent ?? 0;
+  const slug = trace?.scenario?.replace(/[^a-z0-9-]/gi, '-') ?? 'trace';
 
-  const latestSignals = decoded.length > 0 ? decoded[decoded.length - 1] : null;
+  const handleExportJson = () => {
+    const frames = player.decodeAll();
+    downloadBlob(`embedded32-${slug}-decoded.json`, exportDecodedJson(frames), 'application/json');
+  };
+
+  const handleExportCsv = () => {
+    const frames = player.decodeAll();
+    downloadBlob(`embedded32-${slug}-decoded.csv`, exportDecodedCsv(frames), 'text/csv');
+  };
+
+  const handleExportTrace = () => {
+    if (!trace) return;
+    downloadBlob(`embedded32-${slug}-trace.json`, exportTraceJson(trace), 'application/json');
+  };
 
   return (
-    <div>
+    <div className={styles.root} data-testid="demo-root">
       <p className={styles.notice}>
-        Everything below runs <strong>entirely in your browser</strong> using synthetic traces.
-        There is no server, WebSocket, or hardware connection.
+        Everything below runs <strong>entirely in your browser</strong> using synthetic traces. No server, WebSocket,
+        or hardware connection.
       </p>
 
-      <div className={styles.controls}>
-        <label>
-          Scenario
-          <select value={scenario} onChange={(e) => setScenario(e.target.value)}>
-            {TRACES.map((t) => (
-              <option key={t.scenario} value={t.scenario}>
-                {t.scenario}
-              </option>
-            ))}
-          </select>
-        </label>
+      <DemoToolbar
+        {...player}
+        scenario={customTrace ? customTrace.scenario : player.scenario}
+        scenarios={scenarios}
+        onScenarioChange={player.changeScenario}
+        onExportJson={handleExportJson}
+        onExportCsv={handleExportCsv}
+        onExportTrace={handleExportTrace}
+      />
 
-        <label>
-          Speed
-          <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
-            {SPEEDS.map((s) => (
-              <option key={s} value={s}>
-                {s}×
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className={styles.dashboard}>
+        <aside className={styles.colLearning}>
+          <LearningPanel trace={trace} />
+          <ScenarioOverview trace={trace} />
+          <TraceImport onImport={player.loadCustomTrace} onClear={player.clearCustomTrace} />
+        </aside>
 
-        <div className={styles.buttons}>
-          <button
-            type="button"
-            onClick={() => playerRef.current?.play()}
-            disabled={state === 'playing'}
-          >
-            Play
-          </button>
-          <button
-            type="button"
-            onClick={() => playerRef.current?.pause()}
-            disabled={state !== 'playing'}
-          >
-            Pause
-          </button>
-          <button type="button" onClick={() => playerRef.current?.stop()}>
-            Reset
-          </button>
+        <div className={styles.colCenter}>
+          <BusNetwork currentFrame={snapshot?.currentFrame ?? null} />
+          <PlaybackTimeline
+            frames={decoded}
+            selectedIndex={selectedIndex}
+            onSelect={player.selectFrame}
+          />
+          <MetricPanel snapshot={snapshot} />
         </div>
+
+        <aside className={styles.colInspector}>
+          <FrameInspector frame={selectedFrame} />
+          <SignalPanel frame={selectedFrame} />
+        </aside>
       </div>
 
-      {trace && <p className={styles.scenarioDesc}>{trace.description}</p>}
-
-      <div className={styles.meters}>
-        <div className={styles.meter}>
-          <span>Frames decoded</span>
-          <strong>
-            {snapshot?.index ?? 0} / {snapshot?.total ?? trace?.frames.length ?? 0}
-          </strong>
-        </div>
-        <div className={styles.meter}>
-          <span>Estimated bus load (250 kbps)</span>
-          <strong>{busLoad}%</strong>
-          <div className={styles.barTrack}>
-            <div
-              className={styles.barFill}
-              style={{
-                width: `${Math.min(100, busLoad)}%`,
-                background: busLoad > 80 ? '#dc2626' : busLoad > 50 ? '#f59e0b' : '#16a34a',
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {latestSignals && latestSignals.signals.length > 0 && (
-        <div className={styles.signals}>
-          <h3>
-            Latest decode - {latestSignals.name}{' '}
-            <span className={styles.sa}>
-              SA 0x{latestSignals.sourceAddress.toString(16).padStart(2, '0')}
-            </span>
-          </h3>
-          <ul>
-            {latestSignals.signals.map((sig) => (
-              <li key={sig.label}>
-                <span>{sig.label}</span>
-                <strong>
-                  {sig.value}
-                  {sig.unit ? ` ${sig.unit}` : ''}
-                </strong>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div className={styles.log}>
-        <table>
-          <thead>
-            <tr>
-              <th>t (ms)</th>
-              <th>CAN ID</th>
-              <th>PGN</th>
-              <th>SA</th>
-              <th>Message</th>
-              <th>Decoded</th>
-            </tr>
-          </thead>
-          <tbody>
-            {decoded.length === 0 && (
-              <tr>
-                <td colSpan={6} className={styles.empty}>
-                  Press <strong>Play</strong> to stream the selected trace.
-                </td>
-              </tr>
-            )}
-            {decoded
-              .slice()
-              .reverse()
-              .map((frame, i) => (
-                <tr
-                  key={`${frame.timestampMs}-${i}`}
-                  className={frame.isFault ? styles.faultRow : undefined}
-                >
-                  <td>{frame.timestampMs}</td>
-                  <td>
-                    <code>{frame.rawId}</code>
-                  </td>
-                  <td>
-                    <code>{frame.pgnHex}</code>
-                  </td>
-                  <td>
-                    <code>0x{frame.sourceAddress.toString(16).padStart(2, '0')}</code>
-                  </td>
-                  <td>{frame.name}</td>
-                  <td>
-                    {frame.signals.length === 0
-                      ? '-'
-                      : frame.signals
-                          .map((s) => `${s.label}: ${s.value}${s.unit ? ` ${s.unit}` : ''}`)
-                          .join('; ')}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+      <FrameTable frames={decoded} selectedIndex={selectedIndex} onSelect={player.selectFrame} />
     </div>
   );
 }

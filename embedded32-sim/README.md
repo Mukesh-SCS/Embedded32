@@ -49,7 +49,7 @@ await runner.stop();
 
 ## Browser compatibility
 
-**Node.js only** in v1.0. Browser demo will use prerecorded traces (Phase 10).
+**Node.js only** in v1.0. The site browser demo at `/demo` plays prerecorded synthetic traces.
 
 ## Common errors
 

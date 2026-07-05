@@ -1,6 +1,6 @@
 # Sample CAN/J1939 traces
 
-Synthetic, royalty-free bus captures for classroom demos and the future browser playground (Phase 10).
+Synthetic, royalty-free bus captures for classroom demos and the site browser demo at `/demo`.
 
 ## Format (`embedded32-trace-v1`)
 

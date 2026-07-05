@@ -12,7 +12,7 @@ import { Logger } from './logger';
 import { Scheduler } from './scheduler';
 import { MessageBus } from './messaging';
 import { ModuleRegistry } from './registry';
-import { ConfigLoader } from './config';
+import { ConfigLoader, ConfigValidationError } from './config';
 import { RuntimeConfig, Module } from './types';
 
 export class Runtime {
@@ -65,7 +65,18 @@ export class Runtime {
     // Load configuration
     if (this.config.configPath) {
       const configLoader = new ConfigLoader();
-      await configLoader.load(this.config.configPath);
+      try {
+        await configLoader.load(this.config.configPath);
+        this.logger.info(`Configuration loaded from ${this.config.configPath}`);
+      } catch (error: unknown) {
+        const message =
+          error instanceof ConfigValidationError
+            ? error.message
+            : error instanceof Error
+              ? error.message
+              : String(error);
+        this.logger.warn(`Configuration not loaded from ${this.config.configPath}: ${message}`);
+      }
     }
 
     // Initialize all registered modules

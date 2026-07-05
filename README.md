@@ -9,7 +9,7 @@
 | **Release**       | `v1.0.0` monorepo packages (npm publish requires maintainer approval)                 |
 | **Maturity**      | Active development - suitable for learning, labs, and prototyping                     |
 | **Testing**       | Core J1939 and runtime libraries have unit tests; some packages have minimal coverage |
-| **Documentation** | `apps/site/` Next.js site - run locally; public deploy pending maintainer approval    |
+| **Documentation** | `apps/site/` Next.js site — local dev ready; GitHub Pages workflow ships on `main` (live URL after owner enables Pages) |
 | **Certification** | **Not** automotive-certified, safety-certified, or claimed SAE-compliant              |
 
 Embedded32 is a teaching and experimentation platform. It is not positioned as a production-grade replacement for professional CAN tools or a complete J1939 implementation.
@@ -146,7 +146,7 @@ Details: [docs/architecture.md](docs/architecture.md)
 - `SimulationRunner` and vehicle profiles in `@embedded32/sim`
 - `embedded32-tools simulate` for decoded traffic in the terminal
 - Examples under `examples/` and package `examples/` directories
-- Future browser demo with prerecorded traces
+- Browser demo at `/demo` on the docs site (`apps/demo/`) with synthetic traces
 
 ## Hardware-supported usage
 
@@ -161,14 +161,14 @@ SocketCAN setup is optional for courses - see [docs/getting-started.md](docs/get
 
 ## Educational labs
 
-Four labs are planned under `labs/` (Phase 5):
+Four classroom labs ship under `labs/`:
 
 1. CAN communication basics
 2. J1939 messaging
 3. Multi-ECU simulation
 4. Diagnostics and fault injection
 
-Placeholder index: [labs/README.md](labs/README.md)
+Lab catalog: [labs/README.md](labs/README.md)
 
 ## Documentation
 
@@ -212,7 +212,7 @@ MIT License - see [LICENSE](LICENSE).
 
 ## Security reporting
 
-Report vulnerabilities privately - details will be documented in `SECURITY.md` (Phase 6).  
+Report vulnerabilities privately — see [SECURITY.md](SECURITY.md).  
 Do not post exploit details in public issues.
 
 ## Maintainer information

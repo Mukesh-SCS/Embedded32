@@ -2,6 +2,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as YAML from 'yaml';
 import { RuntimeConfig } from '@embedded32/supervisor';
+import { validateConfigObject } from './security/configPath';
+import { redactSecrets } from './security/configRedact';
+import {
+  MqttCredentialError,
+  resolveMqttCredentials,
+  stripInlineMqttCredentials,
+} from './security/mqttCredentials';
+import { safeConsoleWrite } from './security/logSanitize';
 
 /**
  * Configuration loader - reads and validates embedded32.yaml
@@ -13,9 +21,6 @@ export class ConfigLoader {
     this.configPath = configPath || this.findConfigFile();
   }
 
-  /**
-   * Find configuration file in standard locations
-   */
   private findConfigFile(): string {
     const locations = [
       './embedded32.yaml',
@@ -35,9 +40,6 @@ export class ConfigLoader {
     throw new Error('embedded32.yaml not found in standard locations');
   }
 
-  /**
-   * Load configuration from file
-   */
   load(): RuntimeConfig {
     if (!fs.existsSync(this.configPath)) {
       throw new Error(`Configuration file not found: ${this.configPath}`);
@@ -45,24 +47,51 @@ export class ConfigLoader {
 
     try {
       const fileContent = fs.readFileSync(this.configPath, 'utf-8');
-      const config = YAML.parse(fileContent) as RuntimeConfig;
-      this.validate(config);
-      return config;
+      const parsed = YAML.parse(fileContent) as RuntimeConfig;
+      this.rejectInlineMqttCredentials(parsed);
+      const validated = validateConfigObject(parsed) as RuntimeConfig;
+      this.applyRuntimeMqttCredentials(validated);
+      this.validate(validated);
+      return validated;
     } catch (error) {
+      if (error instanceof MqttCredentialError) {
+        throw error;
+      }
       const err = error instanceof Error ? error : new Error(String(error));
       throw new Error(`Failed to load configuration: ${err.message}`);
     }
   }
 
-  /**
-   * Validate configuration structure
-   */
+  private rejectInlineMqttCredentials(config: RuntimeConfig): void {
+    const mqtt = config.ethernet?.mqtt as Record<string, unknown> | undefined;
+    if (!mqtt) return;
+    if ('username' in mqtt || 'password' in mqtt) {
+      throw new Error(
+        'MQTT username/password must not appear in embedded32.yaml. Use EMBEDDED32_MQTT_USERNAME and EMBEDDED32_MQTT_PASSWORD environment variables instead.'
+      );
+    }
+  }
+
+  private applyRuntimeMqttCredentials(config: RuntimeConfig): void {
+    if (!config.ethernet?.mqtt) return;
+    const mqtt = config.ethernet.mqtt;
+    const sanitized = stripInlineMqttCredentials(mqtt as Record<string, unknown>);
+    Object.assign(mqtt, sanitized);
+    delete (mqtt as Record<string, unknown>).username;
+    delete (mqtt as Record<string, unknown>).password;
+
+    const credentials = resolveMqttCredentials(mqtt);
+    if (credentials.username) {
+      mqtt.username = credentials.username;
+      mqtt.password = credentials.password;
+    }
+  }
+
   private validate(config: RuntimeConfig): void {
     if (!config) {
       throw new Error('Configuration is empty');
     }
 
-    // Basic validation - can be extended
     if (config.can && !config.can.interface) {
       throw new Error('CAN interface must be specified');
     }
@@ -76,9 +105,6 @@ export class ConfigLoader {
     }
   }
 
-  /**
-   * Create default configuration
-   */
   static createDefault(): RuntimeConfig {
     return {
       can: {
@@ -137,24 +163,23 @@ export class ConfigLoader {
     };
   }
 
-  /**
-   * Save configuration to file
-   */
   save(config: RuntimeConfig, filepath: string): void {
     try {
-      const yaml = YAML.stringify(config);
+      const safe = redactSecrets(config);
+      const yaml = YAML.stringify(safe);
       fs.writeFileSync(filepath, yaml, 'utf-8');
-      console.log(`✅ Configuration saved to: ${filepath}`);
+      safeConsoleWrite('log', '[ConfigLoader]', `Configuration saved to: ${filepath}`);
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       throw new Error(`Failed to save configuration: ${err.message}`);
     }
   }
 
-  /**
-   * Get configuration path
-   */
   getPath(): string {
     return this.configPath;
   }
+}
+
+export function logRuntimeConfig(config: RuntimeConfig): void {
+  safeConsoleWrite('info', '[ConfigLoader]', 'Loaded configuration', redactSecrets(config));
 }

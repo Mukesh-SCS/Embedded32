@@ -53,6 +53,15 @@ We support good-faith security research on your own installations and forks. Do 
 
 Report vulnerable **dependencies** via Dependabot alerts (when enabled) or a private advisory. Run `npm audit` locally for awareness - not all findings require immediate action in a dev/education toolchain.
 
+## MQTT credentials
+
+- Do **not** commit MQTT usernames or passwords in `embedded32.yaml` or example files.
+- When MQTT is enabled, provide credentials through environment variables:
+  - `EMBEDDED32_MQTT_USERNAME`
+  - `EMBEDDED32_MQTT_PASSWORD`
+- Anonymous local brokers are supported when neither variable is set.
+- Runtime logs redact credential fields via `redactSecrets()`; never log authorization headers or raw broker passwords.
+
 ## Contact
 
 See [MAINTAINERS.md](MAINTAINERS.md) for current security contacts. No phone numbers are listed in this policy.

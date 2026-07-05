@@ -6,6 +6,7 @@
 import { connect, MqttClient, IClientOptions } from 'mqtt';
 import { J1939NanoProto } from './nanoproto';
 import { EventEmitter } from 'events';
+import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
 
 export interface MQTTOptions extends IClientOptions {
   brokerUrl: string;
@@ -60,7 +61,7 @@ export class MQTTClient extends EventEmitter {
         this.client = connect(this.options.brokerUrl, clientOptions);
 
         this.client.on('connect', () => {
-          console.log(`MQTT Connected: ${this.options.clientId}`);
+          safeConsoleWrite('info', '[MQTT]', `Connected: ${sanitizeLogText(this.options.clientId)}`);
           this.isConnected = true;
           this.reconnectAttempts = 0;
 
@@ -93,24 +94,24 @@ export class MQTTClient extends EventEmitter {
               this.emit('message', { ...jsonMsg, topic });
             }
           } catch (error) {
-            console.error('Error processing MQTT message:', error);
+            safeConsoleWrite('error', '[MQTT]', 'Error processing message', error);
           }
         });
 
         this.client.on('error', (error) => {
-          console.error('MQTT Error:', error);
+          safeConsoleWrite('error', '[MQTT]', 'Client error', error);
           this.emit('error', error);
         });
 
         this.client.on('disconnect', () => {
-          console.log('MQTT Disconnected');
+          safeConsoleWrite('info', '[MQTT]', 'Disconnected');
           this.isConnected = false;
           this.emit('disconnected');
         });
 
         this.client.on('offline', () => {
           this.isConnected = false;
-          console.log('MQTT Offline - attempting to reconnect');
+          safeConsoleWrite('info', '[MQTT]', 'Offline - attempting to reconnect');
         });
       } catch (error) {
         reject(error);
@@ -122,7 +123,7 @@ export class MQTTClient extends EventEmitter {
     this.subscribedTopics.add(topic);
     if (this.client && this.isConnected) {
       this.client.subscribe(topic, { qos: qos as 0 | 1 | 2 });
-      console.log(`Subscribed to: ${topic}`);
+      safeConsoleWrite('info', '[MQTT]', `Subscribed to: ${sanitizeLogText(topic)}`);
     }
   }
 
@@ -147,7 +148,7 @@ export class MQTTClient extends EventEmitter {
   publish(topic: string, payload: any, qos: number = 1): void {
     const data = typeof payload === 'string' ? payload : JSON.stringify(payload);
     this.client?.publish(topic, data, { qos: qos as 0 | 1 | 2, retain: false });
-    console.log(`Published to ${topic}`);
+    safeConsoleWrite('info', '[MQTT]', `Published to ${sanitizeLogText(topic)}`);
   }
 
   /**

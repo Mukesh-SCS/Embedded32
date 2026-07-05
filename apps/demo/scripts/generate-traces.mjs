@@ -21,7 +21,7 @@ const ORDER = [
   'engine-overheat',
   'sensor-failure',
   'high-bus-load',
-  'address-conflict',
+  'address-claim-conflict',
   'multi-packet-message',
 ];
 

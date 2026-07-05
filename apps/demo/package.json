@@ -11,7 +11,8 @@
   },
   "scripts": {
     "generate:traces": "node scripts/generate-traces.mjs",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
   },
   "keywords": [
     "can",
@@ -24,6 +25,7 @@
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "vitest": "^3.2.4"
   }
 }

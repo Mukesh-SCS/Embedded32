@@ -1,28 +1,53 @@
-/**
- * Test Suite: J1939-CAN Gateway
- *
- * Tests:
- * - CAN→J1939 message decoding
- * - J1939→CAN message encoding
- * - Two-way bridge functionality
- * - Error handling for invalid frames
- * - Message filtering and routing
- */
+import { describe, it, expect, jest } from '@jest/globals';
+import { J1939CANBinding } from '../src/gateway/J1939CANBinding.js';
+import { buildJ1939Id } from '../src/id/J1939Id.js';
 
-import { describe, it, expect } from '@jest/globals';
-import { J1939CANBinding } from '../src/index.js';
+describe('J1939CANBinding', () => {
+  it('publishes decoded RX frames and sends TX payloads', () => {
+    const published: unknown[] = [];
+    const sent: unknown[] = [];
+    const bus = {
+      publish: jest.fn((topic: string, msg: unknown) => published.push({ topic, msg })),
+      subscribe: jest.fn((topic: string, cb: (msg: unknown) => void) => {
+        if (topic === 'j1939.tx') {
+          (bus as { txCb?: (msg: unknown) => void }).txCb = cb;
+        }
+      }),
+    };
+    const can = {
+      onMessage: jest.fn((cb: (frame: unknown) => void) => {
+        (can as { rxCb?: (frame: unknown) => void }).rxCb = cb;
+      }),
+      send: jest.fn((frame: unknown) => sent.push(frame)),
+    };
 
-describe('J1939-CAN Gateway', () => {
-  it('should instantiate J1939CANBinding', () => {
-    // Basic smoke test - J1939CANBinding class exists and can be referenced
-    expect(J1939CANBinding).toBeDefined();
+    const binding = new J1939CANBinding(can as never, bus);
+    binding.start();
+
+    const frame = {
+      id: buildJ1939Id({ pgn: 0xf004, sa: 0x0e }),
+      data: [0, 0, 0, 0x10, 0x00, 0xff, 0xff, 0xff],
+      extended: true,
+    };
+    (can as { rxCb?: (f: unknown) => void }).rxCb?.(frame);
+    expect(published[0]).toMatchObject({ topic: 'j1939.rx' });
+
+    (bus as { txCb?: (msg: unknown) => void }).txCb?.({
+      payload: { pgn: 0xf004, sa: 0x0e, data: [1, 2, 3] },
+    });
+    expect(sent.length).toBe(1);
   });
 
-  it('should skip detailed gateway tests due to external dependencies', () => {
-    // Gateway tests require MockCANDriver, CANInterface, MessageBus from external packages
-    // These tests would need proper workspace configuration or npm linking
-    // For now, we verify the class exists and can be imported
-    const binding = J1939CANBinding;
-    expect(typeof binding).toBe('function');
+  it('ignores invalid TX payloads', () => {
+    const bus = {
+      publish: jest.fn(),
+      subscribe: jest.fn((_topic: string, cb: (msg: unknown) => void) => {
+        cb({ payload: { pgn: 'bad' } });
+      }),
+    };
+    const can = { onMessage: jest.fn(), send: jest.fn() };
+    const binding = new J1939CANBinding(can as never, bus);
+    binding.start();
+    expect(can.send).not.toHaveBeenCalled();
   });
 });

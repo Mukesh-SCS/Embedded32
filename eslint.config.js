@@ -20,6 +20,9 @@ export default tseslint.config(
       'apps/site/.next/**',
       'apps/site/out/**',
       'apps/site/public/api-ref/**',
+      '.e2e-pages/**',
+      'test-results/**',
+      'playwright-report/**',
       'apps/site/next-env.d.ts',
       'apps/demo/src/traces.ts',
     ],
@@ -82,6 +85,27 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       'no-empty': ['error', { allowEmptyCatch: true }],
+    },
+  },
+  {
+    files: [
+      '**/security/logSanitize.ts',
+      '**/security/configPath.ts',
+      'apps/site/src/lib/security.ts',
+    ],
+    rules: {
+      'no-control-regex': 'off',
+    },
+  },
+  {
+    files: ['apps/site/tests/**/*.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      'no-control-regex': 'off',
     },
   },
   {

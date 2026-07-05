@@ -15,8 +15,8 @@ Embedded32 is a **modular npm monorepo** for teaching and prototyping vehicle-ne
 flowchart TB
   subgraph presentation [Presentation]
     DASH["dashboard (private)"]
-    SITE["docs site (planned)"]
-    DEMO["browser demo (planned)"]
+    SITE["docs site (GitHub Pages)"]
+    DEMO["browser demo (/demo)"]
   end
   subgraph entry [Entry points]
     CLI["@embedded32/cli"]
@@ -126,7 +126,7 @@ Embedded32/
 ├── embedded32-sdk-js/     # @embedded32/sdk-js
 ├── embedded32-dashboard/  # private UI
 ├── examples/              # cross-package examples
-├── labs/                  # structured coursework (Phase 5)
+├── labs/                  # four classroom labs with starter/solution/rubric
 ├── docs/                  # human documentation
 └── scripts/               # audit, verify, packaging helpers
 ```

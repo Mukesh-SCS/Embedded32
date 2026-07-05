@@ -1,4 +1,5 @@
 import { LogEntry } from '../types';
+import { safeConsoleWrite, sanitizeLogText } from '../security/logSanitize.js';
 
 export class Logger {
   private level: 'debug' | 'info' | 'warn' | 'error';
@@ -16,45 +17,30 @@ export class Logger {
     this.level = level;
   }
 
-  /**
-   * Log debug message
-   */
-  debug(message: string, context?: any): void {
+  debug(message: string, context?: unknown): void {
     this.log('debug', message, context);
   }
 
-  /**
-   * Log info message
-   */
-  info(message: string, context?: any): void {
+  info(message: string, context?: unknown): void {
     this.log('info', message, context);
   }
 
-  /**
-   * Log warning message
-   */
-  warn(message: string, context?: any): void {
+  warn(message: string, context?: unknown): void {
     this.log('warn', message, context);
   }
 
-  /**
-   * Log error message
-   */
-  error(message: string, context?: any): void {
+  error(message: string, context?: unknown): void {
     this.log('error', message, context);
   }
 
-  /**
-   * Internal log method
-   */
-  private log(level: 'debug' | 'info' | 'warn' | 'error', message: string, context?: any): void {
+  private log(level: 'debug' | 'info' | 'warn' | 'error', message: string, context?: unknown): void {
     if (this.levelPriority[level] < this.levelPriority[this.level]) {
       return;
     }
 
     const entry: LogEntry = {
       level,
-      message,
+      message: sanitizeLogText(message),
       timestamp: Date.now(),
       context,
     };
@@ -64,42 +50,23 @@ export class Logger {
       this.history.shift();
     }
 
-    // Console output - use appropriate console method by level
     const prefix = `[${new Date().toISOString()}] [${level.toUpperCase()}]`;
-    const output = `${prefix} ${message}`;
+    const payload =
+      context === undefined
+        ? sanitizeLogText(message)
+        : `${sanitizeLogText(message)} ${sanitizeLogText(context)}`;
 
-    switch (level) {
-      case 'error':
-        console.error(output, context || '');
-        break;
-      case 'warn':
-        console.warn(output, context || '');
-        break;
-      case 'debug':
-        console.debug(output, context || '');
-        break;
-      default:
-        console.log(output, context || '');
-    }
+    safeConsoleWrite(level, prefix, payload);
   }
 
-  /**
-   * Set log level
-   */
   setLevel(level: 'debug' | 'info' | 'warn' | 'error'): void {
     this.level = level;
   }
 
-  /**
-   * Get log history
-   */
   getHistory(): LogEntry[] {
     return [...this.history];
   }
 
-  /**
-   * Clear log history
-   */
   clearHistory(): void {
     this.history = [];
   }

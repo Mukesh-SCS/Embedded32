@@ -61,6 +61,6 @@ The workflow runs `npm run docs:api` before the site build and validates the exp
 | `/labs/*`     | `labs/lab-*/README.md`                           |
 | `/packages/*` | `embedded32-*/README.md`                         |
 | `/api-ref/*`  | Copied from `docs/api/` (TypeDoc)                |
-| `/demo`       | Placeholder until Phase 10                       |
+| `/demo`       | Client-side CAN/J1939 trace player (`apps/demo/`) |
 
 Maintainer-only docs remain in `docs/maintainers/` and are not published on this site.

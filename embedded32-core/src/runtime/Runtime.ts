@@ -2,7 +2,6 @@ import { Logger } from '../logger/Logger.js';
 import { Scheduler } from '../scheduler/Scheduler.js';
 import { MessageBus } from '../messaging/MessageBus.js';
 import { ModuleRegistry } from '../registry/ModuleRegistry.js';
-import { ConfigLoader } from '../config/ConfigLoader.js';
 import { RuntimeConfig, Module } from '../types.js';
 
 export class Runtime {
@@ -18,9 +17,7 @@ export class Runtime {
     this.scheduler = new Scheduler();
     this.bus = new MessageBus();
     this.registry = new ModuleRegistry();
-
-    const loader = new ConfigLoader();
-    this.config = loader.load(options.configPath || './config.json');
+    this.config = Object.create(null);
   }
 
   registerModule(module: Module) {
