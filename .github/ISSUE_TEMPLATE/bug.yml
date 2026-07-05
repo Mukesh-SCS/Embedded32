@@ -1,0 +1,93 @@
+name: Bug report
+description: Report a defect in Embedded32 packages, CLIs, labs, or documentation
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. For **security vulnerabilities**, use [private reporting](https://github.com/Mukesh-SCS/Embedded32/security/policy) instead.
+
+  - type: input
+    id: package
+    attributes:
+      label: Package affected
+      description: npm package name or area (e.g. @embedded32/j1939, labs, docs)
+      placeholder: '@embedded32/can'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Package version, tag, or commit hash
+      placeholder: '1.0.0 or commit abc1234'
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: 'node --version output'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - WSL
+        - Raspberry Pi OS
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Commands and actions from a clean `npm ci && npm run build` when possible
+      placeholder: |
+        1. npm ci
+        2. npm run build
+        3. npx tsx ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or terminal output
+      description: Paste relevant stderr/stdout (redact secrets)
+      render: shell
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Willing to open a pull request with a fix?
+      options:
+        - 'Yes'
+        - 'No'
+        - 'Maybe — need guidance'
+    validations:
+      required: true

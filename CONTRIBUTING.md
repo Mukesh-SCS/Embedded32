@@ -1,146 +1,201 @@
 # Contributing to Embedded32
 
-Thank you for your interest in contributing to Embedded32!
+Thank you for helping make Embedded32 a reliable classroom and open-source platform for CAN, J1939, simulation, and diagnostics learning.
 
-## Ways to Contribute
+## Ways to contribute
 
-- **Report Bugs** - Submit detailed bug reports
-- **Suggest Features** - Propose new features or improvements
-- **Write Documentation** - Improve docs, add tutorials
-- **Submit Code** - Fix bugs or implement features
-- **Create Examples** - Share working example projects
+- **Documentation** — guides, concepts, package READMEs, education materials
+- **Labs** — new exercises under `labs/` with starter, solution, rubric, and instructor notes
+- **Tests** — unit tests, lab verification, packaging smoke tests
+- **Bug fixes** — packaging, CLI behavior, simulation correctness
+- **Examples** — hardware-free demos under `examples/`
+- **Issues** — clear bug reports and feature proposals
 
-## Getting Started
+## Development setup
 
-### 1. Fork and Clone
+### Prerequisites
+
+- Node.js **18+** and npm **9+**
+- Git
+
+### Clone and install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Embedded32.git
+git clone https://github.com/Mukesh-SCS/Embedded32.git
 cd Embedded32
+npm ci
 ```
 
-### 2. Install Dependencies
+If `npm ci` fails due to lockfile drift, run `npm install` once and open an issue.
 
-```bash
-npm install
-```
-
-### 3. Create a Branch
-
-```bash
-git checkout -b feature/my-new-feature
-```
-
-### 4. Build and Test
+### Build and verify
 
 ```bash
 npm run build
-npm run test
+npm run verify
 ```
 
-## Development Guidelines
+| Command                        | Purpose                             |
+| ------------------------------ | ----------------------------------- |
+| `npm run lint`                 | ESLint                              |
+| `npm run typecheck`            | TypeScript across packages          |
+| `npm run test`                 | Package unit tests                  |
+| `npm run test:labs`            | Classroom lab solution verification |
+| `npm run audit:packages`       | Tarball packaging audit             |
+| `npm run test:package-install` | Clean install smoke tests           |
+| `npm run format:check`         | Prettier                            |
 
-### Code Style
-
-- Use TypeScript for all code
-- Follow existing code formatting
-- Add comments for complex logic
-- Write self-documenting code
-
-### Commit Messages
-
-Follow conventional commits:
+## Repository structure
 
 ```
-type(scope): brief description
-
-Fixes #123
+Embedded32/
+├── embedded32-*/          # @embedded32/* npm packages
+├── apps/site/             # Documentation site (planned)
+├── apps/demo/             # Browser demo (planned)
+├── labs/                  # Classroom labs
+├── docs/                    # Human documentation + generated API
+├── examples/              # Cross-package examples and traces
+├── scripts/               # Maintainer automation
+└── .github/               # Community templates and CI (Phase 7+)
 ```
 
-**Types:** `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+Published import paths (`@embedded32/*`) must remain stable unless a breaking change is documented in `CHANGELOG.md`.
+
+## Branch naming
+
+| Prefix   | Use                |
+| -------- | ------------------ |
+| `feat/`  | New feature or lab |
+| `fix/`   | Bug fix            |
+| `docs/`  | Documentation only |
+| `chore/` | Tooling, deps, CI  |
+| `test/`  | Test-only changes  |
+
+Example: `feat/lab-05-bridge-basics`
+
+## Commit style
+
+Use [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+type(scope): short description
+
+Optional body explaining why.
+```
+
+**Types:** `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `style`
 
 **Examples:**
 
 ```
-feat(j1939): add DM2 diagnostic support
-fix(can): resolve SocketCAN buffer overflow
-docs(readme): update installation instructions
+docs(education): add instructor troubleshooting section
+fix(can): handle closed MockCANDriver in lab example
+test(labs): assert Lab 03 minimum frame count
 ```
 
-### Testing
+Keep documentation-only changes in separate commits from behavioral changes when possible.
+
+## Running tests
 
 ```bash
+# All package tests
 npm run test
+
+# Lab solutions (instructors and CI)
+npm run test:labs
+
+# Full gate (before opening a PR)
+npm run verify
 ```
 
-- Write tests for new features
-- Ensure all tests pass before submitting
+### Adding tests
 
-## Project Structure
+- Place Jest tests in each package's `tests/` directory.
+- Follow existing ESM patterns (`--experimental-vm-modules` where configured).
+- For labs, update `expected-output/` and `scripts/verify-labs.mjs` when changing solution markers.
+- Document why tests are skipped if a change cannot be tested.
+
+## Updating documentation
+
+- Root and package READMEs must stay honest — no false certification claims.
+- Concept pages live in `docs/concepts/`.
+- Course material lives in `docs/education/`.
+- Regenerate API docs when public exports change: `npm run docs:api`.
+- Run `npm run format` on edited markdown.
+
+## Submitting a pull request
+
+1. Fork the repository and create a branch from `main` (or the active integration branch).
+2. Make focused changes with tests or documented test exceptions.
+3. Run `npm run verify` and `npm run test:labs` when touching labs or docs examples.
+4. Fill out the [pull request template](.github/pull_request_template.md).
+5. Link related issues (`Fixes #123`).
+
+Maintainers may request changes; please keep PRs reasonably scoped.
+
+## Reporting bugs
+
+Use the [bug report issue form](https://github.com/Mukesh-SCS/Embedded32/issues/new?template=bug.yml).
+
+Include:
+
+- Package affected and version
+- Node.js version and OS
+- Steps to reproduce
+- Expected vs actual behavior
+- Logs or terminal output
+
+**Do not** post exploit details or private credentials in public issues — see [SECURITY.md](SECURITY.md).
+
+## Proposing features
+
+Use the [feature request issue form](https://github.com/Mukesh-SCS/Embedded32/issues/new?template=feature.yml).
+
+Explain the teaching or engineering problem, proposed behavior, and alternatives considered.
+
+## Creating educational labs
+
+New labs should follow the structure in `labs/lab-01-can-basics/`:
 
 ```
-embedded32/
-├── embedded32-core/      # OS runtime
-├── embedded32-can/       # CAN layer
-├── embedded32-j1939/     # J1939 stack
-├── embedded32-ethernet/  # Ethernet/MQTT
-├── embedded32-bridge/    # Protocol bridging
-├── embedded32-sim/       # Vehicle simulator
-├── embedded32-tools/     # CLI tools
-├── embedded32-dashboard/ # Web UI
-├── embedded32-sdk-*/     # SDKs (JS, Python, C)
-├── examples/             # Example projects
-└── docs/                 # Documentation
+labs/lab-NN-name/
+  README.md
+  starter/
+  solution/
+  expected-output/
+  rubric.md
+  instructor-notes.md
 ```
 
-## Bug Reports
+Requirements:
 
-Please include:
+- Hardware-free unless clearly marked optional
+- Runnable via `npx tsx` from repository root after `npm run build`
+- Verification markers checked by `npm run test:labs`
+- Honest scope notes for J1939 subset limitations
 
-1. **Description** - Clear description of the bug
-2. **Steps to Reproduce** - Detailed steps
-3. **Expected vs Actual** - What should happen vs what happens
-4. **Environment** - OS, Node version, hardware
-5. **Logs** - Relevant error messages
+Use the [lab request issue form](https://github.com/Mukesh-SCS/Embedded32/issues/new?template=lab-request.yml) to propose new labs before opening a large PR.
 
-## Feature Requests
+## Becoming a maintainer
 
-Please include:
+Embedded32 is maintained by a small core team. Maintainers are added when contributors demonstrate:
 
-1. **Use Case** - Why is this needed?
-2. **Proposed Solution** - How should it work?
-3. **Alternatives** - Other approaches considered
+- Several merged PRs (code, docs, or labs)
+- Reliable use of `npm run verify`
+- Respect for project scope and honest documentation
 
-## Pull Request Process
+See [GOVERNANCE.md](GOVERNANCE.md) and [MAINTAINERS.md](MAINTAINERS.md). Express interest by commenting on a relevant issue or discussion — there is no formal application form.
 
-1. Update documentation for any changes
-2. Add tests for new features
-3. Update CHANGELOG.md
-4. Ensure all CI checks pass
-5. Request review from maintainers
+## Code of conduct
 
-### PR Checklist
-
-- [ ] Tests added/updated
-- [ ] Documentation updated
-- [ ] CHANGELOG updated
-- [ ] Code follows style guidelines
-
-## Questions?
-
-- Open a [GitHub Discussion](https://github.com/Mukesh-SCS/Embedded32/discussions)
-- Review existing [Issues](https://github.com/Mukesh-SCS/Embedded32/issues)
-
-## Code of Conduct
-
-- Be respectful and inclusive
-- Welcome newcomers
-- Focus on constructive feedback
+This project follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be respectful, welcome newcomers, and focus on constructive feedback.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree your contributions are licensed under the [MIT License](LICENSE).
 
----
+## Questions
 
-**Thank you for contributing to Embedded32!** 🎉
+- [GitHub Discussions](https://github.com/Mukesh-SCS/Embedded32/discussions) — questions and ideas
+- [SUPPORT.md](SUPPORT.md) — where to ask for help
+- [Issues](https://github.com/Mukesh-SCS/Embedded32/issues) — bugs and features
