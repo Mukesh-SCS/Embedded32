@@ -46,8 +46,10 @@ ethernet:
     enabled: false # Set to true to enable cloud integration
     broker: 'mqtt://localhost:1883'
     clientId: 'embedded32-vehicle-1'
-    username: ''
-    password: ''
+    # Credentials are read at runtime from environment variables when needed:
+    #   EMBEDDED32_MQTT_USERNAME
+    #   EMBEDDED32_MQTT_PASSWORD
+    # Anonymous MQTT brokers are supported when no credentials are configured.
 
 # ============================================================================
 # Message Bridge Configuration

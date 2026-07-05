@@ -15,7 +15,7 @@ Embedded32 is a unified platform for building embedded communication systems:
 
 - **Core Runtime** - Lightweight OS with scheduler and messaging
 - **CAN Support** - Hardware-agnostic CAN interface
-- **J1939 Stack** - Complete SAE J1939 implementation
+- **J1939 Stack** - Educational J1939 subset (PGN/SPN decode, transport, diagnostics)
 - **Ethernet Layer** - UDP, TCP, MQTT support
 - **Developer Tools** - CLI tools for monitoring and debugging
 - **SDKs** - C, JavaScript, and Python support
@@ -23,13 +23,14 @@ Embedded32 is a unified platform for building embedded communication systems:
 ## Quick Start
 
 ```bash
-# Install CLI tools
-npm install -g embedded32-cli
+# From monorepo clone (npm publish pending maintainer approval)
+git clone https://github.com/Mukesh-SCS/Embedded32.git
+cd Embedded32 && npm ci && npm run build
 
-# Monitor J1939 traffic
-embedded32 j1939 monitor --iface vcan0
+# Monitor J1939 traffic (after build)
+npx embedded32 j1939 monitor --iface vcan0
 
-# Use JavaScript SDK
+# Use JavaScript SDK from workspace
 npm install @embedded32/sdk-js
 ```
 

@@ -52,7 +52,7 @@ See `embedded32-sdk-js/examples/basic-j1939.ts` in the monorepo.
 
 ## Browser compatibility
 
-Virtual transport and decode-only paths may be bundled for future browser demo (Phase 10). SocketCAN is not browser-available.
+Virtual transport and decode-only paths are bundled in the site demo (`apps/demo`, route `/demo`). SocketCAN is not browser-available.
 
 ## Common errors
 

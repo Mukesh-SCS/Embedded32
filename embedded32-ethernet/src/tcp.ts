@@ -5,6 +5,8 @@
 import { Server, Socket, createServer } from 'net';
 import { J1939NanoProto } from './nanoproto';
 import { EventEmitter } from 'events';
+import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
+import { formatClientIdForLog } from './tcpClientId';
 
 export interface TCPOptions {
   port: number;
@@ -18,6 +20,10 @@ export interface TCPMessage {
   priority: number;
   data: Buffer;
   timestamp: number;
+}
+
+function formatClientId(socket: Socket): string {
+  return formatClientIdForLog(socket.remoteAddress, socket.remotePort);
 }
 
 /**
@@ -35,8 +41,8 @@ export class TCPServer extends EventEmitter {
   async start(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.server.on('connection', (socket: Socket) => {
-        const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
-        console.log(`TCP Client connected: ${clientId}`);
+        const clientId = formatClientId(socket);
+        safeConsoleWrite('info', '[TCP]', `Client connected: ${clientId}`);
         this.clientConnections.set(clientId, socket);
 
         let buffer = Buffer.alloc(0);
@@ -44,30 +50,21 @@ export class TCPServer extends EventEmitter {
         socket.on('data', (chunk: Buffer) => {
           buffer = Buffer.concat([buffer, chunk]);
 
-          // Try to decode NanoProto messages from buffer
           while (buffer.length > 0) {
             try {
               const msg = J1939NanoProto.decode(buffer);
               this.emit('message', msg, clientId);
-
-              // Remove processed bytes from buffer
-              // This is simplified - real implementation would need proper framing
               buffer = Buffer.alloc(0);
               break;
-            } catch (error) {
-              // Incomplete message, wait for more data
+            } catch {
               break;
             }
           }
         });
 
         socket.on('error', (error) => {
-          console.error(`TCP Client error (${clientId}):`, error);
-          this.emit('error', error, clientId);
-        });
-
-        socket.on('end', () => {
-          console.log(`TCP Client disconnected: ${clientId}`);
+          safeConsoleWrite('error', '[TCP]', `Client error (${clientId})`, error);
+          safeConsoleWrite('info', '[TCP]', `Client disconnected: ${clientId}`);
           this.clientConnections.delete(clientId);
           this.emit('disconnect', clientId);
         });
@@ -79,9 +76,9 @@ export class TCPServer extends EventEmitter {
         if (this.options.maxConnections) {
           this.server.maxConnections = this.options.maxConnections;
         }
-        console.log(
-          `TCP Server listening on ${this.options.address || '0.0.0.0'}:${this.options.port}`
-        );
+        const address = sanitizeLogText(this.options.address || '0.0.0.0');
+        const port = sanitizeLogText(this.options.port);
+        safeConsoleWrite('info', '[TCP]', `Server listening on ${address}:${port}`);
         resolve();
       });
     });
@@ -110,7 +107,6 @@ export class TCPServer extends EventEmitter {
 
   async stop(): Promise<void> {
     return new Promise((resolve) => {
-      // Close all client connections
       this.clientConnections.forEach((socket) => socket.destroy());
       this.clientConnections.clear();
 
@@ -138,34 +134,37 @@ export class TCPClient extends EventEmitter {
       this.socket = new Socket();
 
       this.socket.on('connect', () => {
-        console.log(`TCP Client connected to ${this.host}:${this.port}`);
+        safeConsoleWrite(
+          'info',
+          '[TCP]',
+          `Client connected to ${sanitizeLogText(this.host)}:${sanitizeLogText(this.port)}`
+        );
         resolve();
       });
 
       this.socket.on('data', (chunk: Buffer) => {
         this.buffer = Buffer.concat([this.buffer, chunk]);
 
-        // Try to decode messages
         while (this.buffer.length > 0) {
           try {
             const msg = J1939NanoProto.decode(this.buffer);
             this.emit('message', msg);
             this.buffer = Buffer.alloc(0);
             break;
-          } catch (error) {
+          } catch {
             break;
           }
         }
       });
 
       this.socket.on('error', (error) => {
-        console.error('TCP Client error:', error);
+        safeConsoleWrite('error', '[TCP]', 'Client error', error);
         this.emit('error', error);
         reject(error);
       });
 
       this.socket.on('close', () => {
-        console.log('TCP Client disconnected');
+        safeConsoleWrite('info', '[TCP]', 'Client disconnected');
         this.emit('disconnect');
       });
 

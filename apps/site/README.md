@@ -1,18 +1,22 @@
 # Embedded32 documentation site
 
-Next.js documentation website for labs, guides, packages, and API reference.
+Neo-brutalist education platform built with **Next.js static export** for GitHub Pages at `/Embedded32/`.
+
+## Design system
+
+Components live in `src/components/ui/`:
+
+- `BrutalButton`, `BrutalCard`, `Badge`, `Callout`, `CodePanel`, `MetricBlock`, `SectionHeading`, `StatusStrip`
+- Tokens in `src/app/globals.css` (ink/paper/yellow/cyan, hard borders, offset shadows)
+- System font stacks only (no external font downloads)
 
 ## Local development
-
-From monorepo root (API docs must exist first):
 
 ```bash
 npm ci
 npm run build
 npm run docs:api
-cd apps/site
-npm install
-npm run dev
+cd apps/site && npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
@@ -20,47 +24,30 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Production build
 
 ```bash
-cd apps/site
-npm run build
-npm run start
+cd apps/site && npm run build
 ```
 
-`npm run build` runs `scripts/sync-content.mjs`, which copies `docs/api/` into `public/api-ref/`.
+Output: `apps/site/out/` - synced to GitHub Pages by CI.
 
-## Verification
+## Demo
 
-From monorepo root:
+Interactive CAN/J1939 demo at `/demo`. See [`apps/demo/README.md`](../demo/README.md).
+
+## Testing
 
 ```bash
-npm run test:docs
+npm run test:e2e        # Playwright against /Embedded32/ export
+npm run verify:pages    # Static export validation
 ```
 
-Includes `apps/site` production build when `package.json` is present.
+Accessibility: `@axe-core/playwright` checks serious/critical violations on the homepage.
 
 ## Deployment
 
-Deployed to **GitHub Pages** via `.github/workflows/deploy-pages.yml`. Full runbook:
-[docs/deployment/GITHUB_PAGES.md](../../docs/deployment/GITHUB_PAGES.md).
+GitHub Pages serves the static export from `.github/workflows/deploy-pages.yml` (unchanged base path `/Embedded32/`).
 
-| Setting          | Value                                      |
-| ---------------- | ------------------------------------------ |
-| Framework        | Next.js static export (`output: 'export'`) |
-| Build command    | `npm run build --workspace apps/site`      |
-| Output directory | `apps/site/out`                            |
-| Base path        | `/Embedded32` (production)                 |
-| Published URL    | `https://mukesh-scs.github.io/Embedded32/` |
+Do **not** commit `apps/site/.next/` or `apps/site/out/`.
 
-The workflow runs `npm run docs:api` before the site build and validates the export with
-`node scripts/verify-pages-build.mjs`. Vercel is not used.
+## Screenshots
 
-## Content sources
-
-| Route         | Source                                           |
-| ------------- | ------------------------------------------------ |
-| `/docs/*`     | `docs/**/*.md` (excludes `maintainers/`, `api/`) |
-| `/labs/*`     | `labs/lab-*/README.md`                           |
-| `/packages/*` | `embedded32-*/README.md`                         |
-| `/api-ref/*`  | Copied from `docs/api/` (TypeDoc)                |
-| `/demo`       | Placeholder until Phase 10                       |
-
-Maintainer-only docs remain in `docs/maintainers/` and are not published on this site.
+After redesign: see `docs/screenshots/redesign/`.

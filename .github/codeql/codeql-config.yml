@@ -1,0 +1,5 @@
+name: embedded32-codeql
+# Log-injection findings are remediated in source (constant format strings +
+# sanitizeLogText, which strips CR/LF/ANSI/control characters). JavaScript data
+# extensions have no way to express a custom sanitizer (summaryModel only
+# supports taint/value), so no local model pack is loaded here.

@@ -22,7 +22,8 @@
     "clean": "node ../scripts/clean-dist.mjs",
     "prepack": "node ../scripts/copy-license.mjs && npm run build",
     "dev": "tsc -w -p tsconfig.json",
-    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js --coverage --coverageReporters=json-summary --coverageReporters=text"
   },
   "keywords": [
     "embedded-systems",

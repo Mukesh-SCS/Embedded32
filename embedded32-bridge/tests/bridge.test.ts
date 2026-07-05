@@ -1,14 +1,11 @@
 /**
- * Bridge Tests
+ * Bridge package tests
  */
 
-describe('Bridge', () => {
-  it('should initialize successfully', () => {
-    expect(true).toBe(true);
-  });
-
-  it('should be ready for implementation', () => {
-    // TODO: Add bridge tests
-    expect(true).toBe(true);
+describe('Bridge package', () => {
+  it('loads bridge modules', async () => {
+    const mod = await import('../src/index.js');
+    expect(mod.CanEthernetBridge).toBeDefined();
+    expect(mod.RuleEngine).toBeDefined();
   });
 });

@@ -127,7 +127,7 @@ npx embedded32-tools monitor vcan0
 
 ## Next step - first lab
 
-Continue to [labs/README.md](../labs/README.md) for the structured lab sequence (Phase 5).
+Continue to [labs/README.md](../labs/README.md) for the four classroom labs.
 
 ## Related docs
 

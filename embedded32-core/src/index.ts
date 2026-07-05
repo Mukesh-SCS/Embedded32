@@ -12,4 +12,8 @@ export * from './scheduler/Scheduler.js';
 export * from './messaging/MessageBus.js';
 export * from './logger/Logger.js';
 export * from './config/ConfigLoader.js';
+export * from './security/logSanitize.js';
+export * from './security/configPath.js';
+export * from './security/configRedact.js';
+export * from './security/mqttCredentials.js';
 export * from './types.js';

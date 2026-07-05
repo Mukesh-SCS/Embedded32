@@ -1,0 +1,49 @@
+.labGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.labCard h2 {
+  margin: 0.5rem 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.labHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.labNumber {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.prereq {
+  font-size: 0.9rem;
+}
+
+.startLink {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+
+.verify {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}

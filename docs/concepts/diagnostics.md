@@ -50,7 +50,7 @@ sequenceDiagram
   Bus->>Stu: embedded32-tools monitor / decode
 ```
 
-Planned lab 4 (`labs/04-diagnostics`) will walk through inject → observe → clear scenarios.
+Lab 4 ([`labs/lab-04-diagnostics-and-faults/`](../../labs/lab-04-diagnostics-and-faults/)) walks through inject → observe → clear scenarios.
 
 ## DM2 and clearing
 

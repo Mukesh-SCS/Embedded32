@@ -52,19 +52,50 @@ export const NAV_SECTIONS: NavSection[] = [
     title: 'Reference',
     items: [
       { label: 'Packages', href: '/packages' },
+      { label: 'Interactive demo', href: '/demo' },
       { label: 'API reference', href: '/api-ref/index.html' },
       { label: 'Architecture', href: '/docs/architecture' },
-      { label: 'Citation', href: '/docs/citation' },
+      { label: 'Citation', href: '/cite' },
     ],
   },
 ];
 
-export const FOOTER_LINKS: NavItem[] = [
-  { label: 'GitHub', href: 'https://github.com/Mukesh-SCS/Embedded32' },
+export const FOOTER_SECTIONS: NavSection[] = [
   {
-    label: 'Contributing',
-    href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/CONTRIBUTING.md',
+    title: 'Learn',
+    items: [
+      { label: 'Getting started', href: '/docs/getting-started' },
+      { label: 'Classroom labs', href: '/labs' },
+      { label: 'Interactive demo', href: '/demo' },
+      { label: 'For instructors', href: '/teach' },
+    ],
   },
-  { label: 'Roadmap', href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/ROADMAP.md' },
-  { label: 'Browser demo (soon)', href: '/demo' },
+  {
+    title: 'Build',
+    items: [
+      { label: 'Packages', href: '/packages' },
+      { label: 'API reference', href: '/api-ref/index.html' },
+      { label: 'Architecture', href: '/docs/architecture' },
+      { label: 'Roadmap', href: '/roadmap' },
+    ],
+  },
+  {
+    title: 'Community',
+    items: [
+      { label: 'Contribute', href: '/contribute' },
+      { label: 'GitHub', href: 'https://github.com/Mukesh-SCS/Embedded32' },
+      { label: 'About', href: '/about' },
+    ],
+  },
+  {
+    title: 'Legal & status',
+    items: [
+      { label: 'Citation', href: '/cite' },
+      { label: 'MIT License', href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/LICENSE' },
+      { label: 'Security', href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/SECURITY.md' },
+    ],
+  },
 ];
+
+/** @deprecated use FOOTER_SECTIONS */
+export const FOOTER_LINKS: NavItem[] = FOOTER_SECTIONS.flatMap((s) => s.items);

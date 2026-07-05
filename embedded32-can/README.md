@@ -53,7 +53,7 @@ J1939 parsing lives in `@embedded32/j1939`, not this package.
 
 ## Browser compatibility
 
-**Node.js only.** CAN hardware is not available in normal browser environments. Use simulation packages or the planned browser demo instead.
+**Node.js only.** CAN hardware is not available in normal browser environments. Use simulation packages or the [browser demo](../apps/demo/README.md) on the docs site.
 
 ## Common errors
 

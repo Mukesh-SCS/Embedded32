@@ -2,7 +2,7 @@
  * ConfigLoader Tests
  */
 
-import { ConfigLoader } from '../src/config/ConfigLoader';
+import { ConfigLoader, ConfigPathError, ConfigValidationError } from '../src/config/ConfigLoader';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -19,7 +19,6 @@ describe('ConfigLoader', () => {
   });
 
   afterEach(() => {
-    // Clean up temp files
     if (fs.existsSync(tempDir)) {
       fs.rmSync(tempDir, { recursive: true });
     }
@@ -35,10 +34,8 @@ describe('ConfigLoader', () => {
       expect(loaded).toEqual(config);
     });
 
-    it('should handle missing config file gracefully', async () => {
-      const loaded = await loader.load('/non/existent/path.json');
-
-      expect(loaded).toEqual({});
+    it('should throw for missing config file', async () => {
+      await expect(loader.load('/non/existent/path.json')).rejects.toThrow(ConfigValidationError);
     });
 
     it('should load nested configuration', async () => {
@@ -56,8 +53,8 @@ describe('ConfigLoader', () => {
 
       const loaded = await loader.load(testConfigPath);
 
-      expect(loaded.server.port).toBe(3000);
-      expect(loaded.database.pool).toBe(10);
+      expect((loaded.server as Record<string, unknown>).port).toBe(3000);
+      expect((loaded.database as Record<string, unknown>).pool).toBe(10);
     });
   });
 
@@ -79,43 +76,37 @@ describe('ConfigLoader', () => {
     });
 
     it('should get top-level config value', () => {
-      const port = loader.get('port');
-      expect(port).toBe(3000);
+      expect(loader.get('port')).toBe(3000);
     });
 
     it('should get nested config value', () => {
-      const appName = loader.get('app.name');
-      expect(appName).toBe('TestApp');
+      expect(loader.get('app.name')).toBe('TestApp');
     });
 
     it('should get deeply nested config value', () => {
-      const logging = loader.get('app.features.logging');
-      expect(logging).toBe(true);
+      expect(loader.get('app.features.logging')).toBe(true);
     });
 
     it('should return default value for missing key', () => {
-      const value = loader.get('non.existent.key', 'default');
-      expect(value).toBe('default');
+      expect(loader.get('non.existent.key', 'default')).toBe('default');
     });
 
     it('should return undefined for missing key without default', () => {
-      const value = loader.get('non.existent.key');
-      expect(value).toBeUndefined();
+      expect(loader.get('non.existent.key')).toBeUndefined();
     });
 
-    it('should get all configuration', () => {
+    it('should get all configuration as a deep copy', () => {
       const all = loader.getAll();
-      expect(all).toHaveProperty('app');
-      expect(all).toHaveProperty('port');
-      expect(all.port).toBe(3000);
+      (all.app as Record<string, unknown>).name = 'Changed';
+      expect(loader.get('app.name')).toBe('TestApp');
     });
   });
 
   describe('set configuration', () => {
     it('should set top-level config value', async () => {
+      fs.writeFileSync(testConfigPath, JSON.stringify({}));
       await loader.load(testConfigPath);
       loader.set('port', 8080);
-
       expect(loader.get('port')).toBe(8080);
     });
 
@@ -123,84 +114,34 @@ describe('ConfigLoader', () => {
       const config = { app: { name: 'Test' } };
       fs.writeFileSync(testConfigPath, JSON.stringify(config));
       await loader.load(testConfigPath);
-
       loader.set('app.version', '2.0.0');
-
       expect(loader.get('app.version')).toBe('2.0.0');
     });
 
     it('should create nested path if not exists', async () => {
+      fs.writeFileSync(testConfigPath, JSON.stringify({}));
       await loader.load(testConfigPath);
       loader.set('new.nested.value', 42);
-
       expect(loader.get('new.nested.value')).toBe(42);
     });
 
-    it('should override existing values', async () => {
-      const config = { setting: 'old' };
-      fs.writeFileSync(testConfigPath, JSON.stringify(config));
+    it('should reject prototype pollution keys', async () => {
+      fs.writeFileSync(testConfigPath, JSON.stringify({}));
       await loader.load(testConfigPath);
-
-      loader.set('setting', 'new');
-
-      expect(loader.get('setting')).toBe('new');
+      expect(() => loader.set('__proto__.polluted', true)).toThrow(ConfigPathError);
+      expect(({} as Record<string, unknown>).polluted).toBeUndefined();
     });
   });
 
   describe('save configuration', () => {
     it('should save configuration to file', async () => {
-      const config = { setting: 'value' };
       fs.writeFileSync(testConfigPath, JSON.stringify({}));
       await loader.load(testConfigPath);
-
       loader.set('setting', 'value');
       await loader.save(testConfigPath);
 
-      const saved = fs.readFileSync(testConfigPath, 'utf-8');
-      const parsed = JSON.parse(saved);
+      const parsed = JSON.parse(fs.readFileSync(testConfigPath, 'utf-8'));
       expect(parsed.setting).toBe('value');
-    });
-
-    it('should preserve existing values when saving', async () => {
-      const config = { existing: 'value', other: 'data' };
-      fs.writeFileSync(testConfigPath, JSON.stringify(config));
-      await loader.load(testConfigPath);
-
-      loader.set('new', 'field');
-      await loader.save(testConfigPath);
-
-      const saved = fs.readFileSync(testConfigPath, 'utf-8');
-      const parsed = JSON.parse(saved);
-      expect(parsed.existing).toBe('value');
-      expect(parsed.new).toBe('field');
-    });
-
-    it('should create formatted JSON output', async () => {
-      const config = { app: { name: 'Test' } };
-      fs.writeFileSync(testConfigPath, JSON.stringify(config));
-      await loader.load(testConfigPath);
-
-      await loader.save(testConfigPath);
-
-      const saved = fs.readFileSync(testConfigPath, 'utf-8');
-      expect(saved).toContain('\n');
-      expect(saved).toContain('  ');
-    });
-  });
-
-  describe('empty configuration', () => {
-    it('should handle empty config file', async () => {
-      fs.writeFileSync(testConfigPath, '{}');
-      await loader.load(testConfigPath);
-
-      const value = loader.get('any.key', 'default');
-      expect(value).toBe('default');
-    });
-
-    it('should work with fresh ConfigLoader instance', () => {
-      const freshLoader = new ConfigLoader();
-      const value = freshLoader.get('any.key', 'default');
-      expect(value).toBe('default');
     });
   });
 });

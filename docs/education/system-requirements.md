@@ -67,7 +67,7 @@ Embedded32 SocketCAN support depends on the optional `socketcan` npm module and 
 
 ## Browser demo (future)
 
-The planned browser playground (Phase 10) will run without local Node for viewing traces; **lab grading** still uses the Node toolchain above.
+The browser demo at `/demo` runs without local Node for viewing traces; **lab grading** still uses the Node toolchain above.
 
 ## Accessibility
 

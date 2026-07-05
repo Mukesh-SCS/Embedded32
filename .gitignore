@@ -89,11 +89,21 @@ __pycache__/
 .eggs/
 *.egg
 
+# Next.js static export / demo build artifacts
+apps/site/.next/
+apps/site/out/
+apps/demo/node_modules/
+apps/demo/node_modules/.vite/
+
 # TypeScript
 *.tsbuildinfo
 tsconfig.json.bak
 
 # Private documentation
 docs/roadmap.md
+# E2E staging directory
+.e2e-pages/
+test-results/
+playwright-report/
 # SDK Python internal files
-embedded32-sdk-python/src/embedded32/__init__.py
+embedded32-sdk-python/src/embedded32/__init__.py*.zip

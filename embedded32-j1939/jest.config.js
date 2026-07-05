@@ -20,4 +20,9 @@ export default {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
+  coverageThreshold: {
+    global: {
+      lines: 70,
+    },
+  },
 };
