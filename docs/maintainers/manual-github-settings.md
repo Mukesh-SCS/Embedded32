@@ -54,11 +54,14 @@ After merging Phase 6, verify forms render: Issues → New issue → choose temp
 
 After merge, confirm [@Mukesh-SCS](https://github.com/Mukesh-SCS) receives review requests on pull requests.
 
-## Vercel (Phase 11)
+## GitHub Pages (Phase 11)
 
-- [ ] Connect repository to Vercel
-- [ ] Set root directory to `apps/site`
-- [ ] Configure preview deployments for pull requests
+- [ ] Settings → **Pages** → Build and deployment → **Source: GitHub Actions**
+- [ ] Run **Deploy Embedded32 Documentation to GitHub Pages** (Actions tab)
+- [ ] Confirm the deployment environment is named `github-pages`
+- [ ] Verify the site at `https://mukesh-scs.github.io/Embedded32/`
+
+Full runbook: [docs/deployment/GITHUB_PAGES.md](../deployment/GITHUB_PAGES.md).
 
 ## Zenodo (Phase 12)
 

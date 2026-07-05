@@ -26,10 +26,9 @@ Milestone-based plan for the Embedded32 education platform. Dates are tentative.
 
 ## v1.2 — Web learning platform
 
-- [x] Documentation site (`apps/site/`) — built locally; Vercel deploy Phase 11
-- [ ] Browser CAN/J1939 playground (`apps/demo/`)
+- [x] Documentation site (`apps/site/`) — built locally and deployed to GitHub Pages through `.github/workflows/deploy-pages.yml`
+- [x] Browser CAN/J1939 playground (`apps/demo/`)
 - [ ] PGN explorer and ECU visualization
-- [ ] Vercel preview deployments
 - [ ] Privacy-respecting analytics (demo/lab usage only)
 
 ## v1.3 — Community growth

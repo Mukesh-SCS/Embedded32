@@ -17,14 +17,16 @@ export default tseslint.config(
       'embedded32-*/**/*.mjs',
       'labs/**/starter/**',
       'apps/site/.next/**',
+      'apps/site/out/**',
       'apps/site/public/api-ref/**',
       'apps/site/**',
+      'apps/demo/src/traces.ts',
     ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['scripts/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'apps/*/scripts/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',

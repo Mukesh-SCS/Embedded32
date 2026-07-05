@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { withBasePath } from '@/lib/basePath';
 import styles from './markdown.module.css';
 
 type MarkdownProps = {
@@ -14,15 +15,19 @@ export function Markdown({ content }: MarkdownProps) {
         components={{
           a: ({ href, children }) => {
             if (!href) return <span>{children}</span>;
-            const external = href.startsWith('http');
-            if (external) {
+            if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) {
               return (
-                <a href={href} target="_blank" rel="noreferrer">
+                <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
                   {children}
                 </a>
               );
             }
-            return <a href={href}>{children}</a>;
+            return <a href={withBasePath(href)}>{children}</a>;
+          },
+          img: ({ src, alt }) => {
+            const resolved = typeof src === 'string' ? withBasePath(src) : src;
+            // eslint-disable-next-line @next/next/no-img-element
+            return <img src={resolved as string} alt={alt ?? ''} />;
           },
         }}
       >

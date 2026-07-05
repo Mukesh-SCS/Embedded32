@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { withBasePath } from '@/lib/basePath';
 
 export default function HomePage() {
   return (
@@ -57,7 +58,7 @@ export default function HomePage() {
             <h3>API reference</h3>
             <p>TypeDoc-generated reference synced from the monorepo on each site build.</p>
             <p>
-              <Link href="/api-ref/index.html">Open API docs →</Link>
+              <a href={withBasePath('/api-ref/index.html')}>Open API docs →</a>
             </p>
           </article>
         </div>

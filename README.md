@@ -52,11 +52,13 @@ cd apps/site
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for guides, labs, packages, and API reference. Production URL (`embedded32.dev`) is **not deployed yet** — see Phase 11.
+Open [http://localhost:3000](http://localhost:3000) for guides, labs, packages, and API reference.
+
+The site deploys to **GitHub Pages** via `.github/workflows/deploy-pages.yml`. After the owner enables Pages, it is served at `https://mukesh-scs.github.io/Embedded32/`. See [docs/deployment/GITHUB_PAGES.md](docs/deployment/GITHUB_PAGES.md).
 
 ## Browser demo
 
-> **Coming soon (Phase 10)** — interactive CAN/J1939 viewer at `/demo` on the documentation site.
+An interactive, **client-side** CAN/J1939 demo lives at `/demo` on the documentation site (source in `apps/demo/`). It plays synthetic traces and decodes a teaching subset of messages entirely in the browser — no server, WebSocket, or hardware required.
 
 ## Fifteen-minute quickstart
 

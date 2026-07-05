@@ -51,7 +51,7 @@ npm run verify
 Embedded32/
 ├── embedded32-*/          # @embedded32/* npm packages
 ├── apps/site/             # Documentation site (Next.js)
-├── apps/demo/             # Browser demo (planned)
+├── apps/demo/             # Client-side CAN/J1939 browser demo
 ├── labs/                  # Classroom labs
 ├── docs/                    # Human documentation + generated API
 ├── examples/              # Cross-package examples and traces

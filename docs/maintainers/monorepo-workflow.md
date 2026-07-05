@@ -49,14 +49,15 @@ Package paths are unchanged from the original repository layout. Published impor
 | Browser (Vite)      | `dashboard`                       | React + `noEmit` typecheck  |
 | Non-TypeScript      | `sdk-c`, `sdk-python`             | stub scripts only           |
 
-## Future directories
+## Platform directories
 
-| Path                 | Phase | Purpose                             |
-| -------------------- | ----- | ----------------------------------- |
-| `apps/site/`         | 9     | Documentation website (Next.js)     |
-| `apps/demo/`         | 10    | Browser demo                        |
-| `labs/`              | 5     | Classroom labs (four complete labs) |
-| `docs/education/`    | 5     | Instructor and student guides       |
-| `examples/traces/`   | 5     | Synthetic sample bus traces         |
-| `docs/api/`          | 4     | Generated API reference             |
-| `.github/workflows/` | 7     | CI, CodeQL, dependency review       |
+| Path                 | Phase | Purpose                                       |
+| -------------------- | ----- | --------------------------------------------- |
+| `apps/site/`         | 9     | Documentation website (Next.js static export) |
+| `apps/demo/`         | 10    | Client-side CAN/J1939 browser demo modules    |
+| `labs/`              | 5     | Classroom labs (four complete labs)           |
+| `docs/education/`    | 5     | Instructor and student guides                 |
+| `examples/traces/`   | 5     | Synthetic sample bus traces                   |
+| `docs/api/`          | 4     | Generated API reference                       |
+| `docs/deployment/`   | 11    | GitHub Pages deployment runbook               |
+| `.github/workflows/` | 7, 11 | CI, CodeQL, dependency review, Pages deploy   |

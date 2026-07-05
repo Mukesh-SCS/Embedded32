@@ -58,6 +58,12 @@ function main() {
   }
 
   console.log('  ✓ Documentation site build');
+
+  if (!run('node', ['scripts/verify-pages-build.mjs'])) {
+    console.error('FAIL: GitHub Pages build validation');
+    process.exit(1);
+  }
+  console.log('  ✓ GitHub Pages export validated');
 }
 
 main();

@@ -41,7 +41,7 @@ There is no minimum time commitment defined — maintainers should set expectati
 ## Release approval
 
 - **npm:** No package is published without explicit maintainer approval (see `docs/maintainers/manual-npm-settings.md` when published).
-- **Website / Vercel:** Production deploys require owner approval (Phase 11).
+- **Website / GitHub Pages:** Production deploys run via `.github/workflows/deploy-pages.yml`; enabling Pages and the `github-pages` environment requires owner action.
 - **Version policy:** Semantic versioning; see [ROADMAP.md](ROADMAP.md).
 
 ## Conflict resolution

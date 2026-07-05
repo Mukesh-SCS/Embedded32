@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { withBasePath } from '@/lib/basePath';
 import { FOOTER_LINKS, NAV_SECTIONS } from '@/lib/nav';
 import styles from './site-chrome.module.css';
+
+function isApiRef(href: string): boolean {
+  return href.startsWith('/api-ref');
+}
 
 export function MaturityBanner() {
   return (
@@ -23,7 +28,7 @@ export function SiteHeader() {
           <Link href="/docs/getting-started">Docs</Link>
           <Link href="/labs">Labs</Link>
           <Link href="/packages">Packages</Link>
-          <Link href="/api-ref/index.html">API</Link>
+          <a href={withBasePath('/api-ref/index.html')}>API</a>
           <Link href="/demo">Demo</Link>
         </nav>
       </div>
@@ -63,12 +68,16 @@ export function DocsSidebar({ activePath }: { activePath?: string }) {
           <ul>
             {section.items.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={activePath === item.href ? styles.activeLink : undefined}
-                >
-                  {item.label}
-                </Link>
+                {isApiRef(item.href) ? (
+                  <a href={withBasePath(item.href)}>{item.label}</a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={activePath === item.href ? styles.activeLink : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
