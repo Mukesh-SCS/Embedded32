@@ -58,6 +58,7 @@ dkms.conf
 
 # Node.js / npm
 node_modules/
+.nx/
 dist/
 build/
 coverage/
