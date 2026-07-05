@@ -41,7 +41,7 @@ Every route is pre-rendered to static HTML (`trailingSlash: true`), so nested ro
 1. Checkout
 2. `actions/configure-pages`
 3. Node 20 + `npm ci`
-4. `npm run docs:api` (generates TypeDoc under `docs/api/`, synced into `public/api-ref/`)
+4. `npm run docs:api` (builds workspace packages via `predocs:api`, then generates TypeDoc under `docs/api/`, synced into `public/api-ref/`)
 5. `npm run build --workspace apps/site` (static export to `apps/site/out`)
 6. `node scripts/verify-pages-build.mjs` (build validation)
 7. Copy `index.html` → `404.html` fallback
