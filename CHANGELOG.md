@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `apps/site/` — Next.js documentation website (labs, docs, packages, API reference)
 - `apps/demo/` — client-side CAN/J1939 browser demo with synthetic trace playback
 - GitHub Pages deployment: `.github/workflows/deploy-pages.yml`, `scripts/verify-pages-build.mjs`, `docs/deployment/GITHUB_PAGES.md`
+- Citation and Zenodo: `CITATION.cff`, `docs/citation.md`, `docs/maintainers/zenodo-release.md`, `npm run test:citation`
 - Maintainer docs: `release-process.md`, `manual-npm-settings.md`
 
 ### Changed

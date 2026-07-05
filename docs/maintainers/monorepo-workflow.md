@@ -25,9 +25,10 @@ npm ci
 | `npm run test:package-install` | Smoke-test tarball installs                          |
 | `npm run test:labs`            | Verify classroom lab solutions and hygiene           |
 | `npm run test:examples`        | Run key examples after build                         |
-| `npm run test:docs`            | Generate API docs and build `apps/site`                               |
+| `npm run test:docs`            | Generate API docs and build `apps/site`              |
+| `npm run test:citation`        | Validate `CITATION.cff` and citation docs (no fake DOI) |
 | `npm run test:coverage`        | Coverage report for j1939, core, can                 |
-| `npm run verify`               | Full pre-merge check (includes labs, examples, docs) |
+| `npm run verify`               | Full pre-merge check (includes labs, examples, docs, citation) |
 
 ## Workspace layout
 
@@ -60,4 +61,5 @@ Package paths are unchanged from the original repository layout. Published impor
 | `examples/traces/`   | 5     | Synthetic sample bus traces                   |
 | `docs/api/`          | 4     | Generated API reference                       |
 | `docs/deployment/`   | 11    | GitHub Pages deployment runbook               |
+| `docs/maintainers/zenodo-release.md` | 12 | Zenodo DOI workflow for maintainers |
 | `.github/workflows/` | 7, 11 | CI, CodeQL, dependency review, Pages deploy   |

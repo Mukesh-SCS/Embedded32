@@ -77,3 +77,13 @@ npx embedded32-tools monitor vcan0
 ```
 
 Run simulation in one terminal and monitor in another only when bridging sim to vcan is configured — default labs do not require this.
+
+## Citation for syllabi and lab handouts
+
+Ask students to cite the repository version they used. Templates and BibTeX: [citation.md](../citation.md).
+
+For course materials, you may cite:
+
+> Tripathi, M. M. (2026). _Embedded32_ classroom labs (Version 1.0.0). https://github.com/Mukesh-SCS/Embedded32/tree/main/labs
+
+A Zenodo DOI will be available after the maintainer archives a GitHub Release — until then, require students to record the Git commit hash in lab reports.

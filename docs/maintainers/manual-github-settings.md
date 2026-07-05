@@ -65,9 +65,13 @@ Full runbook: [docs/deployment/GITHUB_PAGES.md](../deployment/GITHUB_PAGES.md).
 
 ## Zenodo (Phase 12)
 
-- [ ] Connect GitHub account to Zenodo
-- [ ] Enable this repository for archiving on release
-- [ ] Add DOI badge to README after first archive
+- [ ] Sign in to [zenodo.org](https://zenodo.org) with GitHub and enable **Mukesh-SCS/Embedded32**
+- [ ] Create a GitHub Release; confirm Zenodo drafts a deposition
+- [ ] Publish on Zenodo and copy the issued DOI
+- [ ] Update `CITATION.cff`, `docs/citation.md`, and README badge per [zenodo-release.md](./zenodo-release.md)
+- [ ] Run `npm run test:citation` after DOI fields are added
+
+Citation files and runbook are in the repository; **no DOI is fabricated** until Zenodo issues one.
 
 ## npm publish environment (Phase 8)
 

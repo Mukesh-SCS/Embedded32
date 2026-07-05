@@ -13,6 +13,7 @@ Milestone-based plan for the Embedded32 education platform. Dates are tentative.
 - [x] Community files and issue templates
 - [x] GitHub Actions CI and security automation (Phase 7)
 - [x] Controlled release dry-run (Phase 8)
+- [x] Citation metadata and Zenodo runbook (Phase 12)
 - [ ] npm publish with maintainer approval
 
 ## v1.1 — Education foundation

@@ -104,8 +104,8 @@ Do not republish an existing version to hide mistakes — deprecate on npm if ne
 ## Post-release
 
 1. Create GitHub Release with notes from `CHANGELOG.md`
-2. Trigger Zenodo archive (see `docs/maintainers/zenodo-release.md` — Phase 12)
-3. Update `docs/citation.md` when DOI is issued
+2. Trigger Zenodo archive (see [zenodo-release.md](./zenodo-release.md))
+3. Update `CITATION.cff`, `docs/citation.md`, and README DOI badge when DOI is issued
 4. Verify npm package pages show README + LICENSE
 
 ## Related docs

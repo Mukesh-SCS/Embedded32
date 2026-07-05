@@ -202,7 +202,9 @@ Detailed planning will be published in `ROADMAP.md` (Phase 14).
 
 ## Citation
 
-If you use Embedded32 in academic work, see [docs/citation.md](docs/citation.md) (DOI placeholder until Zenodo archive exists).
+If you use Embedded32 in academic work, see [docs/citation.md](docs/citation.md).
+
+Machine-readable metadata: [CITATION.cff](CITATION.cff). A Zenodo DOI badge will be added after the first archived release — see [docs/maintainers/zenodo-release.md](docs/maintainers/zenodo-release.md). **Do not cite a DOI until it appears in those files.**
 
 ## License
 

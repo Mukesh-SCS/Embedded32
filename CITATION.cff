@@ -2,16 +2,26 @@ cff-version: 1.2.0
 title: Embedded32
 message: >-
   If you use Embedded32 in academic work, please cite the software using the
-  metadata below. A Zenodo DOI will be added after the first archived release.
+  metadata below. A Zenodo DOI will be added to the identifiers section after
+  the first GitHub Release is archived on Zenodo — see
+  docs/maintainers/zenodo-release.md.
 type: software
 authors:
   - family-names: Tripathi
     given-names: Mukesh Mani
+    affiliation: Embedded32 open-source education project
 repository-code: 'https://github.com/Mukesh-SCS/Embedded32'
 url: 'https://github.com/Mukesh-SCS/Embedded32'
 license: MIT
 version: 1.0.0
 date-released: '2026-07-04'
+abstract: >-
+  Embedded32 is an open-source TypeScript monorepo for learning and prototyping
+  embedded vehicle networks: CAN bus abstraction, an educational subset of SAE
+  J1939, multi-ECU simulation, diagnostics, and CAN-to-Ethernet/MQTT bridging.
+  It includes hardware-free classroom labs, synthetic bus traces, a browser
+  educational demo, and npm packages under the @embedded32 scope. The platform
+  is for teaching and experimentation — not automotive safety certification.
 keywords:
   - embedded-systems
   - can-bus
@@ -20,6 +30,7 @@ keywords:
   - typescript
   - education
   - diagnostics
+  - vehicle-networks
 preferred-citation: >-
   Tripathi, M. M. (2026). Embedded32: Open-source TypeScript platform for CAN,
   J1939, and ECU simulation education (Version 1.0.0) [Computer software].

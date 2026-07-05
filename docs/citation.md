@@ -1,10 +1,14 @@
 # Citation
 
-Use these formats when referencing Embedded32 in academic work. A Zenodo DOI is **not yet available** — the placeholder below will be updated when a release is archived.
+Use these formats when referencing Embedded32 in academic work, syllabi, and lab assignments.
+
+A **Zenodo DOI is not yet available**. When the maintainer archives the first GitHub Release on Zenodo, this page and `CITATION.cff` will be updated with real DOIs. Do not cite a fabricated DOI.
 
 ## Software citation (recommended)
 
 > Tripathi, M. M. (2026). _Embedded32: Open-source TypeScript platform for CAN, J1939, and ECU simulation education_ (Version 1.0.0) [Computer software]. https://github.com/Mukesh-SCS/Embedded32
+
+Documentation site (after GitHub Pages deploy): https://mukesh-scs.github.io/Embedded32/
 
 ## BibTeX
 
@@ -15,32 +19,72 @@ Use these formats when referencing Embedded32 in academic work. A Zenodo DOI is 
   year         = {2026},
   version      = {1.0.0},
   url          = {https://github.com/Mukesh-SCS/Embedded32},
-  note         = {DOI pending Zenodo archive}
+  license      = {MIT},
+  note         = {DOI pending first Zenodo archive; cite version tag or commit for reproducibility}
 }
 ```
 
-## Citing a specific version
+After Zenodo issues a DOI, add:
 
-After GitHub releases and Zenodo integration (Phase 12), cite the version-specific DOI from the release page. Until then, cite the repository URL and tag or commit hash:
+```bibtex
+  doi          = {10.5281/zenodo.XXXXXXX},
+```
 
-> Embedded32 v1.0.0, commit `<hash>`, https://github.com/Mukesh-SCS/Embedded32
+and remove the `note` field.
 
-## Citing educational labs
+## Citing a specific version (reproducibility)
 
-When labs are published (Phase 5), cite the lab folder and repository version:
+Until a version DOI exists, cite the **Git tag and commit**:
 
-> Embedded32 Lab 02: J1939 messaging, Embedded32 repository, v1.1.0, `labs/lab-02-j1939-messaging/`
+> Tripathi, M. M. (2026). Embedded32 v1.0.0, commit `<full-sha>`, https://github.com/Mukesh-SCS/Embedded32/tree/v1.0.0
+
+Students and researchers should record the commit hash they used (`git rev-parse HEAD`) in lab reports.
+
+## Citing classroom labs
+
+Four labs ship under `labs/` with starter code, rubrics, and verified solutions. Example:
+
+> Tripathi, M. M. (2026). Embedded32 Lab 02: J1939 messaging, in _Embedded32_ (Version 1.0.0), `labs/lab-02-j1939-messaging/`, https://github.com/Mukesh-SCS/Embedded32
+
+| Lab | Suggested short name |
+|-----|----------------------|
+| Lab 1 | CAN communication basics — `labs/lab-01-can-basics/` |
+| Lab 2 | J1939 messaging — `labs/lab-02-j1939-messaging/` |
+| Lab 3 | Multi-ECU simulation — `labs/lab-03-multi-ecu-simulation/` |
+| Lab 4 | Diagnostics and faults — `labs/lab-04-diagnostics-and-faults/` |
+
+## Citing the browser demo or traces
+
+| Asset | Citation hint |
+|-------|----------------|
+| Browser demo | Embedded32 interactive demo, `apps/demo/`, served at `/demo` on the docs site |
+| Synthetic traces | `examples/traces/*.json`, format `embedded32-trace-v1`, `"source": "synthetic"` |
+
+Example:
+
+> Embedded32 synthetic trace `normal-operation.json`, Embedded32 repository v1.0.0, `examples/traces/`
 
 ## DOI status
 
-| Item                   | Status         |
-| ---------------------- | -------------- |
-| Zenodo concept DOI     | **Not issued** |
+| Item | Status |
+|------|--------|
+| Zenodo GitHub integration | **Not configured** (owner action) |
+| Concept DOI (all versions) | **Not issued** |
 | Version DOI for v1.0.0 | **Not issued** |
+| `CITATION.cff` `identifiers.doi` | **Absent** until real DOI exists |
 
-Instructions for maintainers: [maintainers/zenodo-release.md](./maintainers/zenodo-release.md) (Phase 12).
+Maintainers: [maintainers/zenodo-release.md](./maintainers/zenodo-release.md)
+
+## Machine-readable metadata
+
+GitHub and citation tools read [CITATION.cff](../CITATION.cff) at the repository root. Validate locally:
+
+```bash
+npm run test:citation
+```
 
 ## Related
 
-- `CITATION.cff` (Phase 12) — GitHub citation metadata
-- [Root README](../README.md#citation)
+- [Root README — Citation](../README.md#citation)
+- [Course module](./education/course-module.md)
+- [Instructor guide](./education/instructor-guide.md)
