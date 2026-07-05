@@ -23,10 +23,10 @@ flowchart LR
   SCH --> MOD2
 ```
 
-- **Runtime** — owns the scheduler and message bus; wires modules together.
-- **Module** — unit of logic with `init`, `start`, `stop`, and optional tick handlers.
-- **MessageBus** — in-process pub/sub for typed or string topics.
-- **Supervisor** — loads configuration, starts/stops modules, integrates CAN/bridge modules.
+- **Runtime** - owns the scheduler and message bus; wires modules together.
+- **Module** - unit of logic with `init`, `start`, `stop`, and optional tick handlers.
+- **MessageBus** - in-process pub/sub for typed or string topics.
+- **Supervisor** - loads configuration, starts/stops modules, integrates CAN/bridge modules.
 
 ## Scheduler
 
@@ -85,7 +85,7 @@ The supervisor reads JSON configuration (modules, CAN interfaces, bridge endpoin
 
 ## Limitations (educational scope)
 
-- Single-process Node.js — not a real RTOS or AUTOSAR runtime
+- Single-process Node.js - not a real RTOS or AUTOSAR runtime
 - No hard real-time guarantees
 - Configuration format may evolve before v1.1
 

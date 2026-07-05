@@ -15,7 +15,7 @@ const API_DEST = path.join(SITE_ROOT, 'public', 'api-ref');
 
 function copyRecursive(src, dest) {
   if (!fs.existsSync(src)) {
-    console.warn(`sync-content: missing ${src} — run npm run docs:api from monorepo root first`);
+    console.warn(`sync-content: missing ${src} - run npm run docs:api from monorepo root first`);
     return false;
   }
   fs.mkdirSync(dest, { recursive: true });

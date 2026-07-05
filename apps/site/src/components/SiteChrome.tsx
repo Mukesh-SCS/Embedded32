@@ -10,7 +10,7 @@ function isApiRef(href: string): boolean {
 export function MaturityBanner() {
   return (
     <div className={styles.banner} role="note">
-      <strong>Teaching platform.</strong> Embedded32 is for learning and prototyping — not
+      <strong>Teaching platform.</strong> Embedded32 is for learning and prototyping - not
       automotive-certified, safety-certified, or a complete SAE J1939 stack.
     </div>
   );
@@ -40,7 +40,7 @@ export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
-        <p>MIT © Mukesh Mani Tripathi — open-source education platform for CAN &amp; J1939.</p>
+        <p>MIT © Mukesh Mani Tripathi - open-source education platform for CAN &amp; J1939.</p>
         <nav className={styles.footerLinks} aria-label="Footer">
           {FOOTER_LINKS.map((item) =>
             item.href.startsWith('http') ? (

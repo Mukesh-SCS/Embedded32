@@ -41,7 +41,7 @@ Synthetic, royalty-free bus captures for classroom demos and the future browser 
 
 ## Usage
 
-Traces are **not** loaded automatically by labs — they support instructor demos and future `apps/demo` scenarios. Decode frames with:
+Traces are **not** loaded automatically by labs - they support instructor demos and future `apps/demo` scenarios. Decode frames with:
 
 ```typescript
 import { decodeJ1939 } from '@embedded32/j1939';

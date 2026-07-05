@@ -46,18 +46,18 @@ Four labs ship under `labs/` with starter code, rubrics, and verified solutions.
 
 > Tripathi, M. M. (2026). Embedded32 Lab 02: J1939 messaging, in _Embedded32_ (Version 1.0.0), `labs/lab-02-j1939-messaging/`, https://github.com/Mukesh-SCS/Embedded32
 
-| Lab | Suggested short name |
-|-----|----------------------|
-| Lab 1 | CAN communication basics — `labs/lab-01-can-basics/` |
-| Lab 2 | J1939 messaging — `labs/lab-02-j1939-messaging/` |
-| Lab 3 | Multi-ECU simulation — `labs/lab-03-multi-ecu-simulation/` |
-| Lab 4 | Diagnostics and faults — `labs/lab-04-diagnostics-and-faults/` |
+| Lab   | Suggested short name                                           |
+| ----- | -------------------------------------------------------------- |
+| Lab 1 | CAN communication basics - `labs/lab-01-can-basics/`           |
+| Lab 2 | J1939 messaging - `labs/lab-02-j1939-messaging/`               |
+| Lab 3 | Multi-ECU simulation - `labs/lab-03-multi-ecu-simulation/`     |
+| Lab 4 | Diagnostics and faults - `labs/lab-04-diagnostics-and-faults/` |
 
 ## Citing the browser demo or traces
 
-| Asset | Citation hint |
-|-------|----------------|
-| Browser demo | Embedded32 interactive demo, `apps/demo/`, served at `/demo` on the docs site |
+| Asset            | Citation hint                                                                   |
+| ---------------- | ------------------------------------------------------------------------------- |
+| Browser demo     | Embedded32 interactive demo, `apps/demo/`, served at `/demo` on the docs site   |
 | Synthetic traces | `examples/traces/*.json`, format `embedded32-trace-v1`, `"source": "synthetic"` |
 
 Example:
@@ -66,12 +66,12 @@ Example:
 
 ## DOI status
 
-| Item | Status |
-|------|--------|
-| Zenodo GitHub integration | **Not configured** (owner action) |
-| Concept DOI (all versions) | **Not issued** |
-| Version DOI for v1.0.0 | **Not issued** |
-| `CITATION.cff` `identifiers.doi` | **Absent** until real DOI exists |
+| Item                             | Status                            |
+| -------------------------------- | --------------------------------- |
+| Zenodo GitHub integration        | **Not configured** (owner action) |
+| Concept DOI (all versions)       | **Not issued**                    |
+| Version DOI for v1.0.0           | **Not issued**                    |
+| `CITATION.cff` `identifiers.doi` | **Absent** until real DOI exists  |
 
 Maintainers: [maintainers/zenodo-release.md](./maintainers/zenodo-release.md)
 
@@ -85,6 +85,6 @@ npm run test:citation
 
 ## Related
 
-- [Root README — Citation](../README.md#citation)
+- [Root README - Citation](../README.md#citation)
 - [Course module](./education/course-module.md)
 - [Instructor guide](./education/instructor-guide.md)

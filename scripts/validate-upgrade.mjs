@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Final validation checklist for the 15-phase open-source upgrade.
- * Verifies that expected artifacts exist — does not re-run the full verify suite.
+ * Verifies that expected artifacts exist - does not re-run the full verify suite.
  *
  * Usage: npm run validate:upgrade
  */

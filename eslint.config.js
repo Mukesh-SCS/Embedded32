@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 
 export default tseslint.config(
   {
@@ -19,12 +20,35 @@ export default tseslint.config(
       'apps/site/.next/**',
       'apps/site/out/**',
       'apps/site/public/api-ref/**',
-      'apps/site/**',
+      'apps/site/next-env.d.ts',
       'apps/demo/src/traces.ts',
     ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...nextCoreWebVitals.map((config) => ({
+    ...config,
+    files: ['apps/site/src/**/*.{ts,tsx}'],
+  })),
+  {
+    files: ['apps/site/src/**/*.{ts,tsx}'],
+    settings: { next: { rootDir: 'apps/site' } },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+    },
+  },
   {
     files: ['scripts/**/*.mjs', 'apps/*/scripts/**/*.mjs'],
     languageOptions: {

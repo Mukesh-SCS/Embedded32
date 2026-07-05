@@ -1,4 +1,4 @@
-# Lab 1 — CAN communication basics
+# Lab 1 - CAN communication basics
 
 **Time:** 60–90 minutes  
 **Hardware:** None (uses `MockCANDriver`)
@@ -36,7 +36,7 @@ After completing this lab you will be able to:
 | Term    | Meaning                                               |
 | ------- | ----------------------------------------------------- |
 | CAN ID  | 11-bit (standard) or 29-bit (extended) address        |
-| DLC     | Data length — up to 8 bytes on classic CAN            |
+| DLC     | Data length - up to 8 bytes on classic CAN            |
 | Payload | Data bytes carried in the frame                       |
 | Filter  | Rule that selects which frames an application handles |
 

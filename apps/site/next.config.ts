@@ -18,9 +18,6 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: monorepoRoot,
   reactStrictMode: true,
   transpilePackages: ['@embedded32/demo'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   env: {
     NEXT_PUBLIC_BASE_PATH: isProduction ? REPO_BASE : '',
   },

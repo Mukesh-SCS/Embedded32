@@ -1,5 +1,5 @@
 /**
- * Lab 1 — CAN communication basics (solution)
+ * Lab 1 - CAN communication basics (solution)
  */
 
 import { CANInterface, MockCANDriver } from '@embedded32/can';

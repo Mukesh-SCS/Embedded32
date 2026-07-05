@@ -1,12 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  TracePlayer,
-  TRACES,
-  type DecodedFrame,
-  type PlayerSnapshot,
-} from '@embedded32/demo';
+import { TracePlayer, TRACES, type DecodedFrame, type PlayerSnapshot } from '@embedded32/demo';
 import styles from './demo.module.css';
 
 const SPEEDS = [1, 2, 4, 10];
@@ -17,10 +12,7 @@ export function DemoClient() {
   const [snapshot, setSnapshot] = useState<PlayerSnapshot | null>(null);
   const playerRef = useRef<TracePlayer | null>(null);
 
-  const trace = useMemo(
-    () => TRACES.find((t) => t.scenario === scenario) ?? TRACES[0],
-    [scenario]
-  );
+  const trace = useMemo(() => TRACES.find((t) => t.scenario === scenario) ?? TRACES[0], [scenario]);
 
   useEffect(() => {
     const player = new TracePlayer({ speed, onUpdate: setSnapshot });
@@ -113,8 +105,10 @@ export function DemoClient() {
       {latestSignals && latestSignals.signals.length > 0 && (
         <div className={styles.signals}>
           <h3>
-            Latest decode — {latestSignals.name}{' '}
-            <span className={styles.sa}>SA 0x{latestSignals.sourceAddress.toString(16).padStart(2, '0')}</span>
+            Latest decode - {latestSignals.name}{' '}
+            <span className={styles.sa}>
+              SA 0x{latestSignals.sourceAddress.toString(16).padStart(2, '0')}
+            </span>
           </h3>
           <ul>
             {latestSignals.signals.map((sig) => (
@@ -154,7 +148,10 @@ export function DemoClient() {
               .slice()
               .reverse()
               .map((frame, i) => (
-                <tr key={`${frame.timestampMs}-${i}`} className={frame.isFault ? styles.faultRow : undefined}>
+                <tr
+                  key={`${frame.timestampMs}-${i}`}
+                  className={frame.isFault ? styles.faultRow : undefined}
+                >
                   <td>{frame.timestampMs}</td>
                   <td>
                     <code>{frame.rawId}</code>
@@ -168,7 +165,7 @@ export function DemoClient() {
                   <td>{frame.name}</td>
                   <td>
                     {frame.signals.length === 0
-                      ? '—'
+                      ? '-'
                       : frame.signals
                           .map((s) => `${s.label}: ${s.value}${s.unit ? ` ${s.unit}` : ''}`)
                           .join('; ')}

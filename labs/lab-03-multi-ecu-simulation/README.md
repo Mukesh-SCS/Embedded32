@@ -1,4 +1,4 @@
-# Lab 3 — Multi-ECU simulation
+# Lab 3 - Multi-ECU simulation
 
 **Time:** 2 hours  
 **Hardware:** None
@@ -44,5 +44,5 @@ npm run test:labs
 
 ## Related documentation
 
-- [Architecture — simulation flow](../../docs/architecture.md)
+- [Architecture - simulation flow](../../docs/architecture.md)
 - `@embedded32/sim` README

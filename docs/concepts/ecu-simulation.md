@@ -71,7 +71,7 @@ await runner.start();
 await runner.stop();
 ```
 
-Exact API names may vary — see generated [API docs](../api/) or package exports.
+Exact API names may vary - see generated [API docs](../api/) or package exports.
 
 ## Extending profiles
 
@@ -96,9 +96,9 @@ flowchart LR
 
 ## Limitations
 
-- Simplified vehicle physics — not a full vehicle dynamics model
-- Fixed timing — not wall-clock synchronized across machines without bridge
-- Profile catalog is small in v1.0 — grows in v1.1 labs
+- Simplified vehicle physics - not a full vehicle dynamics model
+- Fixed timing - not wall-clock synchronized across machines without bridge
+- Profile catalog is small in v1.0 - grows in v1.1 labs
 
 ## See also
 

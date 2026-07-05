@@ -1,5 +1,5 @@
 /**
- * Lab 3 — Multi-ECU simulation (starter)
+ * Lab 3 - Multi-ECU simulation (starter)
  *
  *   npx tsx labs/lab-03-multi-ecu-simulation/starter/lab.ts
  */

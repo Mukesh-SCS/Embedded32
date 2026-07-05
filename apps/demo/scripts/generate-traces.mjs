@@ -27,7 +27,9 @@ const ORDER = [
 
 function loadTraces() {
   const files = fs.readdirSync(TRACES_DIR).filter((f) => f.endsWith('.json'));
-  const traces = files.map((file) => JSON.parse(fs.readFileSync(path.join(TRACES_DIR, file), 'utf8')));
+  const traces = files.map((file) =>
+    JSON.parse(fs.readFileSync(path.join(TRACES_DIR, file), 'utf8'))
+  );
   traces.sort((a, b) => {
     const ai = ORDER.indexOf(a.scenario);
     const bi = ORDER.indexOf(b.scenario);
@@ -38,7 +40,7 @@ function loadTraces() {
 
 function main() {
   const traces = loadTraces();
-  const banner = `// AUTO-GENERATED from examples/traces/ by apps/demo/scripts/generate-traces.mjs\n// Do not edit by hand — run \`node apps/demo/scripts/generate-traces.mjs\` to refresh.\n`;
+  const banner = `// AUTO-GENERATED from examples/traces/ by apps/demo/scripts/generate-traces.mjs\n// Do not edit by hand - run \`node apps/demo/scripts/generate-traces.mjs\` to refresh.\n`;
   const body = `import type { Trace } from './types';\n\nexport const TRACES: Trace[] = ${JSON.stringify(traces, null, 2)};\n\nexport function getTrace(scenario: string): Trace | undefined {\n  return TRACES.find((t) => t.scenario === scenario);\n}\n`;
   fs.writeFileSync(OUT_FILE, `${banner}\n${body}`);
   console.log(`generate-traces: wrote ${traces.length} traces to src/traces.ts`);

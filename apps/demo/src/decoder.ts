@@ -1,7 +1,7 @@
 import type { DecodedFrame, DecodedSignal, TraceFrame } from './types';
 
 /**
- * Browser-safe J1939 decoder — a teaching subset that mirrors the scaling used by
+ * Browser-safe J1939 decoder - a teaching subset that mirrors the scaling used by
  * `@embedded32/j1939`. It intentionally covers only a handful of PGNs/SPNs so the demo
  * stays readable. It is NOT a complete J1939 implementation.
  */
@@ -64,41 +64,41 @@ type Decoder = {
 };
 
 const PGN_DECODERS: Record<number, Decoder> = {
-  // EEC1 — Electronic Engine Controller 1 (engine speed at byte 3, LE 2 bytes, 0.125 rpm)
+  // EEC1 - Electronic Engine Controller 1 (engine speed at byte 3, LE 2 bytes, 0.125 rpm)
   0xf004: {
-    name: 'EEC1 — Electronic Engine Controller 1',
+    name: 'EEC1 - Electronic Engine Controller 1',
     decode: (b) => {
       const raw = le(b, 3, 2);
       if (isNotAvailable(raw, 2)) return [signal('Engine Speed', 'N/A')];
       return [signal('Engine Speed', (raw * 0.125).toFixed(1), 'rpm')];
     },
   },
-  // ET1 — Engine Temperature 1 (coolant temp byte 0, 1 byte, 1 °C/bit, -40 offset)
+  // ET1 - Engine Temperature 1 (coolant temp byte 0, 1 byte, 1 °C/bit, -40 offset)
   0xfeee: {
-    name: 'ET1 — Engine Temperature 1',
+    name: 'ET1 - Engine Temperature 1',
     decode: (b) => {
       const raw = b[0] ?? 0xff;
       if (isNotAvailable(raw, 1)) return [signal('Coolant Temperature', 'N/A')];
       return [signal('Coolant Temperature', String(raw - 40), '°C')];
     },
   },
-  // AMB — Ambient Conditions (barometric pressure byte 0, 0.5 kPa/bit)
+  // AMB - Ambient Conditions (barometric pressure byte 0, 0.5 kPa/bit)
   0xfef5: {
-    name: 'AMB — Ambient Conditions',
+    name: 'AMB - Ambient Conditions',
     decode: (b) => {
       const raw = b[0] ?? 0xff;
       if (isNotAvailable(raw, 1)) return [signal('Barometric Pressure', 'N/A')];
       return [signal('Barometric Pressure', (raw * 0.5).toFixed(1), 'kPa')];
     },
   },
-  // ETC1 — Electronic Transmission Controller 1
+  // ETC1 - Electronic Transmission Controller 1
   0xf000: {
-    name: 'ETC1 — Electronic Transmission Controller 1',
+    name: 'ETC1 - Electronic Transmission Controller 1',
     decode: (b) => [signal('Output Shaft Speed', String(le(b, 1, 2)), 'raw')],
   },
-  // DM1 — Active Diagnostic Trouble Codes
+  // DM1 - Active Diagnostic Trouble Codes
   0xfeca: {
-    name: 'DM1 — Active Diagnostic Trouble Codes',
+    name: 'DM1 - Active Diagnostic Trouble Codes',
     isFault: true,
     decode: (b) => {
       const lamp = b[0] ?? 0;
@@ -108,7 +108,7 @@ const PGN_DECODERS: Record<number, Decoder> = {
       return [
         signal('MIL/Lamp Status', `0x${lamp.toString(16).padStart(2, '0')}`),
         signal('SPN', String(spn)),
-        signal('FMI', `${fmi} — ${FMI_DESCRIPTIONS[fmi] ?? 'see J1939-73'}`),
+        signal('FMI', `${fmi} - ${FMI_DESCRIPTIONS[fmi] ?? 'see J1939-73'}`),
         signal('Occurrence Count', String(count)),
       ];
     },
@@ -127,7 +127,8 @@ export function decodeFrame(frame: TraceFrame): DecodedFrame {
   const id = parseInt(frame.id, 16) >>> 0;
   const parsed = parseId(id);
   const decoder = PGN_DECODERS[parsed.pgn];
-  const name = decoder?.name ?? PGN_NAMES[parsed.pgn] ?? `PGN 0x${parsed.pgn.toString(16).toUpperCase()}`;
+  const name =
+    decoder?.name ?? PGN_NAMES[parsed.pgn] ?? `PGN 0x${parsed.pgn.toString(16).toUpperCase()}`;
   const signals = decoder ? decoder.decode(frame.data) : [];
 
   return {

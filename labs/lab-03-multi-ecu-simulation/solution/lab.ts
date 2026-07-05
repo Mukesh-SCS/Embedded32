@@ -1,5 +1,5 @@
 /**
- * Lab 3 — Multi-ECU simulation (solution)
+ * Lab 3 - Multi-ECU simulation (solution)
  */
 
 import { VirtualCANPort } from '@embedded32/can';

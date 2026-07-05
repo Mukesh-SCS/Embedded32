@@ -53,12 +53,11 @@
     "@embedded32/can": "1.0.0"
   },
   "devDependencies": {
-    "typescript": "~5.8.3",
     "@types/node": "^20.0.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.0",
-    "typescript": "^6.0.3"
+    "typescript": "~5.8.3"
   },
   "publishConfig": {
     "access": "public"

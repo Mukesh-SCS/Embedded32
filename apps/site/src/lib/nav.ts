@@ -42,10 +42,10 @@ export const NAV_SECTIONS: NavSection[] = [
     title: 'Labs',
     items: [
       { label: 'All labs', href: '/labs' },
-      { label: 'Lab 1 — CAN basics', href: '/labs/lab-01-can-basics' },
-      { label: 'Lab 2 — J1939 messaging', href: '/labs/lab-02-j1939-messaging' },
-      { label: 'Lab 3 — Multi-ECU sim', href: '/labs/lab-03-multi-ecu-simulation' },
-      { label: 'Lab 4 — Diagnostics', href: '/labs/lab-04-diagnostics-and-faults' },
+      { label: 'Lab 1 - CAN basics', href: '/labs/lab-01-can-basics' },
+      { label: 'Lab 2 - J1939 messaging', href: '/labs/lab-02-j1939-messaging' },
+      { label: 'Lab 3 - Multi-ECU sim', href: '/labs/lab-03-multi-ecu-simulation' },
+      { label: 'Lab 4 - Diagnostics', href: '/labs/lab-04-diagnostics-and-faults' },
     ],
   },
   {
@@ -61,7 +61,10 @@ export const NAV_SECTIONS: NavSection[] = [
 
 export const FOOTER_LINKS: NavItem[] = [
   { label: 'GitHub', href: 'https://github.com/Mukesh-SCS/Embedded32' },
-  { label: 'Contributing', href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/CONTRIBUTING.md' },
+  {
+    label: 'Contributing',
+    href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/CONTRIBUTING.md',
+  },
   { label: 'Roadmap', href: 'https://github.com/Mukesh-SCS/Embedded32/blob/main/ROADMAP.md' },
   { label: 'Browser demo (soon)', href: '/demo' },
 ];

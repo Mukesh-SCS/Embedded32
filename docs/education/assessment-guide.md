@@ -16,7 +16,7 @@ Instructors may require students to paste terminal output showing required `LABx
 
 1. **CAN:** How many data bytes can a classic CAN frame carry?
 2. **CAN:** What does `extended: true` indicate?
-3. **J1939:** Which field identifies the message type — PGN or SPN?
+3. **J1939:** Which field identifies the message type - PGN or SPN?
 4. **J1939:** In ID `0x18F00400`, what is the source address (hex)?
 5. **Practical:** Write one line of TypeScript to parse a J1939 ID using `parseJ1939Id`.
 

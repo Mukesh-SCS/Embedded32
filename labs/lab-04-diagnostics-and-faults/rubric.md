@@ -1,4 +1,4 @@
-# Lab 4 rubric — Diagnostics and fault injection
+# Lab 4 rubric - Diagnostics and fault injection
 
 Total: **100 points**
 

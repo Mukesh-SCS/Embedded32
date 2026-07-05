@@ -94,7 +94,8 @@ function parseCff(text) {
   return result;
 }
 
-const PLACEHOLDER_DOI = /10\.0000\/|10\.5281\/zenodo\.0\b|zenodo\.XXXX|DOI pending|TBD|placeholder/i;
+const PLACEHOLDER_DOI =
+  /10\.0000\/|10\.5281\/zenodo\.0\b|zenodo\.XXXX|DOI pending|TBD|placeholder/i;
 
 function main() {
   console.log('Citation metadata verification');
@@ -140,7 +141,7 @@ function main() {
 
   // Reject fabricated DOIs
   if (PLACEHOLDER_DOI.test(cffText)) {
-    fail('CITATION.cff contains placeholder DOI text — remove until Zenodo issues a real DOI');
+    fail('CITATION.cff contains placeholder DOI text - remove until Zenodo issues a real DOI');
   }
 
   for (const id of cff.identifiers ?? []) {
@@ -155,8 +156,13 @@ function main() {
   }
 
   const citationText = fs.readFileSync(citationDoc, 'utf8');
-  if (/10\.5281\/zenodo\.\d+/.test(citationText) && !cff.identifiers?.some((i) => i.type === 'doi')) {
-    warn('docs/citation.md mentions a Zenodo DOI but CITATION.cff has no identifiers.doi — sync after archive');
+  if (
+    /10\.5281\/zenodo\.\d+/.test(citationText) &&
+    !cff.identifiers?.some((i) => i.type === 'doi')
+  ) {
+    warn(
+      'docs/citation.md mentions a Zenodo DOI but CITATION.cff has no identifiers.doi - sync after archive'
+    );
   }
   if (/doi\.org\/10\./.test(citationText) && PLACEHOLDER_DOI.test(citationText)) {
     fail('docs/citation.md contains placeholder DOI URL');

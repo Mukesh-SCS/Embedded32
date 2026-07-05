@@ -1,6 +1,6 @@
 # @embedded32/tools
 
-Command-line toolkit for CAN/J1939 monitoring, logging, and vehicle simulation — the `embedded32-tools` executable.
+Command-line toolkit for CAN/J1939 monitoring, logging, and vehicle simulation - the `embedded32-tools` executable.
 
 ## Installation
 
@@ -56,7 +56,7 @@ Run `embedded32-tools --help` for the full list.
 
 ## Browser compatibility
 
-**Not applicable** — terminal CLI only.
+**Not applicable** - terminal CLI only.
 
 ## Common errors
 
@@ -68,9 +68,9 @@ Run `embedded32-tools --help` for the full list.
 
 ## Related packages
 
-- `@embedded32/cli` — runtime launcher (`embedded32 demo`, `start`)
-- `@embedded32/sim` — simulation engine used by `simulate`
-- `@embedded32/can`, `@embedded32/j1939` — protocol stack
+- `@embedded32/cli` - runtime launcher (`embedded32 demo`, `start`)
+- `@embedded32/sim` - simulation engine used by `simulate`
+- `@embedded32/can`, `@embedded32/j1939` - protocol stack
 
 ## Version compatibility
 

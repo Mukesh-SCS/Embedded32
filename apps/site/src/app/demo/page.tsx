@@ -23,16 +23,16 @@ export default function DemoPage() {
         <article className="card">
           <h3>Decoding</h3>
           <p>
-            The browser decoder implements the same PGN/SPN subset as{' '}
-            <code>@embedded32/j1939</code> — engine speed, coolant temperature, barometric
-            pressure, and DM1 faults.
+            The browser decoder implements the same PGN/SPN subset as <code>@embedded32/j1939</code>{' '}
+            - engine speed, coolant temperature, barometric pressure, and DM1 faults.
           </p>
         </article>
         <article className="card">
           <h3>Traces</h3>
           <p>
             Scenarios come from <code>examples/traces/</code> and are labeled{' '}
-            <code>&quot;source&quot;: &quot;synthetic&quot;</code>. Nothing here is captured from real hardware.
+            <code>&quot;source&quot;: &quot;synthetic&quot;</code>. Nothing here is captured from
+            real hardware.
           </p>
         </article>
         <article className="card">
@@ -46,7 +46,7 @@ npx embedded32-tools simulate vehicle/basic-truck`}</code>
 
       <p style={{ marginTop: '1.5rem' }}>
         Source: <code>apps/demo/</code>. This static site cannot host servers, WebSockets,
-        SocketCAN, or MQTT — for live buses use the CLI and packages locally.
+        SocketCAN, or MQTT - for live buses use the CLI and packages locally.
       </p>
     </div>
   );

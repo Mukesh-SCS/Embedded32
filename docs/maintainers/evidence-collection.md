@@ -4,13 +4,13 @@ How maintainers generate and commit verifiable metrics for the open-source educa
 
 ## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `npm run evidence:collect` | Full snapshot (`verify` + `test:coverage` + counts) |
-| `npm run evidence:collect -- --skip-verify` | Skip verify (faster) |
+| Command                                                             | Purpose                                             |
+| ------------------------------------------------------------------- | --------------------------------------------------- |
+| `npm run evidence:collect`                                          | Full snapshot (`verify` + `test:coverage` + counts) |
+| `npm run evidence:collect -- --skip-verify`                         | Skip verify (faster)                                |
 | `npm run evidence:collect -- --skip-verify --use-existing-coverage` | Use existing `coverage/coverage-summary.json` files |
-| `npm run test:evidence` | Validate `metrics-latest.json` and snapshots |
-| `npm run verify` | Includes `test:evidence` |
+| `npm run test:evidence`                                             | Validate `metrics-latest.json` and snapshots        |
+| `npm run verify`                                                    | Includes `test:evidence`                            |
 
 ## Snapshot format (`embedded32-evidence-v1`)
 
@@ -50,19 +50,19 @@ Do not commit secrets, student data, or private contracts. `verify-evidence.mjs`
 
 ## Interpreting metrics honestly
 
-| Metric | Honest use |
-|--------|------------|
-| `npmVerifyPassed: true` | Full local verify passed at collection time — not a substitute for CI badge |
-| `siteStaticRouteCount` | Requires prior `apps/site` build; `null` if `out/` missing |
-| `npmPublished: false` | Manual flag — set true only after maintainer-approved npm release |
-| `zenodoDoiIssued: false` | Stays false until `CITATION.cff` contains a real `identifiers.doi` |
-| Outreach numbers | Only in `evidence/outreach-log.md`, never fabricated in JSON |
+| Metric                   | Honest use                                                                  |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `npmVerifyPassed: true`  | Full local verify passed at collection time - not a substitute for CI badge |
+| `siteStaticRouteCount`   | Requires prior `apps/site` build; `null` if `out/` missing                  |
+| `npmPublished: false`    | Manual flag - set true only after maintainer-approved npm release           |
+| `zenodoDoiIssued: false` | Stays false until `CITATION.cff` contains a real `identifiers.doi`          |
+| Outreach numbers         | Only in `evidence/outreach-log.md`, never fabricated in JSON                |
 
 ## CI integration
 
 `test:evidence` runs in `npm run verify` and checks structure of **committed** snapshots. It does not re-collect metrics on every CI run (avoids doubling verify runtime).
 
-Optional: maintainers may run `evidence:collect` in a scheduled workflow later — not enabled by default.
+Optional: maintainers may run `evidence:collect` in a scheduled workflow later - not enabled by default.
 
 ## Related
 

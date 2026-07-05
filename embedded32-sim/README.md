@@ -1,6 +1,6 @@
 # @embedded32/sim
 
-Multi-ECU J1939 vehicle simulation for Embedded32 — engine, transmission, brakes, aftertreatment, and profile-based `SimulationRunner` for classroom labs.
+Multi-ECU J1939 vehicle simulation for Embedded32 - engine, transmission, brakes, aftertreatment, and profile-based `SimulationRunner` for classroom labs.
 
 ## Installation
 
@@ -45,7 +45,7 @@ await runner.stop();
 
 ## Hardware requirements
 
-**None** — simulation uses virtual/mock CAN. Optional SocketCAN only if you bridge sim output to `vcan0`.
+**None** - simulation uses virtual/mock CAN. Optional SocketCAN only if you bridge sim output to `vcan0`.
 
 ## Browser compatibility
 
@@ -61,9 +61,9 @@ await runner.stop();
 
 ## Related packages
 
-- `@embedded32/tools` — `embedded32-tools simulate` command
-- `@embedded32/j1939` — decode simulated PGNs
-- `@embedded32/can` — virtual bus attachment
+- `@embedded32/tools` - `embedded32-tools simulate` command
+- `@embedded32/j1939` - decode simulated PGNs
+- `@embedded32/can` - virtual bus attachment
 
 ## Version compatibility
 

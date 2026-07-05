@@ -1,4 +1,4 @@
-# Lab 4 — Diagnostics and fault injection
+# Lab 4 - Diagnostics and fault injection
 
 **Time:** 2 hours  
 **Hardware:** None
@@ -40,7 +40,7 @@ See [examples/j1939-diagnostics.ts](../../examples/j1939-diagnostics.ts) for add
 
 ## Scope note
 
-This lab uses a **subset** DTC catalog — not a production scan tool.
+This lab uses a **subset** DTC catalog - not a production scan tool.
 
 ## Check your work
 

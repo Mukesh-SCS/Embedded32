@@ -12,7 +12,7 @@ Approximate **2-week** undergraduate or bootcamp module on embedded vehicle netw
 
 See [learning-outcomes.md](./learning-outcomes.md) for the full outcome list.
 
-## Week 1 — Foundations
+## Week 1 - Foundations
 
 ### Day 1–2: Introduction and CAN
 
@@ -35,7 +35,7 @@ See [learning-outcomes.md](./learning-outcomes.md) for the full outcome list.
 - Quiz (see [assessment-guide.md](./assessment-guide.md))
 - Optional: trace walkthrough with `examples/traces/normal-operation.json`
 
-## Week 2 — Simulation and diagnostics
+## Week 2 - Simulation and diagnostics
 
 ### Day 6–7: Multi-ECU systems
 
@@ -56,7 +56,7 @@ See [learning-outcomes.md](./learning-outcomes.md) for the full outcome list.
 ### Day 10: Capstone discussion
 
 - Bridge/MQTT overview ([bridge concepts](../concepts/bridge.md))
-- Project roadmap honesty — what Embedded32 does **not** claim
+- Project roadmap honesty - what Embedded32 does **not** claim
 - Course retrospective
 
 ## Grading suggestion
@@ -75,8 +75,8 @@ Adjust per institution policy.
 
 | Track            | Requirements                              |
 | ---------------- | ----------------------------------------- |
-| **A — Default**  | Laptop with Node 18+ only                 |
-| **B — Optional** | Linux VM with `vcan0` for SocketCAN bonus |
+| **A - Default**  | Laptop with Node 18+ only                 |
+| **B - Optional** | Linux VM with `vcan0` for SocketCAN bonus |
 
 Details: [system-requirements.md](./system-requirements.md)
 

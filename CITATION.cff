@@ -3,7 +3,7 @@ title: Embedded32
 message: >-
   If you use Embedded32 in academic work, please cite the software using the
   metadata below. A Zenodo DOI will be added to the identifiers section after
-  the first GitHub Release is archived on Zenodo — see
+  the first GitHub Release is archived on Zenodo - see
   docs/maintainers/zenodo-release.md.
 type: software
 authors:
@@ -21,7 +21,7 @@ abstract: >-
   J1939, multi-ECU simulation, diagnostics, and CAN-to-Ethernet/MQTT bridging.
   It includes hardware-free classroom labs, synthetic bus traces, a browser
   educational demo, and npm packages under the @embedded32 scope. The platform
-  is for teaching and experimentation — not automotive safety certification.
+  is for teaching and experimentation - not automotive safety certification.
 keywords:
   - embedded-systems
   - can-bus

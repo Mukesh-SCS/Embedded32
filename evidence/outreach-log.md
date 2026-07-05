@@ -2,15 +2,15 @@
 
 Record **real** external metrics here. Leave rows as `not recorded` until you have verifiable data.
 
-| Date | Metric | Value | Source | Notes |
-|------|--------|-------|--------|-------|
-| — | GitHub stars | not recorded | github.com/Mukesh-SCS/Embedded32 | Update after checking repo Insights |
-| — | GitHub forks | not recorded | GitHub | |
-| — | Open issues | not recorded | GitHub Issues | |
-| — | npm weekly downloads (`@embedded32/*`) | not recorded | npmjs.com | Requires publish + npm access |
-| — | GitHub Pages views | not recorded | GitHub Insights / Pages | After Pages deploy enabled |
-| — | Classroom pilots | not recorded | Instructor feedback | Course name, institution, headcount |
-| — | Lab completions (estimated) | not recorded | LMS or instructor report | Do not guess |
+| Date | Metric                                 | Value        | Source                           | Notes                               |
+| ---- | -------------------------------------- | ------------ | -------------------------------- | ----------------------------------- |
+| -    | GitHub stars                           | not recorded | github.com/Mukesh-SCS/Embedded32 | Update after checking repo Insights |
+| -    | GitHub forks                           | not recorded | GitHub                           |                                     |
+| -    | Open issues                            | not recorded | GitHub Issues                    |                                     |
+| -    | npm weekly downloads (`@embedded32/*`) | not recorded | npmjs.com                        | Requires publish + npm access       |
+| -    | GitHub Pages views                     | not recorded | GitHub Insights / Pages          | After Pages deploy enabled          |
+| -    | Classroom pilots                       | not recorded | Instructor feedback              | Course name, institution, headcount |
+| -    | Lab completions (estimated)            | not recorded | LMS or instructor report         | Do not guess                        |
 
 ## Classroom pilot template
 

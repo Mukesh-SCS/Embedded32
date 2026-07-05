@@ -8,9 +8,9 @@ export default function HomePage() {
         <div className="heroInner">
           <h1>Learn embedded vehicle networks without hardware first</h1>
           <p>
-            Embedded32 is an open-source TypeScript monorepo for classrooms and self-study:
-            CAN frames, J1939 concepts, multi-ECU simulation, diagnostics, and CAN-to-MQTT
-            bridging — with mock and virtual buses built in.
+            Embedded32 is an open-source TypeScript monorepo for classrooms and self-study: CAN
+            frames, J1939 concepts, multi-ECU simulation, diagnostics, and CAN-to-MQTT bridging -
+            with mock and virtual buses built in.
           </p>
           <div className="heroActions">
             <Link href="/docs/getting-started" className="button">
@@ -29,7 +29,7 @@ export default function HomePage() {
       <div className="page">
         <h2 className="pageTitle">What you can do today</h2>
         <p className="lead">
-          Active development — suitable for learning, labs, and prototyping. Not production
+          Active development - suitable for learning, labs, and prototyping. Not production
           automotive tooling.
         </p>
         <div className="cardGrid">
@@ -49,7 +49,10 @@ export default function HomePage() {
           </article>
           <article className="card">
             <h3>npm packages</h3>
-            <p>Ten public <code>@embedded32/*</code> packages — install after maintainer publish approval.</p>
+            <p>
+              Ten public <code>@embedded32/*</code> packages - install after maintainer publish
+              approval.
+            </p>
             <p>
               <Link href="/packages">Package index →</Link>
             </p>

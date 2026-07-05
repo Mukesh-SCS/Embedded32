@@ -17,7 +17,7 @@ export default function PackagesIndexPage() {
         <h1 className="pageTitle">@embedded32 packages</h1>
         <p className="lead">
           Ten public npm packages at version <code>1.0.0</code> in this monorepo. Publishing
-          requires maintainer approval — see the{' '}
+          requires maintainer approval - see the{' '}
           <Link href="/docs/package-guide">package selection guide</Link>.
         </p>
         <table className="table">

@@ -1,4 +1,4 @@
-# Lab 3 instructor notes — Multi-ECU simulation
+# Lab 3 instructor notes - Multi-ECU simulation
 
 ## Architecture on the whiteboard
 
@@ -22,7 +22,7 @@ scheduler.start();
 
 ## Timing
 
-600 ms at 100 ms broadcast rate yields ~6 frames per ECU minimum — verifier requires `LAB03_FRAME_COUNT >= 8`.
+600 ms at 100 ms broadcast rate yields ~6 frames per ECU minimum - verifier requires `LAB03_FRAME_COUNT >= 8`.
 
 ## Common issues
 

@@ -30,10 +30,10 @@ The second command is what instructors use to grade lab solutions.
 
 Each lab has:
 
-- `README.md` — instructions
-- `starter/` — your starting code (edit this)
-- `solution/` — reference (do not copy verbatim; learn from it)
-- `expected-output/` — sample markers your program should print
+- `README.md` - instructions
+- `starter/` - your starting code (edit this)
+- `solution/` - reference (do not copy verbatim; learn from it)
+- `expected-output/` - sample markers your program should print
 
 Run your work:
 
@@ -43,16 +43,16 @@ npx tsx labs/lab-01-can-basics/starter/lab.ts
 
 ## Lab sequence
 
-1. [Lab 1 — CAN basics](../../labs/lab-01-can-basics/)
-2. [Lab 2 — J1939 messaging](../../labs/lab-02-j1939-messaging/)
-3. [Lab 3 — Multi-ECU simulation](../../labs/lab-03-multi-ecu-simulation/)
-4. [Lab 4 — Diagnostics](../../labs/lab-04-diagnostics-and-faults/)
+1. [Lab 1 - CAN basics](../../labs/lab-01-can-basics/)
+2. [Lab 2 - J1939 messaging](../../labs/lab-02-j1939-messaging/)
+3. [Lab 3 - Multi-ECU simulation](../../labs/lab-03-multi-ecu-simulation/)
+4. [Lab 4 - Diagnostics](../../labs/lab-04-diagnostics-and-faults/)
 
 ## Study resources
 
-- [Getting started](../getting-started.md) — 15-minute quickstart
-- [Concept guides](../concepts/) — CAN, J1939, simulation, diagnostics
-- [Package guide](../package-guide.md) — which npm package to use
+- [Getting started](../getting-started.md) - 15-minute quickstart
+- [Concept guides](../concepts/) - CAN, J1939, simulation, diagnostics
+- [Package guide](../package-guide.md) - which npm package to use
 
 ## Submission checklist
 

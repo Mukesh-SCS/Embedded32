@@ -1,6 +1,6 @@
 # Browser educational demo
 
-A **hardware-free, client-side** CAN/J1939 demo for the Embedded32 documentation site. Everything runs in the browser — no server, WebSocket, SocketCAN, or MQTT connection is required.
+A **hardware-free, client-side** CAN/J1939 demo for the Embedded32 documentation site. Everything runs in the browser - no server, WebSocket, SocketCAN, or MQTT connection is required.
 
 ## What it does
 
@@ -18,12 +18,12 @@ This is a **simulation for learning**, not a real bus connection:
 
 ## Source layout
 
-| Path | Purpose |
-|------|---------|
-| `src/decoder.ts` | Browser-safe J1939 ID + SPN subset decoder |
-| `src/player.ts` | Trace playback engine (timers, bus-load estimate) |
-| `src/traces.ts` | Bundled synthetic traces (mirrors `examples/traces/`) |
-| `src/types.ts` | Shared demo types |
+| Path             | Purpose                                               |
+| ---------------- | ----------------------------------------------------- |
+| `src/decoder.ts` | Browser-safe J1939 ID + SPN subset decoder            |
+| `src/player.ts`  | Trace playback engine (timers, bus-load estimate)     |
+| `src/traces.ts`  | Bundled synthetic traces (mirrors `examples/traces/`) |
+| `src/types.ts`   | Shared demo types                                     |
 
 ## Usage
 

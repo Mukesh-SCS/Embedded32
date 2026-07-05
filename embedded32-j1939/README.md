@@ -2,7 +2,7 @@
 
 Educational SAE J1939 helpers for Embedded32: 29-bit ID parsing, a partial PGN catalog, message decoding, diagnostics subset, and CAN gateway bindings.
 
-> **Scope:** This is a learning-oriented subset — not a complete or certified J1939 stack.
+> **Scope:** This is a learning-oriented subset - not a complete or certified J1939 stack.
 
 ## Installation
 
@@ -28,7 +28,7 @@ console.log(msg.name);
 const id = buildJ1939Id({ priority: 6, pgn: 0xf004, sa: 0x00 });
 ```
 
-Full walkthrough: [examples/j1939-basic.ts](../examples/j1939-basic.ts) — `npx tsx examples/j1939-basic.ts`
+Full walkthrough: [examples/j1939-basic.ts](../examples/j1939-basic.ts) - `npx tsx examples/j1939-basic.ts`
 
 ## Public API overview
 
@@ -37,7 +37,7 @@ Full walkthrough: [examples/j1939-basic.ts](../examples/j1939-basic.ts) — `npx
 | `parseJ1939Id`, `buildJ1939Id`      | 29-bit identifier math                           |
 | `decodeJ1939`, `formatJ1939Message` | Frame → structured message                       |
 | `getPGNInfo`                        | Catalog metadata for known PGNs                  |
-| `J1939TransportProtocol`            | Multi-packet subset (BAM/RTS — partial coverage) |
+| `J1939TransportProtocol`            | Multi-packet subset (BAM/RTS - partial coverage) |
 | `DiagnosticsManager`                | DM1/DM2-oriented helpers                         |
 | `J1939CANBinding`                   | Connect CAN traffic to a runtime message bus     |
 | `AddressClaimManager`               | Address-claim teaching utilities                 |
@@ -60,16 +60,16 @@ Decode functions are pure TypeScript and may be bundled for browser demos. Socke
 
 | Error                         | Fix                                                          |
 | ----------------------------- | ------------------------------------------------------------ |
-| `unknown PGN` / sparse decode | PGN not in catalog — check `getPGNInfo`                      |
+| `unknown PGN` / sparse decode | PGN not in catalog - check `getPGNInfo`                      |
 | Wrong priority/SA             | Confirm hex ID (`0x18F00401`) and `extended: true` on frames |
 | Import `J1939Id` namespace    | Use `parseJ1939Id` / `buildJ1939Id` functions instead        |
 
 ## Related packages
 
-- `@embedded32/can` — frame transport
-- `@embedded32/sim` — ECUs that emit J1939 traffic
-- `@embedded32/tools` — `simulate` and `j1939 monitor` commands
-- `@embedded32/sdk-js` — application-level J1939 client
+- `@embedded32/can` - frame transport
+- `@embedded32/sim` - ECUs that emit J1939 traffic
+- `@embedded32/tools` - `simulate` and `j1939 monitor` commands
+- `@embedded32/sdk-js` - application-level J1939 client
 
 ## Version compatibility
 

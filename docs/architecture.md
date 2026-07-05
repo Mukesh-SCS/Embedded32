@@ -4,10 +4,10 @@ Embedded32 is a **modular npm monorepo** for teaching and prototyping vehicle-ne
 
 ## Design principles
 
-1. **Hardware optional** — mock and virtual CAN drivers enable full labs without adapters.
-2. **Small public surfaces** — each package exports a focused API; deep imports are discouraged.
-3. **Composable pipelines** — CAN → J1939 decode → bridge → MQTT follows clear package boundaries.
-4. **Honest scope** — J1939 and diagnostics are **subsets** suitable for education, not full stack certification.
+1. **Hardware optional** - mock and virtual CAN drivers enable full labs without adapters.
+2. **Small public surfaces** - each package exports a focused API; deep imports are discouraged.
+3. **Composable pipelines** - CAN → J1939 decode → bridge → MQTT follows clear package boundaries.
+4. **Honest scope** - J1939 and diagnostics are **subsets** suitable for education, not full stack certification.
 
 ## Layer diagram
 
@@ -74,7 +74,7 @@ flowchart TB
 | `@embedded32/tools`      | `embedded32-tools` command      | `simulate`, `monitor`, `j1939`                     |
 | `@embedded32/sdk-js`     | App-facing SDK                  | `Embedded32Client`, virtual transport              |
 
-## Data flow — simulation lab
+## Data flow - simulation lab
 
 ```mermaid
 sequenceDiagram
@@ -93,7 +93,7 @@ sequenceDiagram
   end
 ```
 
-## Data flow — runtime with bridge
+## Data flow - runtime with bridge
 
 ```mermaid
 sequenceDiagram
@@ -143,10 +143,10 @@ Shared TypeScript bases: `tsconfig.base.json`, `tsconfig.node16.json`, `tsconfig
 
 ## Extension points
 
-- **New ECU profiles** — add under `embedded32-sim` vehicle definitions; expose via `embedded32-tools simulate`.
-- **New PGN decoders** — extend `@embedded32/j1939` catalog and decode tables.
-- **New CAN drivers** — implement driver interface in `@embedded32/can`.
-- **Labs** — add markdown + starter code under `labs/`.
+- **New ECU profiles** - add under `embedded32-sim` vehicle definitions; expose via `embedded32-tools simulate`.
+- **New PGN decoders** - extend `@embedded32/j1939` catalog and decode tables.
+- **New CAN drivers** - implement driver interface in `@embedded32/can`.
+- **Labs** - add markdown + starter code under `labs/`.
 
 ## What is out of scope (v1.0)
 

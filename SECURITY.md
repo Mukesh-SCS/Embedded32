@@ -10,7 +10,7 @@ Security fixes are provided for the **latest** `1.0.x` release line on the defau
 | Older unpublished snapshots | Best effort only |
 | Pre-release branches        | No               |
 
-Embedded32 is an **education and experimentation** platform — not certified for safety-critical or production vehicle deployments.
+Embedded32 is an **education and experimentation** platform - not certified for safety-critical or production vehicle deployments.
 
 ## Reporting a vulnerability
 
@@ -37,11 +37,11 @@ Include:
 
 ## Response process
 
-1. **Acknowledgment** — within 7 days of a valid report (goal)
-2. **Triage** — severity assessment and affected components
-3. **Fix** — patch on a private branch or direct fix with coordinated disclosure
-4. **Release** — semver-appropriate release notes; npm publish only with maintainer approval
-5. **Credit** — reporters credited in advisory if they wish
+1. **Acknowledgment** - within 7 days of a valid report (goal)
+2. **Triage** - severity assessment and affected components
+3. **Fix** - patch on a private branch or direct fix with coordinated disclosure
+4. **Release** - semver-appropriate release notes; npm publish only with maintainer approval
+5. **Credit** - reporters credited in advisory if they wish
 
 Timelines may be longer for low-severity or documentation-only issues.
 
@@ -51,7 +51,7 @@ We support good-faith security research on your own installations and forks. Do 
 
 ## Dependencies
 
-Report vulnerable **dependencies** via Dependabot alerts (when enabled) or a private advisory. Run `npm audit` locally for awareness — not all findings require immediate action in a dev/education toolchain.
+Report vulnerable **dependencies** via Dependabot alerts (when enabled) or a private advisory. Run `npm audit` locally for awareness - not all findings require immediate action in a dev/education toolchain.
 
 ## Contact
 

@@ -1,4 +1,4 @@
-# Lab 2 rubric — J1939 messaging
+# Lab 2 rubric - J1939 messaging
 
 Total: **100 points**
 

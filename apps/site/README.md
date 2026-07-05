@@ -42,25 +42,25 @@ Includes `apps/site` production build when `package.json` is present.
 Deployed to **GitHub Pages** via `.github/workflows/deploy-pages.yml`. Full runbook:
 [docs/deployment/GITHUB_PAGES.md](../../docs/deployment/GITHUB_PAGES.md).
 
-| Setting | Value |
-|---------|-------|
-| Framework | Next.js static export (`output: 'export'`) |
-| Build command | `npm run build --workspace apps/site` |
-| Output directory | `apps/site/out` |
-| Base path | `/Embedded32` (production) |
-| Published URL | `https://mukesh-scs.github.io/Embedded32/` |
+| Setting          | Value                                      |
+| ---------------- | ------------------------------------------ |
+| Framework        | Next.js static export (`output: 'export'`) |
+| Build command    | `npm run build --workspace apps/site`      |
+| Output directory | `apps/site/out`                            |
+| Base path        | `/Embedded32` (production)                 |
+| Published URL    | `https://mukesh-scs.github.io/Embedded32/` |
 
 The workflow runs `npm run docs:api` before the site build and validates the export with
 `node scripts/verify-pages-build.mjs`. Vercel is not used.
 
 ## Content sources
 
-| Route | Source |
-|-------|--------|
-| `/docs/*` | `docs/**/*.md` (excludes `maintainers/`, `api/`) |
-| `/labs/*` | `labs/lab-*/README.md` |
-| `/packages/*` | `embedded32-*/README.md` |
-| `/api-ref/*` | Copied from `docs/api/` (TypeDoc) |
-| `/demo` | Placeholder until Phase 10 |
+| Route         | Source                                           |
+| ------------- | ------------------------------------------------ |
+| `/docs/*`     | `docs/**/*.md` (excludes `maintainers/`, `api/`) |
+| `/labs/*`     | `labs/lab-*/README.md`                           |
+| `/packages/*` | `embedded32-*/README.md`                         |
+| `/api-ref/*`  | Copied from `docs/api/` (TypeDoc)                |
+| `/demo`       | Placeholder until Phase 10                       |
 
 Maintainer-only docs remain in `docs/maintainers/` and are not published on this site.

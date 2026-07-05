@@ -4,12 +4,12 @@ Thank you for helping make Embedded32 a reliable classroom and open-source platf
 
 ## Ways to contribute
 
-- **Documentation** — guides, concepts, package READMEs, education materials
-- **Labs** — new exercises under `labs/` with starter, solution, rubric, and instructor notes
-- **Tests** — unit tests, lab verification, packaging smoke tests
-- **Bug fixes** — packaging, CLI behavior, simulation correctness
-- **Examples** — hardware-free demos under `examples/`
-- **Issues** — clear bug reports and feature proposals
+- **Documentation** - guides, concepts, package READMEs, education materials
+- **Labs** - new exercises under `labs/` with starter, solution, rubric, and instructor notes
+- **Tests** - unit tests, lab verification, packaging smoke tests
+- **Bug fixes** - packaging, CLI behavior, simulation correctness
+- **Examples** - hardware-free demos under `examples/`
+- **Issues** - clear bug reports and feature proposals
 
 ## Development setup
 
@@ -117,7 +117,7 @@ npm run verify
 
 ## Updating documentation
 
-- Root and package READMEs must stay honest — no false certification claims.
+- Root and package READMEs must stay honest - no false certification claims.
 - Concept pages live in `docs/concepts/`.
 - Course material lives in `docs/education/`.
 - Regenerate API docs when public exports change: `npm run docs:api`.
@@ -145,7 +145,7 @@ Include:
 - Expected vs actual behavior
 - Logs or terminal output
 
-**Do not** post exploit details or private credentials in public issues — see [SECURITY.md](SECURITY.md).
+**Do not** post exploit details or private credentials in public issues - see [SECURITY.md](SECURITY.md).
 
 ## Proposing features
 
@@ -184,7 +184,7 @@ Embedded32 is maintained by a small core team. Maintainers are added when contri
 - Reliable use of `npm run verify`
 - Respect for project scope and honest documentation
 
-See [GOVERNANCE.md](GOVERNANCE.md) and [MAINTAINERS.md](MAINTAINERS.md). Express interest by commenting on a relevant issue or discussion — there is no formal application form.
+See [GOVERNANCE.md](GOVERNANCE.md) and [MAINTAINERS.md](MAINTAINERS.md). Express interest by commenting on a relevant issue or discussion - there is no formal application form.
 
 ## Code of conduct
 
@@ -196,6 +196,6 @@ By contributing, you agree your contributions are licensed under the [MIT Licens
 
 ## Questions
 
-- [GitHub Discussions](https://github.com/Mukesh-SCS/Embedded32/discussions) — questions and ideas
-- [SUPPORT.md](SUPPORT.md) — where to ask for help
-- [Issues](https://github.com/Mukesh-SCS/Embedded32/issues) — bugs and features
+- [GitHub Discussions](https://github.com/Mukesh-SCS/Embedded32/discussions) - questions and ideas
+- [SUPPORT.md](SUPPORT.md) - where to ask for help
+- [Issues](https://github.com/Mukesh-SCS/Embedded32/issues) - bugs and features

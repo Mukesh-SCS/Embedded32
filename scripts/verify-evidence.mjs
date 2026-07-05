@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Validate evidence snapshots — structure, required fields, no secrets.
+ * Validate evidence snapshots - structure, required fields, no secrets.
  */
 
 import fs from 'node:fs';
@@ -89,7 +89,10 @@ function validateMetrics(metrics, relPath) {
     fail(`${relPath}: expected at least 10 public packages`);
   }
 
-  if (metrics.verification.npmVerifyPassed === true && metrics.verification.verifySkipped === true) {
+  if (
+    metrics.verification.npmVerifyPassed === true &&
+    metrics.verification.verifySkipped === true
+  ) {
     fail(`${relPath}: npmVerifyPassed cannot be true when verifySkipped is true`);
   }
 }
@@ -112,7 +115,7 @@ function main() {
   } else {
     const snapshots = fs.readdirSync(SNAPSHOTS_DIR).filter((f) => f.endsWith('.json'));
     if (snapshots.length === 0) {
-      fail('No JSON snapshots in evidence/snapshots/ — run npm run evidence:collect');
+      fail('No JSON snapshots in evidence/snapshots/ - run npm run evidence:collect');
     }
   }
 

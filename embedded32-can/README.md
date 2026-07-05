@@ -1,6 +1,6 @@
 # @embedded32/can
 
-Driver-agnostic CAN frame I/O for Embedded32 — mock, virtual, and SocketCAN backends for labs and production prototyping on Linux.
+Driver-agnostic CAN frame I/O for Embedded32 - mock, virtual, and SocketCAN backends for labs and production prototyping on Linux.
 
 ## Installation
 
@@ -65,9 +65,9 @@ J1939 parsing lives in `@embedded32/j1939`, not this package.
 
 ## Related packages
 
-- `@embedded32/j1939` — parse and decode J1939 frames
-- `@embedded32/sim` — multi-ECU simulation on a virtual bus
-- `@embedded32/tools` — terminal monitor and simulate commands
+- `@embedded32/j1939` - parse and decode J1939 frames
+- `@embedded32/sim` - multi-ECU simulation on a virtual bus
+- `@embedded32/tools` - terminal monitor and simulate commands
 
 ## Version compatibility
 

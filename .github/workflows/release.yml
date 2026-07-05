@@ -1,4 +1,4 @@
-# Controlled release — dry-run by default; publish requires explicit approval.
+# Controlled release - dry-run by default; publish requires explicit approval.
 # Do not enable automatic publish on push.
 
 name: Release

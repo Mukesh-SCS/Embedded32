@@ -17,7 +17,11 @@ export function Markdown({ content }: MarkdownProps) {
             if (!href) return <span>{children}</span>;
             if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) {
               return (
-                <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
+                <a
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel="noreferrer"
+                >
                   {children}
                 </a>
               );

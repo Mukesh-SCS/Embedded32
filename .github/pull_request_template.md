@@ -43,7 +43,7 @@ npm run test:labs
 ## Breaking changes
 
 - [ ] None
-- [ ] Yes — describe migration:
+- [ ] Yes - describe migration:
 
 ## Checklist
 

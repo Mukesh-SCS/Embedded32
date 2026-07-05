@@ -70,10 +70,7 @@ export function listDocs(): DocMeta[] {
   return files
     .map((filePath) => {
       const rel = path.relative(docsRoot, filePath).replace(/\\/g, '/');
-      const slug =
-        rel === 'README.md'
-          ? []
-          : rel.replace(/\.md$/i, '').split('/');
+      const slug = rel === 'README.md' ? [] : rel.replace(/\.md$/i, '').split('/');
       const content = readText(filePath);
       const section = slug[0] ?? 'overview';
       return {
@@ -88,10 +85,7 @@ export function listDocs(): DocMeta[] {
 
 export function getDocBySlug(slug: string[]): { meta: DocMeta; content: string } | null {
   const docsRoot = path.join(MONOREPO_ROOT, 'docs');
-  const rel =
-    slug.length === 0
-      ? 'README.md'
-      : `${slug.join('/')}.md`;
+  const rel = slug.length === 0 ? 'README.md' : `${slug.join('/')}.md`;
   const filePath = path.join(docsRoot, rel);
   if (!fs.existsSync(filePath)) return null;
 

@@ -4,7 +4,7 @@ Guide for faculty teaching the Embedded32 two-week module.
 
 ## Course summary
 
-Embedded32 teaches CAN, SAE J1939 (subset), ECU simulation, and diagnostics using TypeScript — **without requiring CAN hardware** for core labs.
+Embedded32 teaches CAN, SAE J1939 (subset), ECU simulation, and diagnostics using TypeScript - **without requiring CAN hardware** for core labs.
 
 ## Before the first session
 
@@ -57,13 +57,13 @@ Each lab folder includes `rubric.md` and `instructor-notes.md`.
 Tell students explicitly:
 
 - Embedded32 is **not** automotive-certified or a complete J1939 stack.
-- Simulation is for learning — not live vehicle tuning.
+- Simulation is for learning - not live vehicle tuning.
 - PGN/SPN catalog is partial.
 
 ## Getting help
 
-- [Student guide](./student-guide.md) — share with class
-- [GitHub Issues](https://github.com/Mukesh-SCS/Embedded32/issues) — bugs and doc fixes
+- [Student guide](./student-guide.md) - share with class
+- [GitHub Issues](https://github.com/Mukesh-SCS/Embedded32/issues) - bugs and doc fixes
 - Maintainer email via repository profile (no private immigration or personal documents in issues)
 
 ## Optional SocketCAN week
@@ -76,7 +76,7 @@ sudo ip link set up vcan0
 npx embedded32-tools monitor vcan0
 ```
 
-Run simulation in one terminal and monitor in another only when bridging sim to vcan is configured — default labs do not require this.
+Run simulation in one terminal and monitor in another only when bridging sim to vcan is configured - default labs do not require this.
 
 ## Citation for syllabi and lab handouts
 
@@ -86,4 +86,4 @@ For course materials, you may cite:
 
 > Tripathi, M. M. (2026). _Embedded32_ classroom labs (Version 1.0.0). https://github.com/Mukesh-SCS/Embedded32/tree/main/labs
 
-A Zenodo DOI will be available after the maintainer archives a GitHub Release — until then, require students to record the Git commit hash in lab reports.
+A Zenodo DOI will be available after the maintainer archives a GitHub Release - until then, require students to record the Git commit hash in lab reports.
