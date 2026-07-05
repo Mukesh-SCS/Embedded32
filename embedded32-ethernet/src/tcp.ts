@@ -63,11 +63,7 @@ export class TCPServer extends EventEmitter {
         });
 
         socket.on('error', (error) => {
-          const errorDetails =
-            error instanceof Error
-              ? `${sanitizeLogText(error.name)}: ${sanitizeLogText(error.message)}`
-              : sanitizeLogText(error);
-          safeConsoleWrite('error', '[TCP]', `Client error (${clientId})`, errorDetails);
+          safeConsoleWrite('error', '[TCP]', `Client error (${clientId})`, error);
           this.emit('error', error, clientId);
         });
 

@@ -68,9 +68,8 @@ export function safeConsoleWrite(
 ): void {
   const sanitizedPrefix = sanitizeLogText(prefix);
   const sanitizedMessage = sanitizeLogText(message);
-  const line = `${sanitizedPrefix} ${sanitizedMessage}`;
-  const payload = data === undefined ? line : `${line} ${sanitizeLogText(data)}`;
-  const safePayload = sanitizeLogText(payload);
+  const sanitizedData = data === undefined ? '' : ` ${sanitizeLogText(data)}`;
+  const safePayload = `${sanitizedPrefix} ${sanitizedMessage}${sanitizedData}`;
 
   switch (level) {
     case 'error':
