@@ -1,138 +1,79 @@
-# embedded32-cli
+# @embedded32/cli
 
-Command-line interface for launching and managing Embedded32 runtime.
+Command-line launcher for the Embedded32 supervisor-backed runtime — `embedded32` executable for demo, start, init, and status.
 
 ## Installation
 
 ```bash
-npm install -g embedded32-cli
+npm install @embedded32/cli
 ```
 
-## Commands
-
-### Initialize Configuration
+Global install (after npm publish approval):
 
 ```bash
-embedded32 init
+npm install -g @embedded32/cli
 ```
 
-Creates an `embedded32.yaml` configuration file with default settings.
-
-### Start Runtime
+Monorepo development:
 
 ```bash
-embedded32 start [config.yaml]
+npm run build
+npx embedded32 --help
 ```
 
-Starts all enabled modules from configuration.
+## Minimum runnable example
+
+Hardware-free demo:
 
 ```bash
-embedded32 start                    # Uses embedded32.yaml
-embedded32 start /etc/fleet.yaml    # Uses custom config
+npx embedded32 demo
 ```
 
-### Demo Mode
+Starts configured simulators and runtime modules. Press `Ctrl+C` for graceful shutdown.
 
-```bash
-embedded32 demo
-```
+## Public API overview
 
-Runs everything with all features enabled:
+| Command                           | Purpose                     |
+| --------------------------------- | --------------------------- |
+| `embedded32 demo`                 | All-in-one teaching demo    |
+| `embedded32 start [config]`       | Start from YAML/JSON config |
+| `embedded32 init`                 | Write starter configuration |
+| `embedded32 status`               | Inspect running runtime     |
+| `embedded32 --help` / `--version` | Help and version            |
 
-- Virtual CAN bus
-- J1939 decoder
-- Engine/transmission/brake simulators
-- UDP/TCP networking
-- CAN ↔ Ethernet bridge
-- Web dashboard at http://localhost:5173
+Programmatic import of `@embedded32/cli` is supported for embedding; most users invoke the bin only.
 
-### Check Status
+## Runtime requirements
 
-```bash
-embedded32 status
-```
+- Node.js **18+**
+- CommonJS bin entry (`embedded32`)
+- Pulls `@embedded32/supervisor`, `@embedded32/core`, bridge, ethernet, sim, etc. at **1.0.0**
 
-Check the status of a running runtime.
+## Hardware requirements
 
-### Add Plugin
+`demo` mode runs without CAN hardware. `start` with SocketCAN config requires Linux `vcan0`/`can0` as configured.
 
-```bash
-embedded32 add <plugin>
-```
+## Browser compatibility
 
-Add a plugin to your Embedded32 ecosystem.
+CLI is Node-only. Demo may print dashboard URL (`localhost:5173`) when dashboard is run separately — dashboard is a private package.
 
-```bash
-embedded32 add embedded32-bridge
-embedded32 add embedded32-dashboard
-```
+## Common errors
 
-### Help
+| Error                   | Fix                                               |
+| ----------------------- | ------------------------------------------------- |
+| Unknown command exits 1 | Run `embedded32 --help`                           |
+| Config not found        | Run `embedded32 init` or pass valid path          |
+| Confused with tools CLI | Use `embedded32-tools` for `simulate` / `monitor` |
 
-```bash
-embedded32 help
-```
+## Related packages
 
-## Configuration
+- `@embedded32/tools` — `embedded32-tools` simulation and monitoring
+- `@embedded32/supervisor` — module lifecycle behind `start`/`demo`
+- `@embedded32/bridge`, `@embedded32/ethernet` — networking in full configs
 
-The `embedded32.yaml` file configures all runtime behavior:
+## Version compatibility
 
-```yaml
-# CAN Bus
-can:
-  interface: vcan0
-  baudrate: 250000
-  enabled: true
-
-# J1939 Protocol
-j1939:
-  enabled: true
-
-# Network Transports
-ethernet:
-  udp:
-    enabled: true
-    port: 5000
-  tcp:
-    enabled: true
-    port: 9000
-
-# Message Routing
-bridge:
-  canEthernet:
-    enabled: true
-    whitelist: [0xF004, 0xFECA]
-
-# Web Dashboard
-dashboard:
-  enabled: true
-  port: 5173
-
-# Simulators
-simulator:
-  engine: true
-  transmission: true
-  brakes: false
-
-# Logging
-logging:
-  level: info
-  console: true
-```
-
-## Shutdown
-
-Press `Ctrl+C` to gracefully shutdown:
-
-```
-⏹️ Shutting down gracefully...
-✅ Module stopped: Dashboard
-✅ Module stopped: Bridge
-✅ Module stopped: Ethernet
-✅ Module stopped: J1939
-✅ Module stopped: CAN
-✅ Shutdown complete
-```
+`@embedded32/cli@1.0.0` requires matching **1.0.0** workspace dependencies.
 
 ## License
 

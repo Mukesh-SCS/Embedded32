@@ -1,114 +1,76 @@
-# embedded32-supervisor
+# @embedded32/supervisor
 
-Central runtime supervisor and module lifecycle manager for Embedded32.
-
-## Overview
-
-The supervisor manages the lifecycle of all modules, monitors health, distributes events, and handles graceful shutdown.
+Process-level supervisor for Embedded32 — registers modules, tracks health, coordinates startup/shutdown, and backs `@embedded32/cli start` / `demo`.
 
 ## Installation
 
 ```bash
-npm install embedded32-supervisor
+npm install @embedded32/supervisor
 ```
 
-## Usage
-
-### Create Supervisor
+## Minimum runnable example
 
 ```typescript
-import { Supervisor } from 'embedded32-supervisor';
+import { Supervisor } from '@embedded32/supervisor';
 
-const config: RuntimeConfig = {
-  can: { interface: 'vcan0', enabled: true },
+const supervisor = new Supervisor({
   logging: { level: 'info' },
-};
-
-const supervisor = new Supervisor(config);
-```
-
-### Register Modules
-
-```typescript
-supervisor.registerModule({
-  id: 'my-module',
-  name: 'My Module',
-  version: '1.0.0',
-  start: async () => {
-    /* ... */
-  },
-  stop: async () => {
-    /* ... */
-  },
-  getStatus: () => ({/* ... */}),
 });
-```
 
-### Start and Stop
+supervisor.registerModule({
+  id: 'hello',
+  name: 'Hello Module',
+  version: '1.0.0',
+  start: async () => console.log('started'),
+  stop: async () => console.log('stopped'),
+  getStatus: () => ({ state: 'running', uptime: 0, restarts: 0 }),
+});
 
-```typescript
 await supervisor.start();
-// ...
 await supervisor.stop();
 ```
 
-### Module Lifecycle
+Easiest path for learners: `npx embedded32 demo` instead of wiring supervisor manually.
 
-```
-CREATED → INITIALIZING → RUNNING ↔ RESTARTING
-           ↓                       ↓
-          ERROR ←──────────────────┘
+## Public API overview
 
-RUNNING → STOPPING → STOPPED
-```
+| Export                     | Role                                        |
+| -------------------------- | ------------------------------------------- |
+| `Supervisor`               | Start/stop runtime, module registry         |
+| `registerModule`           | Add modules with `start`/`stop`/`getStatus` |
+| `getHealthStatus`          | Aggregate module health                     |
+| `getEventBus`, `getLogger` | Shared runtime services                     |
 
-## API Reference
+## Runtime requirements
 
-### Supervisor
+- Node.js **18+**
+- Depends on `@embedded32/core`, `@embedded32/can`, `@embedded32/j1939`, `@embedded32/ethernet`, `@embedded32/bridge` at **1.0.0** for full stacks
 
-| Method                   | Description                      |
-| ------------------------ | -------------------------------- |
-| `start()`                | Start supervisor and all modules |
-| `stop()`                 | Stop supervisor and all modules  |
-| `registerModule(module)` | Register a module                |
-| `startModule(id)`        | Start specific module            |
-| `stopModule(id)`         | Stop specific module             |
-| `restartModule(id)`      | Restart specific module          |
-| `getHealthStatus()`      | Get runtime health status        |
-| `getModuleInfo()`        | Get all module information       |
-| `getEventBus()`          | Get runtime event bus            |
-| `getLogger()`            | Get logger instance              |
-| `isRunningFlag()`        | Check if running                 |
+## Hardware requirements
 
-### Module Interface
+None for minimal supervisor example. Full fleet configs may enable SocketCAN modules.
 
-```typescript
-interface Module {
-  id: string;
-  name: string;
-  version: string;
-  start(): Promise<void>;
-  stop(): Promise<void>;
-  getStatus(): ModuleInfo;
-}
-```
+## Browser compatibility
 
-### HealthStatus
+**Node.js only.**
 
-```typescript
-interface HealthStatus {
-  healthy: boolean;
-  modules: {
-    [moduleId: string]: {
-      state: ModuleState;
-      uptime: number;
-      restarts: number;
-    };
-  };
-  timestamp: number;
-  systemUptime: number;
-}
-```
+## Common errors
+
+| Error                 | Fix                                                    |
+| --------------------- | ------------------------------------------------------ |
+| Module stuck in ERROR | Check module `start()` throws; use `getHealthStatus()` |
+| Double `start()`      | Guard with `isRunningFlag()` or CLI status             |
+| Wrong package name    | Use `@embedded32/supervisor` scoped install            |
+
+## Related packages
+
+- `@embedded32/cli` — primary user entry
+- `@embedded32/core` — runtime primitives inside modules
+- `@embedded32/bridge` — optional bridge modules
+
+## Version compatibility
+
+`@embedded32/supervisor@1.0.0` matches CLI **1.0.0**.
 
 ## License
 

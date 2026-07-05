@@ -125,15 +125,15 @@ Manually run on all 10 public packages after build. All commands exited **0** an
 
 Updated in Phase 3 — all root workflow commands now exist:
 
-| Command | Status |
-| ------- | ------ |
-| `npm run lint` | **Added Phase 3** — ESLint 9 flat config |
-| `npm run typecheck` | **Added Phase 3** — `lerna run typecheck` across 13 packages |
-| `npm run format` | **Added Phase 3** |
-| `npm run format:check` | **Added Phase 3** |
-| `npm run audit:packages` | Passes |
-| `npm run test:package-install` | Passes |
-| `npm run verify` | **Added Phase 3** — passes on `feat/open-source-education-platform` |
+| Command                        | Status                                                              |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `npm run lint`                 | **Added Phase 3** — ESLint 9 flat config                            |
+| `npm run typecheck`            | **Added Phase 3** — `lerna run typecheck` across 13 packages        |
+| `npm run format`               | **Added Phase 3**                                                   |
+| `npm run format:check`         | **Added Phase 3**                                                   |
+| `npm run audit:packages`       | Passes                                                              |
+| `npm run test:package-install` | Passes                                                              |
+| `npm run verify`               | **Added Phase 3** — passes on `feat/open-source-education-platform` |
 
 ---
 

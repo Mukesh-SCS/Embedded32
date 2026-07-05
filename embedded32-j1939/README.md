@@ -1,129 +1,79 @@
 # @embedded32/j1939
 
-Professional-grade SAE J1939 protocol stack for the Embedded32 platform.
+Educational SAE J1939 helpers for Embedded32: 29-bit ID parsing, a partial PGN catalog, message decoding, diagnostics subset, and CAN gateway bindings.
 
-## Overview
-
-This package provides:
-
-- **J1939 ID Parsing** - Extract priority, PGN, source address from 29-bit CAN IDs
-- **PGN Database** - 50+ standard automotive parameter definitions
-- **Message Decoding** - Map raw CAN data to J1939 semantics
-- **Transport Protocol** - Multi-packet message handling (BAM, RTS/CTS)
-- **Address Claim** - Device network addressing
-- **Diagnostics** - DM1, DM2 fault code support with SPN/FMI decoding
+> **Scope:** This is a learning-oriented subset — not a complete or certified J1939 stack.
 
 ## Installation
 
 ```bash
-npm install @embedded32/j1939
+npm install @embedded32/j1939 @embedded32/can
 ```
 
-## Usage
-
-### Parse J1939 CAN Identifier
+## Minimum runnable example
 
 ```typescript
-import { parseJ1939Id, buildJ1939Id } from '@embedded32/j1939';
+import { parseJ1939Id, decodeJ1939, buildJ1939Id } from '@embedded32/j1939';
 
-// Parse a 29-bit J1939 ID
-const msg = parseJ1939Id(0x18f00401);
-// { priority: 3, pgn: 0xF004, sa: 0x01, pf: 0xF0, ps: 0x04, dp: 0, extended: true }
+const parsed = parseJ1939Id(0x18f00401);
+console.log(parsed.pgn, parsed.sa);
 
-// Build a J1939 ID
-const id = buildJ1939Id({ pgn: 0xf004, sa: 0x01, priority: 3 });
-// 0x18F00401
-```
-
-### Decode J1939 Messages
-
-```typescript
-import { decodeJ1939, formatJ1939Message } from '@embedded32/j1939';
-
-const frame = {
+const msg = decodeJ1939({
   id: 0x18f00401,
-  data: [0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80],
-};
+  data: [0, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70],
+  extended: true,
+});
+console.log(msg.name);
 
-const msg = decodeJ1939(frame);
-// { pgn: 0xF004, name: "Electronic Engine Controller 1", sa: 0x01, raw: [...] }
-
-console.log(formatJ1939Message(msg));
-// "[J1939] Electronic Engine Controller 1 (0x00F004) from SA=0x01"
+const id = buildJ1939Id({ priority: 6, pgn: 0xf004, sa: 0x00 });
 ```
 
-### CAN ↔ J1939 Gateway
+Full walkthrough: [examples/j1939-basic.ts](../examples/j1939-basic.ts) — `npx tsx examples/j1939-basic.ts`
 
-```typescript
-import { CANInterface, SocketCANDriver } from "@embedded32/can";
-import { J1939CANBinding } from "@embedded32/j1939";
+## Public API overview
 
-const can = new CANInterface(new SocketCANDriver("can0"));
-const binding = new J1939CANBinding(can, runtime.getMessageBus());
+| Export                              | Role                                             |
+| ----------------------------------- | ------------------------------------------------ |
+| `parseJ1939Id`, `buildJ1939Id`      | 29-bit identifier math                           |
+| `decodeJ1939`, `formatJ1939Message` | Frame → structured message                       |
+| `getPGNInfo`                        | Catalog metadata for known PGNs                  |
+| `J1939TransportProtocol`            | Multi-packet subset (BAM/RTS — partial coverage) |
+| `DiagnosticsManager`                | DM1/DM2-oriented helpers                         |
+| `J1939CANBinding`                   | Connect CAN traffic to a runtime message bus     |
+| `AddressClaimManager`               | Address-claim teaching utilities                 |
 
-binding.start();
+## Runtime requirements
 
-// Receive J1939 messages
-runtime.getMessageBus().subscribe("j1939.rx", (msg) => {
-  console.log(`Received ${msg.payload.name}`);
-});
+- Node.js **18+**
+- ESM imports
+- `@embedded32/can` when using CAN bindings or examples with frames
 
-// Send J1939 messages
-runtime.getMessageBus().publish("j1939.tx", {
-  payload: { pgn: 0xF004, sa: 0x01, data: [...] }
-});
-```
+## Hardware requirements
 
-### Transport Protocol (Multi-Packet)
+None for parse/decode examples. SocketCAN optional when using `J1939CANBinding` with real interfaces.
 
-```typescript
-import { J1939TransportProtocol } from '@embedded32/j1939';
+## Browser compatibility
 
-const tp = new J1939TransportProtocol();
+Decode functions are pure TypeScript and may be bundled for browser demos. SocketCAN and Node-only bindings are not browser-compatible.
 
-// Send large message using BAM
-tp.sendBAM({
-  pgn: 0xfeca,
-  sa: 0x01,
-  data: new Uint8Array(50),
-});
+## Common errors
 
-// Listen for multi-packet messages
-tp.onMessageComplete((message) => {
-  console.log(`Received ${message.data.length} bytes`);
-});
-```
+| Error                         | Fix                                                          |
+| ----------------------------- | ------------------------------------------------------------ |
+| `unknown PGN` / sparse decode | PGN not in catalog — check `getPGNInfo`                      |
+| Wrong priority/SA             | Confirm hex ID (`0x18F00401`) and `extended: true` on frames |
+| Import `J1939Id` namespace    | Use `parseJ1939Id` / `buildJ1939Id` functions instead        |
 
-### DM1/DM2 Fault Code Decoding
+## Related packages
 
-```typescript
-import { DiagnosticsManager } from '@embedded32/j1939';
+- `@embedded32/can` — frame transport
+- `@embedded32/sim` — ECUs that emit J1939 traffic
+- `@embedded32/tools` — `simulate` and `j1939 monitor` commands
+- `@embedded32/sdk-js` — application-level J1939 client
 
-const dm = new DiagnosticsManager();
+## Version compatibility
 
-const result = dm.processDM1(0x01, dm1Data);
-
-console.log('Lamp Status:', result.lamps);
-// { mil: true, flash: false, amber: false, protect: false }
-
-result.activeDTCs.forEach((dtc) => {
-  console.log(`SPN: ${dtc.spn} (${dtc.spnDescription})`);
-  console.log(`FMI: ${dtc.fmi} (${dtc.fmiDescription})`);
-});
-```
-
-## PGN Constants
-
-| PGN    | Name    | Description                          |
-| ------ | ------- | ------------------------------------ |
-| 0xF004 | EEC1    | Electronic Engine Controller 1       |
-| 0xF003 | ETC1    | Electronic Transmission Controller 1 |
-| 0xFEEE | ET1     | Engine Temperature 1                 |
-| 0xFEEF | EFL     | Engine Fluid Level                   |
-| 0xFEF7 | VEP1    | Vehicle Electrical Power 1           |
-| 0xFECA | DM1     | Active Diagnostic Trouble Codes      |
-| 0xFECB | DM2     | Previously Active DTCs               |
-| 0xEA00 | Request | Request PGN                          |
+Use `@embedded32/j1939@1.0.0` with matching `@embedded32/can@1.0.0`. Transport and diagnostics APIs may expand in minor releases without breaking parse/decode.
 
 ## License
 

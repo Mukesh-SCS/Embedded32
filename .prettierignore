@@ -4,3 +4,5 @@ coverage/
 *.tgz
 package-lock.json
 **/LICENSE
+docs/api/**
+!docs/api/README.md

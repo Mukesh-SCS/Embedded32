@@ -1,127 +1,73 @@
 # @embedded32/sim
 
-Multi-ECU J1939 vehicle simulator for the Embedded32 platform.
-
-## Overview
-
-Comprehensive J1939 vehicle simulation with multiple ECUs for:
-
-- Fleet management development
-- Diagnostic tool testing
-- Training data generation
-- Hardware-in-the-loop testing
+Multi-ECU J1939 vehicle simulation for Embedded32 — engine, transmission, brakes, aftertreatment, and profile-based `SimulationRunner` for classroom labs.
 
 ## Installation
 
 ```bash
-npm install @embedded32/sim
+npm install @embedded32/sim @embedded32/can @embedded32/j1939 @embedded32/core
 ```
 
-## Supported ECUs
+## Minimum runnable example
 
-### Engine Controller (SA: 0x00)
+**CLI (no code):** from monorepo root after `npm run build`:
 
-- **PGN F004** (EEC1) - Engine speed, load, fuel rate, coolant temp
-- **PGN FEE9** (ET1) - Engine temperatures
-- **PGN FEF2** (FE) - Fuel economy
+```bash
+npx embedded32-tools simulate vehicle/basic-truck
+```
 
-### Transmission Controller (SA: 0x03)
-
-- **PGN F003** (ETC1) - Gear position, shaft speeds, fluid pressure
-- **PGN F00C** (TF) - Transmission fluids
-- **PGN FE6C** (TC1) - Transmission control
-
-### Brake Controller (SA: 0x0B)
-
-- **PGN FEEE** (ABS) - Individual wheel speeds
-- **PGN FEAE** - Brake pressure, ABS/traction status
-
-### Aftertreatment Controller (SA: 0x0F)
-
-- **PGN FEDF** - DEF tank level
-- **PGN FEEF** - NOx, EGR
-- **PGN FEE5** - DPF status and regeneration
-
-## Usage
-
-### Full Vehicle Simulation
+**Programmatic:**
 
 ```typescript
-import { VehicleSimulator, EngineSimulator } from '@embedded32/sim';
+import { SimulationRunner } from '@embedded32/sim';
 
-const vehicle = new VehicleSimulator({
-  enabled: {
-    engine: true,
-    transmission: true,
-    aftertreatment: true,
-    brakes: true,
-  },
-  scenario: EngineSimulator.getAccelerationScenario(),
-  broadcastInterval: 100,
-});
-
-// Listen to J1939 messages
-vehicle.on('message', (messages) => {
-  messages.forEach((msg) => {
-    console.log(`[J1939] ${msg.name} (PGN: 0x${msg.pgn.toString(16)})`);
-  });
-});
-
-// Listen to vehicle state
-vehicle.on('tick', (state) => {
-  console.log(`Engine: ${state.engine.rpm} RPM`);
-  console.log(`Speed: ${state.vehicleSpeed} km/h`);
-});
-
-vehicle.start();
+const runner = new SimulationRunner();
+await runner.loadProfile('vehicle/basic-truck');
+await runner.start();
+// decoded traffic via tools or your CAN hooks
+await runner.stop();
 ```
 
-### Engine Scenarios
+## Public API overview
 
-```typescript
-// Idle - engine at idle RPM
-EngineSimulator.getIdleScenario();
+| Export                                              | Role                                   |
+| --------------------------------------------------- | -------------------------------------- |
+| `SimulationRunner`                                  | Load profile, start/stop multi-ECU sim |
+| `VehicleSimulator`                                  | Higher-level vehicle with scenarios    |
+| `EngineSimulator`, `TransmissionSimulator`, …       | Individual ECU actors                  |
+| `EngineECU`, `TransmissionECU`, `DiagnosticToolECU` | Profile-oriented ECU classes           |
+| `DeterministicScheduler`                            | Repeatable tick timing for tests       |
 
-// Acceleration - 0-2500 RPM over 10 seconds
-EngineSimulator.getAccelerationScenario();
+## Runtime requirements
 
-// Cruise - steady 1800 RPM, 30% load
-EngineSimulator.getCruiseScenario();
+- Node.js **18+**
+- Built dependencies: `@embedded32/can`, `@embedded32/j1939`, `@embedded32/core`
 
-// Deceleration - 2500 RPM down to idle
-EngineSimulator.getDecelerationScenario();
-```
+## Hardware requirements
 
-### Individual ECU Control
+**None** — simulation uses virtual/mock CAN. Optional SocketCAN only if you bridge sim output to `vcan0`.
 
-```typescript
-import {
-  EngineSimulator,
-  TransmissionSimulator,
-  BrakeSimulator,
-  AftertreatmentSimulator,
-} from '@embedded32/sim';
+## Browser compatibility
 
-const engine = new EngineSimulator();
-engine.start();
-engine.loadScenario(EngineSimulator.getCruiseScenario());
+**Node.js only** in v1.0. Browser demo will use prerecorded traces (Phase 10).
 
-const engineState = engine.tick();
-const eec1Data = engine.encodeEEC1();
-const et1Data = engine.encodeET1();
-```
+## Common errors
 
-### Transmission Control
+| Error             | Fix                                                |
+| ----------------- | -------------------------------------------------- |
+| Profile not found | Use `vehicle/basic-truck` exactly                  |
+| No traffic        | Ensure `runner.start()` and wait for tick interval |
+| Import errors     | `npm run build` at monorepo root                   |
 
-```typescript
-import { TransmissionSimulator, GearPosition } from '@embedded32/sim';
+## Related packages
 
-const transmission = new TransmissionSimulator();
-transmission.setGearPosition(GearPosition.Drive);
-transmission.tick(engineRpm, engineLoad);
+- `@embedded32/tools` — `embedded32-tools simulate` command
+- `@embedded32/j1939` — decode simulated PGNs
+- `@embedded32/can` — virtual bus attachment
 
-const etc1Data = transmission.encodeETC1();
-```
+## Version compatibility
+
+Keep `@embedded32/sim@1.0.0` aligned with `j1939` and `can` **1.0.0**.
 
 ## License
 

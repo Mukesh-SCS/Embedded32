@@ -1,0 +1,85 @@
+<!DOCTYPE html><html class="default" lang="en" data-base=".."><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@embedded32/cli | Embedded32 API</title><meta name="description" content="Documentation for Embedded32 API"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search"><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">Embedded32 API</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../index.html">Embedded32 API</a></li><li><a href="_embedded32_cli.html">@embedded32/cli</a></li></ul><h1>Module @embedded32/cli</h1></div><section class="tsd-panel tsd-typography"><a id="embedded32cli" class="tsd-anchor"></a><h1 class="tsd-anchor-link">@embedded32/cli<a href="#embedded32cli" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Command-line launcher for the Embedded32 supervisor-backed runtime — <code>embedded32</code> executable for demo, start, init, and status.</p>
+<a id="installation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@embedded32/cli</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Global install (after npm publish approval):</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-5">-g</span><span class="hl-1"> </span><span class="hl-2">@embedded32/cli</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Monorepo development:</p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">build</span><br/><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">embedded32</span><span class="hl-1"> </span><span class="hl-5">--help</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="minimum-runnable-example" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Minimum runnable example<a href="#minimum-runnable-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Hardware-free demo:</p>
+<pre><code class="bash"><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">embedded32</span><span class="hl-1"> </span><span class="hl-2">demo</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Starts configured simulators and runtime modules. Press <code>Ctrl+C</code> for graceful shutdown.</p>
+<a id="public-api-overview" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Public API overview<a href="#public-api-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>embedded32 demo</code></td>
+<td>All-in-one teaching demo</td>
+</tr>
+<tr>
+<td><code>embedded32 start [config]</code></td>
+<td>Start from YAML/JSON config</td>
+</tr>
+<tr>
+<td><code>embedded32 init</code></td>
+<td>Write starter configuration</td>
+</tr>
+<tr>
+<td><code>embedded32 status</code></td>
+<td>Inspect running runtime</td>
+</tr>
+<tr>
+<td><code>embedded32 --help</code> / <code>--version</code></td>
+<td>Help and version</td>
+</tr>
+</tbody>
+</table>
+<p>Programmatic import of <code>@embedded32/cli</code> is supported for embedding; most users invoke the bin only.</p>
+<a id="runtime-requirements" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Runtime requirements<a href="#runtime-requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Node.js <strong>18+</strong></li>
+<li>CommonJS bin entry (<code>embedded32</code>)</li>
+<li>Pulls <code>@embedded32/supervisor</code>, <code>@embedded32/core</code>, bridge, ethernet, sim, etc. at <strong>1.0.0</strong></li>
+</ul>
+<a id="hardware-requirements" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Hardware requirements<a href="#hardware-requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><code>demo</code> mode runs without CAN hardware. <code>start</code> with SocketCAN config requires Linux <code>vcan0</code>/<code>can0</code> as configured.</p>
+<a id="browser-compatibility" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Browser compatibility<a href="#browser-compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>CLI is Node-only. Demo may print dashboard URL (<code>localhost:5173</code>) when dashboard is run separately — dashboard is a private package.</p>
+<a id="common-errors" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Common errors<a href="#common-errors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unknown command exits 1</td>
+<td>Run <code>embedded32 --help</code></td>
+</tr>
+<tr>
+<td>Config not found</td>
+<td>Run <code>embedded32 init</code> or pass valid path</td>
+</tr>
+<tr>
+<td>Confused with tools CLI</td>
+<td>Use <code>embedded32-tools</code> for <code>simulate</code> / <code>monitor</code></td>
+</tr>
+</tbody>
+</table>
+<a id="related-packages" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Related packages<a href="#related-packages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><code>@embedded32/tools</code> — <code>embedded32-tools</code> simulation and monitoring</li>
+<li><code>@embedded32/supervisor</code> — module lifecycle behind <code>start</code>/<code>demo</code></li>
+<li><code>@embedded32/bridge</code>, <code>@embedded32/ethernet</code> — networking in full configs</li>
+</ul>
+<a id="version-compatibility" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Version compatibility<a href="#version-compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><code>@embedded32/cli@1.0.0</code> requires matching <strong>1.0.0</strong> workspace dependencies.</p>
+<a id="license" class="tsd-anchor"></a><h2 class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>MIT © Mukesh Mani Tripathi</p>
+</section></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#embedded32cli"><span>@embedded32/cli</span></a><ul><li><a href="#installation"><span>Installation</span></a></li><li><a href="#minimum-runnable-example"><span>Minimum runnable example</span></a></li><li><a href="#public-api-overview"><span>Public API overview</span></a></li><li><a href="#runtime-requirements"><span>Runtime requirements</span></a></li><li><a href="#hardware-requirements"><span>Hardware requirements</span></a></li><li><a href="#browser-compatibility"><span>Browser compatibility</span></a></li><li><a href="#common-errors"><span>Common errors</span></a></li><li><a href="#related-packages"><span>Related packages</span></a></li><li><a href="#version-compatibility"><span>Version compatibility</span></a></li><li><a href="#license"><span>License</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../index.html">Embedded32 API</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

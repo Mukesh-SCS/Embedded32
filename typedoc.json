@@ -1,0 +1,28 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Embedded32 API",
+  "entryPointStrategy": "packages",
+  "entryPoints": [
+    "embedded32-can",
+    "embedded32-core",
+    "embedded32-j1939",
+    "embedded32-sim",
+    "embedded32-ethernet",
+    "embedded32-bridge",
+    "embedded32-supervisor",
+    "embedded32-cli",
+    "embedded32-tools",
+    "embedded32-sdk-js"
+  ],
+  "out": "docs/api",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "readme": "none",
+  "categorizeByGroup": true,
+  "categoryOrder": ["CAN", "J1939", "Runtime", "Simulation", "Networking", "Tools", "*"],
+  "sort": ["source-order"],
+  "validation": {
+    "notExported": false
+  }
+}

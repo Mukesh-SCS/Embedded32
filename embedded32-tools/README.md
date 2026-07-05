@@ -1,100 +1,80 @@
-# embedded32-tools
+# @embedded32/tools
 
-Professional CLI toolkit for CAN/J1939 monitoring, diagnostics, and simulation.
-
-## Overview
-
-Command-line tools for working with J1939 and CAN bus systems:
-
-- 🚗 **J1939 Monitoring** - Live decode of PGN messages with SPN interpretation
-- 📡 **CAN Monitor** - Raw CAN frame capture and analysis
-- 📨 **Message Transmission** - Send J1939 messages
-- 💾 **Data Recording** - Record in JSON, CSV, or PCAP format
-- 🧪 **Vehicle Simulation** - Simulate realistic ECUs
-- 🎯 **Fault Injection** - Inject diagnostic trouble codes
+Command-line toolkit for CAN/J1939 monitoring, logging, and vehicle simulation — the `embedded32-tools` executable.
 
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/Mukesh-SCS/Embedded32.git
-cd Embedded32
-npm install
+npm install @embedded32/tools
 ```
 
-## Quick Start
+From monorepo clone (development):
 
 ```bash
-# Create virtual CAN interface (Linux)
-sudo modprobe vcan
-sudo ip link add dev vcan0 type vcan
-sudo ip link set up vcan0
-
-# Start vehicle simulator
-embedded32 ecu simulate --engine --transmission
-
-# In another terminal, monitor J1939
-embedded32 j1939 monitor --iface vcan0
+npm ci && npm run build
+npx embedded32-tools --help
 ```
 
-## Commands
+## Minimum runnable example
 
-### CAN Monitor
+Hardware-free simulation (recommended first run):
 
 ```bash
-embedded32 can monitor --iface vcan0
-embedded32 can monitor --iface can0 --format json
-embedded32 can monitor --iface can0 --id 0x18FEF100
+npx embedded32-tools simulate vehicle/basic-truck
 ```
 
-### J1939 Monitor
+You should see decoded J1939 lines from engine, transmission, and diagnostic ECUs. Press `Ctrl+C` to stop.
 
-```bash
-embedded32 j1939 monitor --iface vcan0
-embedded32 j1939 monitor --iface can0 --pgn 0xF004
-embedded32 j1939 monitor --iface can0 --sa 0x00 --format json
-embedded32 j1939 monitor --iface can0 --rate
-```
+## Public API overview
 
-### J1939 Send
+This package is primarily a **CLI**. The published entry is the `embedded32-tools` binary.
 
-```bash
-embedded32 j1939 send --iface vcan0 --pgn 0xF004 \
-  --data "3C 00 FF FF FF FF FF FF"
-```
+| Command              | Purpose                                  |
+| -------------------- | ---------------------------------------- |
+| `simulate <profile>` | Run profile (e.g. `vehicle/basic-truck`) |
+| `monitor <iface>`    | Live CAN/J1939 decode                    |
+| `log <iface>`        | Log frames to file                       |
+| `can up <iface>`     | Create virtual CAN (Linux/WSL)           |
+| `j1939 monitor`      | Legacy J1939 monitor                     |
+| `can monitor`        | Raw CAN monitor                          |
+| `ecu simulate`       | Legacy multi-ECU simulator               |
 
-### Record Data
+Run `embedded32-tools --help` for the full list.
 
-```bash
-embedded32 j1939 dump --iface vcan0 --duration 30 \
-  --format json --output session.json
-```
+## Runtime requirements
 
-### Vehicle Simulation
+- Node.js **18+**
+- Monorepo or installed tarball with compiled `dist/cli.js`
 
-```bash
-embedded32 ecu simulate --engine --transmission --aftertreatment
-embedded32 ecu simulate --engine --fault 100
-```
+## Hardware requirements
 
-## Global Flags
+| Command                  | Hardware                            |
+| ------------------------ | ----------------------------------- |
+| `simulate`               | None                                |
+| `monitor vcan0` / `can0` | Linux SocketCAN interface           |
+| `can up`                 | Linux/WSL with `ip link` privileges |
 
-```bash
---verbose              Enable verbose output
---debug                Enable debug logging
---no-color             Disable colored output
---help, -h             Show help
---version              Show version
-```
+## Browser compatibility
 
-## Platform Support
+**Not applicable** — terminal CLI only.
 
-| OS           | CAN Drivers        | Status          |
-| ------------ | ------------------ | --------------- |
-| Linux        | SocketCAN, vcan    | ✅ Full Support |
-| Raspberry Pi | SocketCAN, MCP2515 | ✅ Full Support |
-| Windows      | PCAN-USB           | ⚠️ Gateway mode |
-| macOS        | Mock/Simulator     | ✅ Testing only |
+## Common errors
+
+| Error                  | Fix                                                                     |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `command not found`    | Use `npx embedded32-tools` or global install                            |
+| Empty monitor on Linux | Start `simulate` in another terminal or check interface name            |
+| Wrong command prefix   | Bin is `embedded32-tools`, not `embedded32` (that is `@embedded32/cli`) |
+
+## Related packages
+
+- `@embedded32/cli` — runtime launcher (`embedded32 demo`, `start`)
+- `@embedded32/sim` — simulation engine used by `simulate`
+- `@embedded32/can`, `@embedded32/j1939` — protocol stack
+
+## Version compatibility
+
+`@embedded32/tools@1.0.0` depends on pinned internal packages at **1.0.0**.
 
 ## License
 
