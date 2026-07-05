@@ -5,7 +5,7 @@
 import { Server, Socket, createServer } from 'net';
 import { J1939NanoProto } from './nanoproto';
 import { EventEmitter } from 'events';
-import { safeConsoleWrite, sanitizeLogText } from './security/logSanitize';
+import { safeConsoleWrite } from './security/logSanitize';
 import { formatClientIdForLog } from './tcpClientId';
 
 export interface TCPOptions {
@@ -64,10 +64,6 @@ export class TCPServer extends EventEmitter {
 
         socket.on('error', (error) => {
           safeConsoleWrite('error', '[TCP]', `Client error (${clientId})`, error);
-          this.emit('error', error, clientId);
-        });
-
-        socket.on('end', () => {
           safeConsoleWrite('info', '[TCP]', `Client disconnected: ${clientId}`);
           this.clientConnections.delete(clientId);
           this.emit('disconnect', clientId);

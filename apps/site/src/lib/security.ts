@@ -23,8 +23,15 @@ export function isValidLabSlug(slug: string): boolean {
  */
 export function sanitizePlainTextTitle(title: string, fallback = 'Untitled'): string {
   if (!title || typeof title !== 'string') return fallback;
-  const stripped = title
-    .replace(HTML_TAG_PATTERN, '')
+
+  let withoutTags = title;
+  let previous: string;
+  do {
+    previous = withoutTags;
+    withoutTags = withoutTags.replace(HTML_TAG_PATTERN, '');
+  } while (withoutTags !== previous);
+
+  const stripped = withoutTags
     .replace(CONTROL_CHARS, '')
     .replace(/\s+/g, ' ')
     .trim();

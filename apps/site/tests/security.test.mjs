@@ -18,8 +18,13 @@ function isValidLabSlug(slug) {
 
 function sanitizePlainTextTitle(title, fallback = 'Untitled') {
   if (!title || typeof title !== 'string') return fallback;
-  const stripped = title
-    .replace(HTML_TAG_PATTERN, '')
+  let withoutTags = title;
+  let previous;
+  do {
+    previous = withoutTags;
+    withoutTags = withoutTags.replace(HTML_TAG_PATTERN, '');
+  } while (withoutTags !== previous);
+  const stripped = withoutTags
     .replace(CONTROL_CHARS, '')
     .replace(/\s+/g, ' ')
     .trim();

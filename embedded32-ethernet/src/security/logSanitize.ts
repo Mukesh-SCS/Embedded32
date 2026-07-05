@@ -12,8 +12,20 @@ export function sanitizeLogText(value: unknown): string {
         ? `${text.slice(0, MAX_LOG_VALUE_LENGTH)}…[truncated]`
         : text;
     return truncated
-      .replace(/\r/g, '\\r')
-      .replace(/\n/g, '\\n')
+      .replace(/\r|\n|\u2028|\u2029/g, (ch) => {
+        switch (ch) {
+          case '\r':
+            return '\\r';
+          case '\n':
+            return '\\n';
+          case '\u2028':
+            return '\\u2028';
+          case '\u2029':
+            return '\\u2029';
+          default:
+            return '';
+        }
+      })
       .replace(ANSI_ESCAPE, '')
       .replace(CONTROL_CHARS, '');
   } catch {
@@ -48,6 +60,10 @@ export function serializeLogValue(value: unknown): string {
 
 export type SafeConsoleLevel = 'debug' | 'info' | 'warn' | 'error' | 'log';
 
+function composeSanitizedLogLine(parts: string[]): string {
+  return parts.filter((part) => part.length > 0).join(' ');
+}
+
 export function safeConsoleWrite(
   level: SafeConsoleLevel,
   prefix: string,
@@ -56,23 +72,26 @@ export function safeConsoleWrite(
 ): void {
   const sanitizedPrefix = sanitizeLogText(prefix);
   const sanitizedMessage = sanitizeLogText(message);
-  const line = `${sanitizedPrefix} ${sanitizedMessage}`;
-  const payload = data === undefined ? line : `${line} ${sanitizeLogText(data)}`;
-
+  const sanitizedData = data === undefined ? '' : sanitizeLogText(data);
+  const safePayload = composeSanitizedLogLine([
+    sanitizedPrefix,
+    sanitizedMessage,
+    sanitizedData
+  ]);
   switch (level) {
     case 'error':
-      console.error('%s', payload);
+      console.error('%s', safePayload);
       break;
     case 'warn':
-      console.warn('%s', payload);
+      console.warn('%s', safePayload);
       break;
     case 'debug':
-      console.debug('%s', payload);
+      console.debug('%s', safePayload);
       break;
     case 'info':
     case 'log':
     default:
-      console.log('%s', payload);
+      console.log('%s', safePayload);
       break;
   }
 }

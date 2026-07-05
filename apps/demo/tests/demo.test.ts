@@ -3,11 +3,19 @@ import { decodeFrame, parseId, resetBamState } from '../src/decoder';
 import { TracePlayer } from '../src/player';
 import { exportDecodedCsv, exportDecodedJson, validateTraceInput } from '../src/export';
 import {
+<<<<<<< HEAD
   normalizeCanId,
   sanitizeCsvCell,
   MAX_FRAME_COUNT,
   MAX_TRACE_BYTES,
 } from '../src/normalize';
+=======
+  exportDecodedCsv,
+  exportDecodedJson,
+  validateTraceInput,
+} from '../src/export';
+import { normalizeCanId, sanitizeCsvCell, MAX_FRAME_COUNT } from '../src/normalize';
+>>>>>>> 5244591b6f6e795be5258a44b6ca16466532c845
 import { createBamState, processBamFrame, isTpCmBam } from '../src/bam';
 import type { TraceFrame } from '../src/types';
 
