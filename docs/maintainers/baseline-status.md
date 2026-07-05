@@ -150,6 +150,7 @@ Updated in Phase 3 — all root workflow commands now exist:
 | Pages deployment     | **Present** — `deploy-pages.yml` → GitHub Pages (Phase 11)             |
 | Citation / Zenodo    | **Present** — `CITATION.cff`, `test:citation`, zenodo runbook (Phase 12) |
 | Evidence metrics   | **Present** — `evidence/`, `evidence:collect`, `test:evidence` (Phase 13) |
+| Upgrade validation | **Present** — `validate:upgrade`, `open-source-upgrade-summary.md` (Phase 15) |
 
 ---
 

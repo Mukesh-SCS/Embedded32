@@ -29,8 +29,9 @@ npm ci
 | `npm run test:citation`        | Validate `CITATION.cff` and citation docs (no fake DOI) |
 | `npm run test:evidence`        | Validate committed evidence snapshots                   |
 | `npm run evidence:collect`     | Generate metrics snapshot under `evidence/`             |
-| `npm run test:coverage`        | Coverage report for j1939, core, can                 |
-| `npm run verify`               | Full pre-merge check (includes citation and evidence) |
+| `npm run test:coverage`        | Coverage report for j1939, core, can                    |
+| `npm run validate:upgrade`     | Artifact checklist for Phases 1–15 deliverables           |
+| `npm run verify`               | Full pre-merge check (includes validate:upgrade)          |
 
 ## Workspace layout
 
@@ -65,4 +66,5 @@ Package paths are unchanged from the original repository layout. Published impor
 | `docs/deployment/`   | 11    | GitHub Pages deployment runbook               |
 | `docs/maintainers/zenodo-release.md` | 12 | Zenodo DOI workflow for maintainers |
 | `evidence/`              | 13    | Metrics snapshots and outreach log          |
+| `open-source-upgrade-summary.md` | 15 | Final upgrade validation report     |
 | `.github/workflows/` | 7, 11 | CI, CodeQL, dependency review, Pages deploy   |

@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Pages deployment: `.github/workflows/deploy-pages.yml`, `scripts/verify-pages-build.mjs`, `docs/deployment/GITHUB_PAGES.md`
 - Citation and Zenodo: `CITATION.cff`, `docs/citation.md`, `docs/maintainers/zenodo-release.md`, `npm run test:citation`
 - Evidence tracking: `evidence/`, `npm run evidence:collect`, `npm run test:evidence`
+- Roadmap and final validation: updated `ROADMAP.md`, `npm run validate:upgrade`, `open-source-upgrade-summary.md`
 - Maintainer docs: `release-process.md`, `manual-npm-settings.md`
 
 ### Changed
