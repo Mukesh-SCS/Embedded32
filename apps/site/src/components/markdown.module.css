@@ -1,0 +1,73 @@
+.markdown {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+}
+
+.markdown :global(h1) {
+  margin-top: 0;
+  font-size: 1.9rem;
+  line-height: 1.25;
+}
+
+.markdown :global(h2) {
+  margin-top: 2rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown :global(h3) {
+  margin-top: 1.5rem;
+}
+
+.markdown :global(p),
+.markdown :global(li) {
+  color: #1e293b;
+}
+
+.markdown :global(code) {
+  background: #f1f5f9;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.markdown :global(pre) {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.markdown :global(pre code) {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.markdown :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.markdown :global(th),
+.markdown :global(td) {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.markdown :global(blockquote) {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: #0c4a6e;
+}
+
+.markdown :global(img) {
+  max-width: 100%;
+}
