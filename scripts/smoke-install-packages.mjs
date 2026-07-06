@@ -161,6 +161,26 @@ const API_SMOKE = {
   },
 };
 
+function collectTransitiveInternalDeps(pkgName, allPackages) {
+  const byName = new Map(allPackages.map((pkg) => [pkg.pkgJson.name, pkg]));
+  const queue = [pkgName];
+  const seen = new Set();
+
+  while (queue.length) {
+    const current = queue.shift();
+    if (seen.has(current)) continue;
+    seen.add(current);
+    const currentPkg = byName.get(current);
+    if (!currentPkg) continue;
+    for (const dep of getInternalDeps(currentPkg.pkgJson)) {
+      queue.push(dep);
+    }
+  }
+
+  seen.delete(pkgName);
+  return seen;
+}
+
 function installTarballs(projectDir, tarballPaths) {
   for (const tarball of tarballPaths) {
     const install = run('npm', ['install', tarball], { cwd: projectDir });
@@ -212,7 +232,7 @@ function smokeCli(projectDir, spec) {
   }
 }
 
-function smokePackage(pkg, tarballs, allPackages) {
+function smokePackage(pkg, tarballs, allPackages, ordered) {
   const name = pkg.pkgJson.name;
   const spec = API_SMOKE[name];
   if (!spec) {
@@ -230,38 +250,27 @@ function smokePackage(pkg, tarballs, allPackages) {
       projectPkg.type = 'module';
       fs.writeFileSync(pkgJsonPath, JSON.stringify(projectPkg, null, 2));
 
-      const installList = [];
-      for (const dep of getInternalDeps(pkg.pkgJson)) {
-        installList.push(tarballs.get(dep));
-      }
+      const transitive = collectTransitiveInternalDeps(name, allPackages);
+      const installList = ordered
+        .filter((pkg) => transitive.has(pkg.pkgJson.name))
+        .map((pkg) => tarballs.get(pkg.pkgJson.name));
       installList.push(tarballs.get(name));
       installTarballs(projectDir, installList.filter(Boolean));
 
       smokeApi(projectDir, spec);
     } else if (spec.moduleType === 'cjs') {
-      const installList = [];
-      for (const dep of getInternalDeps(pkg.pkgJson)) {
-        installList.push(tarballs.get(dep));
-      }
+      const transitive = collectTransitiveInternalDeps(name, allPackages);
+      const installList = ordered
+        .filter((pkg) => transitive.has(pkg.pkgJson.name))
+        .map((pkg) => tarballs.get(pkg.pkgJson.name));
       installList.push(tarballs.get(name));
       installTarballs(projectDir, installList.filter(Boolean));
       smokeApi(projectDir, spec);
     } else if (spec.moduleType === 'cli') {
       const installList = [];
-      const queue = [name];
-      const seen = new Set();
-      while (queue.length) {
-        const current = queue.shift();
-        if (seen.has(current)) continue;
-        seen.add(current);
-        const currentPkg = allPackages.find((p) => p.pkgJson.name === current);
-        if (!currentPkg) continue;
-        for (const dep of getInternalDeps(currentPkg.pkgJson)) {
-          queue.push(dep);
-        }
-      }
-      for (const depName of seen) {
-        if (depName !== name && tarballs.has(depName)) {
+      const transitive = collectTransitiveInternalDeps(name, allPackages);
+      for (const depName of ordered.map((pkg) => pkg.pkgJson.name)) {
+        if (transitive.has(depName) && tarballs.has(depName)) {
           installList.push(tarballs.get(depName));
         }
       }
@@ -291,7 +300,7 @@ function main() {
     for (const pkg of ordered) {
       const name = pkg.pkgJson.name;
       try {
-        smokePackage(pkg, tarballs, packages);
+        smokePackage(pkg, tarballs, packages, ordered);
         console.log(`${colors.green}PASS${colors.reset}  ${name}`);
       } catch (error) {
         failed += 1;
