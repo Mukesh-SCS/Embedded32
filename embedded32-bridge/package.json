@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/bridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CAN to Ethernet and MQTT bridging with J1939-aware routing rules",
   "type": "module",
   "main": "./dist/index.js",
@@ -36,14 +36,14 @@
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
   "dependencies": {
-    "@embedded32/core": "1.0.0",
-    "@embedded32/can": "1.0.0",
-    "@embedded32/j1939": "1.0.0",
-    "@embedded32/ethernet": "1.0.0"
+    "@embedded32/can": "^1.0.1",
+    "@embedded32/core": "^1.0.1",
+    "@embedded32/ethernet": "^1.0.1",
+    "@embedded32/j1939": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
     "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.4.11",
     "typescript": "~5.8.3"

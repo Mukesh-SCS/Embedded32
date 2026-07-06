@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/can",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CAN bus abstraction for Embedded32 with mock, virtual, and SocketCAN drivers",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

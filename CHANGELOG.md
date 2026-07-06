@@ -5,7 +5,28 @@ All notable changes to the Embedded32 platform will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.1] - 2026-07-05
+
+### Fixed
+
+- Improved package build and clean-install reliability.
+- Resolved CI and GitHub Pages deployment issues.
+- Hardened configuration handling against unsafe property paths.
+- Removed shell command interpolation from CAN setup operations.
+- Improved log sanitization and sensitive-value redaction.
+- Improved Markdown, URL, trace-import, and export validation.
+- Added security and regression tests.
+- Updated documentation and education-platform content.
+
+### Security
+
+- Added protection against prototype pollution.
+- Added protection against command injection.
+- Added protection against log injection and unsafe format strings.
+- Removed committed credential placeholders.
+- Added safer handling for imported trace data and CSV exports.
+
+## [1.0.0]
 
 ### Added
 

@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/sim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vehicle and multi-ECU simulation for Embedded32 learning labs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,9 +27,9 @@
     "test:acceptance": "npx jest tests/phase2-acceptance.test.ts"
   },
   "dependencies": {
-    "@embedded32/can": "1.0.0",
-    "@embedded32/core": "1.0.0",
-    "@embedded32/j1939": "1.0.0"
+    "@embedded32/can": "^1.0.1",
+    "@embedded32/core": "^1.0.1",
+    "@embedded32/j1939": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",

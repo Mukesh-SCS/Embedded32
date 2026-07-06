@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/sdk-python",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "J1939 client library for Python - interacting with Embedded32 platform",
   "private": true,
   "scripts": {

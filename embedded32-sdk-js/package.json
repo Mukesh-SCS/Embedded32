@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/sdk-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JavaScript/TypeScript client SDK for J1939 learning and virtual CAN transport",
   "type": "module",
   "main": "./dist/index.js",
@@ -41,7 +41,7 @@
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
   "dependencies": {
-    "@embedded32/j1939": "1.0.0"
+    "@embedded32/j1939": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",

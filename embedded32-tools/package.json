@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command-line CAN and J1939 monitoring, logging, and simulation tools for Embedded32",
   "main": "./dist/cli.js",
   "types": "./dist/cli.d.ts",
@@ -28,10 +28,10 @@
     "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js"
   },
   "dependencies": {
-    "@embedded32/can": "1.0.0",
-    "@embedded32/core": "1.0.0",
-    "@embedded32/j1939": "1.0.0",
-    "@embedded32/sim": "1.0.0",
+    "@embedded32/can": "^1.0.1",
+    "@embedded32/core": "^1.0.1",
+    "@embedded32/j1939": "^1.0.1",
+    "@embedded32/sim": "^1.0.1",
     "commander": "^14.0.2",
     "ws": "^8.18.3"
   },
