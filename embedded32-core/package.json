@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight embedded runtime for Embedded32: scheduler, messaging, and module registry",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,7 +37,7 @@
   "author": "Mukesh Mani Tripathi",
   "license": "MIT",
   "dependencies": {
-    "@embedded32/can": "1.0.0"
+    "@embedded32/can": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",

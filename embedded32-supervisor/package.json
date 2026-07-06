@@ -1,6 +1,6 @@
 {
   "name": "@embedded32/supervisor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Runtime supervisor and module lifecycle manager for Embedded32",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -26,11 +26,11 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@embedded32/bridge": "1.0.0",
-    "@embedded32/can": "1.0.0",
-    "@embedded32/core": "1.0.0",
-    "@embedded32/ethernet": "1.0.0",
-    "@embedded32/j1939": "1.0.0",
+    "@embedded32/bridge": "^1.0.1",
+    "@embedded32/can": "^1.0.1",
+    "@embedded32/core": "^1.0.1",
+    "@embedded32/ethernet": "^1.0.1",
+    "@embedded32/j1939": "^1.0.1",
     "yaml": "^2.3.0"
   },
   "devDependencies": {
