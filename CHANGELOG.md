@@ -9,18 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Resolved CodeQL security and code-quality findings.
-- Hardened configuration loading against prototype pollution.
-- Replaced unsafe shell command construction.
-- Improved log sanitization and sensitive-data handling.
-- Fixed npm packaging and clean-install validation.
-- Improved CAN and J1939 tests.
-- Updated documentation and GitHub Pages support.
+- Improved package build and clean-install reliability.
+- Resolved CI and GitHub Pages deployment issues.
+- Hardened configuration handling against unsafe property paths.
+- Removed shell command interpolation from CAN setup operations.
+- Improved log sanitization and sensitive-value redaction.
+- Improved Markdown, URL, trace-import, and export validation.
+- Added security and regression tests.
+- Updated documentation and education-platform content.
 
 ### Security
 
-- Added regression tests for command injection, log injection,
-  unsafe configuration keys, and untrusted content handling.
+- Added protection against prototype pollution.
+- Added protection against command injection.
+- Added protection against log injection and unsafe format strings.
+- Removed committed credential placeholders.
+- Added safer handling for imported trace data and CSV exports.
+
+## [1.0.0]
 
 ### Added
 
