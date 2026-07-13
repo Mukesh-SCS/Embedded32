@@ -33,7 +33,7 @@
     "@embedded32/j1939": "^1.0.1",
     "@embedded32/sim": "^1.0.1",
     "commander": "^14.0.2",
-    "ws": "^8.18.3"
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
