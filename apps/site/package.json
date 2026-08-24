@@ -10,7 +10,7 @@
     "lint": "eslint src --max-warnings=0"
   },
   "dependencies": {
-    "next": "^16.2.10",
+    "next": "^16.3.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-markdown": "^9.0.1",
