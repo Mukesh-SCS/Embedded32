@@ -36,7 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "@embedded32/core": "^1.0.1",
-    "mqtt": "^5.15.1"
+    "mqtt": "^5.15.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
