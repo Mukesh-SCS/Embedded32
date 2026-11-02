@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.6.6",
     "jest": "^30.5.1",
-    "ts-jest": "^29.4.12",
+    "ts-jest": "^29.4.15",
     "typescript": "~5.8.3"
   },
   "author": "Mukesh Mani Tripathi",
